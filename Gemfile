@@ -1,8 +1,6 @@
 source 'http://rubygems.org'
 
-# 3rd party gems
-gem 'facets', '>= 3.1.0', '< 4.0.0', require: false
-
+gem 'glimmer', '~> 0.9.0'
 # gem 'opal-rails', '~> 1.1.2', require: false
 gem 'opal-browser', '~> 0.2.0', require: false
 

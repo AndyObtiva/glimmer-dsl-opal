@@ -19,14 +19,14 @@ unless jeweler_required.nil?
   Jeweler::Tasks.new do |gem|
     # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
     gem.name = "glimmer"
-    gem.homepage = "http://github.com/AndyObtiva/glimmer"
+    gem.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal"
     gem.license = "MIT"
-    gem.summary = %Q{Ruby Desktop Development GUI Library}
-    gem.description = %Q{Ruby Desktop Development GUI Library (JRuby on SWT)}
+    gem.summary = %Q{Glimmer DSL for Opal}
+    gem.description = %Q{Glimmer DSL for Opal (Web GUI)}
     gem.email = "andy.am@gmail.com"
     gem.authors = ["AndyMaleh"]
-    gem.executables = ['glimmer', 'girb']
-    gem.files = Dir['RUBY_VERSION', 'VERSION', 'bin/**/*', 'lib/**/*', 'vendor/**/*', 'icons/**/*']
+    gem.executables = []
+    gem.files = Dir['README.md', 'LICENSE.txt', 'VERSION', 'lib/**/*']
     # dependencies defined in Gemfile
   end
   Jeweler::RubygemsDotOrgTasks.new

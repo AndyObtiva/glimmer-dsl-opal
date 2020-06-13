@@ -8,9 +8,8 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 # require_relative '../lib/glimmer/swt/packages'
-# module GlimmerSpec
-#   include Glimmer::SWT::Packages # makes SWT packages available to namespace containing specs
-# end
+module GlimmerSpec
+end
 FIXTURES_PATH = File.expand_path('../fixtures', __FILE__)
 ROOT_PATH = File.expand_path('../..', __FILE__)
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -127,11 +126,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
-# RSpec::Matchers.define :have_style do |style|
-#   match do |widget|
-#     expect(widget.getStyle & Glimmer::SWT::SWTProxy[style]).to eq(Glimmer::SWT::SWTProxy[style])
-#   end
-# end
+
 begin
   ENV['APP_ENV'] = 'test'
   require "simplecov"
@@ -149,4 +144,4 @@ rescue LoadError, StandardError => e
   puts 'Failed to load/configure SimpleCov'
   puts e.full_message
 end
-require_relative '../lib/glimmer'
+require_relative '../lib/glimmer-dsl-opal'

@@ -22,7 +22,7 @@ unless jeweler_required.nil?
     gem.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal"
     gem.license = "MIT"
     gem.summary = %Q{Glimmer DSL for Opal}
-    gem.description = %Q{Glimmer DSL for Opal (Web GUI)}
+    gem.description = %Q{Glimmer DSL for Opal (Web GUI for Desktop Apps)}
     gem.email = "andy.am@gmail.com"
     gem.authors = ["AndyMaleh"]
     gem.executables = []

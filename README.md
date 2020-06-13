@@ -1,4 +1,4 @@
-# Glimmer DSL for Opal 0.1.0 Beta (Web GUI)
+# Glimmer DSL for Opal 0.1.0 Beta (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer.svg)](http://badge.fury.io/rb/glimmer)
 [![Travis CI](https://travis-ci.com/AndyObtiva/glimmer.svg?branch=master)](https://travis-ci.com/github/AndyObtiva/glimmer)
 [![Maintainability](https://api.codeclimate.com/v1/badges/38fbc278022862794414/maintainability)](https://codeclimate.com/github/AndyObtiva/glimmer/maintainability)

@@ -29,6 +29,10 @@ module Glimmer
           }
         }
       end
+      
+      def open
+        # No Op (just a placeholder since it is not needed on the web)
+      end
     end
   end
 end

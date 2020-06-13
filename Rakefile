@@ -18,7 +18,7 @@ end
 unless jeweler_required.nil?
   Jeweler::Tasks.new do |gem|
     # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-    gem.name = "glimmer"
+    gem.name = "glimmer-dsl-opal"
     gem.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal"
     gem.license = "MIT"
     gem.summary = %Q{Glimmer DSL for Opal}

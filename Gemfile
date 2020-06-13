@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'glimmer', '~> 0.9.0'
 # gem 'opal-rails', '~> 1.1.2', require: false
-gem 'opal-browser', '~> 0.2.0', require: false
+# gem 'opal-browser', '~> 0.2.0', require: false
 
 group :development do
   gem "rspec-mocks", "~> 3.5.0"

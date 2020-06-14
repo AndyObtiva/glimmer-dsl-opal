@@ -1,12 +1,11 @@
 # Glimmer DSL for Opal 0.0.1 Beta (Web GUI for Desktop Apps)
-[![Gem Version](https://badge.fury.io/rb/glimmer.svg)](http://badge.fury.io/rb/glimmer)
-[![Travis CI](https://travis-ci.com/AndyObtiva/glimmer.svg?branch=master)](https://travis-ci.com/github/AndyObtiva/glimmer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/38fbc278022862794414/maintainability)](https://codeclimate.com/github/AndyObtiva/glimmer/maintainability)
+[![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 
-[Glimmer](https://github.com/AndyObtiva/glimmer) is a native-GUI cross-platform desktop development library written in Ruby. Glimmer's main innovation is a JRuby DSL that enables productive and efficient authoring of desktop application user-interfaces while relying on the robust Eclipse SWT library. Glimmer additionally innovates by having built-in data-binding support to greatly facilitate synchronizing the GUI with domain models. As a result, that achieves true decoupling of object oriented components, enabling developers to solve business problems without worrying about GUI concerns, or alternatively drive development GUI-first, and then write clean business models test-first afterwards.
+[Glimmer](https://github.com/AndyObtiva/glimmer) DSL for Opal is a web GUI adaptor for desktop apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt).
 
-[<img src="https://covers.oreillystatic.com/images/9780596519650/lrg.jpg" width=105 /><br /> 
-Featured in<br />JRuby Cookbook](http://shop.oreilly.com/product/9780596519650.do)
+It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
+
+NOTE: Version 0.0.1 only supports Hello, World! capabilities.
 
 ## Examples
 
@@ -14,12 +13,14 @@ Featured in<br />JRuby Cookbook](http://shop.oreilly.com/product/9780596519650.d
 
 Glimmer code (from `samples/hello/hello_world.rb`):
 ```ruby
+require 'glimmer-dsl-opal'
+
 include Glimmer
 
 shell {
-  text "Glimmer"
+  text 'Glimmer'
   label {
-    text "Hello, World!"
+    text 'Hello, World!'
   }
 }.open
 ```
@@ -31,9 +32,7 @@ glimmer samples/hello/hello_world.rb
 
 Glimmer app:
 
-![Hello World](https://raw.githubusercontent.com/AndyObtiva/glimmer-dsl-swt/master/images/glimmer-hello-world.png)
-
-NOTE: Version 0.0.1 only supports Hello, World! capability of turning a Glimmer SWT desktop app into a web app that runs on Rails 5.
+![Glimmer DSL for Opal Hello World](images/glimmer-dsl-opal-hello-world.png)
 
 ## Background
 
@@ -41,12 +40,18 @@ Ruby is a dynamically-typed object-oriented language, which provides great produ
 
 ## Pre-requisites
 
-- Opal 1
-- Rails 5
+- Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
+- Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
 
-## Rails 5 Setup
+## Setup
 
 Please follow these instructions to make Glimmer desktop apps work in Opal inside Rails 5
+
+Start a new Rails 5 app:
+
+```
+rails new hello_world
+```
 
 Follow instructions to setup opal with a rails application: config/initializers/assets.rb
 
@@ -65,12 +70,12 @@ Opal.use_gem 'glimmer-dsl-opal'
 Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
 
 ```ruby
-require 'opal'
-require 'glimmer-dsl-opal'
+require 'glimmer-dsl-opal' # brings opal and opal browser too
+
 include Glimmer
    
 shell {
-  text 'Hello, World!'
+  text 'Glimmer'
   label {
     text 'Hello, World!'
   }
@@ -85,6 +90,8 @@ rails s
 Visit `http://localhost:3000`
 
 You should see "Hello, World!"
+
+![Glimmer DSL for Opal Hello World](images/glimmer-dsl-opal-hello-world.png)
 
 ## Help
 
@@ -117,11 +124,10 @@ These features have been suggested. You might see them in a future version of Gl
 ## Contributors
 
 * [Andy Maleh](https://github.com/AndyObtiva) (Founder)
-* [Dennis Theisen](https://github.com/Soleone) (Contributor)
 
-[Click here to view contributor commits.](https://github.com/AndyObtiva/glimmer/graphs/contributors)
+[Click here to view contributor commits.](https://github.com/AndyObtiva/glimmer-dsl-opal/graphs/contributors)
 
 ## License
 
-Copyright (c) 2007-2020 Andy Maleh.
+Copyright (c) 2020 Andy Maleh.
 See LICENSE.txt for further details.

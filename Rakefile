@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'bundler'
-# require 'os'
-# require_relative 'lib/glimmer/launcher'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -32,22 +31,16 @@ unless jeweler_required.nil?
   Jeweler::RubygemsDotOrgTasks.new
 end
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
-  # spec.ruby_opts = ["-Xcli.debug=true --debug #{Glimmer::Launcher.jruby_swt_options}"]
-  # NOTE: Disabled debug flags because they were giving noisy output on raise of an error
 
-  # spec.ruby_opts = ["--profile.graph #{Glimmer::Launcher.jruby_swt_options}"]
-  # require 'jruby/profiler'
-  # profile_data = JRuby::Profiler.profile do
-  # end
-
-#   spec.ruby_opts = [Glimmer::Launcher.jruby_swt_options]
+require 'opal/rspec/rake_task'
+Opal::RSpec::RakeTask.new(:default) do |server, task|
+#   task.pattern = FileList['spec-opal/**/*_spec.rb']
+#   server.append_path File.dirname(__FILE__)
+#   $LOAD_PATH.each do |path|
+#     server.append_path path
+#   end
+#   server.append_path File.expand_path('../lib', __FILE__)
 end
-
-task :default => :spec
 
 task :no_puts_debuggerer do
   ENV['puts_debuggerer'] = 'false'

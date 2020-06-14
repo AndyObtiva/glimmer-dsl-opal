@@ -1,25 +1,5 @@
 require 'opal'
-# require 'opal-jquery'
 require 'browser'
-
-class String
-  def underscore
-    gsub(/[A-Z]/) {|m| "_#{m.downcase}"}.sub(/^_/, '')
-  end
-  
-  def camelcase(option=nil)
-    new_string = split("_").map {|word| word[0].upcase + word[1..-1]}.join
-    if option == :upper
-      new_string
-    else
-      new_string.sub(/^./) {|c| c.downcase}
-    end
-  end
-  
-#   def titlecase
-#     #TODO
-#   end
-end
 
 require 'glimmer/dsl/engine'
 # Dir[File.expand_path('../*_expression.rb', __FILE__)].each {|f| require f}

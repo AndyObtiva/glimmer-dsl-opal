@@ -31,7 +31,7 @@ glimmer samples/hello/hello_world.rb
 
 Glimmer app:
 
-![Hello World](https://github.com/AndyObtiva/glimmer-dsl-swt/images/glimmer-hello-world.png)
+![Hello World](https://raw.githubusercontent.com/AndyObtiva/glimmer-dsl-swt/master/images/glimmer-hello-world.png)
 
 NOTE: Version 0.0.1 only supports Hello, World! capability of turning a Glimmer SWT desktop app into a web app that runs on Rails 5.
 

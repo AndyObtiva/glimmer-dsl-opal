@@ -40,6 +40,7 @@ Opal::RSpec::RakeTask.new(:default) do |server, task|
 #     server.append_path path
 #   end
 #   server.append_path File.expand_path('../lib', __FILE__)
+  server.append_path File.expand_path('../lib', __FILE__)
 end
 
 task :no_puts_debuggerer do

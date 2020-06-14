@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-require_relative '../lib/glimmer-dsl-opal'
+require 'glimmer-dsl-opal'
+# require_relative '../lib/glimmer-dsl-opal'
 
 module GlimmerSpec
   describe 'Glimmer::DSL::Opal::ShellExpression' do

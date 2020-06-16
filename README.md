@@ -17,10 +17,8 @@ Other Glimmer DSL gems:
 
 ### Hello, World!
 
-Glimmer code (from `samples/hello/hello_world.rb`):
+Glimmer code (from SWT desktop app sample [`samples/hello/hello_world.rb`](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/samples/hello/hello_world.rb)):
 ```ruby
-require 'glimmer-dsl-opal'
-
 include Glimmer
 
 shell {
@@ -36,7 +34,11 @@ Run:
 glimmer samples/hello/hello_world.rb
 ```
 
-Glimmer app:
+Glimmer app on the desktop:
+
+![Glimmer DSL for Opal Hello World](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-world.png)
+
+Glimmer app on the web using `glimmer-dsl-opal` instead of `glimmer-dsl-swt`:
 
 ![Glimmer DSL for Opal Hello World](images/glimmer-dsl-opal-hello-world.png)
 

@@ -29,16 +29,11 @@ shell {
 }.open
 ```
 
-Run:
-```
-glimmer samples/hello/hello_world.rb
-```
-
-Glimmer app on the desktop:
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for Opal Hello World](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-world.png)
 
-Glimmer app on the web using `glimmer-dsl-opal` instead of `glimmer-dsl-swt`:
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
 ![Glimmer DSL for Opal Hello World](images/glimmer-dsl-opal-hello-world.png)
 

@@ -1,4 +1,4 @@
-# Glimmer DSL for Opal 0.0.1 (Web GUI Adapter for Desktop Apps)
+# Glimmer DSL for Opal 0.0.1 Alpha (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 
 [Glimmer](https://github.com/AndyObtiva/glimmer) DSL for Opal is a web GUI adaptor for desktop apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt).

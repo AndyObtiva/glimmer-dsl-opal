@@ -1,11 +1,16 @@
-# Glimmer DSL for Opal 0.0.1 Beta (Web GUI for Desktop Apps)
+# Glimmer DSL for Opal 0.0.1 Alpha (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 
 [Glimmer](https://github.com/AndyObtiva/glimmer) DSL for Opal is a web GUI adaptor for desktop apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt).
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Version 0.0.1 only supports Hello, World! capabilities.
+NOTE: Alpha Version 0.0.1 only supports Hello, World! capabilities.
+
+Other Glimmer DSL gems:
+- [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
+- [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
+- [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)
 
 ## Examples
 

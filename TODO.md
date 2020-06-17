@@ -2,9 +2,9 @@
 
 Here is a list of tasks to do (moved to CHANGELOG.md once done). 
 
-## Next (0.0.2)
+## Next (0.0.3)
 
-- Button widget
+- Hello, Computed
 
 ## Tasks
 
@@ -12,3 +12,10 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Basic data-binding
 - Radio button
 - Checkbox button
+
+## Samples
+
+- Twitter
+- Reddit
+- Facebook
+- StackOverflow

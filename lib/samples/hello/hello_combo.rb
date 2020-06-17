@@ -1,5 +1,3 @@
-require 'glimmer/data_binding/observable_model'
-
 class Person
   attr_accessor :country, :country_options
   

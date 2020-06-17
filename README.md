@@ -1,5 +1,5 @@
 
-# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.2 (Web GUI for Desktop Apps)
+# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.3 (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -7,14 +7,17 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.2 only supports Hello, World! and Hello, Combo! capabilities.
+NOTE: Alpha Version 0.0.3 only supports capabilities for:
+- Hello, World!
+- Hello, Combo!
+- Hello, Computed!
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
 - [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)
 
-## Supported Widgets
+## Supported Glimmer DSL Keywords
 
 The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) have partial support in Opal:
 
@@ -22,7 +25,10 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 - `label`
 - `combo`
 - `button`
-- `composite` (single-column `grid_layout` only)
+- `text`
+- `composite`
+- `grid_layout`
+- `layout_data`
 
 ## Pre-requisites
 
@@ -45,7 +51,7 @@ Add the following to `Gemfile` (NOTE: if you run into issues, they are probably 
 ```
 gem 'opal-rails'
 gem 'opal-browser'
-gem 'glimmer-dsl-opal', '~> 0.0.2', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.3', require: false
 ```
 
 Edit `config/initializers/assets.rb` and add:
@@ -147,6 +153,122 @@ Visit `http://localhost:3000`
 You should see "Hello, Combo!"
 
 ![Glimmer DSL for Opal Hello Combo](images/glimmer-dsl-opal-hello-combo.png)
+
+### Hello, Computed!
+
+Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+
+```ruby
+require 'glimmer-dsl-opal' # brings opal and opal browser too
+
+class HelloComputed
+  class Contact
+    attr_accessor :first_name, :last_name, :year_of_birth
+  
+    def initialize(attribute_map)
+      @first_name = attribute_map[:first_name]
+      @last_name = attribute_map[:last_name]
+      @year_of_birth = attribute_map[:year_of_birth]
+    end
+  
+    def name
+      "#{last_name}, #{first_name}"
+    end
+  
+    def age
+      Time.now.year - year_of_birth.to_i
+    rescue
+      0
+    end
+  end
+end
+
+require_relative "hello_computed/contact"
+
+class HelloComputed
+  include Glimmer
+
+  def initialize
+    @contact = Contact.new(
+      first_name: "Barry",
+      last_name: "McKibbin",
+      year_of_birth: 1985
+    )
+  end
+
+  def launch
+    shell {
+      text "Hello Computed"
+      composite {
+        grid_layout {
+          num_columns 2
+          make_columns_equal_width true
+          horizontal_spacing 20
+          vertical_spacing 10
+        }
+        label {text "First &Name: "}
+        text {
+          text bind(@contact, :first_name)
+          layout_data {
+            horizontalAlignment :fill
+            grabExcessHorizontalSpace true
+          }
+        }
+        label {text "&Last Name: "}
+        text {
+          text bind(@contact, :last_name)
+          layout_data {
+            horizontalAlignment :fill
+            grabExcessHorizontalSpace true
+          }
+        }
+        label {text "&Year of Birth: "}
+        text {
+          text bind(@contact, :year_of_birth)
+          layout_data {
+            horizontalAlignment :fill
+            grabExcessHorizontalSpace true
+          }
+        }
+        label {text "Name: "}
+        label {
+          text bind(@contact, :name, computed_by: [:first_name, :last_name])
+          layout_data {
+            horizontalAlignment :fill
+            grabExcessHorizontalSpace true
+          }
+        }
+        label {text "Age: "}
+        label {
+          text bind(@contact, :age, on_write: :to_i, computed_by: [:year_of_birth])
+          layout_data {
+            horizontalAlignment :fill
+            grabExcessHorizontalSpace true
+          }
+        }
+      }
+    }.open
+  end
+end
+
+HelloComputed.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for Opal Hello Computed](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-computed.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Computed!"
+
+![Glimmer DSL for Opal Hello Computed](images/glimmer-dsl-opal-hello-computed.png)
 
 ## Help
 

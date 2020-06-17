@@ -1,6 +1,10 @@
+require 'glimmer/opal/element_proxy'
+
 module Glimmer
   module Opal
-    class ShellProxy
+    class DocumentProxy < ElementProxy
+      # TODO consider renaming to ShellProxy to match SWT API
+    
       def initialize(args)
         @args = args
         @children = []
@@ -18,12 +22,6 @@ module Glimmer
         $document.title = value
       end
 
-      def add_child(child)
-        return if @children.include?(child)
-        @children << child
-        dom << child.dom
-      end
-      
       def head_dom
         @head_dom ||= DOM {
           head {

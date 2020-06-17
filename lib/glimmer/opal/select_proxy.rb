@@ -1,22 +1,15 @@
 require 'glimmer/data_binding/observable_element'
 require 'glimmer/opal/event_listener_proxy'
+require 'glimmer/opal/element_proxy'
 
 module Glimmer
   module Opal
-    class SelectProxy
+    class SelectProxy < ElementProxy
       include Glimmer::DataBinding::ObservableElement
       attr_reader :text, :items
       
-      OBSERVATION_REQUEST_MAPPING = {
-        SelectProxy => {
-          'on_widget_selected' => 'change'
-        }
-      }
-
       def initialize(parent, args)
-        @parent = parent
-        @args = args
-        @parent.add_child(self)
+        super(parent, args)
         @items = []
       end
       
@@ -30,29 +23,26 @@ module Glimmer
         redraw
       end
 
-      def handle_observation_request(keyword, &block)
-        event = OBSERVATION_REQUEST_MAPPING[self.class][keyword]
-        selector = 'select'        
-        delegate = $document.on(event, selector) do |event|
-          @text = event.target.value
-          block.call(event)
-        end
-        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
-      end
-      
-      def redraw
-        old_dom = @dom
-        @dom = nil
-        old_dom.replace dom
+      def observation_request_to_event_mapping
+        {
+          'on_widget_selected' => {
+            event: 'change',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                @text = event.target.value
+                event_listener.call(event)              
+              }
+            }
+          }
+        }
       end
       
       def dom
         select_text = @text        
         items = @items
-        on_widget_selected = @on_widget_selected
-                
+        select_id = id
         @dom ||= DOM {
-          select {
+          select(id: select_id) {
             items.to_a.each do |item|
               option_hash = {value: item}
               option_hash[:selected] = 'selected' if select_text == item

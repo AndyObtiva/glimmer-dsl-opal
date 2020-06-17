@@ -1,29 +1,22 @@
+require 'glimmer/opal/element_proxy'
+
 module Glimmer
   module Opal
-    class LabelProxy
+    class LabelProxy < ElementProxy
       attr_reader :text
-
-      def initialize(parent, args)
-        @parent = parent
-        @args = args
-        @parent.add_child(self)
-      end
 
       def text=(value)
         @text = value
         redraw
       end
 
-      def redraw
-        old_dom = @dom
-        @dom = nil
-        old_dom.replace dom
-      end
-
       def dom
         label_text = @text
+        label_id = id
         @dom ||= DOM {
-          label label_text
+          label(id: label_id) {
+            label_text
+          }
         }
       end
     end

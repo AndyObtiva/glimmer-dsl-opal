@@ -12,6 +12,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Basic data-binding
 - Radio button
 - Checkbox button
+- Support multiple windows as multiple tabs
 
 ## Samples
 

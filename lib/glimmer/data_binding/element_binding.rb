@@ -24,7 +24,7 @@ module Glimmer
       
       def call(value)
         converted_value = translated_value = @translator.call(value)
-        @element.send(@property + '=', converted_value) unless evaluate_property == converted_value
+        @element.set_attribute(@property, converted_value) unless evaluate_property == converted_value
       end
       
       def evaluate_property

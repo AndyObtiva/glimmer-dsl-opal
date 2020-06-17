@@ -41,8 +41,9 @@ module Glimmer
         select_text = @text        
         items = @items
         select_id = id
+        select_style = style
         @dom ||= DOM {
-          select(id: select_id) {
+          select(id: select_id, style: select_style) {
             items.to_a.each do |item|
               option_hash = {value: item}
               option_hash[:selected] = 'selected' if select_text == item

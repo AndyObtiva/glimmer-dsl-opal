@@ -14,6 +14,15 @@ module Glimmer
         {
           'on_widget_selected' => {
             event: 'click'
+          }, 
+          'on_modify_text' => {
+            event: 'keyup',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                @text = event.target.value
+                event_listener.call(event)              
+              }
+            }
           }
         }
       end
@@ -21,8 +30,10 @@ module Glimmer
       def dom
         input_text = @text
         input_id = id
+        input_style = style
+        input_args = @args.last
         @dom ||= DOM {
-          input id: input_id, type: 'button', value: input_text
+          input input_args.merge(id: input_id, style: input_style, value: input_text)
         }
       end
     end

@@ -19,20 +19,25 @@ module Glimmer
       end
 
       def text=(value)
-        $document.title = value
+        $document.ready do
+          $document.title = value
+        end
       end
 
       def head_dom
+        # TODO make grid-layout support grab excess space false
         @head_dom ||= DOM {
           head {
-            <<~CSS
-            <style>
-              div.grid_layout > * {
-                display: block;
-                margin-bottom: 10px;
-              }
-            </style>
-            CSS
+#             <<~CSS
+#             <style>
+#               div.grid-layout {
+#                 display: grid;
+#                 grid-template-columns: auto;
+#                 grid-row-gap: 10px;
+#                 justify-content: start;
+#               }
+#             </style>
+#             CSS
           }
         }
       end

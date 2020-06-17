@@ -12,6 +12,7 @@ module Glimmer
 
         def interpret(parent, keyword, *args, &block)
           parent.send(keyword + '=', args.first.to_s)
+          args.first.to_s
         end
       end
     end

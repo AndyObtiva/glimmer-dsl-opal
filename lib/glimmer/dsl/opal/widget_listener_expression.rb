@@ -6,11 +6,11 @@ module Glimmer
       class WidgetListenerExpression < Expression
 
         def can_interpret?(parent, keyword, *args, &block)          
-          keyword.start_with?('on_') and block_given?
+          keyword.start_with?('on_') and args.empty? and block_given?
         end
 
         def interpret(parent, keyword, *args, &block)
-          parent.send(keyword, &block)
+          parent.handle_observation_request(keyword, &block)
         end
       end
     end

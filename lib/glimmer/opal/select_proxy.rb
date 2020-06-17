@@ -1,7 +1,17 @@
+require 'glimmer/data_binding/observable_element'
+require 'glimmer/opal/event_listener_proxy'
+
 module Glimmer
   module Opal
     class SelectProxy
+      include Glimmer::DataBinding::ObservableElement
       attr_reader :text, :items
+      
+      OBSERVATION_REQUEST_MAPPING = {
+        SelectProxy => {
+          'on_widget_selected' => 'change'
+        }
+      }
 
       def initialize(parent, args)
         @parent = parent
@@ -20,13 +30,14 @@ module Glimmer
         redraw
       end
 
-      def on_widget_selected(&block)
-        @on_widget_selected = block
-        $document.on('change', 'select') do |event|
+      def handle_observation_request(keyword, &block)
+        event = OBSERVATION_REQUEST_MAPPING[SelectProxy][keyword]
+        selector = 'select'        
+        delegate = $document.on(event, selector) do |event|
           @text = event.target.value
-          @on_widget_selected.call
+          block.call
         end
-        @on_widget_selected # TODO return an ElementListener proxy
+        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
       
       def redraw

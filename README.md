@@ -41,7 +41,7 @@ rails new hello_world
 
 Follow instructions to setup opal with a rails application: config/initializers/assets.rb
 
-Add the following to `Gemfile`:
+Add the following to `Gemfile` (NOTE: if you run into issues, they are probably fixed in master or development/wip branch, you may check out instead):
 ```
 gem 'opal-rails'
 gem 'opal-browser'

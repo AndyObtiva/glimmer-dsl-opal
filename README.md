@@ -14,28 +14,6 @@ Other Glimmer DSL gems:
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
 - [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)
 
-## Hello, World!
-
-Glimmer code (from SWT desktop app sample [`samples/hello/hello_world.rb`](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/samples/hello/hello_world.rb)):
-```ruby
-include Glimmer
-
-shell {
-  text 'Glimmer'
-  label {
-    text 'Hello, World!'
-  }
-}.open
-```
-
-Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
-
-![Glimmer DSL for Opal Hello World](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-world.png)
-
-Glimmer app on the web (using `glimmer-dsl-opal` gem):
-
-![Glimmer DSL for Opal Hello World](images/glimmer-dsl-opal-hello-world.png)
-
 ## Supported Widgets
 
 The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) have partial support in Opal:

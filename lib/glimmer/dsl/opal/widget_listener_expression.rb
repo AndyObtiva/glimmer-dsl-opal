@@ -3,15 +3,14 @@ require 'glimmer/dsl/expression'
 module Glimmer
   module DSL
     module Opal
-      class PropertyExpression < StaticExpression
-        include TopLevelExpression
+      class WidgetListenerExpression < Expression
 
         def can_interpret?(parent, keyword, *args, &block)          
-          parent and keyword and block.nil?
+          keyword.start_with?('on_') and block_given?
         end
 
         def interpret(parent, keyword, *args, &block)
-          parent.text = args.first.to_s
+          parent.send(keyword, &block)
         end
       end
     end

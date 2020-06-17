@@ -1,5 +1,11 @@
 class Person
   attr_accessor :country, :country_options
+  
+  def country=(value)
+    puts 'country'
+    puts value
+    @country = value
+  end
 
   def initialize
     self.country_options=["", "Canada", "US", "Mexico"]
@@ -22,9 +28,9 @@ class HelloCombo
         }
         button {
           text "Reset"
-          on_widget_selected do
-            person.reset_country
-          end
+#           on_widget_selected do
+#             person.reset_country
+#           end
         }
       }
     }.open

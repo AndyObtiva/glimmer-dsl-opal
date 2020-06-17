@@ -2,6 +2,7 @@
   $LOAD_PATH.unshift(File.expand_path('..', __FILE__))
   
   require 'opal'
+  require 'opal-parser'
   require 'glimmer'
   
   require 'glimmer/dsl/opal/dsl' 

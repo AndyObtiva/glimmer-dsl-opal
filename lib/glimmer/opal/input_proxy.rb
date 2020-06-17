@@ -4,6 +4,12 @@ module Glimmer
     class InputProxy
       attr_reader :text
       
+      OBSERVATION_REQUEST_MAPPING = {
+        InputProxy => {
+          'on_widget_selected' => 'click'
+        }
+      }
+      
       def initialize(parent, args)
         @parent = parent
         @args = args
@@ -21,15 +27,19 @@ module Glimmer
         old_dom.replace dom
       end
 
-      def on_widget_selected(&block)
-        @on_widget_selected = block
-        redraw
+      def handle_observation_request(keyword, &block)
+        event = OBSERVATION_REQUEST_MAPPING[self.class][keyword]
+        selector = 'input'        
+        delegate = $document.on(event, selector) do |event|
+          block.call(event)
+        end
+        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
 
       def dom
-        label_text = @text
+        input_text = @text
         @dom ||= DOM {
-          input# type: 'button', value: @text, onchange: @on_widget_selected
+          input type: 'button', value: input_text
         }
       end
     end

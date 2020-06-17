@@ -197,6 +197,8 @@ module Glimmer
       end
 
       def call(value)
+        puts 'calling model binding value'
+        puts value
         return if model.nil?
         converted_value = value
         invoke_property_writer(model, "#{property_name}=", converted_value) unless evaluate_property == converted_value

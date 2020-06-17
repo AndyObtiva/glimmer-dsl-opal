@@ -21,21 +21,25 @@ module Glimmer
       end
       
       def text=(value)
+        puts 'text value'
+        puts value
         @text = value
         redraw
       end
       
       def items=(the_items)
+        puts 'the items'
+        puts the_items
         @items = the_items
         redraw
       end
 
       def handle_observation_request(keyword, &block)
-        event = OBSERVATION_REQUEST_MAPPING[SelectProxy][keyword]
+        event = OBSERVATION_REQUEST_MAPPING[self.class][keyword]
         selector = 'select'        
         delegate = $document.on(event, selector) do |event|
           @text = event.target.value
-          block.call
+          block.call(event)
         end
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
@@ -47,6 +51,8 @@ module Glimmer
       end
       
       def dom
+        puts 'dom'
+        puts @text
         select_text = @text        
         items = @items
         on_widget_selected = @on_widget_selected

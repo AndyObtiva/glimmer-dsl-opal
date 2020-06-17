@@ -1,9 +1,9 @@
+require 'glimmer/data_binding/observable_model'
+
 class Person
   attr_accessor :country, :country_options
   
   def country=(value)
-    puts 'country'
-    puts value
     @country = value
   end
 
@@ -28,9 +28,9 @@ class HelloCombo
         }
         button {
           text "Reset"
-#           on_widget_selected do
-#             person.reset_country
-#           end
+          on_widget_selected do
+            person.reset_country
+          end
         }
       }
     }.open

@@ -1,4 +1,5 @@
-# Glimmer DSL for Opal 0.0.1 Alpha (Web GUI for Desktop Apps)
+
+# Glimmer DSL for Opal 0.0.2 Alpha (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -6,7 +7,7 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.1 only supports Hello, World! capabilities.
+NOTE: Alpha Version 0.0.2 only supports Hello, World! capabilities.
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
@@ -62,7 +63,7 @@ Add the following to `Gemfile`:
 ```
 gem 'opal-rails'
 gem 'opal-browser'
-gem 'glimmer-dsl-opal', '~> 0.0.1', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.2', require: false
 ```
 
 Edit `config/initializers/assets.rb` and add:

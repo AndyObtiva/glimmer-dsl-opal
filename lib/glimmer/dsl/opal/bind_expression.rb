@@ -27,11 +27,8 @@ module Glimmer
         end
   
         def interpret(parent, keyword, *args, &block)
-          n = 100
           binding_options = args[2] || {}
-          puts n+= 1
           binding_options[:on_read] = binding_options.delete(:on_read) || binding_options.delete('on_read') || block
-          puts n+= 1
           DataBinding::ModelBinding.new(args[0], args[1].to_s, binding_options)
         end
       end

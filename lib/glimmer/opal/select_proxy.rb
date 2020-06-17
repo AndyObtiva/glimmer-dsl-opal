@@ -21,15 +21,11 @@ module Glimmer
       end
       
       def text=(value)
-        puts 'text value'
-        puts value
         @text = value
         redraw
       end
       
       def items=(the_items)
-        puts 'the items'
-        puts the_items
         @items = the_items
         redraw
       end
@@ -51,8 +47,6 @@ module Glimmer
       end
       
       def dom
-        puts 'dom'
-        puts @text
         select_text = @text        
         items = @items
         on_widget_selected = @on_widget_selected

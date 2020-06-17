@@ -3,10 +3,6 @@ require 'glimmer/data_binding/observable_model'
 class Person
   attr_accessor :country, :country_options
   
-  def country=(value)
-    @country = value
-  end
-
   def initialize
     self.country_options=["", "Canada", "US", "Mexico"]
     self.country = "Canada"

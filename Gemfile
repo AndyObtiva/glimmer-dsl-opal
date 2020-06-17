@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 0.9.1'
+gem 'glimmer', '~> 0.9.2'
 
 group :development do
   gem "rspec-mocks", "~> 3.5.0"

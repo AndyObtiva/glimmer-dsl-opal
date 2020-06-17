@@ -31,8 +31,6 @@ module Glimmer
           element_binding.observe(model, model_binding.property_name_expression)
   
           parent.on_widget_selected do
-            puts 'doit'
-            puts element_binding.evaluate_property
             model_binding.call(element_binding.evaluate_property)
           end
         end

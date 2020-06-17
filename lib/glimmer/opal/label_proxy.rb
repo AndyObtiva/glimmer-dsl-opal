@@ -1,6 +1,6 @@
 module Glimmer
   module Opal
-    class Label
+    class LabelProxy
       attr_reader :text
 
       def initialize(parent, args)

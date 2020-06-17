@@ -23,7 +23,7 @@ module Glimmer
       def dom
         label_text = @text
         @dom ||= DOM {
-          div
+          div(class: 'grid_layout')
         }
       end
     end

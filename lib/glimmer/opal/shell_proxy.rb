@@ -1,10 +1,11 @@
 module Glimmer
   module Opal
-    class Shell
+    class ShellProxy
       def initialize(args)
         @args = args
         @children = []
         $document.ready do
+          $document.head.replace(head_dom)
           $document.body.replace(dom)
         end
       end      
@@ -21,6 +22,21 @@ module Glimmer
         return if @children.include?(child)
         @children << child
         dom << child.dom
+      end
+      
+      def head_dom
+        @head_dom ||= DOM {
+          head {
+            <<~CSS
+            <style>
+              div.grid_layout > * {
+                display: block;
+                margin-bottom: 10px;
+              }
+            </style>
+            CSS
+          }
+        }
       end
 
       def dom

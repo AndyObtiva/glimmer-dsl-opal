@@ -31,6 +31,7 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 - `text`
 - `composite`
 - `list` & `list(:multi)`
+- `browser`
 - `grid_layout`
 - `layout_data`
 

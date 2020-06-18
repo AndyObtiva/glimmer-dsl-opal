@@ -83,11 +83,15 @@ module Glimmer
       
       def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
-        event = observation_request_to_event_mapping[keyword][:event]
-        event_handler = observation_request_to_event_mapping[keyword][:event_handler]
-        potential_event_listener = event_handler&.call(event_listener)
-        event_listener = event_handler&.call(event_listener) || event_listener
-        delegate = $document.on(event, selector, &event_listener)
+        event = nil
+        delegate = nil
+        [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+          event = mapping[:event]
+          event_handler = mapping[:event_handler]
+          potential_event_listener = event_handler&.call(event_listener)
+          event_listener = event_handler&.call(event_listener) || event_listener
+          delegate = $document.on(event, selector, &event_listener)
+        end
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
       

@@ -1,5 +1,5 @@
 
-# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.3 (Web GUI for Desktop Apps)
+# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.4 (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -7,10 +7,12 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.3 only supports capabilities for:
+NOTE: Alpha Version 0.0.4 only supports capabilities below (details under [Examples](#examples)):
 - Hello, World!
 - Hello, Combo!
 - Hello, Computed!
+- Hello, List Single Selection!
+- Hello, List Multi Selection!
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
@@ -51,7 +53,7 @@ Add the following to `Gemfile` (NOTE: if you run into issues, they are probably 
 ```
 gem 'opal-rails'
 gem 'opal-browser'
-gem 'glimmer-dsl-opal', '~> 0.0.3', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.4', require: false
 ```
 
 Edit `config/initializers/assets.rb` and add:
@@ -267,6 +269,130 @@ Visit `http://localhost:3000`
 You should see "Hello, Computed!"
 
 ![Glimmer DSL for Opal Hello Computed](images/glimmer-dsl-opal-hello-computed.png)
+
+### Hello, List Single Selection!
+
+Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+
+```ruby
+class Person 
+  attr_accessor :country, :country_options
+
+  def initialize
+    self.country_options=["", "Canada", "US", "Mexico"]
+    self.country = "Canada"
+  end
+
+  def reset_country
+    self.country = "Canada"
+  end
+end
+
+class HelloListSingleSelection
+  include Glimmer
+  def launch
+    person = Person.new
+    shell {
+      composite {
+        list {
+          selection bind(person, :country)
+        }
+        button {
+          text "Reset"
+          on_widget_selected do
+            person.reset_country
+          end
+        }
+      }
+    }.open
+  end
+end
+
+HelloListSingleSelection.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-list-single-selection.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, List Single Selection!"
+
+![Glimmer DSL for Opal Hello List Single Selection](images/glimmer-dsl-opal-hello-list-single-selection.png)
+
+### Hello, List Multi Selection!
+
+Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+
+```ruby
+class Person
+  attr_accessor :provinces, :provinces_options
+
+  def initialize
+    self.provinces_options=[
+      "",
+      "Quebec",
+      "Ontario",
+      "Manitoba",
+      "Saskatchewan",
+      "Alberta",
+      "British Columbia",
+      "Nova Skotia",
+      "Newfoundland"
+    ]
+    self.provinces = ["Quebec", "Manitoba", "Alberta"]
+  end
+
+  def reset_provinces
+    self.provinces = ["Quebec", "Manitoba", "Alberta"]
+  end
+end
+
+class HelloListMultiSelection
+  include Glimmer
+  def launch
+    person = Person.new
+    shell {
+      composite {
+        list(:multi) {
+          selection bind(person, :provinces)
+        }
+        button {
+          text "Reset"
+          on_widget_selected do
+            person.reset_provinces
+          end
+        }
+      }
+    }.open
+  end
+end
+
+HelloListMultiSelection.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-list-multi-selection.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, List Multi Selection!"
+
+![Glimmer DSL for Opal Hello List Multi Selection](images/glimmer-dsl-opal-hello-list-multi-selection.png)
 
 ## Help
 

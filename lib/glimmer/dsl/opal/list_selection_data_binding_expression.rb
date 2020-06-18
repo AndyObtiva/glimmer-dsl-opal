@@ -18,7 +18,6 @@ module Glimmer
         end
   
         def interpret(parent, keyword, *args, &block)
-          i = 0
           model_binding = args[0]
           element_binding = DataBinding::ElementBinding.new(parent, 'items')
           element_binding.call(model_binding.evaluate_options_property)

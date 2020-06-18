@@ -183,8 +183,6 @@ class HelloComputed
   end
 end
 
-require_relative "hello_computed/contact"
-
 class HelloComputed
   include Glimmer
 

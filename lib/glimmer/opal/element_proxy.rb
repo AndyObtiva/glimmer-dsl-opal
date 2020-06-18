@@ -22,9 +22,13 @@ module Glimmer
       end
 
       def redraw
-        old_dom = @dom
-        @dom = nil
-        old_dom.replace dom
+        if @dom
+          old_dom = @dom
+          @dom = nil
+          old_dom.replace dom
+        else
+          dom
+        end
       end
       
       # Subclasses must override with their own mappings

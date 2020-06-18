@@ -1,5 +1,5 @@
 
-# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.4 (Web GUI for Desktop Apps)
+# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.5 (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -7,12 +7,13 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.4 only supports capabilities below (detailed under [Examples](#examples)):
+NOTE: Alpha Version 0.0.5 only supports capabilities below (detailed under [Examples](#examples)):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
 - [Hello, List Single Selection!](#hello-list-single-selection)
 - [Hello, List Multi Selection!](#hello-list-multi-selection)
+- [Hello, Browser!](#hello-browser)
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
@@ -54,7 +55,7 @@ Add the following to `Gemfile` (NOTE: if you run into issues, they are probably 
 ```
 gem 'opal-rails'
 gem 'opal-browser'
-gem 'glimmer-dsl-opal', '~> 0.0.4', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.5', require: false
 ```
 
 Edit `config/initializers/assets.rb` and add:
@@ -394,6 +395,37 @@ Visit `http://localhost:3000`
 You should see "Hello, List Multi Selection!"
 
 ![Glimmer DSL for Opal Hello List Multi Selection](images/glimmer-dsl-opal-hello-list-multi-selection.png)
+
+### Hello, Browser!
+
+Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+
+```ruby
+include Glimmer
+
+shell {
+  minimum_size 1024, 860
+  browser {
+    url 'http://brightonresort.com/about'
+  }
+}.open
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for Opal Hello Browser](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-browser.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Browser!"
+
+![Glimmer DSL for Opal Hello Browser](images/glimmer-dsl-opal-hello-browser.png)
 
 ## Help
 

@@ -1,9 +1,11 @@
 require 'glimmer/opal/element_proxy'
+require 'glimmer/opal/point'
 
 module Glimmer
   module Opal
     class DocumentProxy < ElementProxy
       # TODO consider renaming to ShellProxy to match SWT API
+      attr_reader :minimum_size
     
       def initialize(args)
         @args = args
@@ -23,6 +25,11 @@ module Glimmer
           $document.title = value
         end
       end
+      
+      def minimum_size=(width_or_minimum_size, height = nil)
+        @minimum_size = height.nil? ? width_or_minimum_size : Point.new(width_or_minimum_size, height)
+        redraw
+      end
 
       def head_dom
         # TODO make grid-layout support grab excess space false
@@ -30,6 +37,19 @@ module Glimmer
           head {
             <<~CSS
             <style>
+              html {
+                width: 100%;
+                height: 100%;
+              }
+              body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+              }
+              body > iframe {
+                width: 100%;
+                height: 100%;
+              }
               ul {
                 list-style: none;
                 padding: 0;
@@ -53,8 +73,11 @@ module Glimmer
       end
 
       def dom
+        i = 0
+        body_style = ''
+        body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
         @dom ||= DOM {
-          body {
+          body(style: body_style) {
           }
         }
       end

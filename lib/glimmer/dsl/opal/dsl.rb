@@ -15,7 +15,9 @@ require 'glimmer/dsl/opal/combo_selection_data_binding_expression'
 require 'glimmer/dsl/opal/widget_listener_expression'
 require 'glimmer/dsl/opal/grid_layout_expression'
 require 'glimmer/dsl/opal/text_expression'
+require 'glimmer/dsl/opal/list_expression'
 require 'glimmer/dsl/opal/layout_data_expression'
+require 'glimmer/dsl/opal/list_selection_data_binding_expression'
 
 module Glimmer
   module DSL
@@ -25,6 +27,7 @@ module Glimmer
        %w[
          widget_listener
          combo_selection_data_binding
+         list_selection_data_binding
          data_binding
          text
          property

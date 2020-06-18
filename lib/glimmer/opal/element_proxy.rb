@@ -70,9 +70,15 @@ module Glimmer
         redraw
       end
       
+      # TODO rename to avoid conflict with SWT Style verbiage
+      
       def style=(css)
         @style = css
         redraw
+      end
+      
+      def has_style?(symbol)
+        @args.include?(symbol) # not a very solid implementation. Bring SWT constants eventually
       end
       
       def handle_observation_request(keyword, &event_listener)

@@ -28,16 +28,26 @@ module Glimmer
         # TODO make grid-layout support grab excess space false
         @head_dom ||= DOM {
           head {
-#             <<~CSS
-#             <style>
-#               div.grid-layout {
-#                 display: grid;
-#                 grid-template-columns: auto;
-#                 grid-row-gap: 10px;
-#                 justify-content: start;
-#               }
-#             </style>
-#             CSS
+            <<~CSS
+            <style>
+              ul {
+                list-style: none;
+                padding: 0;
+              }
+              li {
+                cursor: default;
+                padding-left: 10px;
+                padding-right: 10px;
+              }
+              li.selected-list-item {
+                background: rgb(80, 116, 211);
+                color: white;
+              }
+              li.empty-list-item {
+                color: transparent;
+              }
+            </style>
+            CSS
           }
         }
       end

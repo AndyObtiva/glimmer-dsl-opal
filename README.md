@@ -7,12 +7,12 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.4 only supports capabilities below (details under [Examples](#examples)):
-- Hello, World!
-- Hello, Combo!
-- Hello, Computed!
-- Hello, List Single Selection!
-- Hello, List Multi Selection!
+NOTE: Alpha Version 0.0.4 only supports capabilities below (detailed under [Examples](#examples)):
+- [Hello, World!](#hello-world)
+- [Hello, Combo!](#hello-combo)
+- [Hello, Computed!](#hello-computed)
+- [Hello, List Single Selection!](#hello-list-single-selection)
+- [Hello, List Multi Selection!](#hello-list-multi-selection)
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)

@@ -312,7 +312,7 @@ HelloListSingleSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-list-single-selection.png)
+![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-single-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -379,7 +379,7 @@ HelloListMultiSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-list-multi-selection.png)
+![Glimmer DSL for Opal Hello List Multi Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-multi-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 

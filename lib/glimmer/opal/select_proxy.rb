@@ -41,7 +41,7 @@ module Glimmer
         select_text = @text        
         items = @items
         select_id = id
-        select_style = style
+        select_style = css
         @dom ||= DOM {
           select(id: select_id, style: select_style) {
             items.to_a.each do |item|

@@ -5,7 +5,7 @@ module Glimmer
     class ElementProxy
       include Glimmer
       include PropertyOwner
-      attr_reader :parent, :args, :css_classes, :style
+      attr_reader :parent, :args, :css_classes, :css, :children
       
       def initialize(parent, args)
         @parent = parent
@@ -13,6 +13,7 @@ module Glimmer
         @children = []
         @parent.add_child(self)
         @css_classes = Set.new
+        @css = ''
       end
 
       def add_child(child)
@@ -41,6 +42,7 @@ module Glimmer
       end
       
       def id
+        # TODO replace hash with autoincrement per name
         "#{name}-#{hash}"
       end
       
@@ -74,10 +76,8 @@ module Glimmer
         redraw
       end
       
-      # TODO rename to avoid conflict with SWT Style verbiage
-      
-      def style=(css)
-        @style = css
+      def css=(css)
+        @css = css
         redraw
       end
       

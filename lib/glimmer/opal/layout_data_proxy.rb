@@ -23,7 +23,7 @@ module Glimmer
       end
 
       def reapply
-#         @parent.style = <<~CSS
+#         @parent.css = <<~CSS
 #         CSS
       end
     end

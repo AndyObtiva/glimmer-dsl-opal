@@ -60,7 +60,7 @@ module Glimmer
       def dom
         list_items = @items
         list_id = id
-        list_style = style
+        list_style = css
         list_selection = selection
         @dom ||= DOM {
           ul(id: list_id, style: list_style) {

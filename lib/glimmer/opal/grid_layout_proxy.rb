@@ -39,7 +39,7 @@ module Glimmer
       end
       
       def reapply
-        @parent.style = <<~CSS
+        @parent.css = <<~CSS
           display: grid;
           grid-template-columns: #{'auto ' * @num_columns.to_i};
           grid-row-gap: #{@vertical_spacing}px;

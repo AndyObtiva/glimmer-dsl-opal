@@ -13,6 +13,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Radio button
 - Checkbox button
 - Support multiple windows as multiple tabs
+- Support different themes by detecting browser OS (Mac, Windows, Linux)
 
 ## Samples
 

@@ -30,7 +30,7 @@ module Glimmer
       def dom
         input_text = @text
         input_id = id
-        input_style = style
+        input_style = css
         input_args = @args.last
         @dom ||= DOM {
           input input_args.merge(id: input_id, style: input_style, value: input_text)

@@ -10,7 +10,7 @@ module Glimmer
       
       def dom
         div_id = id
-        div_style = style
+        div_style = css
         @dom ||= DOM {
           div(id: div_id, class: 'grid-layout', style: div_style)
         }

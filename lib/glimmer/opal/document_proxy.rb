@@ -66,6 +66,41 @@ module Glimmer
               li.empty-list-item {
                 color: transparent;
               }
+              .tabs {
+                overflow: hidden;
+                border: 1px solid #ccc;
+                background-color: #f1f1f1;
+              }
+              
+              /* Style the buttons inside the tab */
+              .tabs .tab {
+                background-color: inherit;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+              }
+              
+              /* Change background color of buttons on hover */
+              .tabs .tab:hover {
+                background-color: #ddd;
+              }
+              
+              /* Create an active/current tablink class */
+              .tabs .tab.active {
+                background-color: #ccc;
+              }
+              
+              /* Style the tab content */
+              .tab-item {
+                display: none;
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                border-top: none;
+              }              
             </style>
             CSS
           }

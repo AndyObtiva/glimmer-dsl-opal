@@ -5,7 +5,7 @@ module Glimmer
     class ElementProxy
       include Glimmer
       include PropertyOwner
-      attr_reader :parent, :args, :css_classes, :css, :children
+      attr_reader :parent, :args, :css_classes, :css, :children, :enabled
       
       def initialize(parent, args)
         @parent = parent
@@ -13,6 +13,7 @@ module Glimmer
         @children = Set.new
         @css_classes = Set.new
         @css = ''
+        @enabled = true
         @parent.add_child(self)
       end
 
@@ -20,6 +21,11 @@ module Glimmer
 #         return if @children.include?(child)
         @children << child
         dom << child.dom
+      end
+      
+      def enabled=(value)
+        @enabled = value
+        redraw
       end
 
       def redraw

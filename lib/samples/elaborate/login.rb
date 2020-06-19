@@ -1,4 +1,3 @@
-require "java"
 require "observer"
 
 #Presents login screen data

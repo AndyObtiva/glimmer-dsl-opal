@@ -32,8 +32,10 @@ module Glimmer
         input_id = id
         input_style = css
         input_args = @args.last
+        input_disabled = @enabled ? {} : {'disabled': 'disabled'}
+        input_args = input_args.merge(type: 'password') if has_style?(:password)        
         @dom ||= DOM {
-          input input_args.merge(id: input_id, style: input_style, value: input_text)
+          input input_args.merge(id: input_id, style: input_style, value: input_text).merge(input_disabled)
         }
       end
     end

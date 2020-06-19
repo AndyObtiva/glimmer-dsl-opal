@@ -7,13 +7,14 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.5 only supports capabilities below (detailed under [Examples](#examples)):
+NOTE: Alpha Version 0.0.5 only supports capabilities for Hello samples below (detailed under [Examples](#examples)):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
 - [Hello, List Single Selection!](#hello-list-single-selection)
 - [Hello, List Multi Selection!](#hello-list-multi-selection)
 - [Hello, Browser!](#hello-browser)
+- [Hello, Tab!](#hello-tab)
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
@@ -63,6 +64,12 @@ Edit `config/initializers/assets.rb` and add:
 Opal.use_gem 'glimmer-dsl-opal'
 ```
 
+Add the following line to the top of an empty `app/assets/javascripts/application.js.rb`
+
+```ruby
+require 'glimmer-dsl-opal' # brings opal and opal browser too
+```
+
 ## Examples
 
 ### Hello, World!
@@ -70,8 +77,6 @@ Opal.use_gem 'glimmer-dsl-opal'
 Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
 
 ```ruby
-require 'glimmer-dsl-opal' # brings opal and opal browser too
-
 include Glimmer
    
 shell {
@@ -84,7 +89,7 @@ shell {
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello World](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-world.png)
+![Glimmer DSL for SWT Hello World](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-world.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -104,8 +109,6 @@ You should see "Hello, World!"
 Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
 
 ```ruby
-require 'glimmer-dsl-opal' # brings opal and opal browser too
-
 class Person
   attr_accessor :country, :country_options
   
@@ -143,7 +146,7 @@ HelloCombo.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello Combo](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-combo.png)
+![Glimmer DSL for SWT Hello Combo](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-combo.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -163,8 +166,6 @@ You should see "Hello, Combo!"
 Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
 
 ```ruby
-require 'glimmer-dsl-opal' # brings opal and opal browser too
-
 class HelloComputed
   class Contact
     attr_accessor :first_name, :last_name, :year_of_birth
@@ -257,7 +258,7 @@ HelloComputed.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello Computed](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-computed.png)
+![Glimmer DSL for SWT Hello Computed](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-computed.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -314,7 +315,7 @@ HelloListSingleSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello List Single Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-single-selection.png)
+![Glimmer DSL for SWT Hello List Single Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-single-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -381,7 +382,7 @@ HelloListMultiSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello List Multi Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-multi-selection.png)
+![Glimmer DSL for SWT Hello List Multi Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-multi-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -412,7 +413,7 @@ shell {
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello Browser](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-browser.png)
+![Glimmer DSL for SWT Hello Browser](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-browser.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -426,6 +427,55 @@ Visit `http://localhost:3000`
 You should see "Hello, Browser!"
 
 ![Glimmer DSL for Opal Hello Browser](images/glimmer-dsl-opal-hello-browser.png)
+
+### Hello, Tab!
+
+Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+
+```ruby
+class HelloTab
+  include Glimmer
+  def launch
+    shell {
+      text "Hello, Tab!"
+      tab_folder {
+        tab_item {
+          text "English"
+          label {
+            text "Hello, World!"
+          }
+        }
+        tab_item {
+          text "French"
+          label {
+            text "Bonjour, Univers!"
+          }
+        }
+      }
+    }.open
+  end
+end
+
+HelloTab.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Tab English](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-tab-english.png)
+![Glimmer DSL for SWT Hello Tab French](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-tab-french.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Tab!"
+
+![Glimmer DSL for Opal Hello Tab English](images/glimmer-dsl-opal-hello-tab-english.png)
+![Glimmer DSL for Opal Hello Tab French](images/glimmer-dsl-opal-hello-tab-french.png)
 
 ## Help
 

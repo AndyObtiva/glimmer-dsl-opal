@@ -3,9 +3,11 @@ require 'glimmer/opal/element_proxy'
 module Glimmer
   module Opal
     class DivProxy < ElementProxy
+      attr_reader :layout
+      
       def initialize(parent, args)
         super(parent, args)
-        GridLayoutProxy.new(self, [])
+        @layout = GridLayoutProxy.new(self, [])
       end
       
       def dom

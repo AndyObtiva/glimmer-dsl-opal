@@ -11,6 +11,7 @@ module Glimmer
         @args = args
         @parent.add_css_class('grid-layout')
         @vertical_spacing = 10
+        @num_columns = 1
         reapply
       end
 

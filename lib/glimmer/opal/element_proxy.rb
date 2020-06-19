@@ -10,14 +10,14 @@ module Glimmer
       def initialize(parent, args)
         @parent = parent
         @args = args
-        @children = []
-        @parent.add_child(self)
+        @children = Set.new
         @css_classes = Set.new
         @css = ''
+        @parent.add_child(self)
       end
 
       def add_child(child)
-        return if @children.include?(child)
+#         return if @children.include?(child)
         @children << child
         dom << child.dom
       end
@@ -29,6 +29,10 @@ module Glimmer
           old_dom.replace dom
         else
           dom
+        end
+        @children.each do |child|
+          child.redraw
+          add_child(child)
         end
       end
       

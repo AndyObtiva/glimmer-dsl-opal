@@ -2,12 +2,23 @@ require 'glimmer/opal/div_proxy'
 
 module Glimmer
   module Opal
-    class TabFolder < DivProxy
+    class TabFolder < ElementProxy
       attr_reader :tabs
       
       def initialize(parent, args)
         super(parent, args)
         @tabs = []
+      end
+      
+      def add_child(child)
+        super(child)
+        if @children.size == 1
+          child.show
+        end
+      end      
+      
+      def hide_all_tab_content
+        @children.each(&:hide)
       end
     
       def name

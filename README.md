@@ -1,5 +1,4 @@
-
-# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.5 (Web GUI for Desktop Apps)
+# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.6 (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -7,7 +6,7 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.5 only supports capabilities for Hello samples below (detailed under [Examples](#examples)):
+NOTE: Alpha Version 0.0.6 only supports Hello sample capabilities (detailed under [Examples](#examples)):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -56,7 +55,7 @@ Add the following to `Gemfile` (NOTE: if you run into issues, they are probably 
 ```
 gem 'opal-rails'
 gem 'opal-browser'
-gem 'glimmer-dsl-opal', '~> 0.0.5', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.6', require: false
 ```
 
 Edit `config/initializers/assets.rb` and add:

@@ -6,7 +6,7 @@
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) 5 and [Opal](https://opalrb.com/) 1.
 
-NOTE: Alpha Version 0.0.7 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](#samples):
+NOTE: Alpha Version 0.0.7 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello Samples:
 - [Hello, World!](#hello-world)

@@ -54,17 +54,18 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 
 ## Setup
 
-Please follow these instructions to make Glimmer desktop apps work in Opal inside Rails 5
+(NOTE: if you run into issues, they are probably fixed in master or development/wip branch, you may check out instead)
+
+Please install a Rails 5 gem (e.g. `gem install rails -v5.2.4.3` )
 
 Start a new Rails 5 app:
 
 ```
-rails new hello_world
+rails new glimmer_app
 ```
 
-Follow instructions to setup opal with a rails application: config/initializers/assets.rb
+Add the following to `Gemfile`:
 
-Add the following to `Gemfile` (NOTE: if you run into issues, they are probably fixed in master or development/wip branch, you may check out instead):
 ```
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.1.0'
@@ -72,16 +73,20 @@ gem 'opal-browser', '~> 0.2.0'
 gem 'glimmer-dsl-opal', '~> 0.0.7', require: false
 ```
 
-Edit `config/initializers/assets.rb` and add:
+Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb
+
+Edit `config/initializers/assets.rb` and add the following at the bottom:
 ```
 Opal.use_gem 'glimmer-dsl-opal'
 ```
 
-Add the following line to the top of an empty `app/assets/javascripts/application.js.rb`
+Add the following line to the top of an empty `app/assets/javascripts/application.js.rb` (replacing `application.js`)
 
 ```ruby
 require 'glimmer-dsl-opal' # brings opal and opal browser too
 ```
+
+Add more code to `app/assets/javascripts/application.js.rb` from one of the samples below or require a Glimmer app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell) gem.
 
 ## Samples
 

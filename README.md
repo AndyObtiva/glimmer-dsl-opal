@@ -80,13 +80,13 @@ Edit `config/initializers/assets.rb` and add the following at the bottom:
 Opal.use_gem 'glimmer-dsl-opal'
 ```
 
-Add the following line to the top of an empty `app/assets/javascripts/application.js.rb` (replacing `application.js`)
+Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`)
 
 ```ruby
 require 'glimmer-dsl-opal' # brings opal and opal browser too
 ```
 
-Add more code to `app/assets/javascripts/application.js.rb` from one of the samples below or require a [Glimmer](https://github.com/AndyObtiva/glimmer) app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem) gem.
+Add more code to `app/assets/javascripts/application.rb` from one of the samples below or require a [Glimmer](https://github.com/AndyObtiva/glimmer) app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem) gem.
 
 ## Samples
 
@@ -94,7 +94,7 @@ Add more code to `app/assets/javascripts/application.js.rb` from one of the samp
 
 #### Hello, World!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 include Glimmer
@@ -126,7 +126,7 @@ You should see "Hello, World!"
 
 #### Hello, Combo!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class Person
@@ -183,7 +183,7 @@ You should see "Hello, Combo!"
 
 #### Hello, Computed!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class HelloComputed
@@ -295,7 +295,7 @@ You should see "Hello, Computed!"
 
 #### Hello, List Single Selection!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class Person 
@@ -352,7 +352,7 @@ You should see "Hello, List Single Selection!"
 
 #### Hello, List Multi Selection!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class Person
@@ -419,7 +419,7 @@ You should see "Hello, List Multi Selection!"
 
 #### Hello, Browser!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 include Glimmer
@@ -450,7 +450,7 @@ You should see "Hello, Browser!"
 
 #### Hello, Tab!
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class HelloTab
@@ -501,7 +501,7 @@ You should see "Hello, Tab!"
 
 #### Login
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 require "observer"
@@ -615,7 +615,7 @@ You should see "Login" dialog
 
 #### Tic Tac Toe
 
-Add the following Glimmer code to `app/assets/javascripts/application.js.rb`
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
 
 ```ruby
 class TicTacToe

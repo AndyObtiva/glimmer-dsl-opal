@@ -104,6 +104,56 @@ module Glimmer
               .hide {
                 display: none !important;
               }
+                            
+              /* The Modal (background) */
+              .modal {
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                text-align: center;
+              }
+              
+              /* Modal Content */
+              .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                border: 1px solid #888;
+                display: inline-block;
+                min-width: 200px;
+              }
+              
+              .modal-content .text {
+                background: rgb(80, 116, 211);
+                color: white;
+                padding: 5px;
+              }
+              
+              .modal-content .message {
+                padding: 20px;
+              }
+              
+              /* The Close Button */
+              .close {
+                color: #aaaaaa;
+                float: right;
+#                 font-size: 18px;
+                font-weight: bold;
+                margin: 5px;
+              }
+              
+              .close:hover,
+              .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+              }              
             </style>
             CSS
           }

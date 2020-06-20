@@ -14,16 +14,22 @@ module Glimmer
         @css_classes = Set.new
         @css = ''
         @enabled = true
+        puts 'amihere?'
         @parent.add_child(self)
       end
 
       def add_child(child)
-#         return if @children.include?(child)
+#         return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition
+        puts 'adding child...'
         @children << child
+        puts 'adding child dom'
         dom << child.dom
+        puts 'added'
       end
       
       def enabled=(value)
+        puts 'enabled'
+        puts value
         @enabled = value
         redraw
       end
@@ -195,7 +201,8 @@ module Glimmer
 #           },
           InputProxy => {
             :text => lambda do |observer|
-              on_modify_text { |modify_event|                
+              on_modify_text { |modify_event|
+                puts 'modifying text...'
                 observer.call(text)
               }
             end,

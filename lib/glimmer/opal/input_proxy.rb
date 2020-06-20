@@ -19,8 +19,10 @@ module Glimmer
             event: 'keyup',
             event_handler: -> (event_listener) {
               -> (event) {
-                @text = event.target.value
-                event_listener.call(event)              
+                if args.last[:type] == 'text'
+                  @text = event.target.value
+                  event_listener.call(event)              
+                end
               }
             }
           }
@@ -35,7 +37,7 @@ module Glimmer
         input_disabled = @enabled ? {} : {'disabled': 'disabled'}
         input_args = input_args.merge(type: 'password') if has_style?(:password)        
         @dom ||= DOM {
-          input input_args.merge(id: input_id, style: input_style, value: input_text).merge(input_disabled)
+          input input_args.merge(id: input_id, style: input_style, value: input_text, style: 'min-width: 27px;').merge(input_disabled)
         }
       end
     end

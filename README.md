@@ -86,7 +86,7 @@ Add the following line to the top of an empty `app/assets/javascripts/applicatio
 require 'glimmer-dsl-opal' # brings opal and opal browser too
 ```
 
-Add more code to `app/assets/javascripts/application.js.rb` from one of the samples below or require a [Glimmer](https://github.com/AndyObtiva/glimmer) app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell) gem.
+Add more code to `app/assets/javascripts/application.js.rb` from one of the samples below or require a [Glimmer](https://github.com/AndyObtiva/glimmer) app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem) gem.
 
 ## Samples
 

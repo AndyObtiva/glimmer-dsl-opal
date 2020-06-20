@@ -6,29 +6,18 @@ module Glimmer
       attr_reader :text, :message
       
       def initialize(parent, args)
-        puts 'modal'
         i = 0
         @parent = parent
-        puts i+= 1
         @args = args
-        puts i+= 1
         @children = Set.new
-        puts i+= 1
         @css_classes = Set.new(['modal'])
-        puts i+= 1
         @css = ''
-        puts i+= 1
         @enabled = true
-        puts i+= 1
         content do
           on_widget_selected {
-            puts 'hiding...'
             hide
-            puts 'hidden'
           }
         end
-        puts i+= 1
-        puts 'finished modal'
       end
       
       def text=(txt)
@@ -45,21 +34,12 @@ module Glimmer
         element = self
         begin
           element = element.parent
-          puts 'element'
-          puts element.inspect
         end while(element.parent)
         element
       end
       
       def open
-        puts 'open'
-        puts 'open adding child'
         document.add_child(self)
-        puts "css_classes.include?('hide')"
-        puts css_classes.include?('hide')
-#         until css_classes.include?('hide')
-#           sleep(0.01)
-#         end
       end
       
       def hide

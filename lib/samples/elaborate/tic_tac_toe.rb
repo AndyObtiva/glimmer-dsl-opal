@@ -38,12 +38,13 @@ class TicTacToe
   end
 
   def display_game_over_message(message_text)
-    puts 'display game over message'
     message_box(@shell) {
       text 'Game Over'
       message message_text
     }.open
-    @tic_tac_toe_board.reset
+    async_exec do
+      @tic_tac_toe_board.reset
+    end
   end
 
   def open

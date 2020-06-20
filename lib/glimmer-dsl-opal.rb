@@ -1,5 +1,5 @@
 require 'opal'
-require 'opal-parser'
+require 'opal-async'
 require 'glimmer'
 
 GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)

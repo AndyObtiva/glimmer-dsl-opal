@@ -99,7 +99,7 @@ shell {
   label {
     text 'Hello, World!'
   }
-}
+}.open
 ```
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):

@@ -803,9 +803,7 @@ class TicTacToe
       text 'Game Over'
       message message_text
     }.open
-    async_exec do
-      @tic_tac_toe_board.reset
-    end
+    @tic_tac_toe_board.reset
   end
 
   def open

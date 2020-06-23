@@ -4,11 +4,22 @@ module Glimmer
   module Opal
     class LayoutDataProxy
       include PropertyOwner
-      attr_reader :parent, :args, :horizontal_alignment, :grab_excess_horizontal_space
+      attr_reader :parent, 
+                  :args, 
+                  :horizontal_alignment, 
+                  :vertical_alignment, 
+                  :grab_excess_horizontal_space,
+                  :grab_excess_vertical_space,
+                  :height_hint
     
       def initialize(parent, args)
         @parent = parent
         @args = args
+        reapply
+      end
+
+      def height_hint=(height_hint)
+        @height_hint = height_hint
         reapply
       end
 
@@ -17,8 +28,18 @@ module Glimmer
         reapply
       end
       
+      def vertical_alignment=(vertical_alignment)
+        @vertical_alignment = vertical_alignment
+        reapply
+      end
+      
       def grab_excess_horizontal_space=(grab_excess_horizontal_space)
         @grab_excess_horizontal_space = grab_excess_horizontal_space
+        reapply
+      end
+
+      def grab_excess_vertical_space=(grab_excess_vertical_space)
+        @grab_excess_vertical_space = grab_excess_vertical_space
         reapply
       end
 

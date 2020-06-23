@@ -81,8 +81,7 @@ class ContactManager
               @contact_manager_presenter.toggle_sort(:email)
             }
           }
-          items bind(@contact_manager_presenter, :results),
-          column_properties(:first_name, :last_name, :email)
+          items bind(@contact_manager_presenter, :results), column_properties(:first_name, :last_name, :email)
           on_mouse_down { |event|
             table_proxy.edit_table_item(event.table_item, event.column_index)
           }

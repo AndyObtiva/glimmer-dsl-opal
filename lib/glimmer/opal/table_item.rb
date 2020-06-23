@@ -1,4 +1,4 @@
-require 'glimmer/opal/div_proxy'
+require 'glimmer/opal/input_proxy'
 
 module Glimmer
   module Opal

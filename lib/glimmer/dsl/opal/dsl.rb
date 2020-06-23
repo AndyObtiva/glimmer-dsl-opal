@@ -24,6 +24,10 @@ require 'glimmer/dsl/opal/async_exec_expression'
 require 'glimmer/dsl/opal/observe_expression'
 require 'glimmer/dsl/opal/layout_data_expression'
 require 'glimmer/dsl/opal/list_selection_data_binding_expression'
+require 'glimmer/dsl/opal/table_expression'
+require 'glimmer/dsl/opal/table_column_expression'
+require 'glimmer/dsl/opal/table_items_data_binding_expression'
+require 'glimmer/dsl/opal/column_properties_expression'
 
 module Glimmer
   module DSL

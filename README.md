@@ -2,13 +2,11 @@
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[Glimmer](https://github.com/AndyObtiva/glimmer) DSL for Opal is a web GUI adaptor for webifying desktop apps that are built with [Glimmer](https://github.com/AndyObtiva/glimmer) & [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt).
+Glimmer DSL for Opal is a web GUI adaptor for webifying [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)).
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web via standard CSS.
 
 NOTE: Alpha Version 0.0.7 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
-
-Hello Samples:
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -16,8 +14,6 @@ Hello Samples:
 - [Hello, List Multi Selection!](#hello-list-multi-selection)
 - [Hello, Browser!](#hello-browser)
 - [Hello, Tab!](#hello-tab)
-
-Elaborate Samples:
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
 

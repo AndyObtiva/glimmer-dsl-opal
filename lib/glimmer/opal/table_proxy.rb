@@ -38,10 +38,28 @@ module Glimmer
       
       def selection=(value)
         @selection = value
-        # TODO redraw selection properly as per list selection
         redraw
       end
       
+      def search(&condition)
+        items.select {|item| condition.nil? || condition.call(item)}
+      end      
+      
+      def index_of(item)
+        @items.index(item)
+      end
+      
+      def select(index, meta = false)
+        selected_item = @items[index]
+        if @selection.include?(selected_item)
+          @selection.delete(selected_item) if meta
+        else
+          @selection = [] if !meta || (!has_style?(:multi) && @selection.to_a.size >= 1)
+          @selection << selected_item
+        end
+        self.selection = @selection
+      end
+
       def columns_dom        
         @columns_dom ||= DOM {
           tr {

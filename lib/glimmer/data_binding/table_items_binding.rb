@@ -12,7 +12,6 @@ module Glimmer
       include DataBinding::Observer
 
       def initialize(parent, model_binding, column_properties)
-        puts 'table items binding'
         @table = parent
         @model_binding = model_binding
         @column_properties = column_properties
@@ -23,8 +22,6 @@ module Glimmer
         end
         call(@model_binding.evaluate_property)
         model = model_binding.base_model
-        put 'observing...'
-        put model.inspect
         observe(model, model_binding.property_name_expression)
         ##@table.on_widget_disposed do |dispose_event| # doesn't seem needed within Opal
         ##  unregister_all_observables
@@ -32,7 +29,6 @@ module Glimmer
       end
 
       def call(new_model_collection=nil)
-        puts 'updating table items'        
         if new_model_collection and new_model_collection.is_a?(Array)
           observe(new_model_collection, @column_properties)
           @model_collection = new_model_collection
@@ -41,10 +37,6 @@ module Glimmer
       end
       
       def populate_table(model_collection, parent, column_properties)
-        puts 'populate table'
-        puts model_collection.size
-        puts parent
-        puts column_properties
         selected_table_item_models = parent.selection.map(&:get_data)
         parent.remove_all
         model_collection.each do |model|

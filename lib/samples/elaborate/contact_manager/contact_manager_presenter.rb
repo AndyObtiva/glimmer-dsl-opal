@@ -12,10 +12,7 @@ class ContactManager
     end
   
     def list
-      puts 'list'
       self.results = @contact_repository.find({})
-      puts self.results.to_a.size
-      self.results
     end
   
     def find

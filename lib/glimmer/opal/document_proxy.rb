@@ -153,7 +153,13 @@ module Glimmer
                 color: #000;
                 text-decoration: none;
                 cursor: pointer;
-              }              
+              }
+              
+              table tbody tr.selected-table-item {
+                background: rgb(80, 116, 211);
+                color: white;
+              }
+
             </style>
             CSS
           }

@@ -5,6 +5,14 @@ module Glimmer
     class TableItem < ElementProxy
       attr_reader :data
       
+      def initialize(parent, args)
+        super(parent, args)
+        on_widget_selected { |event|
+          parent.select(parent.index_of(self), event.meta?)
+          redraw
+        }
+      end
+
       def get_text(index)
         text_array[index]
       end
@@ -42,18 +50,22 @@ module Glimmer
         'tr'
       end
       
-      def observation_request_to_event_mapping
-        {
-          'on_widget_selected' => {
-            event: 'click'
-          },
-        }
-      end      
+      def on_widget_selected(&block)
+        event = 'click'
+        delegate = $document.on(event, selector, &block)
+        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
+      end
       
       def dom
         table_item_id = id
         table_item_id_style = css
+        table_item_selection = parent.selection.include?(self)
         table_item_css_classes = css_classes
+        if table_item_selection
+          table_item_css_classes << 'selected-table-item'
+        else
+          table_item_css_classes.delete('selected-table-item')
+        end
         table_item_text_array = text_array
         @dom ||= DOM {
           tr(id: table_item_id, style: table_item_id_style, class: table_item_css_classes.to_a.join(' ')) {
@@ -64,7 +76,7 @@ module Glimmer
             end
           }
         }
-      end      
+      end
     end
   end
 end

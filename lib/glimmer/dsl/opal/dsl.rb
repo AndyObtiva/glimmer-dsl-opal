@@ -38,6 +38,7 @@ module Glimmer
          widget_listener
          combo_selection_data_binding
          list_selection_data_binding
+         table_items_data_binding
          data_binding
          text
          property

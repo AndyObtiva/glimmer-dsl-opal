@@ -11,7 +11,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           keyword == "items" and
             block.nil? and
-            parent.is_a?(TableProxy) and
+            parent.is_a?(Glimmer::Opal::TableProxy) and
             args.size == 2 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_property.is_a?(Array) and

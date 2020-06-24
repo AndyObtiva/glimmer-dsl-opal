@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.7 (Web GUI for Desktop Apps)
+# <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=65 /> Glimmer DSL for Opal 0.0.8 (Web GUI for Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -6,7 +6,7 @@ Glimmer DSL for Opal is a web GUI adaptor for webifying [Glimmer](https://github
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web via standard CSS.
 
-NOTE: Alpha Version 0.0.7 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.0.8 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -66,7 +66,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.1.0'
 gem 'opal-browser', '~> 0.2.0'
-gem 'glimmer-dsl-opal', '~> 0.0.7', require: false
+gem 'glimmer-dsl-opal', '~> 0.0.8', require: false
 ```
 
 Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb

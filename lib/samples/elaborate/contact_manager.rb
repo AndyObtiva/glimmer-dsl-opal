@@ -5,6 +5,10 @@ class ContactManager
 
   def initialize
     @contact_manager_presenter = ContactManagerPresenter.new
+    puts @contact_manager_presenter
+    puts @contact_manager_presenter.class
+    puts @contact_manager_presenter.class.ancestors
+    puts @contact_manager_presenter.methods.sort - Object.methods
     @contact_manager_presenter.list
   end
 
@@ -46,7 +50,13 @@ class ContactManager
             button {
               text "&List All"
               on_widget_selected {
+                puts 'will list...'
+                puts @contact_manager_presenter
+                puts @contact_manager_presenter.class
+                puts @contact_manager_presenter.class.ancestors
+                puts @contact_manager_presenter.methods.sort - Object.methods
                 @contact_manager_presenter.list
+                puts 'done'
               }
             }
           }

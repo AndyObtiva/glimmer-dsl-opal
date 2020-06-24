@@ -9,7 +9,7 @@ module Glimmer
     # TODO prefix utility methods with double-underscore
     module ObservableModel
       include Observable
-      include Glimmer
+#       include Glimmer
 
       def add_property_writer_observers(property_name)
         property_writer_name = "#{property_name}="

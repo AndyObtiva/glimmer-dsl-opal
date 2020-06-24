@@ -215,7 +215,7 @@ class ContactManager
       Taylor
     ]
     def initialize(contacts = nil)
-      @contacts = contacts || 1000.times.map do |n|
+      @contacts = contacts || 10.times.map do |n|
         random_first_name_index = (rand*NAMES_FIRST.size).to_i
         random_last_name_index = (rand*NAMES_LAST.size).to_i
         first_name = NAMES_FIRST[random_first_name_index]

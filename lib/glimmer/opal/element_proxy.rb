@@ -14,6 +14,9 @@ module Glimmer
         @css_classes = Set.new
         @css = ''
         @enabled = true
+        puts 'self'
+        puts self
+        puts @parent
         @parent.add_child(self)
       end
 

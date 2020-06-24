@@ -2,9 +2,13 @@
 
 Here is a list of tasks to do (moved to CHANGELOG.md once done). 
 
-## Next (0.0.3)
+## Next (0.0.8)
 
-- Hello, Computed
+- Contact Manager
+
+## Issues
+
+- Fix list selection so it always requires holding meta key
 
 ## Tasks
 

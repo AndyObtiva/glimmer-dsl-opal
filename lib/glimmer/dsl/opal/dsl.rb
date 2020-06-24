@@ -36,9 +36,9 @@ module Glimmer
        Opal,
        %w[
          widget_listener
+         table_items_data_binding
          combo_selection_data_binding
          list_selection_data_binding
-         table_items_data_binding
          data_binding
          text
          property

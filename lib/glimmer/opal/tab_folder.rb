@@ -17,6 +17,13 @@ module Glimmer
         end
       end
       
+      def redraw
+        super()
+        @children.each do |child|
+          add_child(child) # TODO think of impact of this on performance
+        end
+      end
+      
       def hide_all_tab_content
         @children.each(&:hide)
       end

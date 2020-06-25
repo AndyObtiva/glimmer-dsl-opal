@@ -63,13 +63,19 @@ module Glimmer
       end
       
       def redraw
+        if @dom
+          old_dom = @dom
+          @dom = nil
+          old_dom.replace dom
+        else
+          dom
+        end
         if @last_redrawn_children != @children
           items_dom.clear
           @last_redrawn_children = @children
           @children = []
           @last_redrawn_children.each { |c| add_child(c) }
         end
-        super()
       end
 
       def columns_dom        

@@ -39,9 +39,6 @@ module Glimmer
         @children.each do |child|          
           child.redraw
         end
-#         @children.each do |child|
-#           add_child(child) # TODO think of impact of this on performance
-#         end
       end
       
       # Subclasses must override with their own mappings

@@ -11,8 +11,8 @@ module Glimmer
       def initialize(parent, args)
         super(parent, args)
         @columns = []
-        @selection = []
         @children = []
+        @selection = []
       end
       
       # Only table_columns may be added as children
@@ -27,18 +27,18 @@ module Glimmer
       end
       
       def remove_all
-        items.each(&:dispose)
         items.clear
         @items_dom = nil
       end
       
       def selection=(new_selection)
+        changed = (@selection + new_selection) - (@selection & new_selection)
         @selection = new_selection
-        redraw
+        changed.each(&:redraw)
       end
       
-      def items=(new_selection)
-        @children = new_selection
+      def items=(new_items)
+        @children = new_items
         redraw
       end
       
@@ -51,15 +51,15 @@ module Glimmer
       end
       
       def select(index, meta = false)
-        # TODO consider unifying among multi-selectables (like multi list and multi tree)
+        new_selection = @selection.clone
         selected_item = items[index]
         if @selection.include?(selected_item)
-          @selection.delete(selected_item) if meta
+          new_selection.delete(selected_item) if meta
         else
-          @selection = [] if !meta || (!has_style?(:multi) && @selection.to_a.size >= 1)
-          @selection << selected_item
+          new_selection = [] if !meta || (!has_style?(:multi) && @selection.to_a.size >= 1)
+          new_selection << selected_item
         end
-        self.selection = @selection
+        self.selection = new_selection
       end
       
       def redraw
@@ -74,7 +74,9 @@ module Glimmer
           items_dom.clear
           @last_redrawn_children = @children
           @children = []
-          @last_redrawn_children.each { |c| add_child(c) }
+          @last_redrawn_children.each do |child|            
+            add_child(child)
+          end
         end
       end
 

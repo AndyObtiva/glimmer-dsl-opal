@@ -12,10 +12,6 @@ module Glimmer
         }
       end
       
-      def dispose
-        @dom.remove
-      end
-
       def get_text(index)
         text_array[index]
       end

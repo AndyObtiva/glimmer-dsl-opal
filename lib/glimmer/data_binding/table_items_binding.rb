@@ -54,6 +54,7 @@ module Glimmer
         selected_table_items = parent.search {|item| selected_table_item_models.include?(item.get_data) }
         selected_table_items = [parent.items.first] if selected_table_items.empty? && !parent.items.empty?
         parent.selection = selected_table_items unless selected_table_items.empty?
+        parent.redraw
       end
       
       def sort_table(model_collection, parent, column_properties)

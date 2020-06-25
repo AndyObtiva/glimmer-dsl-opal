@@ -14,14 +14,11 @@ module Glimmer
         @css_classes = Set.new
         @css = ''
         @enabled = true
-        puts 'self'
-        puts self
-        puts @parent
         @parent.add_child(self)
       end
 
       def add_child(child)
-#         return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition
+#         return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition        
         @children << child
         dom << child.dom
       end
@@ -39,10 +36,12 @@ module Glimmer
         else
           dom
         end
-        @children.each do |child|
+        @children.each do |child|          
           child.redraw
-          add_child(child)
         end
+#         @children.each do |child|
+#           add_child(child) # TODO think of impact of this on performance
+#         end
       end
       
       # Subclasses must override with their own mappings

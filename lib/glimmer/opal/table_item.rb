@@ -9,8 +9,11 @@ module Glimmer
         super(parent, args)
         on_widget_selected { |event|
           parent.select(parent.index_of(self), event.meta?)
-          redraw
         }
+      end
+      
+      def dispose
+        @dom.remove
       end
 
       def get_text(index)
@@ -59,12 +62,12 @@ module Glimmer
       def dom
         table_item_id = id
         table_item_id_style = css
-        table_item_selection = parent.selection.include?(self)
         table_item_css_classes = css_classes
+        table_item_selection = parent.selection.include?(self)
         if table_item_selection
-          table_item_css_classes << 'selected-table-item'
+          table_item_css_classes << 'selected'
         else
-          table_item_css_classes.delete('selected-table-item')
+          table_item_css_classes.delete('selected')
         end
         table_item_text_array = text_array
         @dom ||= DOM {

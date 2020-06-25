@@ -12,6 +12,7 @@ module Glimmer
       include DataBinding::Observer
 
       def initialize(parent, model_binding, column_properties)
+        @last_model_collection = nil
         @table = parent
         @model_binding = model_binding
         @column_properties = column_properties
@@ -34,9 +35,13 @@ module Glimmer
           @model_collection = new_model_collection
         end
         populate_table(@model_collection, @table, @column_properties)
+        sort_table(@model_collection, @table, @column_properties)
       end
       
       def populate_table(model_collection, parent, column_properties)
+        return if model_collection&.sort_by(&:hash) == @last_model_collection&.sort_by(&:hash)
+        @last_model_collection = model_collection
+        # TODO improve performance
         selected_table_item_models = parent.selection.map(&:get_data)
         parent.remove_all
         model_collection.each do |model|
@@ -50,6 +55,12 @@ module Glimmer
         selected_table_items = [parent.items.first] if selected_table_items.empty? && !parent.items.empty?
         parent.selection = selected_table_items unless selected_table_items.empty?
       end
+      
+      def sort_table(model_collection, parent, column_properties)
+        return if model_collection == @last_model_collection
+        parent.items = parent.items.sort_by { |item| model_collection.index(item.get_data) }
+        @last_model_collection = model_collection
+      end      
     end
   end
 end

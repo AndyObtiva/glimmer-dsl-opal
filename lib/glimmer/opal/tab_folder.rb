@@ -15,7 +15,7 @@ module Glimmer
         if @children.size == 1
           child.show
         end
-      end      
+      end
       
       def hide_all_tab_content
         @children.each(&:hide)

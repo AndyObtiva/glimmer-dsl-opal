@@ -10,6 +10,13 @@ module Glimmer
         @layout = GridLayoutProxy.new(self, [])
       end
       
+      def redraw
+        super()
+        @children.each do |child|
+          add_child(child) # TODO think of impact of this on performance, and of other alternatives
+        end
+      end
+      
       def dom
         div_id = id
         div_style = css

@@ -4,14 +4,15 @@ require 'glimmer/opal/table_column'
 module Glimmer
   module Opal
     class TableProxy < ElementProxy
-      attr_reader :items, :columns, :selection
+      attr_reader :columns, :selection
       attr_accessor :column_properties
+      alias items children
       
       def initialize(parent, args)
         super(parent, args)
-        @items = []
         @columns = []
         @selection = []
+        @children = []
       end
       
       # Only table_columns may be added as children
@@ -20,24 +21,24 @@ module Glimmer
           @columns << child
           columns_dom << child.dom
         else
-          @items << child
+          @children << child        
           items_dom << child.dom
         end
       end
       
       def remove_all
-        @items = []
+        items.each(&:dispose)
+        items.clear
         @items_dom = nil
+      end
+      
+      def selection=(new_selection)
+        @selection = new_selection
         redraw
       end
       
-      def items=(value)
-        @items = value
-        redraw
-      end
-      
-      def selection=(value)
-        @selection = value
+      def items=(new_selection)
+        @children = new_selection
         redraw
       end
       
@@ -46,11 +47,12 @@ module Glimmer
       end      
       
       def index_of(item)
-        @items.index(item)
+        items.index(item)
       end
       
       def select(index, meta = false)
-        selected_item = @items[index]
+        # TODO consider unifying among multi-selectables (like multi list and multi tree)
+        selected_item = items[index]
         if @selection.include?(selected_item)
           @selection.delete(selected_item) if meta
         else
@@ -58,6 +60,16 @@ module Glimmer
           @selection << selected_item
         end
         self.selection = @selection
+      end
+      
+      def redraw
+        if @last_redrawn_children != @children
+          items_dom.clear
+          @last_redrawn_children = @children
+          @children = []
+          @last_redrawn_children.each { |c| add_child(c) }
+        end
+        super()
       end
 
       def columns_dom        

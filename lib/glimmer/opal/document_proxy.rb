@@ -59,10 +59,6 @@ module Glimmer
                 padding-left: 10px;
                 padding-right: 10px;
               }
-              li.selected-list-item {
-                background: rgb(80, 116, 211);
-                color: white;
-              }
               li.empty-list-item {
                 color: transparent;
               }
@@ -143,7 +139,6 @@ module Glimmer
               .close {
                 color: #aaaaaa;
                 float: right;
-#                 font-size: 18px;
                 font-weight: bold;
                 margin: 5px;
               }
@@ -155,9 +150,17 @@ module Glimmer
                 cursor: pointer;
               }
               
-              table tbody tr.selected-table-item {
+              .selected {
                 background: rgb(80, 116, 211);
                 color: white;
+              }
+              
+              table {
+                border-spacing: 0;
+              }
+              
+              table tr th,td {
+                cursor: default;
               }
 
             </style>

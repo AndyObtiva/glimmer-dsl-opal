@@ -66,7 +66,7 @@ module Glimmer
           ul(id: list_id, style: list_style) {
             list_items.to_a.each_with_index do |item, index|
               li_class = ''
-              li_class += ' selected-list-item' if list_selection.include?(item)
+              li_class += ' selected' if list_selection.include?(item)
               li_class += ' empty-list-item' if item == ITEM_EMPTY
               li(class: li_class) {
                 item

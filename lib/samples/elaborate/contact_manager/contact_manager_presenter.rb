@@ -12,7 +12,6 @@ class ContactManager
     end
   
     def list
-      puts 'listing...'
       self.results = @contact_repository.find({})
     end
   

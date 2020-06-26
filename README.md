@@ -6,7 +6,7 @@ Glimmer DSL for Opal is a web GUI adaptor for webifying [Glimmer](https://github
 
 It enables running [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps on the web via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web via standard CSS.
 
-NOTE: Alpha Version 0.0.8 only supports capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.0.8 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -16,6 +16,7 @@ NOTE: Alpha Version 0.0.8 only supports capabilities for the following [glimmer-
 - [Hello, Tab!](#hello-tab)
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
+- [Contact Manager](#contact-manager)
 
 Other Glimmer DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
@@ -35,10 +36,13 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 - `list` & `list(:multi)`
 - `tab_folder`
 - `tab_item`
+- `table`
+- `table_column`
 - `message_box`
 - `on_widget_selected`
 - `on_modify_text`
 - `observe`
+- `bind`
 - `async_exec`
 - `grid_layout`
 - `layout_data`
@@ -837,6 +841,448 @@ You should see "Tic Tac Toe"
 ![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
 ![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
 ![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
+
+#### Contact Manager
+
+Add the following Glimmer code to `app/assets/javascripts/application.rb`
+
+```ruby
+class ContactManager
+  class Contact
+    attr_accessor :first_name, :last_name, :email
+  
+    def initialize(attribute_map)
+      @first_name = attribute_map[:first_name]
+      @last_name = attribute_map[:last_name]
+      @email = attribute_map[:email]
+    end
+  end
+end
+
+class ContactManager
+  class ContactRepository
+    NAMES_FIRST = %w[
+      Liam
+      Noah
+      William
+      James
+      Oliver
+      Benjamin
+      Elijah
+      Lucas
+      Mason
+      Logan
+      Alexander
+      Ethan
+      Jacob
+      Michael
+      Daniel
+      Henry
+      Jackson
+      Sebastian
+      Aiden
+      Matthew
+      Samuel
+      David
+      Joseph
+      Carter
+      Owen
+      Wyatt
+      John
+      Jack
+      Luke
+      Jayden
+      Dylan
+      Grayson
+      Levi
+      Isaac
+      Gabriel
+      Julian
+      Mateo
+      Anthony
+      Jaxon
+      Lincoln
+      Joshua
+      Christopher
+      Andrew
+      Theodore
+      Caleb
+      Ryan
+      Asher
+      Nathan
+      Thomas
+      Leo
+      Isaiah
+      Charles
+      Josiah
+      Hudson
+      Christian
+      Hunter
+      Connor
+      Eli
+      Ezra
+      Aaron
+      Landon
+      Adrian
+      Jonathan
+      Nolan
+      Jeremiah
+      Easton
+      Elias
+      Colton
+      Cameron
+      Carson
+      Robert
+      Angel
+      Maverick
+      Nicholas
+      Dominic
+      Jaxson
+      Greyson
+      Adam
+      Ian
+      Austin
+      Santiago
+      Jordan
+      Cooper
+      Brayden
+      Roman
+      Evan
+      Ezekiel
+      Xaviar
+      Jose
+      Jace
+      Jameson
+      Leonardo
+      Axel
+      Everett
+      Kayden
+      Miles
+      Sawyer
+      Jason
+      Emma
+      Olivia
+      Ava
+      Isabella
+      Sophia
+      Charlotte
+      Mia
+      Amelia
+      Harper
+      Evelyn
+      Abigail
+      Emily
+      Elizabeth
+      Mila
+      Ella
+      Avery
+      Sofia
+      Camila
+      Aria
+      Scarlett
+      Victoria
+      Madison
+      Luna
+      Grace
+      Chloe
+      Penelope
+      Layla
+      Riley
+      Zoey
+      Nora
+      Lily
+      Eleanor
+      Hannah
+      Lillian
+      Addison
+      Aubrey
+      Ellie
+      Stella
+      Natalie
+      Zoe
+      Leah
+      Hazel
+      Violet
+      Aurora
+      Savannah
+      Audrey
+      Brooklyn
+      Bella
+      Claire
+      Skylar
+      Lucy
+      Paisley
+      Everly
+      Anna
+      Caroline
+      Nova
+      Genesis
+      Emilia
+      Kennedy
+      Samantha
+      Maya
+      Willow
+      Kinsley
+      Naomi
+      Aaliyah
+      Elena
+      Sarah
+      Ariana
+      Allison
+      Gabriella
+      Alice
+      Madelyn
+      Cora
+      Ruby
+      Eva
+      Serenity
+      Autumn
+      Adeline
+      Hailey
+      Gianna
+      Valentina
+      Isla
+      Eliana
+      Quinn
+      Nevaeh
+      Ivy
+      Sadie
+      Piper
+      Lydia
+      Alexa
+      Josephine
+      Emery
+      Julia
+      Delilah
+      Arianna
+      Vivian
+      Kaylee
+      Sophie
+      Brielle
+      Madeline
+    ]
+    NAMES_LAST = %w[
+      Smith
+      Johnson
+      Williams
+      Brown
+      Jones
+      Miller
+      Davis
+      Wilson
+      Anderson
+      Taylor
+    ]
+    def initialize(contacts = nil)
+      @contacts = contacts || 1000.times.map do |n|
+        random_first_name_index = (rand*NAMES_FIRST.size).to_i
+        random_last_name_index = (rand*NAMES_LAST.size).to_i
+        first_name = NAMES_FIRST[random_first_name_index]
+        last_name = NAMES_LAST[random_last_name_index]
+        email = "#{first_name}@#{last_name}.com".downcase
+        Contact.new(
+          first_name: first_name,
+          last_name: last_name,
+          email: email
+        )
+      end
+    end
+  
+    def find(attribute_filter_map)
+      @contacts.find_all do |contact|
+        match = true
+        attribute_filter_map.keys.each do |attribute_name|
+          contact_value = contact.send(attribute_name).downcase
+          filter_value = attribute_filter_map[attribute_name].downcase
+          match = false unless contact_value.match(filter_value)
+        end
+        match
+      end
+    end
+  end
+end
+
+class ContactManager
+  class ContactManagerPresenter
+    attr_accessor :results
+    @@contact_attributes = [:first_name, :last_name, :email]
+    @@contact_attributes.each {|attribute_name| attr_accessor attribute_name}
+  
+    def initialize(contact_repository = nil)
+      @contact_repository = contact_repository || ContactRepository.new
+      @results = []
+    end
+  
+    def list
+      self.results = @contact_repository.find({})
+    end
+  
+    def find
+      filter_map = {}
+      @@contact_attributes.each do |attribute_name|
+        filter_map[attribute_name] = self.send(attribute_name) if self.send(attribute_name)
+      end
+      self.results = @contact_repository.find(filter_map)
+      @sort_attribute_name = nil
+      @sort_direction_ascending = nil
+    end
+  
+    def toggle_sort(attribute_name)
+      @sort_attribute_name = attribute_name
+      @sort_direction_ascending = !@sort_direction_ascending
+      sorted_results = self.results.sort_by {|contact| contact.send(attribute_name).downcase}
+      sorted_results = sorted_results.reverse unless @sort_direction_ascending
+      self.results = sorted_results
+    end
+  end
+end
+
+class ContactManager
+  include Glimmer
+
+  def initialize
+    @contact_manager_presenter = ContactManagerPresenter.new
+    @contact_manager_presenter.list
+  end
+
+  def launch
+    shell {
+      text "Contact Manager"
+      composite {
+        composite {
+          grid_layout 2, false
+          label {text "First &Name: "}
+          text {
+            text bind(@contact_manager_presenter, :first_name)
+            on_key_pressed {|key_event|
+              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+            }
+          }
+          label {text "&Last Name: "}
+          text {
+            text bind(@contact_manager_presenter, :last_name)
+            on_key_pressed {|key_event|
+              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+            }
+          }
+          label {text "&Email: "}
+          text {
+            text bind(@contact_manager_presenter, :email)
+            on_key_pressed {|key_event|
+              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+            }
+          }
+          composite {
+            grid_layout 2, false
+            button {
+              text "&Find"
+              on_widget_selected {
+                @contact_manager_presenter.find
+              }
+            }
+            button {
+              text "&List All"
+              on_widget_selected {
+                @contact_manager_presenter.list
+              }
+            }
+          }
+        }
+
+        table(:multi) { |table_proxy|
+          layout_data {
+            horizontal_alignment :fill
+            vertical_alignment :fill
+            grab_excess_horizontal_space true
+            grab_excess_vertical_space true
+            height_hint 200
+          }
+          table_column {
+            text "First Name"
+            width 80
+            on_widget_selected {
+              @contact_manager_presenter.toggle_sort(:first_name)
+            }
+          }
+          table_column {
+            text "Last Name"
+            width 80
+            on_widget_selected {
+              @contact_manager_presenter.toggle_sort(:last_name)
+            }
+          }
+          table_column {
+            text "Email"
+            width 200
+            on_widget_selected {
+              @contact_manager_presenter.toggle_sort(:email)
+            }
+          }
+          items bind(@contact_manager_presenter, :results), column_properties(:first_name, :last_name, :email)
+          on_mouse_down { |event|
+            table_proxy.edit_table_item(event.table_item, event.column_index)
+          }
+        }
+      }
+    }.open
+  end
+end
+
+ContactManager.new.launch
+
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+Glimmer DSL for SWT Contact Manager
+
+![Glimmer DSL for SWT Contact Manager](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager.png)
+
+Glimmer DSL for SWT Contact Manager Find
+
+![Glimmer DSL for SWT Contact Manager Find](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-find.png)
+
+Glimmer DSL for SWT Contact Manager Edit Started
+
+![Glimmer DSL for SWT Contact Manager Edit Started](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-started.png)
+
+Glimmer DSL for SWT Contact Manager Edit In Progress
+
+![Glimmer DSL for SWT Contact Manager Edit In Progress](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-in-progress.png)
+
+Glimmer DSL for SWT Contact Manager Edit Done
+
+![Glimmer DSL for SWT Contact Manager Edit Done](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-done.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Tic Tac Toe"
+
+Glimmer DSL for Opal Contact Manager
+
+![Glimmer DSL for Opal Contact Manager](images/glimmer-dsl-opal-contact-manager.png)
+
+Glimmer DSL for Opal Contact Manager Find
+
+![Glimmer DSL for Opal Contact Manager Find](images/glimmer-dsl-opal-contact-manager-find.png)
+
+Glimmer DSL for Opal Contact Manager Edit Started
+
+![Glimmer DSL for Opal Contact Manager Edit Started](images/glimmer-dsl-opal-contact-manager-edit-started.png)
+
+Glimmer DSL for Opal Contact Manager Edit In Progress
+
+![Glimmer DSL for Opal Contact Manager Edit In Progress](images/glimmer-dsl-opal-contact-manager-edit-in-progress.png)
+
+Glimmer DSL for Opal Contact Manager Edit Done
+
+![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
 
 ## Help
 

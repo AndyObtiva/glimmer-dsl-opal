@@ -1,4 +1,4 @@
-require 'glimmer/opal/element_proxy'
+  require 'glimmer/opal/element_proxy'
 
 module Glimmer
   module Opal
@@ -49,10 +49,21 @@ module Glimmer
         'tr'
       end
       
+      def edit(column_index)
+        return if @edit_column_index == column_index.to_i
+        parent.select(parent.index_of(self), false)
+        @edit_column_index = column_index.to_i
+        redraw
+      end
+      
       def on_widget_selected(&block)
         event = 'click'
         delegate = $document.on(event, selector, &block)
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
+      end
+      
+      def max_column_width(column_index)
+        parent.dom.css("tr td:nth-child(#{column_index + 1})").first.width
       end
       
       def dom
@@ -66,15 +77,59 @@ module Glimmer
           table_item_css_classes.delete('selected')
         end
         table_item_text_array = text_array
+        table_item_edit_column_index = @edit_column_index
+        table_item_max_width = max_column_width(table_item_edit_column_index) if table_item_edit_column_index
+        table_item_edit_handler = lambda do |event, cancel = false|
+          Async::Task.new do
+            text_value = event.target.value
+            edit_property = parent.column_properties[table_item_edit_column_index]
+            edit_model = get_data
+            if !cancel && edit_model.send(edit_property) != text_value
+              edit_model.send("#{edit_property}=", text_value)
+              set_text(table_item_edit_column_index, text_value)
+            end
+            @edit_column_index = nil
+            redraw
+          end
+        end
+        table_item_edit_cancel_handler = lambda do |event|           
+          Async::Task.new do
+            table_item_edit_handler.call(event, true)
+          end
+        end   
+        table_item_edit_key_handler = lambda do |event|
+          Async::Task.new do
+            if event.code == 13
+              table_item_edit_handler.call(event)
+            elsif event.code == 27
+              table_item_edit_cancel_handler.call(event)
+            end
+          end
+        end
         @dom ||= DOM {
           tr(id: table_item_id, style: table_item_id_style, class: table_item_css_classes.to_a.join(' ')) {
-            table_item_text_array.each do |table_item_text|
-              td {
-                table_item_text
+            table_item_text_array.each_with_index do |table_item_text, column_index|
+              td('data-column-index' => column_index) {
+                if table_item_edit_column_index == column_index                  
+                  input(type: 'text', value: table_item_text, style: "max-width: #{table_item_max_width - 11}px;")
+                else
+                  table_item_text
+                end
               }
             end
           }
-        }
+        }.tap do |the_dom|
+          if table_item_edit_column_index
+            table_item_input = the_dom.css("td:nth-child(#{table_item_edit_column_index + 1}) input").first
+            if table_item_input
+              Async::Task.new do
+                table_item_input.focus
+                table_item_input.on('keyup', &table_item_edit_key_handler)
+                table_item_input.on('focusout', &table_item_edit_cancel_handler)                
+              end
+            end
+          end
+        end
       end
     end
   end

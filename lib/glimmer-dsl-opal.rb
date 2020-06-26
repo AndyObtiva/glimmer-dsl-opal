@@ -1,5 +1,7 @@
 require 'opal'
 require 'opal-async'
+require 'browser'
+require 'browser/effects'
 require 'glimmer'
 
 GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)

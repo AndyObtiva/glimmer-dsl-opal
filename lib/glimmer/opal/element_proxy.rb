@@ -7,6 +7,20 @@ module Glimmer
       include PropertyOwner
       attr_reader :parent, :args, :css_classes, :css, :children, :enabled
       
+      class << self
+        def next_id_number_for(name)
+          @max_id_numbers[name] = max_id_number_for(name) + 1
+        end
+        
+        def max_id_number_for(name)
+          @max_id_numbers[name] = max_id_numbers[name] || 0
+        end
+        
+        def max_id_numbers
+          @max_id_numbers ||= {}
+        end
+      end
+      
       def initialize(parent, args)
         @parent = parent
         @args = args
@@ -51,10 +65,9 @@ module Glimmer
       end
       
       def id
-        # TODO replace hash with autoincrement per name
-        "#{name}-#{hash}"
+        @id ||= "#{name}-#{ElementProxy.next_id_number_for(name)}"
       end
-      
+            
       # Subclasses can override with their own selector
       def selector
         "#{name}##{id}"

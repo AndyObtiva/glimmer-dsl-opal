@@ -43,6 +43,9 @@ module Glimmer
         @last_model_collection = model_collection
         # TODO improve performance
         selected_table_item_models = parent.selection.map(&:get_data)
+        old_items = parent.items
+        old_item_ids_per_model = old_items.reduce({}) {|hash, item| hash.merge(item.get_data.hash => item.id) }
+        puts old_item_ids_per_model.inspect
         parent.remove_all
         model_collection.each do |model|
           table_item = Glimmer::Opal::TableItem.new(parent)
@@ -50,6 +53,8 @@ module Glimmer
             table_item.set_text(index, model.send(column_properties[index]).to_s)
           end
           table_item.set_data(model)
+          puts old_item_ids_per_model[model.hash]
+          table_item.id = old_item_ids_per_model[model.hash] if old_item_ids_per_model[model.hash]
         end
         selected_table_items = parent.search {|item| selected_table_item_models.include?(item.get_data) }
         selected_table_items = [parent.items.first] if selected_table_items.empty? && !parent.items.empty?

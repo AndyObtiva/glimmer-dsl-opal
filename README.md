@@ -92,13 +92,13 @@ Add more code to `app/assets/javascripts/application.rb` from one of the samples
 
 #### Hello, World!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/hello/hello_world'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 include Glimmer
@@ -130,13 +130,13 @@ You should see "Hello, World!"
 
 #### Hello, Combo!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/hello/hello_combo'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class Person
@@ -193,14 +193,14 @@ You should see "Hello, Combo!"
 
 #### Hello, Computed!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 
 ```ruby
 require 'samples/hello/hello_computed'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class HelloComputed
@@ -312,14 +312,14 @@ You should see "Hello, Computed!"
 
 #### Hello, List Single Selection!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 
 ```ruby
 require 'samples/hello/hello_list_single_selection'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class Person 
@@ -376,13 +376,13 @@ You should see "Hello, List Single Selection!"
 
 #### Hello, List Multi Selection!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/hello/hello_list_multi_selection'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class Person
@@ -449,13 +449,13 @@ You should see "Hello, List Multi Selection!"
 
 #### Hello, Browser!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/hello/hello_browser'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 include Glimmer
@@ -486,13 +486,13 @@ You should see "Hello, Browser!"
 
 #### Hello, Tab!
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/hello/hello_tab'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class HelloTab
@@ -543,13 +543,13 @@ You should see "Hello, Tab!"
 
 #### Login
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/elaborate/login'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 require "observer"
@@ -663,13 +663,13 @@ You should see "Login" dialog
 
 #### Tic Tac Toe
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/elaborate/tic_tac_toe'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class TicTacToe
@@ -898,13 +898,13 @@ You should see "Tic Tac Toe"
 
 #### Contact Manager
 
-Add the following Glimmer code to `app/assets/javascripts/application.rb`
+Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'samples/elaborate/contact_manager'
 ```
 
-Or add the code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class ContactManager

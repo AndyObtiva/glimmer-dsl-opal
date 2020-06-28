@@ -68,6 +68,11 @@ module Glimmer
         @id ||= "#{name}-#{ElementProxy.next_id_number_for(name)}"
       end
             
+      # Sets id explicitly. Useful in cases of wanting to maintain a stable id
+      def id=(value)
+        @id = value
+      end
+            
       # Subclasses can override with their own selector
       def selector
         "#{name}##{id}"

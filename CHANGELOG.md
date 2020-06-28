@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.9
+
+- Upgraded to glimmer gem v0.9.3
+- Fixed issue with missing Glimmer::Opal::ElementProxy#id=(value) method breaking Contact Manager sample Find feature
+
 ## 0.0.8
 
 - Contact Manager sample support

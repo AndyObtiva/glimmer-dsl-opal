@@ -71,26 +71,32 @@ module Glimmer
       end
       
       def observation_request_to_event_mapping
+        mouse_handler = -> (event_listener) {
+          -> (event) {
+            event.singleton_class.send(:define_method, :table_item=) do |item|
+              @table_item = item
+            end
+            event.singleton_class.send(:define_method, :table_item) do
+              @table_item
+            end
+            table_row = event.target.ancestors('tr').first
+            table_data = event.target.ancestors('td').first
+            event.table_item = items.detect {|item| item.id == table_row.attributes['id']}
+            event.singleton_class.send(:define_method, :column_index) do
+              (table_data || event.target).attributes['data-column-index']
+            end
+            event_listener.call(event)              
+          }
+        } 
+
         {
           'on_mouse_down' => {
             event: 'mousedown',
-            event_handler: -> (event_listener) {
-              -> (event) {
-                event.singleton_class.send(:define_method, :table_item=) do |item|
-                  @table_item = item
-                end
-                event.singleton_class.send(:define_method, :table_item) do
-                  @table_item
-                end
-                table_row = event.target.ancestors('tr').first
-                table_data = event.target.ancestors('td').first
-                event.table_item = items.detect {|item| item.id == table_row.attributes['id']}
-                event.singleton_class.send(:define_method, :column_index) do
-                  (table_data || event.target).attributes['data-column-index']
-                end
-                event_listener.call(event)              
-              }
-            }
+            event_handler: mouse_handler,
+          },
+          'on_mouse_up' => {
+            event: 'mouseup',
+            event_handler: mouse_handler,
           }
         }
       end

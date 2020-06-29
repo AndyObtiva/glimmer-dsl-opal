@@ -2,7 +2,15 @@
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Glimmer DSL for Opal is an experimental web GUI adaptor for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer](https://github.com/AndyObtiva/glimmer) [DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/), allowing Ruby desktop apps to run on the web without changing a line of code. Apps may then be custom-styled for the web via standard CSS.
+Glimmer DSL for Opal is an experimental web GUI adaptor for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer](https://github.com/AndyObtiva/glimmer) [DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/), allowing Ruby desktop apps to run on the web without changing a line of code. Apps may then be custom-styled for the web via standard CSS. 
+
+Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal](https://opalrb.com/) Ruby, and as such inherits the full range of powerful Glimmer DSL [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities, such as: 
+- `bind(model, property)` basic data-binding
+- `bind(model, property, computed_by: procs)` computed data-binding
+- `bind(model, property, on_read:, on_write:)` data-binding converters
+- `bind(model, property), column_properties(columns)` `table` data-binding
+- Automatically inferred `property_options` for `list` and `combo` data-binding
+- `observe(model, property)` free-form observing
 
 NOTE: Alpha Version 0.0.9 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)

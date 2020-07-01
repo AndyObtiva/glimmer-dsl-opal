@@ -30,6 +30,10 @@ module Glimmer
         @enabled = true
         @parent.add_child(self)
       end
+      
+      def dispose
+        dom.remove
+      end
 
       def add_child(child)
 #         return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition        

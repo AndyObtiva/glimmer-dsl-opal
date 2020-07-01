@@ -11,10 +11,9 @@ module Glimmer
         @args = args
         @children = []
         $document.ready do
-          $document.head.replace(head_dom)
-          $document.body.replace(dom)
+          $document.body << dom
         end
-      end      
+      end
 
       def text
         $document.title
@@ -34,7 +33,7 @@ module Glimmer
       def head_dom
         # TODO make grid-layout support grab excess space false
         @head_dom ||= DOM {
-          head {
+          div {
             <<~CSS
             <style>
               html {
@@ -171,12 +170,13 @@ module Glimmer
 
       def dom
         i = 0
+        body_id = id
         body_style = ''
         body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
         @dom ||= DOM {
-          body(style: body_style) {
+          div(id: body_id, style: body_style) {                    
           }
-        }
+        }.tap { |the_dom| the_dom >> head_dom }
       end
       
       def open

@@ -1,3 +1,18 @@
 language: ruby
 rvm:
   - ruby-2.7.1
+os: linux
+dist: xenial
+services:
+  - xvfb
+addons:
+  chrome: stable
+script:
+  - sleep 3 # give xvfb some time to start
+  - ls
+  - rackup  # start a Web server
+  - sleep 3 # give Web server some time to bind to sockets, etc
+after_script:
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9292 http://localhost &
+  ⋮

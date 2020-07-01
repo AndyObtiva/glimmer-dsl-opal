@@ -31,16 +31,12 @@ unless jeweler_required.nil?
   Jeweler::RubygemsDotOrgTasks.new
 end
 
-
 require 'opal/rspec/rake_task'
 Opal::RSpec::RakeTask.new(:default) do |server, task|
-#   task.pattern = FileList['spec-opal/**/*_spec.rb']
-#   server.append_path File.dirname(__FILE__)
-#   $LOAD_PATH.each do |path|
-#     server.append_path path
-#   end
-#   server.append_path File.expand_path('../lib', __FILE__)
   server.append_path File.expand_path('../lib', __FILE__)
+  require 'opal-async'
+  require 'opal-browser'
+  Opal.use_gem('glimmer-dsl-opal')
 end
 
 task :no_puts_debuggerer do

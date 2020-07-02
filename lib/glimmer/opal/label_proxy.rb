@@ -15,7 +15,7 @@ module Glimmer
         label_id = id
         label_style = css
         @dom ||= DOM {
-          label(id: label_id, style: label_style) {
+          label(id: label_id, style: label_style, class: 'label') {
             label_text
           }
         }

@@ -1,7 +1,7 @@
 require 'glimmer/dsl/static_expression'
 require 'glimmer/dsl/top_level_expression'
 require 'glimmer/dsl/parent_expression'
-require 'glimmer/opal/document_proxy'
+require 'glimmer/swt/shell_proxy'
 
 module Glimmer
   module DSL
@@ -11,7 +11,7 @@ module Glimmer
         include ParentExpression
 
         def interpret(parent, keyword, *args, &block)
-          Glimmer::Opal::DocumentProxy.new(args)
+          Glimmer::SWT::ShellProxy.new(*args)
         end
       end
     end

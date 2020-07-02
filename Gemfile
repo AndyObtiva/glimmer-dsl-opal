@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'delegate', '~> 0.1.0'
 gem 'glimmer', '~> 0.9.3'
 
 group :development, :test do

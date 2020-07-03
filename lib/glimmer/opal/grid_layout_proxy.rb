@@ -1,9 +1,9 @@
-require 'glimmer/opal/property_owner'
+require 'glimmer/swt/property_owner'
 
 module Glimmer
   module Opal
     class GridLayoutProxy
-      include PropertyOwner
+      include Glimmer::SWT::PropertyOwner
       attr_reader :parent, :args, :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing
     
       def initialize(parent, args)

@@ -40,7 +40,6 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/data_binding_expression.rb",
     "lib/glimmer/dsl/opal/dsl.rb",
     "lib/glimmer/dsl/opal/grid_layout_expression.rb",
-    "lib/glimmer/dsl/opal/label_expression.rb",
     "lib/glimmer/dsl/opal/layout_data_expression.rb",
     "lib/glimmer/dsl/opal/list_expression.rb",
     "lib/glimmer/dsl/opal/list_selection_data_binding_expression.rb",
@@ -54,6 +53,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/table_expression.rb",
     "lib/glimmer/dsl/opal/table_items_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/text_expression.rb",
+    "lib/glimmer/dsl/opal/widget_expression.rb",
     "lib/glimmer/dsl/opal/widget_listener_expression.rb",
     "lib/glimmer/opal/display_proxy.rb",
     "lib/glimmer/opal/div_proxy.rb",
@@ -63,18 +63,18 @@ Gem::Specification.new do |s|
     "lib/glimmer/opal/grid_layout_proxy.rb",
     "lib/glimmer/opal/iframe_proxy.rb",
     "lib/glimmer/opal/input_proxy.rb",
-    "lib/glimmer/opal/label_proxy.rb",
     "lib/glimmer/opal/layout_data_proxy.rb",
     "lib/glimmer/opal/list_proxy.rb",
     "lib/glimmer/opal/modal.rb",
-    "lib/glimmer/opal/point.rb",
-    "lib/glimmer/opal/property_owner.rb",
     "lib/glimmer/opal/select_proxy.rb",
     "lib/glimmer/opal/tab_folder.rb",
     "lib/glimmer/opal/tab_item.rb",
     "lib/glimmer/opal/table_column.rb",
     "lib/glimmer/opal/table_item.rb",
     "lib/glimmer/opal/table_proxy.rb",
+    "lib/glimmer/swt/label_proxy.rb",
+    "lib/glimmer/swt/point.rb",
+    "lib/glimmer/swt/property_owner.rb",
     "lib/glimmer/swt/shell_proxy.rb",
     "lib/glimmer/swt/widget_proxy.rb",
     "lib/samples/elaborate/contact_manager.rb",
@@ -107,7 +107,6 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<delegate>.freeze, ["~> 0.1.0"])
     s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_development_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
@@ -118,7 +117,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<opal-browser>.freeze, ["~> 0.2.0"])
     s.add_development_dependency(%q<glimmer-dsl-opal>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<delegate>.freeze, ["~> 0.1.0"])
     s.add_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
     s.add_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])

@@ -9,7 +9,7 @@ module GlimmerSpec
     let(:title) {'Hello, World!'}
     
     after do
-      Glimmer::Opal::ElementProxy.reset_max_id_numbers
+      Glimmer::SWT::WidgetProxy.reset_max_id_numbers
       @target.dispose if @target.respond_to?(:dispose)
     end
      

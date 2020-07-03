@@ -1,5 +1,5 @@
 module Glimmer
-  module Opal
+  module SWT
     Point = Struct.new(:x, :y)
   end
 end

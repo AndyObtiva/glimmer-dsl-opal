@@ -4,7 +4,7 @@ require 'browser'
 require 'glimmer/dsl/engine'
 # Dir[File.expand_path('../*_expression.rb', __FILE__)].each {|f| require f}
 require 'glimmer/dsl/opal/shell_expression'
-require 'glimmer/dsl/opal/label_expression'
+require 'glimmer/dsl/opal/widget_expression'
 require 'glimmer/dsl/opal/property_expression'
 require 'glimmer/dsl/opal/combo_expression'
 require 'glimmer/dsl/opal/composite_expression'
@@ -42,6 +42,7 @@ module Glimmer
          data_binding
          text
          property
+         widget
        ]
       )
     end

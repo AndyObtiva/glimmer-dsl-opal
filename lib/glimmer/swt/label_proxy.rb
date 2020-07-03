@@ -1,8 +1,8 @@
-require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class LabelProxy < ElementProxy
+  module SWT
+    class LabelProxy < WidgetProxy
       attr_reader :text
 
       def text=(value)

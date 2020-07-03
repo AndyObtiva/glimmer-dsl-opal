@@ -1,10 +1,10 @@
-require 'glimmer/opal/property_owner'
+require 'glimmer/swt/property_owner'
 
 module Glimmer
   module Opal
     class ElementProxy
       include Glimmer
-      include PropertyOwner
+      include Glimmer::SWT::PropertyOwner
       attr_reader :parent, :args, :css_classes, :css, :children, :enabled
       
       class << self

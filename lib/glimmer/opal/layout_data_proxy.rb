@@ -1,9 +1,9 @@
-require 'glimmer/opal/property_owner'
+require 'glimmer/swt/property_owner'
 
 module Glimmer
   module Opal
     class LayoutDataProxy
-      include PropertyOwner
+      include Glimmer::SWT::PropertyOwner
       attr_reader :parent, 
                   :args, 
                   :horizontal_alignment, 

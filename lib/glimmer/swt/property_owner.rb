@@ -1,5 +1,5 @@
 module Glimmer
-  module Opal
+  module SWT
     # Adapts Glimmer UI classes to SWT JavaBean property owner classes (which are now adapted to Opal)
     module PropertyOwner
       def get_attribute(attribute_name)

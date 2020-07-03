@@ -1,8 +1,9 @@
-require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/grid_layout_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class DivProxy < ElementProxy
+  module SWT
+    class CompositeProxy < WidgetProxy
       attr_reader :layout
       
       def initialize(parent, args)
@@ -20,8 +21,9 @@ module Glimmer
       def dom
         div_id = id
         div_style = css
+        div_class = "#{name} grid-layout"
         @dom ||= DOM {
-          div(id: div_id, class: 'grid-layout', style: div_style)
+          div(id: div_id, class: div_class, style: div_style)
         }
       end
     end

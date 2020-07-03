@@ -1,8 +1,8 @@
-require 'glimmer/opal/div_proxy'
+require 'glimmer/swt/composite_proxy'
 
 module Glimmer
   module Opal
-    class TabItem < DivProxy
+    class TabItem < Glimmer::SWT::CompositeProxy
       include Glimmer
       attr_reader :text, :content_visible      
       

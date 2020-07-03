@@ -178,8 +178,9 @@ module Glimmer
         body_id = id
         body_style = '' # a start for more styling further along
         body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
+        body_class = name
         @dom ||= DOM {
-          div(id: body_id, class: 'shell', style: body_style) {                    
+          div(id: body_id, class: body_class, style: body_style) {                    
           }
         }.tap { |the_dom| the_dom >> head_dom }
       end

@@ -9,7 +9,7 @@ module GlimmerSpec
     let(:title) {'Hello, World!'}
     
     after do
-      Glimmer::SWT::WidgetProxy.reset_max_id_numbers
+      Glimmer::SWT::WidgetProxy.reset_max_id_numbers!
       @target.dispose if @target.respond_to?(:dispose)
     end
      
@@ -23,7 +23,7 @@ module GlimmerSpec
       expect($document.css('body > div#shell-1.shell > div.shell-style').first.inner_html).to eq(@target.head_style_css)
       expect($document.title).to eq(title)
     end
-     
+    
     it 'renders shell with label content' do
       @target = shell {
         label {
@@ -36,5 +36,21 @@ module GlimmerSpec
       expect(label_element).to be_a(Browser::DOM::Element)
       expect(label_element.inner_html).to eq(title)
     end
+    
+    it 'renders shell with composite containing combo' do
+      @target = shell {
+        composite {
+          combo {
+          }
+        }
+      }
+      
+      composite_element = $document.css('body > div#shell-1.shell > div#composite-1.composite').first
+      expect(composite_element).to be_a(Browser::DOM::Element)
+      combo_element = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1').first
+      expect(combo_element).to be_a(Browser::DOM::Element::Select)
+    end
+    
+    it 'renders shell with composite containing combo (read only)'
   end
 end

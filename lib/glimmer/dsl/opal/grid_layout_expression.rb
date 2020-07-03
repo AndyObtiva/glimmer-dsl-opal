@@ -1,6 +1,6 @@
 require 'glimmer/dsl/static_expression'
 require 'glimmer/dsl/parent_expression'
-require 'glimmer/opal/grid_layout_proxy'
+require 'glimmer/swt/grid_layout_proxy'
 
 module Glimmer
   module DSL
@@ -9,7 +9,7 @@ module Glimmer
         include ParentExpression
 
         def interpret(parent, keyword, *args, &block)
-          Glimmer::Opal::GridLayoutProxy.new(parent, args)
+          Glimmer::SWT::GridLayoutProxy.new(parent, args)
         end
       end
     end

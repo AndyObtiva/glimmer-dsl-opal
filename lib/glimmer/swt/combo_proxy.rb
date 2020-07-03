@@ -1,10 +1,9 @@
 require 'glimmer/data_binding/observable_element'
-require 'glimmer/opal/event_listener_proxy'
-require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class SelectProxy < ElementProxy
+  module SWT
+    class ComboProxy < WidgetProxy
       include Glimmer::DataBinding::ObservableElement
       attr_reader :text, :items
       
@@ -42,8 +41,9 @@ module Glimmer
         items = @items
         select_id = id
         select_style = css
+        select_class = name
         @dom ||= DOM {
-          select(id: select_id, style: select_style) {
+          select(id: select_id, class: select_class, style: select_style) {
             items.to_a.each do |item|
               option_hash = {value: item}
               option_hash[:selected] = 'selected' if select_text == item

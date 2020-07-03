@@ -1,7 +1,7 @@
 require 'glimmer/dsl/expression'
 require 'glimmer/data_binding/model_binding'
 require 'glimmer/data_binding/element_binding'
-require 'glimmer/opal/select_proxy'
+require 'glimmer/swt/combo_proxy'
 
 module Glimmer
   module DSL

@@ -17,10 +17,10 @@ module Glimmer
         end
         
         def max_id_numbers
-          @max_id_numbers ||= reset_max_id_numbers
+          @max_id_numbers ||= reset_max_id_numbers!
         end
         
-        def reset_max_id_numbers
+        def reset_max_id_numbers!
           @max_id_numbers = {}
         end
       end

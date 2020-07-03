@@ -1,5 +1,5 @@
 module Glimmer
-  module Opal
+  module SWT
     class EventListenerProxy
       attr_reader :element_proxy, :event, :selector, :delegate
 

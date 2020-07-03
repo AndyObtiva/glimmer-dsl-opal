@@ -1,3 +1,4 @@
+require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 
 module Glimmer
@@ -9,6 +10,7 @@ module Glimmer
       attr_reader :parent, :args, :css_classes, :css, :children, :enabled
       
       class << self
+        # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args)
           the_widget_class = widget_class(keyword) || Glimmer::SWT::LabelProxy
           the_widget_class.new(parent, args)
@@ -36,10 +38,10 @@ module Glimmer
         end
         
         def max_id_numbers
-          @max_id_numbers ||= reset_max_id_numbers
+          @max_id_numbers ||= reset_max_id_numbers!
         end
         
-        def reset_max_id_numbers
+        def reset_max_id_numbers!
           @max_id_numbers = {}
         end
       end

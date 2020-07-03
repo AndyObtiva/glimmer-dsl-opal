@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-07-02"
+  s.date = "2020-07-03"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -34,9 +34,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/browser_expression.rb",
     "lib/glimmer/dsl/opal/button_expression.rb",
     "lib/glimmer/dsl/opal/column_properties_expression.rb",
-    "lib/glimmer/dsl/opal/combo_expression.rb",
     "lib/glimmer/dsl/opal/combo_selection_data_binding_expression.rb",
-    "lib/glimmer/dsl/opal/composite_expression.rb",
     "lib/glimmer/dsl/opal/data_binding_expression.rb",
     "lib/glimmer/dsl/opal/dsl.rb",
     "lib/glimmer/dsl/opal/grid_layout_expression.rb",
@@ -56,22 +54,21 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/widget_expression.rb",
     "lib/glimmer/dsl/opal/widget_listener_expression.rb",
     "lib/glimmer/opal/display_proxy.rb",
-    "lib/glimmer/opal/div_proxy.rb",
-    "lib/glimmer/opal/document_proxy.rb",
     "lib/glimmer/opal/element_proxy.rb",
-    "lib/glimmer/opal/event_listener_proxy.rb",
-    "lib/glimmer/opal/grid_layout_proxy.rb",
     "lib/glimmer/opal/iframe_proxy.rb",
     "lib/glimmer/opal/input_proxy.rb",
     "lib/glimmer/opal/layout_data_proxy.rb",
     "lib/glimmer/opal/list_proxy.rb",
     "lib/glimmer/opal/modal.rb",
-    "lib/glimmer/opal/select_proxy.rb",
     "lib/glimmer/opal/tab_folder.rb",
     "lib/glimmer/opal/tab_item.rb",
     "lib/glimmer/opal/table_column.rb",
     "lib/glimmer/opal/table_item.rb",
     "lib/glimmer/opal/table_proxy.rb",
+    "lib/glimmer/swt/combo_proxy.rb",
+    "lib/glimmer/swt/composite_proxy.rb",
+    "lib/glimmer/swt/event_listener_proxy.rb",
+    "lib/glimmer/swt/grid_layout_proxy.rb",
     "lib/glimmer/swt/label_proxy.rb",
     "lib/glimmer/swt/point.rb",
     "lib/glimmer/swt/property_owner.rb",

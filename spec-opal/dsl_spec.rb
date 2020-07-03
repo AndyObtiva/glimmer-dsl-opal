@@ -45,7 +45,7 @@ module GlimmerSpec
       end
     end
     
-    xit 'renders shell with label content' do
+    it 'renders shell with label content' do
       @target = shell {
         label {
           text title
@@ -53,9 +53,11 @@ module GlimmerSpec
       }
       @target.open
 
-      label_element = $document.css('body > div#shell-1.shell > label#label-1.label').first
-      expect(label_element).to be_a(Browser::DOM::Element)
-      expect(label_element.inner_html).to eq(title)
+      Document.ready? do
+        label_element = Document.find('body > div#shell-1.shell > label#label-1.label').first
+        expect(label_element).to be_a(Element)
+        expect(label_element.inner_html).to eq(title)
+      end
     end
     
     xit 'renders shell with composite containing combo (read only)' do

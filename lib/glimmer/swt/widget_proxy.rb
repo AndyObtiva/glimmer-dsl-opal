@@ -63,7 +63,7 @@ module Glimmer
       def add_child(child)
 #         return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition        
         @children << child
-        dom << child.dom
+        Document.find(path) << child.dom
       end
       
       def enabled=(value)

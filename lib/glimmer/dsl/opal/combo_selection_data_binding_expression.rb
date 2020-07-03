@@ -10,7 +10,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           keyword == 'selection' and
             block.nil? and
-            parent.is_a?(Glimmer::Opal::SelectProxy) and
+            parent.is_a?(Glimmer::SWT::ComboProxy) and
             args.size == 1 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_options_property.is_a?(Array)

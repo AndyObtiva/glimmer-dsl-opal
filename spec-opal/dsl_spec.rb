@@ -77,7 +77,7 @@ module GlimmerSpec
       end
     end
     
-    xit 'renders shell with composite containing data-bound combo (read only)' do
+    it 'renders shell with composite containing data-bound combo (read only)' do
       person = Person.new
       @target = shell {
         composite {
@@ -87,40 +87,34 @@ module GlimmerSpec
         }
       }
       
-      composite_element = $document.css('body > div#shell-1.shell > div#composite-1.composite').first
-      expect(composite_element).to be_a(Browser::DOM::Element)
-      
-      combo_element = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
-      expect(combo_element).to be_a(Browser::DOM::Element::Select)
-      expect(combo_element.value).to eq('Canada')
-      
-      combo_option_element1 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(1)').first
-      expect(combo_option_element1).to be_a(Browser::DOM::Element)
-      expect(combo_option_element1.inner_html).to eq('')
-      
-      combo_option_element2 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(2)').first
-      expect(combo_option_element2).to be_a(Browser::DOM::Element)
-      expect(combo_option_element2.inner_html).to eq('Canada')
-      
-      combo_option_element3 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(3)').first
-      expect(combo_option_element3).to be_a(Browser::DOM::Element)
-      expect(combo_option_element3.inner_html).to eq('US')
-      
-      combo_option_element4 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(4)').first
-      expect(combo_option_element4).to be_a(Browser::DOM::Element)
-      expect(combo_option_element4.inner_html).to eq('Mexico')
-      
-#       expect(combo_element.value).to eq('Canada')
-#       combo_option_element2.remove_attribute('selected')
-#       combo_option_element3['selected'] = 'selected'
-#       combo_element['value'] = 'US'
-#       expect(combo_element.value).to eq('US')
-#       combo_element.trigger 'change'
-
-      combo_jquery_element = Element.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
-      puts combo_jquery_element
-      
-#       expect(person.country).to eq('US')
+      Document.ready? do
+        composite_element = Document.find('body > div#shell-1.shell > div#composite-1.composite').first
+        expect(composite_element).to be_a(Browser::DOM::Element)
+        
+        combo_element = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
+        expect(combo_element).to be_a(Browser::DOM::Element::Select)
+        expect(combo_element.value).to eq('Canada')
+        
+        combo_option_element1 = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(1)').first
+        expect(combo_option_element1).to be_a(Browser::DOM::Element)
+        expect(combo_option_element1.inner_html).to eq('')
+        
+        combo_option_element2 = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(2)').first
+        expect(combo_option_element2).to be_a(Browser::DOM::Element)
+        expect(combo_option_element2.inner_html).to eq('Canada')
+        
+        combo_option_element3 = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(3)').first
+        expect(combo_option_element3).to be_a(Browser::DOM::Element)
+        expect(combo_option_element3.inner_html).to eq('US')
+        
+        combo_option_element4 = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(4)').first
+        expect(combo_option_element4).to be_a(Browser::DOM::Element)
+        expect(combo_option_element4.inner_html).to eq('Mexico')      
+        
+        combo_element.value = 'US'
+        
+        expect(person.country).to eq('US')
+      end      
     end
   end
 end

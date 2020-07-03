@@ -28,7 +28,6 @@ module Glimmer
             event: 'change',
             event_handler: -> (event_listener) {
               -> (event) {
-                puts 'handling event combo change'
                 @text = event.target.value
                 event_listener.call(event)              
               }

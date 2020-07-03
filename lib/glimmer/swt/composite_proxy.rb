@@ -22,7 +22,7 @@ module Glimmer
         div_id = id
         div_style = css
         div_class = "#{name} grid-layout"
-        @dom ||= DOM {
+        @dom ||= html {
           div(id: div_id, class: div_class, style: div_style)
         }
       end

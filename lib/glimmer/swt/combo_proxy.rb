@@ -43,7 +43,7 @@ module Glimmer
         select_id = id
         select_style = css
         select_class = name
-        @dom ||= DOM {
+        @dom ||= html {
           select(id: select_id, class: select_class, style: select_style) {
             items.to_a.each do |item|
               option_hash = {value: item}
@@ -53,7 +53,7 @@ module Glimmer
               } 
             end
           }
-        }
+        }.to_s
       end
     end
   end

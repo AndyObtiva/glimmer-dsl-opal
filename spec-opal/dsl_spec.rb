@@ -60,18 +60,21 @@ module GlimmerSpec
       end
     end
     
-    xit 'renders shell with composite containing combo (read only)' do
+    it 'renders shell with composite containing combo (read only)' do
       @target = shell {
         composite {
           combo(:read_only) {
           }
         }
       }
+      @target.open
       
-      composite_element = $document.css('body > div#shell-1.shell > div#composite-1.composite').first
-      expect(composite_element).to be_a(Browser::DOM::Element)
-      combo_element = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
-      expect(combo_element).to be_a(Browser::DOM::Element::Select)
+      Document.ready? do
+        composite_element = Document.find('body > div#shell-1.shell > div#composite-1.composite').first
+        expect(composite_element).to be_a(Element)
+        combo_element = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
+        expect(combo_element).to be_a(Element)
+      end
     end
     
     xit 'renders shell with composite containing data-bound combo (read only)' do

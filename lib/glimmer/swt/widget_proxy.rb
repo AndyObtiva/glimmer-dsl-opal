@@ -57,7 +57,16 @@ module Glimmer
       end
       
       def dispose
-#         Document.find(path).remove
+        Document.find(path).remove
+      end
+      
+      def path
+        "#{parent_path} > #{element}##{id}.#{name}"
+      end
+
+      # Root element representing widget. Must be overridden by subclasses if different from div
+      def element
+        'div'
       end
 
       def add_child(child)
@@ -79,7 +88,7 @@ module Glimmer
         if @dom
           old_dom = @dom
           @dom = nil
-          Document.find(path).replaceWith(dom)
+          Document.find(path).replace_with(dom)
         else
           Document.find(parent_path).append(dom)
         end

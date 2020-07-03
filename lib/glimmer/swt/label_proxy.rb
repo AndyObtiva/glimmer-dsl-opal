@@ -10,10 +10,10 @@ module Glimmer
         redraw
       end
       
-      def path
-        "#{parent_path} > label##{id}.#{name}"
+      def element
+        'label'
       end
-
+      
       def dom
         label_text = @text
         label_id = id

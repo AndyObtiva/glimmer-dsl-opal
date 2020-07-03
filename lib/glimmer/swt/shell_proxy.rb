@@ -15,8 +15,8 @@ module Glimmer
         end
       end
       
-      def path
-        "body > div##{id}.#{name}"
+      def element
+        'div'
       end
       
       def parent_path

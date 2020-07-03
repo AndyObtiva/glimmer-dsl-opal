@@ -22,12 +22,13 @@ module Glimmer
         redraw
       end
 
-      def observation_request_to_event_mapping
+      def observation_request_to_event_mapping      
         {
           'on_widget_selected' => {
             event: 'change',
             event_handler: -> (event_listener) {
               -> (event) {
+                puts 'handling event combo change'
                 @text = event.target.value
                 event_listener.call(event)              
               }

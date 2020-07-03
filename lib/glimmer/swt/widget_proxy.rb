@@ -7,7 +7,7 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :css_classes, :css, :children, :enabled
+      attr_reader :parent, :args, :path, :css_classes, :css, :children, :enabled
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -57,7 +57,7 @@ module Glimmer
       end
       
       def dispose
-        dom.remove
+#         Document.find(path).remove
       end
 
       def add_child(child)
@@ -70,14 +70,18 @@ module Glimmer
         @enabled = value
         redraw
       end
+      
+      def parent_path
+        @parent.path
+      end
 
       def redraw
         if @dom
           old_dom = @dom
           @dom = nil
-          old_dom.replace dom
+          Document.find(path).replaceWith(dom)
         else
-          dom
+          Document.find(parent_path).append(dom)
         end
         @children.each do |child|          
           child.redraw
@@ -165,7 +169,7 @@ module Glimmer
       
       def set_attribute(attribute_name, *args)
         apply_property_type_converters(attribute_name, args)
-        super(attribute_name, *args)
+        super(attribute_name, *args) # PropertyOwner
       end
       
       def apply_property_type_converters(attribute_name, args)

@@ -1,6 +1,3 @@
-require 'opal'
-require 'browser'
-
 require 'glimmer/dsl/engine'
 # Dir[File.expand_path('../*_expression.rb', __FILE__)].each {|f| require f}
 require 'glimmer/dsl/opal/shell_expression'

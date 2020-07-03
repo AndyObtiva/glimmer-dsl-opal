@@ -10,9 +10,17 @@ module Glimmer
       def initialize(args)
         @args = args
         @children = []
-        $document.ready do
-          $document.body << dom
+        Document.ready? do
+          redraw
         end
+      end
+      
+      def path
+        "body > div##{id}.#{name}"
+      end
+      
+      def parent_path
+        'body'
       end
 
       def text
@@ -20,8 +28,8 @@ module Glimmer
       end
 
       def text=(value)
-        $document.ready do
-          $document.title = value
+        Document.ready? do
+          Document.title = value
         end
       end
       
@@ -166,7 +174,7 @@ module Glimmer
       def head_dom
         head_dom_css = head_style_css
         # TODO make grid-layout support grab excess space false
-        @head_dom ||= DOM {
+        @head_dom ||= html {
           div(class: 'shell-style') {
             head_dom_css
           }
@@ -179,14 +187,15 @@ module Glimmer
         body_style = '' # a start for more styling further along
         body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
         body_class = name
-        @dom ||= DOM {
-          div(id: body_id, class: body_class, style: body_style) {                    
+        @dom ||= html {
+#           head_dom
+          div(id: body_id, class: body_class, style: body_style) {
           }
-        }.tap { |the_dom| the_dom >> head_dom }
+        }.to_s
       end
       
       def open
-        # No Op (just a placeholder since it is not needed on the web)
+        # TODO make it start as hidden and show shell upon open
       end
     end
   end

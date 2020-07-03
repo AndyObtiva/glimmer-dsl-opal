@@ -38,12 +38,14 @@ module GlimmerSpec
       }
       @target.open
 
-      expect($document.css('body > div#shell-1.shell').first).to be_a(Browser::DOM::Element)
-      expect($document.css('body > div#shell-1.shell > div.shell-style').first.inner_html).to eq(@target.head_style_css)
-      expect($document.title).to eq(title)
+      Document.ready? do
+        expect(Document.title).to eq(title)
+        expect(Document.find('body > div#shell-1.shell').first).to be_a(Element)
+        expect(Document.find('body > div#shell-1.shell > div.shell-style').first.inner_html).to eq(@target.head_style_css)
+      end
     end
     
-    it 'renders shell with label content' do
+    xit 'renders shell with label content' do
       @target = shell {
         label {
           text title
@@ -56,7 +58,7 @@ module GlimmerSpec
       expect(label_element.inner_html).to eq(title)
     end
     
-    it 'renders shell with composite containing combo (read only)' do
+    xit 'renders shell with composite containing combo (read only)' do
       @target = shell {
         composite {
           combo(:read_only) {
@@ -70,7 +72,7 @@ module GlimmerSpec
       expect(combo_element).to be_a(Browser::DOM::Element::Select)
     end
     
-    it 'renders shell with composite containing data-bound combo (read only)' do
+    xit 'renders shell with composite containing data-bound combo (read only)' do
       person = Person.new
       @target = shell {
         composite {
@@ -85,6 +87,7 @@ module GlimmerSpec
       
       combo_element = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
       expect(combo_element).to be_a(Browser::DOM::Element::Select)
+      expect(combo_element.value).to eq('Canada')
       
       combo_option_element1 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(1)').first
       expect(combo_option_element1).to be_a(Browser::DOM::Element)
@@ -101,6 +104,18 @@ module GlimmerSpec
       combo_option_element4 = $document.css('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo > option:nth-child(4)').first
       expect(combo_option_element4).to be_a(Browser::DOM::Element)
       expect(combo_option_element4.inner_html).to eq('Mexico')
+      
+#       expect(combo_element.value).to eq('Canada')
+#       combo_option_element2.remove_attribute('selected')
+#       combo_option_element3['selected'] = 'selected'
+#       combo_element['value'] = 'US'
+#       expect(combo_element.value).to eq('US')
+#       combo_element.trigger 'change'
+
+      combo_jquery_element = Element.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
+      puts combo_jquery_element
+      
+#       expect(person.country).to eq('US')
     end
   end
 end

@@ -132,24 +132,27 @@ module GlimmerSpec
       end      
     end
      
-    xit 'renders shell with composite containing listener-bound button' do
+    it 'renders shell with composite containing listener-bound button' do
       person = Person.new
-      @target = shell {
-        composite {
-          button {
-            text "Reset"
-            on_widget_selected do
-              person.reset_country
-            end
+      Document.ready? do
+        @target = shell {
+          composite {
+            button {
+              text "Reset"
+              on_widget_selected do
+                person.reset_country
+              end
+            }
           }
         }
-      }
-       
-      Document.ready? do
-        combo_element = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
-        person.country = 'Mexico'
          
-        expect(combo_element.value).to eq('Mexico')
+        button_element = Document.find('body > div#shell-1.shell > div#composite-1.composite > button#button-1.button').first
+        expect(button_element).to be_a(Element)
+        
+        person.country = 'Mexico'
+        button_element.trigger(:click)
+        
+        expect(person.country).to eq('Canada')
       end      
     end
   end

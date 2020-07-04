@@ -15,5 +15,4 @@ require 'glimmer/dsl/opal/dsl'
 require 'glimmer/data_binding/ext/observable_model'
 
 require 'glimmer-dsl-xml'
-Element.alias_native :replaceWith
-Element.alias_method :replace_with, :replaceWith
+Element.alias_native :replace_with, :replaceWith

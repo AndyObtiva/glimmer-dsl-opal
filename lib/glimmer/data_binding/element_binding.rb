@@ -27,7 +27,7 @@ module Glimmer
         @element.set_attribute(@property, converted_value) unless evaluate_property == converted_value
       end
       
-      def evaluate_property
+      def evaluate_property        
         @element.send(@property)
       end
     end

@@ -11,9 +11,7 @@ module Glimmer
         include ParentExpression
 
         def interpret(parent, keyword, *args, &block)
-#           Document.ready? do
-            Glimmer::SWT::ShellProxy.new(*args)
-#           end
+          Glimmer::SWT::ShellProxy.new(*args)
         end
       end
     end

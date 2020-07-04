@@ -30,11 +30,11 @@ module GlimmerSpec
     after do
       Document.ready? do
         Glimmer::SWT::WidgetProxy.reset_max_id_numbers!
-#         @target.dispose if @target && @target.respond_to?(:dispose)
+        @target.dispose if @target && @target.respond_to?(:dispose)
       end
     end
      
-    xit 'renders empty shell with title and CSS shell-style div' do
+    it 'renders empty shell with title and CSS shell-style div' do
       Document.ready? do
         @target = shell {
           text title
@@ -50,7 +50,7 @@ module GlimmerSpec
     end
     
     # TODO add test for minimum_size
-    xit 'renders shell with label content' do
+    it 'renders shell with label content' do
       Document.ready? do
         @target = shell {
           @label = label {
@@ -67,7 +67,7 @@ module GlimmerSpec
       end
     end
     
-    xit 'renders shell with composite containing combo (read only)' do
+    it 'renders shell with composite containing combo (read only)' do
       Document.ready? do
         @target = shell {
           @composite = composite {
@@ -125,15 +125,14 @@ module GlimmerSpec
         combo_element.trigger(:change)
           
         expect(person.country).to eq('US')
-  
-        person.country = 'Mexico'
-           
-        combo_element = Document.find('body > div#shell-1.shell > div#composite-1.composite > select#combo-1.combo').first
-#         expect(combo_element.value).to eq('Mexico')
+        
+        person.country = 'Mexico'        
+        
+        expect(combo_element.value).to eq('Mexico')
       end      
     end
      
-    it 'renders shell with composite containing listener-bound button' do
+    xit 'renders shell with composite containing listener-bound button' do
       person = Person.new
       @target = shell {
         composite {

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 0.9.3'
+gem 'glimmer', '~> 0.9.3', path: '../glimmer'
 gem 'glimmer-dsl-xml', '~> 0.1.0'
 
 group :development, :test do

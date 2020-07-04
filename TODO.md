@@ -18,6 +18,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Checkbox button
 - Support multiple windows as multiple tabs
 - Support different themes by detecting browser OS (Mac, Windows, Linux)
+- Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 
 ## Samples
 

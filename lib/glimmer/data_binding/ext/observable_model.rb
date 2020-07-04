@@ -24,10 +24,10 @@ module Glimmer
             old_value = self.send(property_name)
             unregister_dependent_observers(property_name, old_value)
             self.send("__original_#{property_writer_name}", value)
-            Glimmer::Opal::DisplayProxy.instance.async_exec do
-              notify_observers(property_name)
-              ensure_array_object_observer(property_name, value, old_value)
-            end
+#             Glimmer::Opal::DisplayProxy.instance.async_exec do
+            notify_observers(property_name)
+            ensure_array_object_observer(property_name, value, old_value)
+#             end
           end
         end
       rescue => e

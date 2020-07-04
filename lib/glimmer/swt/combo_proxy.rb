@@ -18,6 +18,7 @@ module Glimmer
       
       def text=(value)
         @text = value
+        Document.find(path)&.value = value
         redraw
       end
       

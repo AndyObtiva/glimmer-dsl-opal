@@ -13,11 +13,9 @@ module Glimmer
       
       def redraw
         super()
-#         Document.ready? do
-          @children.each do |child|
-            add_child(child) # TODO think of impact of this on performance, and of other alternatives
-          end
-#         end
+        @children.each do |child|
+          add_child(child) # TODO think of impact of this on performance, and of other alternatives
+        end
       end
       
       def dom

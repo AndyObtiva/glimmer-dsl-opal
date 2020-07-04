@@ -12,6 +12,10 @@ module Glimmer
         @items = []
       end
       
+      def element
+        'select'
+      end
+      
       def text=(value)
         @text = value
         redraw
@@ -27,7 +31,7 @@ module Glimmer
           'on_widget_selected' => {
             event: 'change',
             event_handler: -> (event_listener) {
-              -> (event) {
+              -> (event) {                
                 @text = event.target.value
                 event_listener.call(event)              
               }

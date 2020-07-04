@@ -9,11 +9,11 @@ module Glimmer
       
       def async_exec(&block)
         executer = lambda do
-          if $document.at_css('.modal')
+          if Document.find('.modal').to_a.empty?
+            block.call
+          else
             sleep(0.05)
             Async::Task.new(&executer)
-          else
-            block.call
           end
         end
         Async::Task.new(&executer)

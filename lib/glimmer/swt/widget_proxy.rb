@@ -165,7 +165,7 @@ module Glimmer
           event_handler = mapping[:event_handler]
           potential_event_listener = event_handler&.call(event_listener)
           event_listener = event_handler&.call(event_listener) || event_listener
-          delegate = $document.on(event, selector, &event_listener)
+          delegate = Document.find(path).on(event, &event_listener)
         end
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end

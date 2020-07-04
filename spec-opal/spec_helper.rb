@@ -10,4 +10,13 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+  
+  config.after do
+    Document.ready? do
+      Glimmer::SWT::WidgetProxy.reset_max_id_numbers!
+      @target.dispose if @target && @target.respond_to?(:dispose)
+    end
+  end
 end
+
+require 'glimmer-dsl-opal'

@@ -13,9 +13,11 @@ module Glimmer
       
       def redraw
         super()
-        @children.each do |child|
-          add_child(child) # TODO think of impact of this on performance, and of other alternatives
-        end
+#         Document.ready? do
+          @children.each do |child|
+            add_child(child) # TODO think of impact of this on performance, and of other alternatives
+          end
+#         end
       end
       
       def dom
@@ -24,7 +26,7 @@ module Glimmer
         div_class = "#{name} grid-layout"
         @dom ||= html {
           div(id: div_id, class: div_class, style: div_style)
-        }
+        }.to_s
       end
     end
   end

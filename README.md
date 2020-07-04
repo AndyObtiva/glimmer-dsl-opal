@@ -57,6 +57,7 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 
 - Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
 - Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
+- jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the glimmer-dsl-opal rubygem)
 
 ## Setup
 

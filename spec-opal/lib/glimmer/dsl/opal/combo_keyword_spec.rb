@@ -4,25 +4,6 @@ module GlimmerSpec
   RSpec.describe 'combo keyword' do
     include Glimmer
     
-    before :all do
-      class Person
-        attr_accessor :country, :country_options
-        
-        def initialize
-          self.country_options=["", "Canada", "US", "Mexico"]
-          self.country = "Canada"
-        end
-      
-        def reset_country
-          self.country = "Canada"
-        end
-      end    
-    end
-    
-    after :all do
-      GlimmerSpec.send(:remove_const, :Person) if GlimmerSpec.const_defined?(:Person)
-    end
-    
     it 'renders shell with composite containing combo (read only)' do
       Document.ready? do
         @target = shell {

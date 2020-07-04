@@ -3,9 +3,8 @@ require 'opal/rspec'
 require 'opal-async'
 require 'opal-jquery'
 
-Opal.use_gem 'glimmer-dsl-xml'
-
 Opal.use_gem 'glimmer-dsl-opal'
+Opal.use_gem 'glimmer-dsl-xml'
 
 # or use Opal::RSpec::SprocketsEnvironment.new(spec_pattern='spec-opal/**/*_spec.{rb,opal}') to customize the pattern
 sprockets_env = Opal::RSpec::SprocketsEnvironment.new

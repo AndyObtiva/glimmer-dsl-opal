@@ -20,3 +20,4 @@ RSpec.configure do |config|
 end
 
 require 'glimmer-dsl-opal'
+require 'fixtures/person'

@@ -39,7 +39,7 @@ module Glimmer
       end
 
       def call(value)
-        PROPERTY_TYPE_UPDATERS[@property_type].call(@element_proxy, value) unless evaluate_property == value
+        PROPERTY_TYPE_UPDATERS[@property_type].call(@element_proxy, value) unless !evaluate_property.is_a?(Array) && evaluate_property == value
       end
 
       def evaluate_property

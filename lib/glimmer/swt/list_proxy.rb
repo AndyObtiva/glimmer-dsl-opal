@@ -6,7 +6,7 @@ module Glimmer
       ITEM_EMPTY = '_____'
       attr_reader :items, :selection
       
-      def initialize(parent, args)
+      def initialize(parent, args)        
         super(parent, args)
         @selection = []
       end

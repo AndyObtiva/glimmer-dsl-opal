@@ -47,7 +47,7 @@ module Glimmer
       end
       
       def initialize(parent, args)
-        @parent = parent
+        @parent = parent        
         @args = args
         @children = Set.new
         @css_classes = Set.new

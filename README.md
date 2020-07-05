@@ -12,7 +12,7 @@ Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com
 - Automatically inferred `property_options` for `list` and `combo` data-binding
 - `observe(model, property)` free-form observing
 
-NOTE: Alpha Version 0.0.9 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.1.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -76,8 +76,10 @@ Add the following to `Gemfile`:
 ```
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.1.0'
-gem 'opal-browser', '~> 0.2.0'
-gem 'glimmer-dsl-opal', '~> 0.0.9', require: false
+gem 'opal-jquery', '~> 0.4.4'
+gem 'glimmer-dsl-opal', '~> 0.1.0', require: false
+gem 'glimmer-dsl-xml', '~> 0.1.0', require: false
+
 ```
 
 Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb

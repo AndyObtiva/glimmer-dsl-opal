@@ -30,7 +30,9 @@ module Glimmer
         input_disabled = @enabled ? {} : {'disabled': 'disabled'}
         input_args = input_args.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
-          button input_args.merge(id: input_id, class: name, style: input_style, value: input_text, style: 'min-width: 27px;').merge(input_disabled)
+          button(input_args.merge(id: input_id, class: name, style: input_style, style: 'min-width: 27px;').merge(input_disabled)) {
+            input_text
+          }
         }.to_s
       end
     end

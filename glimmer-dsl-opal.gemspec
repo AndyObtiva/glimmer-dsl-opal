@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-07-03"
+  s.date = "2020-07-05"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -32,7 +32,6 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/async_exec_expression.rb",
     "lib/glimmer/dsl/opal/bind_expression.rb",
     "lib/glimmer/dsl/opal/browser_expression.rb",
-    "lib/glimmer/dsl/opal/button_expression.rb",
     "lib/glimmer/dsl/opal/column_properties_expression.rb",
     "lib/glimmer/dsl/opal/combo_selection_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/data_binding_expression.rb",
@@ -65,6 +64,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/opal/table_column.rb",
     "lib/glimmer/opal/table_item.rb",
     "lib/glimmer/opal/table_proxy.rb",
+    "lib/glimmer/swt/button_proxy.rb",
     "lib/glimmer/swt/combo_proxy.rb",
     "lib/glimmer/swt/composite_proxy.rb",
     "lib/glimmer/swt/event_listener_proxy.rb",
@@ -74,6 +74,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/property_owner.rb",
     "lib/glimmer/swt/shell_proxy.rb",
     "lib/glimmer/swt/widget_proxy.rb",
+    "lib/jquery.js",
     "lib/samples/elaborate/contact_manager.rb",
     "lib/samples/elaborate/contact_manager/contact.rb",
     "lib/samples/elaborate/contact_manager/contact_manager_presenter.rb",
@@ -105,23 +106,27 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :add_runtime_dependency then
     s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
+    s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 0.1.0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_development_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
     s.add_development_dependency(%q<jeweler>.freeze, [">= 2.3.9", "< 3.0.0"])
     s.add_development_dependency(%q<rdoc>.freeze, [">= 6.2.1", "< 7.0.0"])
     s.add_development_dependency(%q<opal-rspec>.freeze, ["~> 0.8.0.alpha2"])
+    s.add_development_dependency(%q<opal-rails>.freeze, ["~> 1.1.2"])
     s.add_development_dependency(%q<opal-async>.freeze, ["~> 1.1.0"])
-    s.add_development_dependency(%q<opal-browser>.freeze, ["~> 0.2.0"])
+    s.add_development_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
     s.add_development_dependency(%q<glimmer-dsl-opal>.freeze, [">= 0"])
   else
     s.add_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
+    s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 0.1.0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
     s.add_dependency(%q<jeweler>.freeze, [">= 2.3.9", "< 3.0.0"])
     s.add_dependency(%q<rdoc>.freeze, [">= 6.2.1", "< 7.0.0"])
     s.add_dependency(%q<opal-rspec>.freeze, ["~> 0.8.0.alpha2"])
+    s.add_dependency(%q<opal-rails>.freeze, ["~> 1.1.2"])
     s.add_dependency(%q<opal-async>.freeze, ["~> 1.1.0"])
-    s.add_dependency(%q<opal-browser>.freeze, ["~> 0.2.0"])
+    s.add_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
     s.add_dependency(%q<glimmer-dsl-opal>.freeze, [">= 0"])
   end
 end

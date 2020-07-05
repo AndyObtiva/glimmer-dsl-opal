@@ -11,7 +11,8 @@ module Glimmer
         @args = args
         @children = []
 #         Document.ready? do
-          redraw
+        Document.find('body').empty unless ENV['RUBY_ENV'] == 'test'
+        redraw
 #         end
       end
       

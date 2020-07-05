@@ -254,7 +254,7 @@ module Glimmer
 #               }
 #             end,
 #           },
-          InputProxy => {
+          TextProxy => {
             :text => lambda do |observer|
               on_modify_text { |modify_event|
                 observer.call(text)
@@ -319,7 +319,7 @@ module Glimmer
 #               }
 #             end,
 #           },
-#           InputProxy => {
+#           Button => { #radio?
 #             :selection => lambda do |observer|
 #               on_widget_selected { |selection_event|
 #                 observer.call(getSelection)

@@ -66,6 +66,10 @@ module Glimmer
           li.empty-list-item {
             color: transparent;
           }
+          .selected {
+            background: rgb(80, 116, 211);
+            color: white;
+          }            
         CSS
 #           .tabs {
 #             overflow: hidden;
@@ -153,11 +157,6 @@ module Glimmer
 #             color: #000;
 #             text-decoration: none;
 #             cursor: pointer;
-#           }
-#            
-#           .selected {
-#             background: rgb(80, 116, 211);
-#             color: white;
 #           }
 #            
 #           table {

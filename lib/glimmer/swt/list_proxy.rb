@@ -44,9 +44,11 @@ module Glimmer
             event: 'click',
             event_handler: -> (event_listener) {
               -> (event) {
-                selected_item = event.target.text
-                select(index_of(selected_item), event.meta_key)
-                event_listener.call(event)              
+                if event.target.prop('nodeName') == 'LI'
+                  selected_item = event.target.text
+                  select(index_of(selected_item), event.meta_key)
+                  event_listener.call(event)              
+                end
               }
             }
           }
@@ -72,6 +74,7 @@ module Glimmer
                 item
               }
             end
+            nil #TODO   look into glimmer-dsl-xml and why it doesn't ignore collections like each_with_index
           }
         }.to_s
       end

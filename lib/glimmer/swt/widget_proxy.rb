@@ -358,6 +358,7 @@ module Glimmer
   end
 end
 
+require 'glimmer/swt/browser_proxy'
 require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/composite_proxy'

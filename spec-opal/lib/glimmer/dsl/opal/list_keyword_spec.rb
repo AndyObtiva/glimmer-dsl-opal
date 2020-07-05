@@ -4,8 +4,6 @@ module GlimmerSpec
   RSpec.describe 'list keyword' do
     include Glimmer
     
-    let(:title) {'Hello, World!'}
-        
     it 'renders and binds list widget for single selection' do
       person = Person.new
       Document.ready? do

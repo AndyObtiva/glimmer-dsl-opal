@@ -21,6 +21,24 @@ module GlimmerSpec
       end           
     end
      
-      it 'sets minimum_size'
+    it 'sets minimum_size' do
+      Document.ready? do
+        @target = shell {
+          minimum_size 640, 480
+        }
+        @target.open
+         
+        expect(@target).to be_a(Glimmer::SWT::ShellProxy)
+   
+        shell_element = Document.find('body > div#shell-1.shell').first
+        expect(shell_element).to be_a(Element)
+        expect(shell_element.css('min-width')).to eq("640px")
+        expect(shell_element.css('min-height')).to eq("480px")
+        
+        body_element = Document.find('body')
+        expect(body_element.css('min-width')).to eq("640px")
+        expect(body_element.css('min-height')).to eq("480px")
+      end
+    end
   end
 end

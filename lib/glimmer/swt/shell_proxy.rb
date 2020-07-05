@@ -45,12 +45,12 @@ module Glimmer
             width: 100%;
             height: 100%;
           }
-          body {
+          body, .shell {
             width: 100%;
             height: 100%;
             margin: 0;
           }
-          body > iframe {
+          .shell iframe {
             width: 100%;
             height: 100%;
           }
@@ -178,9 +178,13 @@ module Glimmer
       def dom
         i = 0
         body_id = id
-        body_style = '' # a start for more styling further along
-        body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
         body_class = name
+        body_style = '' # a start for more styling further along
+        if @minimum_size
+          body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
+          Document.find('body').css('min-width', "#{@minimum_size.x}px")
+          Document.find('body').css('min-height', "#{@minimum_size.y}px")
+        end
         @dom ||= html {
           div(id: body_id, class: body_class, style: body_style) {
             style_dom

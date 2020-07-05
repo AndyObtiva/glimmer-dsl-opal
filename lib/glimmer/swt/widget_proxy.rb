@@ -71,7 +71,7 @@ module Glimmer
 
       def add_child(child)
 #         Document.ready? do
-#           return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition        
+#           return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition
           @children << child
           Document.find(path).append(child.dom)
 #         end
@@ -79,6 +79,7 @@ module Glimmer
       
       def enabled=(value)
         @enabled = value
+        # TODO consider relying less on redraw in setters in the future
         redraw
       end
       
@@ -93,6 +94,12 @@ module Glimmer
           Document.find(path).replace_with(dom)
         else
           Document.find(parent_path).append(dom)
+        end
+        @observation_requests&.clone&.each do |keyword, event_listener_set|
+          event_listener_set.each do |event_listener|
+            @observation_requests[keyword].delete(event_listener)
+            handle_observation_request(keyword, &event_listener)
+          end
         end
         @children.each do |child|          
           child.redraw
@@ -158,15 +165,19 @@ module Glimmer
       
       def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
+        @observation_requests ||= {}
+        @observation_requests[keyword] ||= Set.new
         event = nil
         delegate = nil
         [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+          @observation_requests[keyword] << event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
           potential_event_listener = event_handler&.call(event_listener)
-          event_listener = event_handler&.call(event_listener) || event_listener
+          event_listener = potential_event_listener || event_listener
           delegate = Document.find(path).on(event, &event_listener)
         end
+        # TODO update code below for new WidgetProxy API
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
       
@@ -351,4 +362,5 @@ require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/composite_proxy'
 require 'glimmer/swt/label_proxy'
+require 'glimmer/swt/list_proxy'
 require 'glimmer/swt/text_proxy'

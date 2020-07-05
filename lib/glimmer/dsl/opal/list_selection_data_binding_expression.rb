@@ -2,7 +2,7 @@ require 'glimmer/dsl/expression'
 require 'glimmer/data_binding/model_binding'
 require 'glimmer/data_binding/element_binding'
 require 'glimmer/data_binding/list_selection_binding'
-require 'glimmer/opal/list_proxy'
+require 'glimmer/swt/list_proxy'
 
 module Glimmer
   module DSL
@@ -11,7 +11,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           keyword == 'selection' and
             block.nil? and
-            parent.is_a?(Glimmer::Opal::ListProxy) and
+            parent.is_a?(Glimmer::SWT::ListProxy) and
             args.size == 1 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_options_property.is_a?(Array)
@@ -31,7 +31,6 @@ module Glimmer
           list_selection_binding.call(model_binding.evaluate_property)
           #TODO check if nested data binding works for list widget and other widgets that need custom data binding
           list_selection_binding.observe(model, model_binding.property_name_expression)
-  
           parent.on_widget_selected do
             model_binding.call(list_selection_binding.evaluate_property)
           end

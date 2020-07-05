@@ -1,8 +1,8 @@
-require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class ListProxy < ElementProxy
+  module SWT
+    class ListProxy < WidgetProxy
       ITEM_EMPTY = '_____'
       attr_reader :items, :selection
       
@@ -13,7 +13,7 @@ module Glimmer
       
       def items=(items)
         @items = items.map {|item| item.strip == '' ? ITEM_EMPTY : item}
-        redraw
+        redraw # consider repopulating li's instead of redrawing when li's are available.
       end
       
       def index_of(item)
@@ -43,9 +43,9 @@ module Glimmer
           'on_widget_selected' => {
             event: 'click',
             event_handler: -> (event_listener) {
-              -> (event) {                
+              -> (event) {
                 selected_item = event.target.text
-                select(index_of(selected_item), event.meta?)
+                select(index_of(selected_item), event.meta_key)
                 event_listener.call(event)              
               }
             }
@@ -53,7 +53,7 @@ module Glimmer
         }
       end
       
-      def name
+      def element
         'ul'
       end
       
@@ -62,8 +62,8 @@ module Glimmer
         list_id = id
         list_style = css
         list_selection = selection
-        @dom ||= DOM {
-          ul(id: list_id, style: list_style) {
+        @dom ||= html {
+          ul(id: list_id, class: name, style: list_style) {
             list_items.to_a.each_with_index do |item, index|
               li_class = ''
               li_class += ' selected' if list_selection.include?(item)
@@ -73,7 +73,7 @@ module Glimmer
               }
             end
           }
-        }
+        }.to_s
       end
     end
   end

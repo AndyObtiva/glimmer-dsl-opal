@@ -1,4 +1,4 @@
-require 'glimmer/swt/event_listener_proxy'
+  require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 
 module Glimmer
@@ -85,10 +85,11 @@ module Glimmer
       end
 
       def redraw
-        if @dom
+        if @dom && !Document.find(path).empty?
+          old_element = Document.find(path)
           old_dom = @dom
           @dom = nil
-          Document.find(path).replace_with(dom)
+          old_element.replace_with(dom.gsub('<html>', '').gsub('</html>', ''))
         else
           Document.find(parent_path).append(dom)
         end
@@ -164,6 +165,10 @@ module Glimmer
         @args.include?(symbol) # not a very solid implementation. Bring SWT constants eventually
       end
       
+      def listener_path
+        path
+      end
+      
       def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
         @observation_requests ||= {}
@@ -176,7 +181,7 @@ module Glimmer
           event_handler = mapping[:event_handler]
           potential_event_listener = event_handler&.call(event_listener)
           event_listener = potential_event_listener || event_listener
-          delegate = Document.find(path).on(event, &event_listener)
+          delegate = Document.find(listener_path).on(event, &event_listener)
         end
         # TODO update code below for new WidgetProxy API
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)

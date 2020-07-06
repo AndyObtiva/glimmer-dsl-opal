@@ -5,7 +5,6 @@ module GlimmerSpec
     include Glimmer
     
     it 'renders tabs with first one selected by default' do
-      person = Person.new
       Document.ready? do
         @target = shell {
           @tab_folder = tab_folder {
@@ -44,8 +43,8 @@ module GlimmerSpec
         tab_folder_tabs_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs').first
         expect(tab_folder_tabs_element).to be_a(Element)
         
-        tab_item1_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-1-tab.tab.selected').first
-        expect(tab_item1_tab_element).to be_a(Element)
+        selected_tab_item1_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-1-tab.tab.selected').first
+        expect(selected_tab_item1_tab_element).to be_a(Element)
         
         tab_item2_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-2-tab.tab').first
         expect(tab_item2_tab_element).to be_a(Element)
@@ -53,8 +52,8 @@ module GlimmerSpec
         tab_item1_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-1').first
         expect(tab_item1_content_element).to be_a(Element)
         
-        tab_item2_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-2').first
-        expect(tab_item2_content_element).to be_a(Element)
+        hidden_tab_item2_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-2.hide').first
+        expect(hidden_tab_item2_content_element).to be_a(Element)
         
         tab_item1_label_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-1 > label#label-1.label').first
         expect(tab_item1_label_element).to be_a(Element)
@@ -64,5 +63,41 @@ module GlimmerSpec
       end
     end    
   
+    it 'selects second tab' do
+      Document.ready? do
+        @target = shell {
+          @tab_folder = tab_folder {
+            @tab_item1 = tab_item {
+              text "English"
+              @label1 = label {
+                text "Hello, World!"
+              }
+            }
+            @tab_item2 = tab_item {
+              text "French"
+              @label2 = label {
+                text "Bonjour, Univers!"
+              }
+            }
+          }
+        }
+        @target.open
+        
+        tab_item2_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-2-tab.tab').first
+        tab_item2_tab_element.trigger(:click)
+        
+        tab_item1_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-1-tab.tab:not(.selected)').first
+        expect(tab_item1_tab_element).to be_a(Element)
+        
+        selected_tab_item2_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-2-tab.tab.selected').first
+        expect(selected_tab_item2_tab_element).to be_a(Element)        
+        
+        hidden_tab_item1_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-1.hide').first
+        expect(hidden_tab_item1_content_element).to be_a(Element)
+        
+        tab_item2_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-2:not(.hide)').first
+        expect(tab_item2_content_element).to be_a(Element)
+      end
+    end  
   end
 end

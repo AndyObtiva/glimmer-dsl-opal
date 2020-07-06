@@ -10,20 +10,24 @@ module Glimmer
       def initialize(parent, args)
         super(parent, args)
         css_classes << 'tab-item'
-        content do
+        content {
           on_widget_selected {
             @parent.hide_all_tab_content
             show
           }
-        end
+        }
       end
       
       def show
+        # TODO rewrite via simply class application in jquery
+#         Document.find(path).remove_class('hide')
         @content_visible = true
-        redraw      
+        redraw
       end
       
       def hide
+        # TODO rewrite via simply class application in jquery
+#         Document.find(path).add_class('hide')
         @content_visible = false
         redraw
       end
@@ -43,25 +47,33 @@ module Glimmer
             event: 'click'
           },
         }
+      end
+      
+      def listener_path
+        tab_path
       end      
       
       def redraw        
         if @tab_dom
           old_tab_dom = @tab_dom
           @tab_dom = nil
-          Document.find("#{parent.tabs_path} > ##{tab_id}").replace_with(tab_dom)
+          Document.find(tab_path).replace_with(tab_dom)
         else
           Document.find(parent.tabs_path).append(tab_dom)
         end
         super()
-      end      
+      end
+      
+      def tab_path
+        "#{parent.tabs_path} > ##{tab_id}"
+      end
       
       def tab_id
         id + '-tab'
       end
         
       def tab_dom
-        tab_selected = content_visible ? 'selected' : ''
+        tab_selected = @content_visible ? 'selected' : ''
         @tab_dom ||= html {
           button(id: tab_id, class: "tab #{tab_selected}") {
             @text
@@ -74,13 +86,14 @@ module Glimmer
         tab_item_id_style = css
         tab_item_css_classes = css_classes
         css_classes << name
-        if content_visible
+        if @content_visible
           tab_item_css_classes.delete('hide')
         else
           tab_item_css_classes << 'hide' 
         end
+        tab_item_class_string = tab_item_css_classes.to_a.join(' ')
         @dom ||= html {
-          div(id: tab_item_id, style: tab_item_id_style, class: tab_item_css_classes.to_a.join(' ')) {
+          div(id: tab_item_id, style: tab_item_id_style, class: tab_item_class_string) {
           }
         }.to_s
       end      

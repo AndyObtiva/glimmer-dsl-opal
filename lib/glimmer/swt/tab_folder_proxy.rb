@@ -13,8 +13,6 @@ module Glimmer
       def add_child(child)
         unless @children.include?(child)
           @children << child
-#           Document.find("##{tabs_id}").append(child.tab_dom)
-#           Document.find(path).append(child.dom)
         end
         if @children.size == 1
           child.show

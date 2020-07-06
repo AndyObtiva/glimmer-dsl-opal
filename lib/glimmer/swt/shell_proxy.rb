@@ -44,7 +44,7 @@ module Glimmer
           .hide {
             display: none !important;
           }
-          .selected {
+          .selected, .tabs .tab.selected {
             background: rgb(80, 116, 211);
             color: white;
           }          
@@ -108,8 +108,8 @@ module Glimmer
       
       def style_dom_tab_item_css
         <<~CSS
-          /* Create an active/current tablink class */
-          .tabs .tab.active {
+          /* Create an selected/current tablink class */
+          .tabs .tab.selected {
             background-color: #ccc;
           }              
           /* Change background color of buttons on hover */

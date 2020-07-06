@@ -4,7 +4,7 @@ module GlimmerSpec
   RSpec.describe 'tab' do
     include Glimmer
     
-    it 'renders tabs' do
+    it 'renders tabs with first one selected by default' do
       person = Person.new
       Document.ready? do
         @target = shell {
@@ -43,6 +43,24 @@ module GlimmerSpec
         
         tab_folder_tabs_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs').first
         expect(tab_folder_tabs_element).to be_a(Element)
+        
+        tab_item1_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-1-tab.tab.selected').first
+        expect(tab_item1_tab_element).to be_a(Element)
+        
+        tab_item2_tab_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs > button#tab-item-2-tab.tab').first
+        expect(tab_item2_tab_element).to be_a(Element)
+        
+        tab_item1_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-1').first
+        expect(tab_item1_content_element).to be_a(Element)
+        
+        tab_item2_content_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-2').first
+        expect(tab_item2_content_element).to be_a(Element)
+        
+        tab_item1_label_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-1 > label#label-1.label').first
+        expect(tab_item1_label_element).to be_a(Element)
+        
+        tab_item2_label_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-item-2 > label#label-2.label').first
+        expect(tab_item2_label_element).to be_a(Element)
       end
     end    
   

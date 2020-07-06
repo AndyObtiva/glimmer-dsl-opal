@@ -53,7 +53,7 @@ module Glimmer
         else
           Document.find(parent.tabs_path).append(tab_dom)
         end
-        super
+        super()
       end      
       
       def tab_id
@@ -61,9 +61,9 @@ module Glimmer
       end
         
       def tab_dom
-        tab_active = content_visible ? 'active' : ''
+        tab_selected = content_visible ? 'selected' : ''
         @tab_dom ||= html {
-          button(id: tab_id, class: "tab #{tab_active}") {
+          button(id: tab_id, class: "tab #{tab_selected}") {
             @text
           }
         }.to_s
@@ -73,15 +73,12 @@ module Glimmer
         tab_item_id = id
         tab_item_id_style = css
         tab_item_css_classes = css_classes
+        css_classes << name
         if content_visible
           tab_item_css_classes.delete('hide')
         else
           tab_item_css_classes << 'hide' 
         end
-#         if !@parent.tabs.include?(self)
-#           @parent.tabs_dom << tab_dom
-#           @parent.tabs << self
-#         end
         @dom ||= html {
           div(id: tab_item_id, style: tab_item_id_style, class: tab_item_css_classes.to_a.join(' ')) {
           }

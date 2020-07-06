@@ -37,6 +37,12 @@ module GlimmerSpec
         
         expect(@tab_item1.children.to_a.first).to eq(@label1)
         expect(@tab_item2.children.to_a.first).to eq(@label2)
+        
+        tab_folder_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder').first
+        expect(tab_folder_element).to be_a(Element)
+        
+        tab_folder_tabs_element = Document.find('body > div#shell-1.shell > div#tab-folder-1.tab-folder > div#tab-folder-1-tabs').first
+        expect(tab_folder_tabs_element).to be_a(Element)
       end
     end    
   

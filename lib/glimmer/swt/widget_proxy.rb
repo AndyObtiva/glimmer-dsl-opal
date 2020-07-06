@@ -116,7 +116,7 @@ module Glimmer
       end
       
       def name
-        self.class.name.split('::').last.underscore.sub(/_proxy$/, '')
+        self.class.name.split('::').last.underscore.sub(/_proxy$/, '').gsub('_', '-')
       end
       
       def id

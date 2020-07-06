@@ -33,10 +33,6 @@ module Glimmer
         redraw
       end
     
-      def name
-        'button'
-      end
-      
       def selector
         super + '-tab'
       end      
@@ -65,11 +61,10 @@ module Glimmer
       end
         
       def tab_dom
-        tab_text = text
         tab_active = content_visible ? 'active' : ''
         @tab_dom ||= html {
           button(id: tab_id, class: "tab #{tab_active}") {
-            tab_text
+            @text
           }
         }.to_s
       end

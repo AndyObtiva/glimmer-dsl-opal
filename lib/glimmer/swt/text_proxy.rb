@@ -33,12 +33,12 @@ module Glimmer
         text_id = id
         text_style = css
         text_class = name
-        text_disabled = @enabled ? {} : {'disabled': 'disabled'}
         # TODO support password field
-#         text_args = @args.last
-#         text_args = text_args.merge(type: 'password') if has_style?(:password)        
+        options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text, style: 'min-width: 27px;'}
+        options = options.merge('disabled': 'disabled') unless @enabled
+        options = options.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
-          input({type: 'text', id: text_id, style: text_style, class: text_class, value: text_text, style: 'min-width: 27px;'}.merge(text_disabled))
+          input(options)
         }.to_s
       end
     end

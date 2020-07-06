@@ -1,15 +1,12 @@
-require 'glimmer/swt/property_owner'
+require 'glimmer/swt/layout_proxy'
 
 module Glimmer
   module SWT
-    class GridLayoutProxy
-      include Glimmer::SWT::PropertyOwner
-      attr_reader :parent, :args, :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing
+    class GridLayoutProxy < LayoutProxy
+      attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing
     
       def initialize(parent, args)
-        @parent = parent
-        @args = args
-        @parent.add_css_class('grid-layout')
+        super(parent, args)
         @horizontal_spacing = 10
         @vertical_spacing = 10
         @num_columns = @args.first || 1        
@@ -38,16 +35,6 @@ module Glimmer
         @vertical_spacing = spacing
 #         @parent.add_css_class("vertical-spacing-#{@vertical_spacing}")
         reapply
-      end
-      
-      def reapply
-        @parent.css = <<~CSS
-          display: grid;
-          grid-template-columns: #{'auto ' * @num_columns.to_i};
-          grid-row-gap: #{@vertical_spacing}px;
-          grid-column-gap: #{@horizontal_spacing}px;
-          justify-content: start;
-        CSS
       end
     end
   end

@@ -31,7 +31,7 @@ module Glimmer
         input_args = input_args.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
           button(input_args.merge(id: input_id, class: name, style: input_style, style: 'min-width: 27px;').merge(input_disabled)) {
-            input_text
+            input_text.to_s == '' ? '&nbsp;' : input_text
           }
         }.to_s
       end

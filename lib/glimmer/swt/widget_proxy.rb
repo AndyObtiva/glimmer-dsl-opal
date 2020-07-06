@@ -21,7 +21,7 @@ module Glimmer
           class_name_main = "#{class_name_alternative}Proxy"
           Glimmer::SWT.const_get(class_name_main.to_sym) rescue Glimmer::SWT.const_get(class_name_alternative.to_sym)
         rescue => e
-          puts "Widget #{keyword} is not found!"
+          puts "Widget #{keyword} was not found!"
           nil
         end
         
@@ -163,6 +163,14 @@ module Glimmer
       
       def has_style?(symbol)
         @args.include?(symbol) # not a very solid implementation. Bring SWT constants eventually
+      end
+      
+      def dom_element
+        Document.find(path)
+      end
+      
+      def parent_dom_element
+        Document.find(parent_path)
       end
       
       def listener_path

@@ -1,4 +1,3 @@
-require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/composite_proxy'
 
 module Glimmer

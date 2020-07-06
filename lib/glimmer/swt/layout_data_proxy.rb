@@ -1,7 +1,7 @@
 require 'glimmer/swt/property_owner'
 
 module Glimmer
-  module Opal
+  module SWT
     class LayoutDataProxy
       include Glimmer::SWT::PropertyOwner
       attr_reader :parent, 

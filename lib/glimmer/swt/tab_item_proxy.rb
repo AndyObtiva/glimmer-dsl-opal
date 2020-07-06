@@ -1,8 +1,9 @@
+require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/composite_proxy'
 
 module Glimmer
-  module Opal
-    class TabItem < Glimmer::SWT::CompositeProxy
+  module SWT
+    class TabItemProxy < CompositeProxy
       include Glimmer
       attr_reader :text, :content_visible      
       
@@ -15,10 +16,6 @@ module Glimmer
             show
           }
         end
-      end
-      
-      def content(&block)
-        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::TabItemExpression.new, &block)
       end
       
       def show
@@ -56,22 +53,25 @@ module Glimmer
         if @tab_dom
           old_tab_dom = @tab_dom
           @tab_dom = nil
-          old_tab_dom.replace tab_dom
+          Document.find("#{parent.tabs_path} > ##{tab_id}").replace_with(tab_dom)
         else
-          tab_dom
+          Document.find(parent.tabs_path).append(tab_dom)
         end
         super
       end      
       
+      def tab_id
+        id + '-tab'
+      end
+        
       def tab_dom
-        tab_id = id + '-tab'
         tab_text = text
         tab_active = content_visible ? 'active' : ''
-        @tab_dom ||= DOM {
+        @tab_dom ||= html {
           button(id: tab_id, class: "tab #{tab_active}") {
             tab_text
           }
-        }
+        }.to_s
       end
       
       def dom
@@ -83,16 +83,15 @@ module Glimmer
         else
           tab_item_css_classes << 'hide' 
         end
-        if !@parent.tabs.include?(self)
-          @parent.tabs_dom << tab_dom
-          @parent.tabs << self
-        end
-        @dom ||= DOM {
+#         if !@parent.tabs.include?(self)
+#           @parent.tabs_dom << tab_dom
+#           @parent.tabs << self
+#         end
+        @dom ||= html {
           div(id: tab_item_id, style: tab_item_id_style, class: tab_item_css_classes.to_a.join(' ')) {
           }
-        }
+        }.to_s
       end      
     end
   end
 end
-require 'glimmer/dsl/opal/tab_item_expression'

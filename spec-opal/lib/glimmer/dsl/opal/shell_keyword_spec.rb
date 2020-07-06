@@ -17,7 +17,13 @@ module GlimmerSpec
    
         expect(Document.title).to eq(title)
         expect(Document.find('body > div#shell-1.shell').first).to be_a(Element)
-        expect(Document.find('body > div#shell-1.shell > style.shell-style').first.html).to eq(@target.style_dom_css)
+        expect(Document.find('body > div#shell-1.shell > style.common-style').first.html).to eq(@target.style_dom_css)
+        expect(Document.find('body > div#shell-1.shell > style.shell-style').first.html).to eq(@target.style_dom_shell_css)
+        expect(Document.find('body > div#shell-1.shell > style.list-style').first.html).to eq(@target.style_dom_list_css)
+        expect(Document.find('body > div#shell-1.shell > style.tab-style').first.html).to eq(@target.style_dom_tab_css)
+#         expect(Document.find('body > div#shell-1.shell > style.tab-item-style').first.html).to eq(@target.style_dom_tab_item_css)
+#         expect(Document.find('body > div#shell-1.shell > style.modal-style').first.html).to eq(@target.style_dom_modal_css)
+        expect(Document.find('body > div#shell-1.shell > style.table-style').first.html).to eq(@target.style_dom_table_css)
       end           
     end
      

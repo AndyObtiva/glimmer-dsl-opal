@@ -72,8 +72,8 @@ module Glimmer
       def add_child(child)
 #         Document.ready? do
 #           return if @children.include?(child) # TODO consider adding an option to enable this if needed to prevent dom repetition
-          @children << child
-          Document.find(path).append(child.dom)
+        @children << child
+        Document.find(path).append(child.dom)
 #         end
       end
       
@@ -104,6 +104,10 @@ module Glimmer
         @children.each do |child|          
           child.redraw
         end
+      end
+      
+      def content(&block)
+        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::WidgetExpression.new, &block)
       end
       
       # Subclasses must override with their own mappings
@@ -364,4 +368,8 @@ require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/composite_proxy'
 require 'glimmer/swt/label_proxy'
 require 'glimmer/swt/list_proxy'
+require 'glimmer/swt/tab_folder_proxy'
+require 'glimmer/swt/tab_item_proxy'
 require 'glimmer/swt/text_proxy'
+
+require 'glimmer/dsl/opal/widget_expression'

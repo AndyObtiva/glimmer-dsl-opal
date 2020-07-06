@@ -1,8 +1,8 @@
-require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class TabFolder < ElementProxy
+  module SWT
+    class TabFolderProxy < WidgetProxy      
       attr_reader :tabs
       
       def initialize(parent, args)
@@ -11,7 +11,11 @@ module Glimmer
       end
       
       def add_child(child)
-        super(child)
+        unless @children.include?(child)
+          @children << child
+          Document.find("##{tabs_id}").append(child.tab_dom)
+          Document.find(path).append(child.dom)
+        end
         if @children.size == 1
           child.show
         end
@@ -32,21 +36,22 @@ module Glimmer
         'div'
       end
       
-      def tabs_dom
-        tabs_id = id + '-tabs'
-        @tabs_dom ||= DOM {
-          div(id: tabs_id, class: 'tabs')
-        }
+      def tabs_path
+        path + " > ##{tabs_id}"
+      end
+      
+      def tabs_id
+        id + '-tabs'
       end
       
       def dom
         tab_folder_id = id
         tab_folder_id_style = css
-        @dom ||= DOM {
+        @dom ||= html {
           div(id: tab_folder_id, style: tab_folder_id_style, class: 'tab-folder') {
-            
+            div(id: tabs_id, class: 'tabs')
           }
-        }.tap {|the_dom| the_dom << tabs_dom }
+        }.to_s
       end
     end
   end

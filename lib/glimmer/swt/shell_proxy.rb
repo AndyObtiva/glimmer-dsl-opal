@@ -1,4 +1,4 @@
-require 'glimmer/swt/widget_proxy'
+    require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/point'
 
 module Glimmer
@@ -41,6 +41,18 @@ module Glimmer
       
       def style_dom_css
         <<~CSS
+          .hide {
+            display: none !important;
+          }
+          .selected {
+            background: rgb(80, 116, 211);
+            color: white;
+          }          
+        CSS
+      end
+            
+      def style_dom_shell_css
+        <<~CSS
           html {
             width: 100%;
             height: 100%;
@@ -54,6 +66,11 @@ module Glimmer
             width: 100%;
             height: 100%;
           }
+        CSS
+      end
+      
+      def style_dom_list_css
+        <<~CSS
           ul {
             list-style: none;
             padding: 0;
@@ -66,113 +83,111 @@ module Glimmer
           li.empty-list-item {
             color: transparent;
           }
-          .selected {
-            background: rgb(80, 116, 211);
-            color: white;
-          }            
         CSS
-#           .tabs {
-#             overflow: hidden;
-#             border: 1px solid #ccc;
-#             background-color: #f1f1f1;
-#           }
-#              
-#           /* Style the buttons inside the tab */
-#           .tabs .tab {
-#             background-color: inherit;
-#             float: left;
-#             border: none;
-#             outline: none;
-#             cursor: pointer;
-#             padding: 14px 16px;
-#             transition: 0.3s;
-#             font-size: 17px;
-#           }
-#            
-#           /* Change background color of buttons on hover */
-#           .tabs .tab:hover {
-#             background-color: #ddd;
-#           }
-#            
-#           /* Create an active/current tablink class */
-#           .tabs .tab.active {
-#             background-color: #ccc;
-#           }
-#            
-#           /* Style the tab content */
-#           .tab-item {
-#             padding: 6px 12px;
-#             border: 1px solid #ccc;
-#             border-top: none;
-#           }
-#            
-#           .hide {
-#             display: none !important;
-#           }
-#                          
-#           /* The Modal (background) */
-#           .modal {
-#             position: fixed; /* Stay in place */
-#             z-index: 1; /* Sit on top */
-#             padding-top: 100px; /* Location of the box */
-#             left: 0;
-#             top: 0;
-#             width: 100%; /* Full width */
-#             height: 100%; /* Full height */
-#             overflow: auto; /* Enable scroll if needed */
-#             background-color: rgb(0,0,0); /* Fallback color */
-#             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-#             text-align: center;
-#           }
-#            
-#           /* Modal Content */
-#           .modal-content {
-#             background-color: #fefefe;
-#             margin: auto;
-#             border: 1px solid #888;
-#             display: inline-block;
-#             min-width: 200px;
-#           }
-#            
-#           .modal-content .text {
-#             background: rgb(80, 116, 211);
-#             color: white;
-#             padding: 5px;
-#           }
-#            
-#           .modal-content .message {
-#             padding: 20px;
-#           }
-#            
-#           /* The Close Button */
-#           .close {
-#             color: #aaaaaa;
-#             float: right;
-#             font-weight: bold;
-#             margin: 5px;
-#           }
-#            
-#           .close:hover,
-#           .close:focus {
-#             color: #000;
-#             text-decoration: none;
-#             cursor: pointer;
-#           }
-#            
-#           table {
-#             border-spacing: 0;
-#           }
-#            
-#           table tr th,td {
-#             cursor: default;
-#           }   
       end
       
-      def style_dom
-        # TODO make grid-layout support grab excess space false
-        style(class: 'shell-style') {
-          style_dom_css
-        }
+      def style_dom_tab_css
+        <<~CSS
+          .tabs .tab {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+          }
+          .tabs {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+          }
+        CSS
+      end
+      
+      def style_dom_tab_item_css
+        <<~CSS
+          /* Create an active/current tablink class */
+          .tabs .tab.active {
+            background-color: #ccc;
+          }              
+          /* Change background color of buttons on hover */
+          .tabs .tab:hover {
+            background-color: #ddd;
+          }              
+          /* Style the tab content */
+          .tab-item {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+          }
+        CSS
+      end
+
+      def style_dom_modal_css
+        <<~CSS
+          /* The Modal (background) */
+          .modal {
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            text-align: center;
+          }
+            
+          /* Modal Content */
+          .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            border: 1px solid #888;
+            display: inline-block;
+            min-width: 200px;
+          }
+            
+          .modal-content .text {
+            background: rgb(80, 116, 211);
+            color: white;
+            padding: 5px;
+          }
+            
+          .modal-content .message {
+            padding: 20px;
+          }
+            
+          /* The Close Button */
+          .close {
+            color: #aaaaaa;
+            float: right;
+            font-weight: bold;
+            margin: 5px;
+          }
+            
+          .close:hover,
+          .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+          }
+        CSS
+      end
+      
+      def style_dom_table_css
+        <<~CSS
+          table {
+            border-spacing: 0;
+          }
+            
+          table tr th,td {
+            cursor: default;
+          }   
+        CSS
       end
       
       def dom
@@ -187,7 +202,27 @@ module Glimmer
         end
         @dom ||= html {
           div(id: body_id, class: body_class, style: body_style) {
-            style_dom
+            style(class: 'common-style') {
+              style_dom_css
+            }
+            style(class: 'shell-style') {
+              style_dom_shell_css
+            }
+            style(class: 'list-style') {
+              style_dom_list_css
+            }
+            style(class: 'tab-style') {
+              style_dom_tab_css
+            }        
+#             style(class: 'tab-item-style') {
+#               style_dom_tab_item_css
+#             }        
+#             style(class: 'modal-style') {
+#               style_dom_modal_css
+#             }        
+            style(class: 'table-style') {
+              style_dom_table_css
+            }        
           }
         }.to_s
       end

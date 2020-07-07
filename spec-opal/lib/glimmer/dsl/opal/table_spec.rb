@@ -18,7 +18,7 @@ module GlimmerSpec
             }
             table_column {
               text "Last Name"
-              width 80
+              width 120
               on_widget_selected {
                 contact_manager_presenter.toggle_sort(:last_name)
               }
@@ -40,15 +40,21 @@ module GlimmerSpec
         
         expect(@table).to be_a(Glimmer::SWT::TableProxy)
         
-        table_column_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#th-1.th').first
+        table_column_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#table-column-1.table-column').first
         expect(table_column_element1).to be_a(Element)
+        expect(table_column_element1.html).to eq('First Name')
+        expect(table_column_element1.attr('style')).to include('width: 80px;')
         
-        table_column_element2 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#th-2.th').first
+        table_column_element2 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#table-column-2.table-column').first
         expect(table_column_element2).to be_a(Element)
+        expect(table_column_element2.html).to eq('Last Name')
+        expect(table_column_element2.attr('style')).to include('width: 120px;')
         
-        table_column_element3 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#th-3.th').first
+        table_column_element3 = Document.find('body > div#shell-1.shell > table#table-1.table > thead > tr > th#table-column-3.table-column').first
         expect(table_column_element3).to be_a(Element)
-#         
+        expect(table_column_element3.html).to eq('Email')
+        expect(table_column_element3.attr('style')).to include('width: 200px;')
+        
 #         selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected').first
 #         expect(selected_list_item_element).to be_a(Element)
 #         expect(selected_list_item_element.html).to eq(person.country)

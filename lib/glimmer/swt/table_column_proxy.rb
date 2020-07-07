@@ -23,14 +23,10 @@ module Glimmer
       
       def css
         <<~CSS
-          width: #{width};
+          width: #{width}px;
         CSS
       end
     
-      def name
-        'th'
-      end
-      
       def element
         'th'
       end

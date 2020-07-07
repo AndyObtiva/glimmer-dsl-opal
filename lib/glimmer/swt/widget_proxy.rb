@@ -1,4 +1,4 @@
-  require 'glimmer/swt/event_listener_proxy'
+require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 
 module Glimmer

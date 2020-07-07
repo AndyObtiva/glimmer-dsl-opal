@@ -18,14 +18,14 @@ module Glimmer
       end
       
       def show
-        # TODO rewrite via simply class application in jquery
+        # TODO refactor/rewrite via simply class application in jquery
 #         Document.find(path).remove_class('hide')
         @content_visible = true
         redraw
       end
       
       def hide
-        # TODO rewrite via simply class application in jquery
+        # TODO refactor/rewrite via simply class application in jquery
 #         Document.find(path).add_class('hide')
         @content_visible = false
         redraw

@@ -91,7 +91,8 @@ module Glimmer
           @dom = nil
           old_element.replace_with(dom.gsub('<html>', '').gsub('</html>', ''))
         else
-          Document.find(parent_path).append(dom)
+          @dom = nil
+          Document.find(parent_path).append(dom.gsub('<html>', '').gsub('</html>', ''))
         end
         @observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
@@ -380,6 +381,9 @@ require 'glimmer/swt/label_proxy'
 require 'glimmer/swt/list_proxy'
 require 'glimmer/swt/tab_folder_proxy'
 require 'glimmer/swt/tab_item_proxy'
+require 'glimmer/swt/table_column_proxy'
+require 'glimmer/swt/table_item_proxy'
+require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
 
 require 'glimmer/dsl/opal/widget_expression'

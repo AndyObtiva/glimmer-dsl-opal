@@ -2,8 +2,8 @@ require 'glimmer/data_binding/observable_array'
 require 'glimmer/data_binding/observable_model'
 require 'glimmer/data_binding/observable'
 require 'glimmer/data_binding/observer'
-require 'glimmer/opal/table_proxy'
-require 'glimmer/opal/table_item'
+require 'glimmer/swt/table_proxy'
+require 'glimmer/swt/table_item_proxy'
 
 module Glimmer
   module DataBinding
@@ -47,7 +47,7 @@ module Glimmer
         old_item_ids_per_model = old_items.reduce({}) {|hash, item| hash.merge(item.get_data.hash => item.id) }
         parent.remove_all
         model_collection.each do |model|
-          table_item = Glimmer::Opal::TableItem.new(parent)
+          table_item = Glimmer::SWT::TableItem.new(parent)
           for index in 0..(column_properties.size-1)
             table_item.set_text(index, model.send(column_properties[index]).to_s)
           end

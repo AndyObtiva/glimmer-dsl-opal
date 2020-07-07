@@ -1,8 +1,8 @@
-  require 'glimmer/opal/element_proxy'
+require 'glimmer/swt/widget_proxy'
 
 module Glimmer
-  module Opal
-    class TableItem < ElementProxy
+  module SWT
+    class TableItemProxy < WidgetProxy
       attr_reader :data
       
       def initialize(parent, args)
@@ -47,6 +47,28 @@ module Glimmer
       
       def name
         'tr'
+      end
+      
+      def parent_path
+        parent.items_path
+      end
+      
+      def element
+        'tr'
+      end
+      
+      def redraw
+        super()
+        if table_item_edit_column_index
+          table_item_input = dom_element.find("td:nth-child(#{table_item_edit_column_index + 1}) input")
+          if !table_item_input.empty?
+            Async::Task.new do
+              table_item_input.focus
+              table_item_input.on('keyup', &table_item_edit_key_handler)
+              table_item_input.on('focusout', &table_item_edit_cancel_handler)                
+            end
+          end
+        end
       end
       
       def edit(column_index)
@@ -106,7 +128,7 @@ module Glimmer
             end
           end
         end
-        @dom ||= DOM {
+        @dom ||= html {
           tr(id: table_item_id, style: table_item_id_style, class: table_item_css_classes.to_a.join(' ')) {
             table_item_text_array.each_with_index do |table_item_text, column_index|
               td('data-column-index' => column_index) {
@@ -118,18 +140,7 @@ module Glimmer
               }
             end
           }
-        }.tap do |the_dom|
-          if table_item_edit_column_index
-            table_item_input = the_dom.css("td:nth-child(#{table_item_edit_column_index + 1}) input").first
-            if table_item_input
-              Async::Task.new do
-                table_item_input.focus
-                table_item_input.on('keyup', &table_item_edit_key_handler)
-                table_item_input.on('focusout', &table_item_edit_cancel_handler)                
-              end
-            end
-          end
-        end
+        }
       end
     end
   end

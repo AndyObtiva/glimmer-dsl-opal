@@ -1,5 +1,5 @@
 require 'glimmer/dsl/static_expression'
-require 'glimmer/opal/table_proxy'
+require 'glimmer/swt/table_proxy'
 
 module Glimmer
   module DSL
@@ -10,7 +10,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           keyword == 'column_properties' and
             block.nil? and
-            parent.is_a?(Glimmer::Opal::TableProxy)
+            parent.is_a?(Glimmer::SWT::TableProxy)
         end
   
         def interpret(parent, keyword, *args, &block)

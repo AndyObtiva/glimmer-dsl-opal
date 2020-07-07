@@ -23,3 +23,4 @@ end
 
 require 'glimmer-dsl-opal'
 require 'fixtures/person'
+require 'fixtures/contact_manager/contact_manager_presenter'

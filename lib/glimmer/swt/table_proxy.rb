@@ -1,9 +1,9 @@
-require 'glimmer/opal/element_proxy'
-require 'glimmer/opal/table_column'
+require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/table_column_proxy'
 
 module Glimmer
-  module Opal
-    class TableProxy < ElementProxy
+  module SWT
+    class TableProxy < WidgetProxy
       attr_reader :columns, :selection
       attr_accessor :column_properties
       alias items children
@@ -17,18 +17,17 @@ module Glimmer
       
       # Only table_columns may be added as children
       def add_child(child)
-        if child.is_a?(TableColumn)
+        if child.is_a?(TableColumnProxy)
           @columns << child
-          columns_dom << child.dom
         else
           @children << child        
-          items_dom << child.dom
         end
+        child.redraw
       end
       
       def remove_all
         items.clear
-        @items_dom = nil
+        redraw
       end
       
       def selection=(new_selection)
@@ -102,41 +101,61 @@ module Glimmer
       end
       
       def redraw
-        if @dom
-          old_dom = @dom
-          @dom = nil
-          old_dom.replace dom
-        else
-          dom
-        end
-        if @last_redrawn_children != @children
-          items_dom.clear
-          @last_redrawn_children = @children
-          @children = []
-          @last_redrawn_children.each do |child|            
-            add_child(child)
-          end
-        end
+        super()
+        @columns.to_a.each(&:redraw)  
+      end
+      
+#       def redraw
+#         if @dom
+#           old_dom = @dom
+#           @dom = nil
+#           old_dom.replace dom
+#         else
+#           dom
+#         end
+#         if @last_redrawn_children != @children
+#           items_dom_element.empty
+#           @last_redrawn_children = @children
+#           @children = []
+#           @last_redrawn_children.each do |child|            
+#             add_child(child)
+#           end
+#         end
+#       end
+      
+      def element
+        'table'
+      end
+      
+      def columns_path
+        path + ' thead tr'
       end
 
+      def columns_dom_element
+        Document.find(columns_path)
+      end
+      
+      def items_dom_path
+        path + ' tbody'
+      end
+
+      def items_dom_element
+        Document.find(items_dom_path)
+      end
+      
       def columns_dom        
-        @columns_dom ||= DOM {
-          tr {
-          }
+        tr {
         }
       end
       
       def thead_dom
-        @thead_dom ||= DOM {
-          thead {
-          }
-        }.tap {|the_dom| the_dom << columns_dom }
-      end
+        thead {
+          columns_dom
+        }
+      end            
       
       def items_dom        
-        @items_dom ||= DOM {
-          tbody {
-          }
+        tbody {
         }
       end
       
@@ -144,11 +163,14 @@ module Glimmer
         table_id = id
         table_id_style = css
         table_id_css_classes = css_classes
+        table_id_css_classes << 'table'
         table_id_css_classes_string = table_id_css_classes.to_a.join(' ')
-        @dom ||= DOM {
-          table(id: table_id, style: table_id_style, class: table_id_css_classes_string) {            
+        @dom ||= html {
+          table(id: table_id, style: table_id_style, class: table_id_css_classes_string) {
+            thead_dom
+            items_dom
           }
-        }.tap {|the_dom| the_dom >> thead_dom }.tap {|the_dom| the_dom << items_dom }
+        }.to_s
       end
     end
   end

@@ -1,7 +1,7 @@
 require 'glimmer/dsl/expression'
 require 'glimmer/data_binding/model_binding'
 require 'glimmer/data_binding/table_items_binding'
-require 'glimmer/opal/table_proxy'
+require 'glimmer/swt/table_proxy'
 
 module Glimmer
   module DSL
@@ -11,7 +11,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           keyword == "items" and
             block.nil? and
-            parent.is_a?(Glimmer::Opal::TableProxy) and
+            parent.is_a?(Glimmer::SWT::TableProxy) and
             args.size == 2 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_property.is_a?(Array) and

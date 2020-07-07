@@ -1,6 +1,6 @@
 require 'glimmer/dsl/static_expression'
 require 'glimmer/dsl/parent_expression'
-require 'glimmer/opal/table_proxy'
+require 'glimmer/swt/table_proxy'
 
 module Glimmer
   module DSL
@@ -9,7 +9,7 @@ module Glimmer
         include ParentExpression
 
         def interpret(parent, keyword, *args, &block)
-          Glimmer::Opal::TableProxy.new(parent, args)
+          Glimmer::SWT::TableProxy.new(parent, args)
         end
       end
     end

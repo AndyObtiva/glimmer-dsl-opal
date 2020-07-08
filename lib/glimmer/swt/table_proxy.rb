@@ -78,11 +78,11 @@ module Glimmer
             event.singleton_class.send(:define_method, :table_item) do
               @table_item
             end
-            table_row = event.target.ancestors('tr').first
-            table_data = event.target.ancestors('td').first
-            event.table_item = items.detect {|item| item.id == table_row.attributes['id']}
+            table_row = event.target.parents('tr').first
+            table_data = event.target.parents('td').first
+            event.table_item = items.detect {|item| item.id == table_row.attr('id')}
             event.singleton_class.send(:define_method, :column_index) do
-              (table_data || event.target).attributes['data-column-index']
+              (table_data || event.target).attr('data-column-index')
             end
             event_listener.call(event)              
           }

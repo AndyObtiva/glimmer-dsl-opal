@@ -4,7 +4,7 @@ module GlimmerSpec
   RSpec.describe 'table' do
     include Glimmer
     
-    it 'renders and binds table widget for single selection' do
+    it 'renders and binds table widget with support for editing' do
       contact_manager_presenter = ContactManager::ContactManagerPresenter.new
       contact_manager_presenter.list
       Document.ready? do
@@ -56,7 +56,7 @@ module GlimmerSpec
         expect(table_column_element3.html).to eq('Email')
         expect(table_column_element3.attr('style')).to include('width: 200px;')
         
-        table_item_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-1.table-item').first
+        table_item_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-1.table-item.selected').first
         expect(table_item_element1).to be_a(Element)
         expect(table_item_element1.html).to eq("<td data-column-index=\"0\">Liam</td><td data-column-index=\"1\">Smith</td><td data-column-index=\"2\">liam@smith.com</td>")
         
@@ -68,52 +68,11 @@ module GlimmerSpec
         expect(table_item_element3).to be_a(Element)
         expect(table_item_element3.html).to eq("<td data-column-index=\"0\">Madeline</td><td data-column-index=\"1\">Taylor</td><td data-column-index=\"2\">madeline@taylor.com</td>")
         
-#         selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected').first
-#         expect(selected_list_item_element).to be_a(Element)
-#         expect(selected_list_item_element.html).to eq(person.country)
-#          
-#         person.country = 'US'
-#         selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected').first
-#         expect(selected_list_item_element.html).to eq('US')
-#          
-#         new_selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li:nth-child(4)').first
-#         expect(new_selected_list_item_element.html).to eq('Mexico')
-#         new_selected_list_item_element.trigger(:click)
-#          
-#         expect(person.country).to eq('Mexico')
-      end
-    end    
-        
-    xit 'renders and binds table widget for multi selection' do
-      person = Person.new
-      Document.ready? do
-        @target = shell {
-          @list = table(:multi) {
-            selection bind(person, :provinces)
-          }
-        }
-        @target.open
-        
-        expect(@list).to be_a(Glimmer::SWT::ListProxy)
-         
-        list_element = Document.find('body > div#shell-1.shell > ul#list-1.list').first
-        expect(list_element).to be_a(Element)
-        
-        selected_list_item_elements = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected')
-        expect(selected_list_item_elements.to_a.map(&:html)).to eq(["Quebec", "Manitoba", "Alberta"])
-
-        person.provinces << 'Ontario'
-        selected_list_item_elements = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected')
-        expect(selected_list_item_elements.to_a.map(&:html).sort).to eq(["Quebec", "Manitoba", "Alberta", "Ontario"].sort)
-          
-        new_selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li:nth-child(5)').first
-        expect(new_selected_list_item_element.html).to eq('Saskatchewan')
-
-        new_selected_list_item_element.trigger(:click)
-           
-        expect(person.provinces).to eq(["Saskatchewan"])
-        
-        # TODO add more expectations for meta (and shift) key presses once you figure out how
+        table_item_cell_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-1.table-item.selected td:nth-child(1)').first
+        expect(table_item_cell_element1.html).to eq('Liam')
+        @table.edit_table_item(@table.items.first, 0)
+        table_item_cell_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-1.table-item.selected td:nth-child(1)').first
+        expect(table_item_cell_element1.html).to eq("<input type=\"text\" value=\"Liam\" style=\"max-width: 69px;\">")
       end
     end    
   end

@@ -100,7 +100,7 @@ module Glimmer
             handle_observation_request(keyword, &event_listener)
           end
         end
-        @children.each do |child|          
+        children.each do |child|
           child.redraw
         end
       end

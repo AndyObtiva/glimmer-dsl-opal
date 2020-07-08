@@ -35,8 +35,8 @@ module Glimmer
         @selection = new_selection
         changed.each(&:redraw)
       end
-      
-      def items=(new_items)
+            
+      def items=(new_items)        
         @children = new_items
         redraw
       end
@@ -135,12 +135,12 @@ module Glimmer
         Document.find(columns_path)
       end
       
-      def items_dom_path
+      def items_path
         path + ' tbody'
       end
 
       def items_dom_element
-        Document.find(items_dom_path)
+        Document.find(items_path)
       end
       
       def columns_dom        

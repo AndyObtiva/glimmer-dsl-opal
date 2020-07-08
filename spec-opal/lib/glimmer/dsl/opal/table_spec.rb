@@ -6,6 +6,7 @@ module GlimmerSpec
     
     it 'renders and binds table widget for single selection' do
       contact_manager_presenter = ContactManager::ContactManagerPresenter.new
+      contact_manager_presenter.list
       Document.ready? do
         @target = shell {
           @table = table(:multi) { |table_proxy|
@@ -54,6 +55,18 @@ module GlimmerSpec
         expect(table_column_element3).to be_a(Element)
         expect(table_column_element3.html).to eq('Email')
         expect(table_column_element3.attr('style')).to include('width: 200px;')
+        
+        table_item_element1 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-1.table-item').first
+        expect(table_item_element1).to be_a(Element)
+        expect(table_item_element1.html).to eq("<td data-column-index=\"0\">Liam</td><td data-column-index=\"1\">Smith</td><td data-column-index=\"2\">liam@smith.com</td>")
+        
+        table_item_element2 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-2.table-item').first
+        expect(table_item_element2).to be_a(Element)
+        expect(table_item_element2.html).to eq("<td data-column-index=\"0\">Noah</td><td data-column-index=\"1\">Johnson</td><td data-column-index=\"2\">noah@johnson.com</td>")
+         
+        table_item_element3 = Document.find('body > div#shell-1.shell > table#table-1.table > tbody > tr#table-item-3.table-item').first
+        expect(table_item_element3).to be_a(Element)
+        expect(table_item_element3.html).to eq("<td data-column-index=\"0\">Madeline</td><td data-column-index=\"1\">Taylor</td><td data-column-index=\"2\">madeline@taylor.com</td>")
         
 #         selected_list_item_element = Document.find('body > div#shell-1.shell > ul#list-1.list > li.selected').first
 #         expect(selected_list_item_element).to be_a(Element)

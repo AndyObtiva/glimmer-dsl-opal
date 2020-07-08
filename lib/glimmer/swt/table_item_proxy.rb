@@ -45,10 +45,6 @@ module Glimmer
         @data_hash ||= {}
       end
       
-      def name
-        'tr'
-      end
-      
       def parent_path
         parent.items_path
       end
@@ -58,9 +54,10 @@ module Glimmer
       end
       
       def redraw
-        super()
-        if table_item_edit_column_index
-          table_item_input = dom_element.find("td:nth-child(#{table_item_edit_column_index + 1}) input")
+        super() #TODO re-enalbe and remove below lines
+
+        if @edit_column_index
+          table_item_input = dom_element.find("td:nth-child(#{@edit_column_index + 1}) input")
           if !table_item_input.empty?
             Async::Task.new do
               table_item_input.focus
@@ -92,6 +89,7 @@ module Glimmer
         table_item_id = id
         table_item_id_style = css
         table_item_css_classes = css_classes
+        table_item_css_classes << name
         table_item_selection = parent.selection.include?(self)
         if table_item_selection
           table_item_css_classes << 'selected'
@@ -99,16 +97,15 @@ module Glimmer
           table_item_css_classes.delete('selected')
         end
         table_item_text_array = text_array
-        table_item_edit_column_index = @edit_column_index
-        table_item_max_width = max_column_width(table_item_edit_column_index) if table_item_edit_column_index
+        table_item_max_width = max_column_width(@edit_column_index) if @edit_column_index
         table_item_edit_handler = lambda do |event, cancel = false|
           Async::Task.new do
             text_value = event.target.value
-            edit_property = parent.column_properties[table_item_edit_column_index]
+            edit_property = parent.column_properties[@edit_column_index]
             edit_model = get_data
             if !cancel && edit_model.send(edit_property) != text_value
               edit_model.send("#{edit_property}=", text_value)
-              set_text(table_item_edit_column_index, text_value)
+              set_text(@edit_column_index, text_value)
             end
             @edit_column_index = nil
             redraw
@@ -132,7 +129,7 @@ module Glimmer
           tr(id: table_item_id, style: table_item_id_style, class: table_item_css_classes.to_a.join(' ')) {
             table_item_text_array.each_with_index do |table_item_text, column_index|
               td('data-column-index' => column_index) {
-                if table_item_edit_column_index == column_index                  
+                if @edit_column_index == column_index                  
                   input(type: 'text', value: table_item_text, style: "max-width: #{table_item_max_width - 11}px;")
                 else
                   table_item_text
@@ -140,7 +137,7 @@ module Glimmer
               }
             end
           }
-        }
+        }.to_s
       end
     end
   end

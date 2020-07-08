@@ -47,7 +47,7 @@ module Glimmer
         old_item_ids_per_model = old_items.reduce({}) {|hash, item| hash.merge(item.get_data.hash => item.id) }
         parent.remove_all
         model_collection.each do |model|
-          table_item = Glimmer::SWT::TableItem.new(parent)
+          table_item = Glimmer::SWT::TableItemProxy.new(parent)
           for index in 0..(column_properties.size-1)
             table_item.set_text(index, model.send(column_properties[index]).to_s)
           end

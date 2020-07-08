@@ -5,29 +5,15 @@ class ContactManager
     NAMES_FIRST = %w[
       Liam
       Noah
-      William
-      James
-      Oliver
-      Vivian
-      Kaylee
-      Sophie
-      Brielle
       Madeline
     ]
     NAMES_LAST = %w[
       Smith
       Johnson
-      Williams
-      Brown
-      Jones
-      Miller
-      Davis
-      Wilson
-      Anderson
       Taylor
     ]
     def initialize(contacts = nil)
-      @contacts = contacts || 10.times.map do |n|
+      @contacts = contacts || 3.times.map do |n|
         first_name = NAMES_FIRST[n]
         last_name = NAMES_LAST[n]
         email = "#{first_name}@#{last_name}.com".downcase

@@ -24,7 +24,7 @@ NOTE: Alpha Version 0.0.9 only supports bare-minimum capabilities for the follow
 - [Tic Tac Toe](#tic-tac-toe)
 - [Contact Manager](#contact-manager)
 
-Other Glimmer DSL gems:
+Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (Desktop GUI)
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
 - [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)

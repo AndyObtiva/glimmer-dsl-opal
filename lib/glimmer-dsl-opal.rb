@@ -9,7 +9,7 @@ if RUBY_PLATFORM == 'opal'
   original_add_method = logger.class.instance_method(:add)
   logger.define_singleton_method("__original_add", original_add_method)
   logger.singleton_class.send(:define_method, :add) do |*args|
-    Async::Timeout.new 1000 do
+    Async::Timeout.new 5000 do
       __original_add(*args)
     end
   end  

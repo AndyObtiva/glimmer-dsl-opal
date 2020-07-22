@@ -1352,6 +1352,10 @@ Glimmer DSL for Opal Contact Manager Edit Done
 
 ![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
 
+## Sample App
+
+[https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app)
+
 ## Help
 
 ### Issues

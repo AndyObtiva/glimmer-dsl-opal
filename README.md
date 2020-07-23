@@ -2,9 +2,9 @@
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[Glimmer](https://github.com/AndyObtiva/glimmer) DSL for [Opal](https://opalrb.com/) is an experimental proof-of-concept web GUI adaptor for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/) and [Opal](https://opalrb.com/), allowing Ruby desktop apps to run on the web without changing a line of code. Apps may then be custom-styled for the web via standard CSS. 
+[Glimmer](https://github.com/AndyObtiva/glimmer) DSL for [Opal](https://opalrb.com/) is an experimental proof-of-concept web GUI adapter for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/), allowing Ruby desktop apps to run on the web via [Opal Ruby](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web with standard CSS. 
 
-Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal](https://opalrb.com/) Ruby, and as such inherits the full range of powerful Glimmer DSL [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities, such as: 
+Glimmer DSL for Opal webifier successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web, such as: 
 - `bind(model, property)` basic data-binding
 - `bind(model, property, computed_by: procs)` computed data-binding
 - `bind(model, property, on_read:, on_write:)` data-binding converters
@@ -92,20 +92,24 @@ Opal.use_gem 'glimmer-dsl-opal'
 Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`)
 
 ```ruby
-require 'glimmer-dsl-opal' # brings opal and opal browser too
+require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
 ```
 
-Add more code to `app/assets/javascripts/application.rb` inside `Document.ready? do; end` block from one of the samples below or require a [Glimmer](https://github.com/AndyObtiva/glimmer) app/[custom-shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem) gem.
-
-## Samples
-
-Make sure to add any `require` statements or code below inside:
+Add more code to `app/assets/javascripts/application.rb` inside a `Document.ready?` block from one of the samples below or a [Glimmer](https://github.com/AndyObtiva/glimmer) [app](https://github.com/AndyObtiva/glimmer#app)/[custom-shell gem](https://github.com/AndyObtiva/glimmer#custom-shell-gem).
 
 ```ruby
 Document.ready? do
-# Code goes here.
+  # require-statement/code goes here.
 end
 ```
+
+## Samples
+
+Follow the instructions below to try out [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) samples webified via [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal)
+
+Also, this external sample app contains all the samples mentioned below configured inside a Rails 5 [Opal](https://opalrb.com/) app with all the pre-requisites ready to go for convenience:
+
+[https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app)
 
 ### Hello Samples
 
@@ -1362,10 +1366,6 @@ Glimmer DSL for Opal Contact Manager Edit In Progress
 Glimmer DSL for Opal Contact Manager Edit Done
 
 ![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
-
-## Sample App
-
-[https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app)
 
 ## Help
 

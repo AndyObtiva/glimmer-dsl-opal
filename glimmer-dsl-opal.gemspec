@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-07-05"
+  s.date = "2020-07-23"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -31,48 +31,44 @@ Gem::Specification.new do |s|
     "lib/glimmer/data_binding/table_items_binding.rb",
     "lib/glimmer/dsl/opal/async_exec_expression.rb",
     "lib/glimmer/dsl/opal/bind_expression.rb",
-    "lib/glimmer/dsl/opal/browser_expression.rb",
     "lib/glimmer/dsl/opal/column_properties_expression.rb",
     "lib/glimmer/dsl/opal/combo_selection_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/data_binding_expression.rb",
     "lib/glimmer/dsl/opal/dsl.rb",
-    "lib/glimmer/dsl/opal/grid_layout_expression.rb",
     "lib/glimmer/dsl/opal/layout_data_expression.rb",
-    "lib/glimmer/dsl/opal/list_expression.rb",
+    "lib/glimmer/dsl/opal/layout_expression.rb",
     "lib/glimmer/dsl/opal/list_selection_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/message_box_expression.rb",
     "lib/glimmer/dsl/opal/observe_expression.rb",
     "lib/glimmer/dsl/opal/property_expression.rb",
     "lib/glimmer/dsl/opal/shell_expression.rb",
-    "lib/glimmer/dsl/opal/tab_folder_expression.rb",
-    "lib/glimmer/dsl/opal/tab_item_expression.rb",
     "lib/glimmer/dsl/opal/table_column_expression.rb",
     "lib/glimmer/dsl/opal/table_expression.rb",
     "lib/glimmer/dsl/opal/table_items_data_binding_expression.rb",
-    "lib/glimmer/dsl/opal/text_expression.rb",
     "lib/glimmer/dsl/opal/widget_expression.rb",
     "lib/glimmer/dsl/opal/widget_listener_expression.rb",
     "lib/glimmer/opal/display_proxy.rb",
     "lib/glimmer/opal/element_proxy.rb",
-    "lib/glimmer/opal/iframe_proxy.rb",
-    "lib/glimmer/opal/input_proxy.rb",
-    "lib/glimmer/opal/layout_data_proxy.rb",
-    "lib/glimmer/opal/list_proxy.rb",
-    "lib/glimmer/opal/modal.rb",
-    "lib/glimmer/opal/tab_folder.rb",
-    "lib/glimmer/opal/tab_item.rb",
-    "lib/glimmer/opal/table_column.rb",
-    "lib/glimmer/opal/table_item.rb",
-    "lib/glimmer/opal/table_proxy.rb",
+    "lib/glimmer/swt/browser_proxy.rb",
     "lib/glimmer/swt/button_proxy.rb",
     "lib/glimmer/swt/combo_proxy.rb",
     "lib/glimmer/swt/composite_proxy.rb",
     "lib/glimmer/swt/event_listener_proxy.rb",
     "lib/glimmer/swt/grid_layout_proxy.rb",
     "lib/glimmer/swt/label_proxy.rb",
+    "lib/glimmer/swt/layout_data_proxy.rb",
+    "lib/glimmer/swt/layout_proxy.rb",
+    "lib/glimmer/swt/list_proxy.rb",
+    "lib/glimmer/swt/message_box_proxy.rb",
     "lib/glimmer/swt/point.rb",
     "lib/glimmer/swt/property_owner.rb",
     "lib/glimmer/swt/shell_proxy.rb",
+    "lib/glimmer/swt/tab_folder_proxy.rb",
+    "lib/glimmer/swt/tab_item_proxy.rb",
+    "lib/glimmer/swt/table_column_proxy.rb",
+    "lib/glimmer/swt/table_item_proxy.rb",
+    "lib/glimmer/swt/table_proxy.rb",
+    "lib/glimmer/swt/text_proxy.rb",
     "lib/glimmer/swt/widget_proxy.rb",
     "lib/jquery.js",
     "lib/samples/elaborate/contact_manager.rb",
@@ -105,7 +101,7 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
+    s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 0.9.5"])
     s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 0.1.0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_development_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
@@ -117,7 +113,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
     s.add_development_dependency(%q<glimmer-dsl-opal>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<glimmer>.freeze, ["~> 0.9.3"])
+    s.add_dependency(%q<glimmer>.freeze, ["~> 0.9.5"])
     s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 0.1.0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])

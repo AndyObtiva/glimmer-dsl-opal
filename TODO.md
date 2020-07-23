@@ -2,14 +2,13 @@
 
 Here is a list of tasks to do (moved to CHANGELOG.md once done). 
 
-## Next (0.1.0)
+## Next (0.1.1)
 
-- opal-rspect test coverage
-- opal-jquery refactoring
+- support automatic table sorting just like glimmer-dsl-swt
 
 ## Issues
 
-- Fix list selection so it always requires holding meta key
+N/A
 
 ## Tasks
 

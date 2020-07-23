@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.0
+
+- Code redesign to better match the glimmer-dsl-swt APIs
+- opal-jquery refactoring
+- opal-rspec test coverage
+
 ## 0.0.9
 
 - Upgraded to glimmer gem v0.9.3

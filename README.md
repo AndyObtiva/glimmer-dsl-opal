@@ -60,7 +60,7 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 
 ## Setup
 
-(NOTE: if you run into issues, they are probably fixed in master or development/wip branch, you may check out instead)
+(NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete alpha. Also, there is a slight chance issues you encounter are fixed in master or some other branch that you could check out instead)
 
 Please install a Rails 5 gem (e.g. `gem install rails -v5.2.4.3` )
 

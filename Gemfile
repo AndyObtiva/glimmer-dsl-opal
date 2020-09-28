@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 0.9.5' #, path: '../glimmer'
-gem 'glimmer-dsl-xml', '~> 0.1.0'
+gem 'glimmer', '~> 1.0.0' #, path: '../glimmer'
+gem 'glimmer-dsl-xml', '~> 1.0.0'
 
 group :development, :test do
   gem "puts_debuggerer", "~> 0.8.1", require: false

@@ -41,3 +41,5 @@ N/A
 - Desktopify.org (free): freely convert any web app into a desktop app using Glimmer scaffolding. Provide scaffolded app as src, dmg, pkg, app, msi, and jar+script for Linux. 
 - GlimmerAppStore.com: cross platform alternative to Mac App Store to host and sell glimmer apps with auto update support
 - helpmeteachyou.org (free): free education platform
+- social.community (free): online community gathering with DropComm self-moderating technology.
+

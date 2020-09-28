@@ -92,6 +92,18 @@ Add the following line to the top of an empty `app/assets/javascripts/applicatio
 require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
 ```
 
+Run:
+
+```
+rails g scaffold welcome
+```
+
+Modify `config/routes.rb`:
+
+```ruby
+root to: 'welcome#index'
+```
+
 Add more code to `app/assets/javascripts/application.rb` inside a `Document.ready?` block from one of the samples below or a [Glimmer](https://github.com/AndyObtiva/glimmer) [app](https://github.com/AndyObtiva/glimmer#app)/[custom-shell gem](https://github.com/AndyObtiva/glimmer#custom-shell-gem).
 
 ```ruby

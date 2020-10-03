@@ -19,41 +19,21 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'delegate'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
-        end
-      }
-    }.open
+module Glimmer
+  module Util
+    class ProcTracker < DelegateClass(Proc)
+      def initialize(proc)
+        super(proc)
+      end
+      def call(*args)
+        __getobj__.call(*args)
+        @called = true
+      end
+      def called?
+        !!@called
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

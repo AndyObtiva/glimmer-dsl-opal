@@ -7,9 +7,9 @@ module Glimmer
     
       def initialize(parent, args)
         super(parent, args)
-        @horizontal_spacing = 10
-        @vertical_spacing = 10
-        @num_columns = @args.first || 1        
+        self.horizontal_spacing = 10
+        self.vertical_spacing = 10
+        self.num_columns = @args.first || 1        
         reapply
       end
 
@@ -35,6 +35,19 @@ module Glimmer
         @vertical_spacing = spacing
 #         @parent.add_css_class("vertical-spacing-#{@vertical_spacing}")
         reapply
+      end
+      
+      def reapply
+        layout_css = <<~CSS
+          display: grid;
+          grid-template-columns: #{'auto ' * @num_columns.to_i};
+          grid-row-gap: #{@vertical_spacing}px;
+          grid-column-gap: #{@horizontal_spacing}px;
+          justify-content: start;
+        CSS
+        layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
+          @parent.dom_element.css(key, value) unless key.nil?
+        end      
       end
     end
   end

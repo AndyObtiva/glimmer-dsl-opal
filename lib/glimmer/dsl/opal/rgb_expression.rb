@@ -19,41 +19,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/dsl/opal/color_expression'
+require 'glimmer/swt/color_proxy'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
-        end
-      }
-    }.open
+module Glimmer
+  module DSL
+    module Opal
+      class RgbExpression < ColorExpression
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

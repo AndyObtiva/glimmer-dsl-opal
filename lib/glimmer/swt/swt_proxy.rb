@@ -19,41 +19,35 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/swt'
+require 'glimmer/swt/style_constantizable'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
+module Glimmer
+  module SWT
+    # Proxy for org.eclipse.swt.SWT
+    #
+    # Follows the Proxy Design Pattern
+    class SWTProxy            
+      include StyleConstantizable      
 
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
+      class << self
+        def constant_source_class
+          SWT
         end
-      }
-    }.open
+
+        def constant_value_none
+          SWT::NONE
+        end
+        
+        def extra_styles
+          EXTRA_STYLES
+        end
+      end
+      
+      EXTRA_STYLES = {
+        NO_RESIZE: self[:shell_trim, :resize!, :max!],
+        NO_SORT: -7,
+      }            
+    end
   end
 end
-
-HelloCombo.new.launch

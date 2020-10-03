@@ -15,6 +15,11 @@ require 'glimmer/dsl/opal/layout_data_expression'
 require 'glimmer/dsl/opal/list_selection_data_binding_expression'
 require 'glimmer/dsl/opal/table_items_data_binding_expression'
 require 'glimmer/dsl/opal/column_properties_expression'
+require 'glimmer/dsl/opal/font_expression'
+require 'glimmer/dsl/opal/color_expression'
+require 'glimmer/dsl/opal/rgb_expression'
+require 'glimmer/dsl/opal/rgba_expression'
+require 'glimmer/dsl/opal/custom_widget_expression'
 
 module Glimmer
   module DSL
@@ -22,11 +27,13 @@ module Glimmer
       Engine.add_dynamic_expressions(
        Opal,
        %w[
+         custom_widget
          widget_listener
          table_items_data_binding
          combo_selection_data_binding
          list_selection_data_binding
          data_binding
+         font
          layout
          property
          widget

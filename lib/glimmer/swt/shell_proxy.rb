@@ -3,7 +3,7 @@ require 'glimmer/swt/point'
 
 module Glimmer
   module SWT
-    class ShellProxy < WidgetProxy
+    class ShellProxy < CompositeProxy
       # TODO consider renaming to ShellProxy to match SWT API
       attr_reader :minimum_size
     

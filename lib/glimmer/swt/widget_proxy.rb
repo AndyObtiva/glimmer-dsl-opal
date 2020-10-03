@@ -1,5 +1,27 @@
+# Copyright (c) 2020 Andy Maleh
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
+require 'glimmer/swt/swt_proxy'
 
 module Glimmer
   module SWT
@@ -7,7 +29,8 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :css_classes, :css, :children, :enabled
+      attr_reader :parent, :args, :path, :css, :children, :enabled
+      attr_accessor :foreground, :background
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -50,10 +73,13 @@ module Glimmer
         @parent = parent        
         @args = args
         @children = Set.new
-        @css_classes = Set.new
         @css = ''
         @enabled = true
         @parent.add_child(self)
+      end
+      
+      def css_classes
+        @css_classes ||= Set.new      
       end
       
       def dispose
@@ -133,27 +159,27 @@ module Glimmer
       end
       
       def add_css_class(css_class)
-        @css_classes << css_class
+        css_classes << css_class
         redraw
       end
       
       def add_css_classes(css_classes)
-        @css_classes += css_classes
+        css_classes += css_classes
         redraw
       end
       
       def remove_css_class(css_class)
-        @css_classes.delete(css_class)
+        css_classes.delete(css_class)
         redraw
       end
       
       def remove_css_classes(css_classes)
-        @css_classes -= css_classes
+        css_classes -= css_classes
         redraw
       end
       
       def clear_css_classes(css_class)
-        @css_classes.clear
+        css_classes.clear
         redraw
       end
       
@@ -177,6 +203,19 @@ module Glimmer
       def listener_path
         path
       end
+      
+      def can_handle_observation_request?(observation_request)        
+        # TODO sort this out for Opal
+        observation_request = observation_request.to_s
+        if observation_request.start_with?('on_swt_')
+          constant_name = observation_request.sub(/^on_swt_/, '')
+          SWTProxy.has_constant?(constant_name)
+        elsif observation_request.start_with?('on_')
+#           event = observation_request.sub(/^on_/, '')
+#           can_add_listener?(event) || can_handle_drag_observation_request?(observation_request) || can_handle_drop_observation_request?(observation_request)
+          true # TODO filter by valid listeners only in the future
+        end
+      end      
       
       def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
@@ -222,8 +261,15 @@ module Glimmer
       end
       
       def property_type_converters
+        color_converter = lambda do |value|
+          if value.is_a?(Symbol) || value.is_a?(String)
+            ColorProxy.new(value)
+          else
+            value
+          end
+        end
         @property_type_converters ||= {
-#           :background => color_converter,
+          :background => color_converter,
 #           :background_image => lambda do |value|
 #             if value.is_a?(String)
 #               if value.start_with?('uri:classloader')
@@ -243,7 +289,7 @@ module Glimmer
 #               value
 #             end
 #           end,
-#           :foreground => color_converter,
+          :foreground => color_converter,
 #           :font => lambda do |value|
 #             if value.is_a?(Hash)
 #               font_properties = value

@@ -19,41 +19,55 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/error'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
+module Glimmer
+  module UI
+    module CustomShell
+      include Glimmer::UI::CustomWidget
       
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
+      class << self
+        def included(klass)
+          klass.extend(CustomWidget::ClassMethods)
+          klass.include(Glimmer) 
+          Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
         end
-      }
-    }.open
+      end
+      
+      def initialize(parent, args, options, &content)
+        super
+        raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy)
+      end
+
+      # Classes may override
+      def open
+        body_root.open
+      end
+
+      # DO NOT OVERRIDE. JUST AN ALIAS FOR `#open`. OVERRIDE `#open` INSTEAD.
+      def show
+        open
+      end
+
+      def close
+        body_root.close
+      end
+
+      def hide
+        body_root.hide
+      end
+
+      def visible?
+        body_root.visible?
+      end
+
+      def center
+        body_root.center
+      end
+
+      def start_event_loop
+        body_root.start_event_loop
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

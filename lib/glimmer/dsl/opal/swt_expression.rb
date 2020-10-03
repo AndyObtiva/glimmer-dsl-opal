@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Andy Maleh
+# Copyright (c) 2007-2020 Andy Maleh
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -19,41 +19,28 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/dsl/static_expression'
+require 'glimmer/swt/swt_proxy'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
+# TODO consider turning static keywords like bind into methods
 
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
+module Glimmer
+  module DSL
+    module Opal
+      # Responsible for returning SWT constant values
+      #
+      # Named SwtExpression (not SWTExpression) so that the DSL engine
+      # discovers quickly by convention
+      class SwtExpression < StaticExpression
+        def can_interpret?(parent, keyword, *args, &block)
+          block.nil? &&
+            args.size > 0
         end
-      }
-    }.open
+  
+        def interpret(parent, keyword, *args, &block)
+          Glimmer::SWT::SWTProxy[*args]
+        end
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

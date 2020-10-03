@@ -1,6 +1,6 @@
 require 'glimmer/data_binding/observable'
 require 'glimmer/data_binding/observer'
-require 'glimmer/opal/display_proxy'
+require 'glimmer/swt/display_proxy'
 
 # This ensures all data-binding events happen async and block on modal display
 

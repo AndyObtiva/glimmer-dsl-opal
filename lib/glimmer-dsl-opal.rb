@@ -1,9 +1,11 @@
 require 'opal'
 if RUBY_PLATFORM == 'opal'
   require 'opal-async'
+#   require 'async/ext/thread'
   require 'jquery' # included in glimmer-dsl-opal
   require 'opal-jquery'
   require 'glimmer'
+  require 'facets/hash/symbolize_keys'  
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger
@@ -25,4 +27,13 @@ if RUBY_PLATFORM == 'opal'
    
   require 'glimmer-dsl-xml'
   Element.alias_native :replace_with, :replaceWith
+  
+#   Glimmer::Config.loop_max_count = 20
+  
+  Glimmer::Config.excluded_keyword_checkers << lambda do |method_symbol, *args|
+    method = method_symbol.to_s
+    result = false
+    result ||= method == '<<'
+  end
+  
 end

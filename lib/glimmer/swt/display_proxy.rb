@@ -1,5 +1,5 @@
 module Glimmer
-  module Opal
+  module SWT
     class DisplayProxy
       class << self
         def instance
@@ -18,6 +18,8 @@ module Glimmer
         end
         Async::Task.new(&executer)
       end
+      # sync_exec kept for API compatibility reasons
+      alias sync_exec async_exec
     end
   end
 end

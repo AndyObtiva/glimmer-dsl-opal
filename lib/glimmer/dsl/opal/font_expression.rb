@@ -19,41 +19,29 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/dsl/expression'
+require 'glimmer/dsl/top_level_expression'
+require 'glimmer/swt/font_proxy'
 
-  def initialize
-    self.country_options=['', 'Canada', 'US', 'Mexico']
-    self.country = 'Canada'
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  def launch
-    person = Person.new
-    
-    shell {
-      fill_layout :vertical
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection bind(person, :country)
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
+module Glimmer
+  module DSL
+    module Opal
+      # font expression
+      # Note: Cannot be a static expression because it clashes with font property expression
+      class FontExpression < Expression
+        include TopLevelExpression
+  
+        def can_interpret?(parent, keyword, *args, &block)
+          keyword.to_s == 'font' and     
+            (parent.nil? || !parent.respond_to?('font')) and
+            args.size == 1 and 
+            args.first.is_a?(Hash)
         end
-      }
-    }.open
+  
+        def interpret(parent, keyword, *args, &block)
+          Glimmer::SWT::FontProxy.new(*args)
+        end
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

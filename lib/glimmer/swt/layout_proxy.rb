@@ -40,21 +40,11 @@ module Glimmer
       end
       
       def reapply
-        layout_css = <<~CSS
-          display: grid;
-          grid-template-columns: #{'auto ' * @num_columns.to_i};
-          grid-row-gap: #{@vertical_spacing}px;
-          grid-column-gap: #{@horizontal_spacing}px;
-          justify-content: start;
-        CSS
-        layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
-          unless key.nil?
-            @parent.dom_element.css(key, value)
-          end
-        end
+        # subclasses can override this
       end
     end
   end
 end
 
 require 'glimmer/swt/grid_layout_proxy'
+require 'glimmer/swt/fill_layout_proxy'

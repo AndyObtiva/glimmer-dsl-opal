@@ -8,7 +8,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Issues
 
-N/A
+- Look into edit table item error on sorting table
 
 ## Tasks
 
@@ -42,4 +42,3 @@ N/A
 - GlimmerAppStore.com: cross platform alternative to Mac App Store to host and sell glimmer apps with auto update support
 - helpmeteachyou.org (free): free education platform
 - social.community (free): online community gathering with DropComm self-moderating technology.
-

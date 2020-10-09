@@ -29,13 +29,13 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :css, :children, :enabled
+      attr_reader :parent, :args, :path, :children, :enabled
       attr_accessor :foreground, :background
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args)
-          the_widget_class = widget_class(keyword) || Glimmer::SWT::LabelProxy
+          the_widget_class = widget_class(keyword)
           the_widget_class.new(parent, args)
         end
         
@@ -75,10 +75,11 @@ module Glimmer
         @children = Set.new
         @css = ''
         @enabled = true
-        @parent.add_child(self)
+        @parent.add_child(self)                
       end
       
       def css_classes
+        # TODO deprecate this now that we switched to opal-jquery which automatically holds classes in dom elements
         @css_classes ||= Set.new      
       end
       
@@ -115,10 +116,14 @@ module Glimmer
           old_element = Document.find(path)
           old_dom = @dom
           @dom = nil
-          old_element.replace_with(dom.gsub('<html>', '').gsub('</html>', ''))
+          @dom = dom
+          @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
+          old_element.replace_with(@dom.gsub('<html>', '').gsub('</html>', ''))
         else
           @dom = nil
-          Document.find(parent_path).append(dom.gsub('<html>', '').gsub('</html>', ''))
+          @dom = dom
+          @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
+          Document.find(parent_path).append(@dom.gsub('<html>', '').gsub('</html>', ''))
         end
         @observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
@@ -184,6 +189,7 @@ module Glimmer
       end
       
       def css=(css)
+        # TODO remove this method as it is probably not needed anymore
         @css = css
         redraw
       end
@@ -194,6 +200,20 @@ module Glimmer
       
       def dom_element
         Document.find(path)
+      end
+      
+      def style_element
+        style_element_id = "#{id}-style"
+        style_element_selector = "style##{style_element_id}"
+        element = dom_element.find(style_element_selector)
+        if element.empty?
+          new_element = Element.new(:style)
+          new_element.attr('id', style_element_id)
+          new_element.attr('class', "#{name.gsub('_', '-')}-instance-style widget-instance-style")
+          dom_element.prepend(new_element)
+          element = dom_element.find(style_element_selector)
+        end
+        element
       end
       
       def parent_dom_element

@@ -2,37 +2,45 @@ require 'glimmer/swt/layout_proxy'
 
 module Glimmer
   module SWT
-    class FillLayoutProxy < LayoutProxy
+    class RowLayoutProxy < LayoutProxy
       include Glimmer
       
       STYLE = <<~CSS
-        .fill-layout {
+        .row-layout {
           display: flex;
         }
-        
-        .fill-layout > * {
-          width: 100%;
-          height: 100%;
+                
+        .row-layout-pack {
+          display: initial;
         }
-        
-        .fill-layout-horizontal {
+                
+        .row-layout-horizontal {
           flex-direction: row;
         }
         
-        .fill-layout-vertical {
+        .row-layout-horizontal.row-layout-pack {
+          flex-direction: none;
+        }
+        
+        .row-layout-vertical {
           flex-direction: column;
+        }
+        
+        .row-layout-vertical.row-layout-pack {
+          flex-direction: none;          
         }
       CSS
     
-      attr_reader :type, :margin_width, :margin_height, :spacing
+      attr_reader :type, :margin_width, :margin_height, :spacing, :pack
     
       def initialize(parent, args)
         super(parent, args)
         @type = @args.first || :horizontal
         @marign_width = 15
         @margin_height = 15
-        @parent.dom_element.add_class('fill-layout')
-        @parent.dom_element.add_class(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
+        self.pack = true
+        @parent.dom_element.add_class('row-layout')
+        @parent.dom_element.add_class(horizontal? ? 'row-layout-horizontal' : 'row-layout-vertical')
       end
       
       def horizontal?
@@ -42,7 +50,22 @@ module Glimmer
       def vertical?
         @type == :vertical
       end
+      
+      def dom(widget_dom)        
+        dom_result = widget_dom
+        dom_result += '<br />' if vertical? && @pack
+        dom_result
+      end
 
+      def pack=(value)
+        pd @pack = value
+        if @pack
+          @parent.dom_element.add_class('row-layout-pack')
+        else
+          @parent.dom_element.remove_class('row-layout-pack')
+        end
+      end
+      
       def margin_width=(pixels)
         @margin_width = pixels
         # Using padding for width since margin-right isn't getting respected with width 100%

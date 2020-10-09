@@ -33,6 +33,7 @@ module Glimmer
         @parent = parent
         @args = args
         @parent.add_css_class(css_class)
+        @parent.layout = self
       end
 
       def css_class
@@ -42,9 +43,15 @@ module Glimmer
       def reapply
         # subclasses can override this
       end
+      
+      # Decorates widget dom. Subclasses may override. Returns widget dom by default.
+      def dom(widget_dom)
+        widget_dom
+      end
     end
   end
 end
 
 require 'glimmer/swt/grid_layout_proxy'
 require 'glimmer/swt/fill_layout_proxy'
+require 'glimmer/swt/row_layout_proxy'

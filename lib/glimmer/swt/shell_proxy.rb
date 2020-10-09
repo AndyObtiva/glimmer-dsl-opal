@@ -179,7 +179,7 @@ module Glimmer
       end
       
       def style_dom_table_css
-        <<~CSS
+        <<~CSS        
           table {
             border-spacing: 0;
           }
@@ -213,16 +213,22 @@ module Glimmer
             }
             style(class: 'tab-style') {
               style_dom_tab_css
-            }        
+            }            
 #             style(class: 'tab-item-style') {
 #               style_dom_tab_item_css
 #             }        
 #             style(class: 'modal-style') {
 #               style_dom_modal_css
 #             }        
-            style(class: 'table-style') {
+            style(class: 'table-style') {            
               style_dom_table_css
-            }        
+            }
+            style(class: 'fill-layout-style') {
+              Glimmer::SWT::FillLayoutProxy::STYLE
+            }
+            style(class: 'row-layout-style') {
+              Glimmer::SWT::RowLayoutProxy::STYLE
+            }
           }
         }.to_s
       end

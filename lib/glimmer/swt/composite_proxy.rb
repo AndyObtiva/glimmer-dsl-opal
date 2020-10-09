@@ -21,11 +21,18 @@ module Glimmer
       def dom
         div_id = id
         div_style = css
-        div_class = "#{name} grid-layout"
+        div_class = name
         @dom ||= html {
           div(id: div_id, class: div_class, style: div_style)
         }.to_s
       end
+      
+      def layout=(the_layout)
+        @layout = the_layout
+      end
+      
     end
+    
   end
+  
 end

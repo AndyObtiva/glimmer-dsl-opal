@@ -72,10 +72,11 @@ Add the following to `Gemfile`:
 
 ```
 gem 'opal-rails', '~> 1.1.2'
-gem 'opal-async', '~> 1.1.0'
+gem 'opal-async', '~> 1.1.1'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.1.0', require: false
-gem 'glimmer-dsl-xml', '~> 0.1.0', require: false
+gem 'glimmer-dsl-opal', '~> 0.2.0', require: false
+gem 'glimmer-dsl-xml', '~> 1.0.0', require: false
+gem 'glimmer-dsl-css', '~> 1.0.0', require: false
 
 ```
 

@@ -26,6 +26,7 @@ if RUBY_PLATFORM == 'opal'
   require 'glimmer/data_binding/ext/observable_model'
    
   require 'glimmer-dsl-xml'
+  require 'glimmer-dsl-css'
   Element.alias_native :replace_with, :replaceWith
   
 #   Glimmer::Config.loop_max_count = 20

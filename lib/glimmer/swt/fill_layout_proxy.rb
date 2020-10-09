@@ -31,6 +31,8 @@ module Glimmer
         @type = @args.first || :horizontal
         @marign_width = 15
         @margin_height = 15
+        @parent.css_classes << 'fill-layout'
+        @parent.css_classes << (horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
         @parent.dom_element.add_class('fill-layout')
         @parent.dom_element.add_class(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
       end

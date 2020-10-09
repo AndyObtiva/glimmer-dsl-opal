@@ -193,7 +193,7 @@ module Glimmer
       def dom
         i = 0
         body_id = id
-        body_class = name
+        body_class = ([name] + css_classes.to_a).join(' ')
         body_style = '' # a start for more styling further along
         if @minimum_size
           body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size

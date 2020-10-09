@@ -101,6 +101,18 @@ module Glimmer
           @red, @green, @blue, @alpha = @args
         end        
       end
+      
+      def to_css
+        if alpha.nil?
+          "rgb(#{red}, #{green}, #{blue})"
+        else
+          "rgba(#{red}, #{green}, #{blue}, #{alpha_css})"
+        end
+      end
+      
+      def alpha_css
+        alpha.to_f / 255
+      end
 
     end
   end

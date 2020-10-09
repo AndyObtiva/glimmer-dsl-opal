@@ -29,8 +29,7 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled
-      attr_accessor :foreground, :background
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -73,15 +72,14 @@ module Glimmer
         @parent = parent        
         @args = args
         @children = Set.new
-        @css = ''
         @enabled = true
         @parent.add_child(self)                
       end
       
       def css_classes
-        # TODO deprecate this now that we switched to opal-jquery which automatically holds classes in dom elements
+        # TODO consider deprecating this in favor of jquery css class setting on dom directly if practical
         @css_classes ||= Set.new      
-      end
+      end      
       
       def dispose
         Document.find(path).remove
@@ -107,6 +105,16 @@ module Glimmer
         redraw
       end
       
+      def foreground=(value)
+        @foreground = value
+        redraw
+      end
+      
+      def background=(value)
+        @background = value
+        redraw
+      end
+      
       def parent_path
         @parent.path
       end
@@ -125,6 +133,9 @@ module Glimmer
           @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
           Document.find(parent_path).append(@dom.gsub('<html>', '').gsub('</html>', ''))
         end
+        the_element = Document.find(path)
+        the_element.css('color', foreground.to_css) unless foreground.nil?
+        the_element.css('background-color', background.to_css) unless background.nil?
         @observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
             @observation_requests[keyword].delete(event_listener)
@@ -185,12 +196,6 @@ module Glimmer
       
       def clear_css_classes(css_class)
         css_classes.clear
-        redraw
-      end
-      
-      def css=(css)
-        # TODO remove this method as it is probably not needed anymore
-        @css = css
         redraw
       end
       

@@ -11,7 +11,6 @@ module Glimmer
         @args = args
         @children = Set.new
         @css_classes = Set.new(['modal', name])
-        @css = ''
         @enabled = true
         content do
           on_widget_selected {

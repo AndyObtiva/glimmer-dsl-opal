@@ -148,11 +148,17 @@ module Glimmer
       # <- end of class methods
       
 
-      attr_reader :body_root, :parent, :swt_style, :options
+      attr_reader :body_root, :parent, :options, :swt_style
 
       def initialize(parent, args, options, &content)
         @parent = parent
+        options = args.delete_at(-1) if args.is_a?(Array) && args.last.is_a?(Hash)
+        if args.is_a?(Hash)
+          options = args
+          args = []
+        end
         @args = args
+        @swt_style = SWT::SWTProxy[*args]
         options ||= {}
         @options = self.class.options.merge(options)
         @content = Util::ProcTracker.new(content) if content

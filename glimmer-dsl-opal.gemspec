@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-10-09"
+  s.date = "2020-10-11"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "VERSION",
+    "lib/ext/exception.rb",
     "lib/glimmer-dsl-opal.rb",
     "lib/glimmer/data_binding/element_binding.rb",
     "lib/glimmer/data_binding/ext/observable_model.rb",
@@ -123,9 +124,10 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 1.0.1"])
     s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.0.0"])
     s.add_runtime_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
-    s.add_runtime_dependency(%q<opal-async>.freeze, ["~> 1.1.1"])
+    s.add_runtime_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_development_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
+    s.add_development_dependency(%q<rake-tui>.freeze, [">= 0"])
     s.add_development_dependency(%q<jeweler>.freeze, [">= 2.3.9", "< 3.0.0"])
     s.add_development_dependency(%q<rdoc>.freeze, [">= 6.2.1", "< 7.0.0"])
     s.add_development_dependency(%q<opal-rspec>.freeze, ["~> 0.8.0.alpha2"])
@@ -135,9 +137,10 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<glimmer>.freeze, ["~> 1.0.1"])
     s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.0.0"])
     s.add_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
-    s.add_dependency(%q<opal-async>.freeze, ["~> 1.1.1"])
+    s.add_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
     s.add_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
+    s.add_dependency(%q<rake-tui>.freeze, [">= 0"])
     s.add_dependency(%q<jeweler>.freeze, [">= 2.3.9", "< 3.0.0"])
     s.add_dependency(%q<rdoc>.freeze, [">= 6.2.1", "< 7.0.0"])
     s.add_dependency(%q<opal-rspec>.freeze, ["~> 0.8.0.alpha2"])

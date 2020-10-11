@@ -90,7 +90,7 @@ module Glimmer
         @args = args        
         case @args.size
         when 1
-          @alpha = 255
+          @alpha = nil
           if @args.first.is_a?(String) || @args.first.is_a?(Symbol)              
             standard_color = @args.first.to_s.downcase.sub('COLOR_', '')             
             @red, @green, @blue = SWT_COLOR_TRANSLATION[standard_color]

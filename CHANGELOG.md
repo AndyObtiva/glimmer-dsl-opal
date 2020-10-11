@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.2.0
+
+- Color support
+- Font support
+- Hello, Custom Widget! sample
+
 ## 0.1.0
 
 - Code redesign to better match the glimmer-dsl-swt APIs

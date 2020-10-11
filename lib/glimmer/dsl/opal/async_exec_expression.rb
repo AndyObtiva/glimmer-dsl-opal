@@ -9,7 +9,7 @@ module Glimmer
         include TopLevelExpression
 
         def interpret(parent, keyword, *args, &block)
-          Glimmer::Opal::DisplayProxy.instance.async_exec(&block)
+          Glimmer::SWT::DisplayProxy.instance.async_exec(&block)
         end
       end
     end

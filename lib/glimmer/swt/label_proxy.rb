@@ -29,7 +29,7 @@ module Glimmer
       def redraw
         super
         the_element = Document.find(path)
-        pd alignment = [:left, :center, :right].detect {|value| args.detect { |arg| SWTProxy[value] == arg } }
+        alignment = [:left, :center, :right].detect {|value| args.detect { |arg| SWTProxy[value] == arg } }
         the_element.css('text-align', alignment.to_s)
       end
     end

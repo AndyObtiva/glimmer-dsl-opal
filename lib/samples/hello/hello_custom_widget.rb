@@ -39,15 +39,30 @@ class GreetingLabel
   
   after_body {
     return if colors.nil?
-    
-#     Thread.new {
+    Async::Task.new(delay: 0.1) {
+      i = 0
+      looper = lambda do
+        color = colors[i]
+        i+=1
+        i = i % colors.size
 #       colors.cycle { |color|
-#         async_exec {
-#           self.color = color
+        puts color
+        async_exec {
+          self.color = color
+        }
+#         `if (false) {await new Promise(r => setTimeout(r, 5000))}`        
+#         Async::Task.new(delay: 1000) {
+          sleep(1)
 #         }
-#         sleep(1)
-#       }
-#     }
+#         break if i == 2
+        Async::Task.new do
+          looper.call
+        end
+      end
+      Async::Task.new do
+        looper.call
+      end
+    }
   }
   
   body {

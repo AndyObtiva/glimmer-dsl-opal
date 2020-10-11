@@ -1,11 +1,14 @@
 require 'opal'
+
 if RUBY_PLATFORM == 'opal'
+  require 'native' # move this to opal-async
   require 'opal-async'
-#   require 'async/ext/thread'
+  require 'async/ext'
   require 'jquery' # included in glimmer-dsl-opal
   require 'opal-jquery'
   require 'glimmer'
   require 'facets/hash/symbolize_keys'  
+  require 'ext/exception'
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger

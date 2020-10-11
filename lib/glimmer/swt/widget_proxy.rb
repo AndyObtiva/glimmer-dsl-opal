@@ -29,7 +29,7 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -73,7 +73,7 @@ module Glimmer
         @args = args
         @children = Set.new
         @enabled = true
-        @parent.add_child(self)                
+        @parent.add_child(self)
       end
       
       def css_classes
@@ -107,12 +107,20 @@ module Glimmer
       
       def foreground=(value)
         @foreground = value
-        redraw
+        dom_element.css('color', foreground.to_css) unless foreground.nil?
       end
       
       def background=(value)
         @background = value
-        redraw
+        dom_element.css('background-color', background.to_css) unless background.nil?
+      end
+      
+      def font=(value)
+        @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
+        dom_element.css('font-family', @font.name) unless @font.nil?
+        dom_element.css('font-style', 'italic') if @font&.style == :italic
+        dom_element.css('font-weight', 'bold') if @font&.style == :bold
+        dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
       
       def parent_path
@@ -133,9 +141,6 @@ module Glimmer
           @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
           Document.find(parent_path).append(@dom.gsub('<html>', '').gsub('</html>', ''))
         end
-        the_element = Document.find(path)
-        the_element.css('color', foreground.to_css) unless foreground.nil?
-        the_element.css('background-color', background.to_css) unless background.nil?
         @observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
             @observation_requests[keyword].delete(event_listener)

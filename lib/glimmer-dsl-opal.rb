@@ -8,6 +8,7 @@ if RUBY_PLATFORM == 'opal'
   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
   
+  require 'opal-parser'
   require 'native' # move this to opal-async
   require 'opal-async'
   require 'async/ext'
@@ -16,6 +17,8 @@ if RUBY_PLATFORM == 'opal'
   require 'glimmer'
   require 'facets/hash/symbolize_keys'  
   require 'glimmer-dsl-opal/ext/exception'
+  require 'glimmer-dsl-opal/ext/date'
+  require 'glimmer-dsl-opal/missing/uri'
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger

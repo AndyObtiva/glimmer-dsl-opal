@@ -33,7 +33,7 @@ module Glimmer
       # discovers quickly by convention
       class SwtExpression < StaticExpression
         def can_interpret?(parent, keyword, *args, &block)
-          block.nil? &&
+          block.nil? and
             args.size > 0
         end
   

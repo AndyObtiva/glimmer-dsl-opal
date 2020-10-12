@@ -29,8 +29,9 @@ module Glimmer
       
       attr_reader :parent, :args
         
-      def initialize(parent, args)
+      def initialize(parent, args)      
         @parent = parent
+        @parent = parent.body_root if @parent.is_a?(Glimmer::UI::CustomWidget)
         @parent.css_classes.each do |css_class|
           @parent.remove_css_class(css_class) if css_class.include?('layout')
         end

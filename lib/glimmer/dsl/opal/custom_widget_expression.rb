@@ -39,11 +39,31 @@ module Glimmer
         end
   
         def interpret(parent, keyword, *args, &block)
-          options = args.last.is_a?(Hash) ? args.pop : {}
-          UI::CustomWidget.for(keyword).new(parent, *args, options, &block)
+          custom_widget_class = UI::CustomWidget.for(keyword)
+          # TODO clean code by extracting methods into CustomShell
+          if !Glimmer::UI::CustomShell.requested? && custom_widget_class.ancestors.include?(Glimmer::UI::CustomShell)
+            options = args.last.is_a?(Hash) ? args.pop : {}
+            options = options.merge('swt_style' => args.join(',')) unless args.join(',').empty?
+            params = {
+              'custom_shell' => keyword
+            }.merge(options)
+            param_string = params.to_a.map {|k, v| "#{k}=#{URI.encode_www_form_component(v)}"}.join('&')
+            url = "#{`document.location.href`}?#{param_string}"
+            `window.open(#{url})`
+             # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
+            Struct.new(:open).new(true)
+          else          
+            custom_widget_class.new(parent, *args, options, &block)
+          end
         end
+        
+        def add_content(parent, &content)
+          content.call(parent) if parent.is_a?(Glimmer::SWT::ShellProxy) || parent.is_a?(Glimmer::UI::CustomShell)
+        end
+        
   
         def add_content(parent, &block)
+          return unless parent.is_a?(Glimmer::UI::CustomWidget)
           # TODO consider avoiding source_location
           if block.source_location == parent.content&.__getobj__.source_location
             parent.content.call(parent) unless parent.content.called?

@@ -1,14 +1,14 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.2.0 (Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.3.0 (Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-### You can finally live in pure Ruby land even on the web!
+### You can finally live in pure Ruby land on the web!
 
 [Glimmer](https://github.com/AndyObtiva/glimmer) DSL for [Opal](https://opalrb.com/) is an experimental proof-of-concept web GUI adapter for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/), allowing Ruby desktop apps to run on the web via [Opal Ruby](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web with standard CSS by web designers. 
 
-Glimmer DSL for Opal webifier successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
+Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.2.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.3.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -17,6 +17,7 @@ NOTE: Alpha Version 0.2.0 only supports bare-minimum capabilities for the follow
 - [Hello, Browser!](#hello-browser)
 - [Hello, Tab!](#hello-tab)
 - [Hello, Custom Widget!](#hello-custom-widget)
+- [Hello, Custom Shell!](#hello-custom-shell)
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
 - [Contact Manager](#contact-manager)
@@ -44,16 +45,18 @@ Widgets:
 - `table`
 - `table_column`
 - `message_box`
-
-Graphics:
-- `color`
-- `font`
+- CustomWidget (ability to define any keyword as a custom widget)
+- CustomShell (ability to define any keyword as a custom shell (aka custom window) that opens in a new browser window)
 
 Layouts:
 - `grid_layout`
 - `row_layout`
 - `fill_layout`
 - `layout_data`
+
+Graphics:
+- `color`
+- `font`
 
 Data-Binding/Observers:
 - `bind`
@@ -86,11 +89,11 @@ Add the following to `Gemfile`:
 
 ```
 gem 'opal-rails', '~> 1.1.2'
-gem 'opal-async', '~> 1.1.1'
+gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.2.0', require: false
-gem 'glimmer-dsl-xml', '~> 1.0.0', require: false
-gem 'glimmer-dsl-css', '~> 1.0.0', require: false
+gem 'glimmer-dsl-opal', '~> 0.3.0', require: false
+gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
+gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
 ```
 
@@ -687,6 +690,175 @@ Visit `http://localhost:3000`
 You should see "Hello, Custom Widget!"
 
 ![Glimmer DSL for Opal Hello Custom Widget](images/glimmer-dsl-opal-hello-custom-widget.gif)
+
+#### Hello, Custom Shell!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_custom_shell'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+require 'date'
+
+# This class declares an `email_shell` custom shell, aka custom window (by convention)
+# Used to view an email message
+class EmailShell
+  include Glimmer::UI::CustomShell
+  
+  # multiple options without default values  
+  options :date, :subject, :from, :message
+  
+  # single option with default value
+  option :to, default: '"John Irwin" <john.irwin@example.com>'
+  
+  before_body {
+    @swt_style |= swt(:shell_trim, :modeless)
+  }
+  
+  body {
+    # pass received swt_style through to shell to customize it (e.g. :dialog_trim for a blocking shell)
+    shell(swt_style) {
+      grid_layout(2, false)
+      
+      text subject      
+
+      label {
+        text 'Date:'
+      }
+      label {
+        text date
+      }
+
+      label {
+        text 'From:'
+      }
+      label {
+        text from
+      }
+
+      label {
+        text 'To:'
+      }
+      label {
+        text to
+      }
+
+      label {
+        text 'Subject:'
+      }
+      label {
+        text subject
+      }
+
+      label {
+        layout_data(:fill, :fill, true, true) {
+          horizontal_span 2 #TODO implement
+          vertical_indent 10
+        }
+        
+        background :white
+        text message        
+      }
+    }
+  }
+  
+end
+
+class HelloCustomShell
+  # including Glimmer enables the Glimmer DSL syntax, including auto-discovery of the `email_shell` custom widget
+  include Glimmer
+  
+  Email = Struct.new(:date, :subject, :from, :message, keyword_init: true)
+  EmailSystem = Struct.new(:emails, keyword_init: true)
+  
+  def initialize
+    @email_system = EmailSystem.new(
+      emails: [
+        Email.new(date: DateTime.new(2029, 10, 22, 11, 3, 0).strftime('%F %I:%M %p'), subject: '3rd Week Report', from: '"Dianne Tux" <dianne.tux@example.com>', message: "Hello,\n\nI was wondering if you'd like to go over the weekly report sometime this afternoon.\n\nDianne"),
+        Email.new(date: DateTime.new(2029, 10, 21, 8, 1, 0).strftime('%F %I:%M %p'), subject: 'Glimmer Upgrade v100.0', from: '"Robert McGabbins" <robert.mcgabbins@example.com>', message: "Team,\n\nWe are upgrading to Glimmer version 100.0.\n\nEveryone pull the latest code!\n\nRegards,\n\nRobert McGabbins"),
+        Email.new(date: DateTime.new(2029, 10, 19, 16, 58, 0).strftime('%F %I:%M %p'), subject: 'Christmas Party', from: '"Lisa Ferreira" <lisa.ferreira@example.com>', message: "Merry Christmas,\n\nAll office Christmas Party arrangements have been set\n\nMake sure to bring a Secret Santa gift\n\nBest regards,\n\nLisa Ferreira"),
+        Email.new(date: DateTime.new(2029, 10, 16, 9, 43, 0).strftime('%F %I:%M %p'), subject: 'Glimmer Upgrade v99.0', from: '"Robert McGabbins" <robert.mcgabbins@example.com>', message: "Team,\n\nWe are upgrading to Glimmer version 99.0.\n\nEveryone pull the latest code!\n\nRegards,\n\nRobert McGabbins"),
+        Email.new(date: DateTime.new(2029, 10, 15, 11, 2, 0).strftime('%F %I:%M %p'), subject: '2nd Week Report', from: '"Dianne Tux" <dianne.tux@example.com>', message: "Hello,\n\nI was wondering if you'd like to go over the weekly report sometime this afternoon.\n\nDianne"),
+        Email.new(date: DateTime.new(2029, 10, 2, 10, 34, 0).strftime('%F %I:%M %p'), subject: 'Glimmer Upgrade v98.0', from: '"Robert McGabbins" <robert.mcgabbins@example.com>', message: "Team,\n\nWe are upgrading to Glimmer version 98.0.\n\nEveryone pull the latest code!\n\nRegards,\n\nRobert McGabbins"),
+      ]
+    )
+  end
+  
+  def launch
+    shell {
+      grid_layout
+      
+      text 'Hello, Custom Shell!'
+      
+      label {
+        font height: 24, style: :bold
+        text 'Emails:'
+      }
+      
+      label {
+        font height: 18
+        text 'Click an email to view its message'
+      }
+      
+      table {
+        layout_data :fill, :fill, true, true
+      
+        table_column {
+          text 'Date:'
+          width 180
+        }
+        table_column {
+          text 'Subject:'
+          width 180
+        }
+        table_column {
+          text 'From:'
+          width 360
+        }
+        
+        items bind(@email_system, :emails), column_properties(:date, :subject, :from)
+        
+        on_mouse_up { |event|
+          email = event.table_item.get_data
+          Thread.new do
+            async_exec {
+              email_shell(date: email.date, subject: email.subject, from: email.from, message: email.message).open
+            }
+          end
+        }
+      }
+    }.open
+  end  
+end
+
+HelloCustomShell.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Custom Shell](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-custom-shell.png)
+![Glimmer DSL for SWT Hello Custom Shell Email1](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-custom-shell-email1.png)
+![Glimmer DSL for SWT Hello Custom Shell Email2](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-custom-shell-email2.png)
+![Glimmer DSL for SWT Hello Custom Shell Email3](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-custom-shell-email3.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Custom Widget!"
+
+![Glimmer DSL for Opal Hello Custom Shell](images/glimmer-dsl-opal-hello-custom-shell.png)
+![Glimmer DSL for Opal Hello Custom Shell Email1](images/glimmer-dsl-opal-hello-custom-shell-email1.png)
+![Glimmer DSL for Opal Hello Custom Shell Email2](images/glimmer-dsl-opal-hello-custom-shell-email2.png)
+![Glimmer DSL for Opal Hello Custom Shell Email3](images/glimmer-dsl-opal-hello-custom-shell-email3.png)
 
 ### Elaborate Samples
 

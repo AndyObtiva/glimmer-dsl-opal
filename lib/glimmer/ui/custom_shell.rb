@@ -19,6 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+require 'glimmer/ui/custom_widget'
 require 'glimmer/error'
 
 module Glimmer
@@ -32,15 +33,32 @@ module Glimmer
           klass.include(Glimmer) 
           Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
         end
+          
+        def request_parameter_string
+          URI.decode_www_form_component(`document.location.href`.match(/\?(.*)$/).to_a[1].to_s)
+        end
+        
+        def encoded_request_parameter_string
+          `document.location.href`.match(/\?(.*)$/).to_a[1].to_s
+        end
+        
+        def requested_and_not_handled?
+          requested? && !request_parameter_string.include?('custom_shell_handled=true')        
+        end   
+        
+        def requested?
+          request_parameter_string.include?('custom_shell=')
+        end   
       end
       
       def initialize(parent, args, options, &content)
-        super
+        super(parent, args, options, &content)
         raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy)
       end
 
       # Classes may override
       def open
+        # TODO consider the idea of delaying rendering till the open method
         body_root.open
       end
 

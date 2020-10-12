@@ -4,8 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Hello, Custom Shell! Sample
-
 ## Soon
 
 - Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
@@ -14,9 +12,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Look into edit table item error on sorting table
 
-## Tasks
+## Features
 
-- Do away with redraw everywhere possible
 - Listeners
 - Basic data-binding
 - Radio button
@@ -25,6 +22,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support different themes by detecting browser OS (Mac, Windows, Linux)
 - Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
+
+## Refactorings
+
+- Do away with redraw everywhere possible
+- Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
 
 ## Samples
 

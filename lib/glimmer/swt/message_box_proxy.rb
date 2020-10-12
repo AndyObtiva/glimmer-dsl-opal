@@ -93,7 +93,7 @@ module Glimmer
           }
           .modal-content {
             background-color: #fefefe;
-            margin: auto;
+            padding-bottom: 15px;
             border: 1px solid #888;
             display: inline-block;
             min-width: 200px;

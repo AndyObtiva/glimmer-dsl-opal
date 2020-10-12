@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.0
+
+- Support opening a custom shell in a browser tab/window by passing in query parameters to URL (e.g. ?custom_shell=keyword+option1=value1 etc...)
+- Make custom shells automatically open in a new tab/window (while standard shells continue to open in the same window by replacing its content)
+- Hello, Custom Shell! Sample
+
 ## 0.2.0
 
 - Color support

@@ -1,4 +1,4 @@
-# Copyright (c) 2007-2020 Andy Maleh
+# Copyright (c) 2020 Andy Maleh
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -73,8 +73,8 @@ class EmailShell
 
       label {
         layout_data(:fill, :fill, true, true) {
-          horizontal_span 2
-          verticalIndent 10
+          horizontal_span 2 #TODO implement
+          vertical_indent 10
         }
         
         background :white

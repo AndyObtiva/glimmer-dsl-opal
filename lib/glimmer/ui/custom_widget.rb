@@ -152,13 +152,14 @@ module Glimmer
 
       def initialize(parent, args, options, &content)
         @parent = parent
-        options = args.delete_at(-1) if args.is_a?(Array) && args.last.is_a?(Hash)
+        options = args.delete_at(-1) if options.nil? && args.is_a?(Array) && args.last.is_a?(Hash)
         if args.is_a?(Hash)
           options = args
           args = []
         end
+        args = options.delete('swt_style').split(',').map(&:to_sym) if options['swt_style']                
         @args = args
-        @swt_style = SWT::SWTProxy[*args]
+        @swt_style = SWT::SWTProxy[*@args]
         options ||= {}
         @options = self.class.options.merge(options)
         @content = Util::ProcTracker.new(content) if content

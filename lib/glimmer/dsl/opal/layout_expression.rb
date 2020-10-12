@@ -9,7 +9,7 @@ module Glimmer
         include ParentExpression
 
         def can_interpret?(parent, keyword, *args, &block)
-          parent.is_a?(Glimmer::SWT::CompositeProxy) &&
+          (parent.is_a?(Glimmer::SWT::CompositeProxy) or (parent.is_a?(Glimmer::UI::CustomWidget) and parent.body_root.is_a?(Glimmer::SWT::CompositeProxy))) and
             Glimmer::SWT::LayoutProxy.layout_exists?(keyword)
         end
 

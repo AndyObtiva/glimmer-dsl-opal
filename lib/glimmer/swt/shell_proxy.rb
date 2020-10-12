@@ -9,7 +9,7 @@ module Glimmer
     
       WIDTH_MIN = 130
       HEIGHT_MIN = 0
-    
+      
       def initialize(args)
         @args = args
         @children = []
@@ -238,6 +238,7 @@ module Glimmer
       end
       
       def open
+        # TODO consider the idea of delaying rendering till the open method
         # TODO make it start as hidden and show shell upon open
       end
     end

@@ -20,6 +20,7 @@ require 'glimmer/dsl/opal/color_expression'
 require 'glimmer/dsl/opal/rgb_expression'
 require 'glimmer/dsl/opal/rgba_expression'
 require 'glimmer/dsl/opal/custom_widget_expression'
+require 'glimmer/dsl/opal/swt_expression'
 
 module Glimmer
   module DSL

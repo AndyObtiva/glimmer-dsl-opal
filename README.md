@@ -1,14 +1,14 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.1.0 (Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.2.0 (Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-### You can finally live in pure Ruby land even on the web! (w/o HTML/CSS/JS if you do not want to write any)
+### You can finally live in pure Ruby land even on the web!
 
 [Glimmer](https://github.com/AndyObtiva/glimmer) DSL for [Opal](https://opalrb.com/) is an experimental proof-of-concept web GUI adapter for [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)). It webifies them via [Rails](https://rubyonrails.org/), allowing Ruby desktop apps to run on the web via [Opal Ruby](https://opalrb.com/) without changing a line of code. Apps may then be custom-styled for the web with standard CSS by web designers. 
 
 Glimmer DSL for Opal webifier successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.1.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.2.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -16,6 +16,7 @@ NOTE: Alpha Version 0.1.0 only supports bare-minimum capabilities for the follow
 - [Hello, List Multi Selection!](#hello-list-multi-selection)
 - [Hello, Browser!](#hello-browser)
 - [Hello, Tab!](#hello-tab)
+- [Hello, Custom Widget!](#hello-custom-widget)
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
 - [Contact Manager](#contact-manager)
@@ -30,6 +31,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 
 The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) have partial support in Opal:
 
+Widgets:
 - `shell`
 - `label`
 - `combo`
@@ -42,19 +44,31 @@ The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glim
 - `table`
 - `table_column`
 - `message_box`
+
+Graphics:
+- `color`
+- `font`
+
+Layouts:
+- `grid_layout`
+- `row_layout`
+- `fill_layout`
+- `layout_data`
+
+Data-Binding/Observers:
+- `bind`
+- `observe`
 - `on_widget_selected`
 - `on_modify_text`
-- `observe`
-- `bind`
+
+Event loop:
 - `async_exec`
-- `grid_layout`
-- `layout_data`
 
 ## Pre-requisites
 
 - Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
 - Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
-- jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the glimmer-dsl-opal rubygem)
+- jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
 
 ## Setup
 
@@ -128,7 +142,7 @@ Also, this external sample app contains all the samples mentioned below configur
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/hello/hello_world'
+require 'glimmer-dsl-opal/samples/hello/hello_world'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -166,7 +180,7 @@ You should see "Hello, World!"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/hello/hello_combo'
+require 'glimmer-dsl-opal/samples/hello/hello_combo'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -174,32 +188,40 @@ Or add the Glimmer code directly if you prefer to play around with it:
 ```ruby
 class Person
   attr_accessor :country, :country_options
-  
+
   def initialize
-    self.country_options=["", "Canada", "US", "Mexico"]
-    self.country = "Canada"
+    self.country_options = ['', 'Canada', 'US', 'Mexico']
+    reset_country
   end
 
   def reset_country
-    self.country = "Canada"
+    self.country = 'Canada'
   end
 end
 
 class HelloCombo
   include Glimmer
+  
   def launch
     person = Person.new
+    
     shell {
-      composite {
-        combo(:read_only) {
-          selection bind(person, :country)
-        }
-        button {
-          text "Reset"
-          on_widget_selected do
-            person.reset_country
-          end
-        }
+      row_layout(:vertical) {
+        pack false
+      }        
+      
+      text 'Hello, Combo!'      
+      
+      combo(:read_only) {
+        selection bind(person, :country)
+      }
+      
+      button {
+        text 'Reset Selection'
+        
+        on_widget_selected do
+          person.reset_country
+        end
       }
     }.open
   end
@@ -230,7 +252,7 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 
 
 ```ruby
-require 'samples/hello/hello_computed'
+require 'glimmer-dsl-opal/samples/hello/hello_computed'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -349,7 +371,7 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 
 
 ```ruby
-require 'samples/hello/hello_list_single_selection'
+require 'glimmer-dsl-opal/samples/hello/hello_list_single_selection'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -392,7 +414,7 @@ HelloListSingleSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Hello List Single Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-single-selection.png)
+![Glimmer DSL for SWT Hello List Single Selection](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-list-single-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -412,7 +434,7 @@ You should see "Hello, List Single Selection!"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/hello/hello_list_multi_selection'
+require 'glimmer-dsl-opal/samples/hello/hello_list_multi_selection'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -465,7 +487,7 @@ HelloListMultiSelection.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Hello List Multi Selection](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-list-multi-selection.png)
+![Glimmer DSL for SWT Hello List Multi Selection](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-list-multi-selection.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -485,7 +507,7 @@ You should see "Hello, List Multi Selection!"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/hello/hello_browser'
+require 'glimmer-dsl-opal/samples/hello/hello_browser'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -502,7 +524,7 @@ shell {
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Hello Browser](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-browser.png)
+![Glimmer DSL for SWT Hello Browser](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-browser.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -522,7 +544,7 @@ You should see "Hello, Browser!"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/hello/hello_tab'
+require 'glimmer-dsl-opal/samples/hello/hello_tab'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -555,8 +577,8 @@ HelloTab.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Hello Tab English](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-tab-english.png)
-![Glimmer DSL for SWT Hello Tab French](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-hello-tab-french.png)
+![Glimmer DSL for SWT Hello Tab English](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-tab-english.png)
+![Glimmer DSL for SWT Hello Tab French](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-tab-french.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -572,6 +594,100 @@ You should see "Hello, Tab!"
 ![Glimmer DSL for Opal Hello Tab English](images/glimmer-dsl-opal-hello-tab-english.png)
 ![Glimmer DSL for Opal Hello Tab French](images/glimmer-dsl-opal-hello-tab-french.png)
 
+#### Hello, Custom Widget!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_custom_widget'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+# This class declares a `greeting_label` custom widget (by convention)
+class GreetingLabel
+  include Glimmer::UI::CustomWidget
+  
+  # multiple options without default values
+  options :name, :colors
+  
+  # single option with default value
+  option :greeting, default: 'Hello'
+  
+  # internal attribute (not a custom widget option)
+  attr_accessor :color
+  
+  before_body {
+    @font = {height: 24, style: :bold}
+    @color = :black
+  }
+  
+  after_body {
+    return if colors.nil?
+    
+    Thread.new {
+      colors.cycle { |color|
+        async_exec {
+          self.color = color
+        }
+        sleep(1)
+      }
+    }
+  }
+  
+  body {
+    # pass received swt_style through to label to customize (e.g. :center to center text)
+    label(swt_style) {
+      text "#{greeting}, #{name}!"
+      font @font
+      foreground bind(self, :color)
+    }
+  }
+  
+end
+
+# including Glimmer enables the Glimmer DSL syntax, including auto-discovery of the `greeting_label` custom widget
+include Glimmer
+
+shell {
+  fill_layout :vertical
+  
+  minimum_size 215, 215
+  text 'Hello, Custom Widget!'
+  
+  # custom widget options are passed in a hash
+  greeting_label(name: 'Sean')
+  
+  # pass :center SWT style followed by custom widget options hash
+  greeting_label(:center, name: 'Laura', greeting: 'Aloha') #
+  
+  greeting_label(:right, name: 'Rick') {
+    # you can nest attributes under custom widgets just like any standard widget
+    foreground :red
+  }
+  
+  # the colors option cycles between colors for the label foreground every second
+  greeting_label(:center, name: 'Mary', greeting: 'Aloha', colors: [:red, :dark_green, :blue])
+}.open
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Custom Widget](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-custom-widget.gif)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Custom Widget!"
+
+![Glimmer DSL for Opal Hello Custom Widget](images/glimmer-dsl-opal-hello-custom-widget.gif)
+
 ### Elaborate Samples
 
 #### Login
@@ -579,7 +695,7 @@ You should see "Hello, Tab!"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/elaborate/login'
+require 'glimmer-dsl-opal/samples/elaborate/login'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -675,9 +791,9 @@ Login.new.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Login](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-login.png)
-![Glimmer DSL for SWT Login Filled In](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-login-filled-in.png)
-![Glimmer DSL for SWT Login Logged In](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-login-logged-in.png)
+![Glimmer DSL for SWT Login](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-login.png)
+![Glimmer DSL for SWT Login Filled In](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-login-filled-in.png)
+![Glimmer DSL for SWT Login Logged In](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-login-logged-in.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -699,7 +815,7 @@ You should see "Login" dialog
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/elaborate/tic_tac_toe'
+require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -910,9 +1026,9 @@ TicTacToe.new.open
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-tic-tac-toe.png)
-![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
-![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-tic-tac-toe-game-over.png)
+![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
+![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
+![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -934,7 +1050,7 @@ You should see "Tic Tac Toe"
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
-require 'samples/elaborate/contact_manager'
+require 'glimmer-dsl-opal/samples/elaborate/contact_manager'
 ```
 
 Or add the Glimmer code directly if you prefer to play around with it:
@@ -1055,104 +1171,6 @@ class ContactManager
       Jason
       Emma
       Olivia
-      Ava
-      Isabella
-      Sophia
-      Charlotte
-      Mia
-      Amelia
-      Harper
-      Evelyn
-      Abigail
-      Emily
-      Elizabeth
-      Mila
-      Ella
-      Avery
-      Sofia
-      Camila
-      Aria
-      Scarlett
-      Victoria
-      Madison
-      Luna
-      Grace
-      Chloe
-      Penelope
-      Layla
-      Riley
-      Zoey
-      Nora
-      Lily
-      Eleanor
-      Hannah
-      Lillian
-      Addison
-      Aubrey
-      Ellie
-      Stella
-      Natalie
-      Zoe
-      Leah
-      Hazel
-      Violet
-      Aurora
-      Savannah
-      Audrey
-      Brooklyn
-      Bella
-      Claire
-      Skylar
-      Lucy
-      Paisley
-      Everly
-      Anna
-      Caroline
-      Nova
-      Genesis
-      Emilia
-      Kennedy
-      Samantha
-      Maya
-      Willow
-      Kinsley
-      Naomi
-      Aaliyah
-      Elena
-      Sarah
-      Ariana
-      Allison
-      Gabriella
-      Alice
-      Madelyn
-      Cora
-      Ruby
-      Eva
-      Serenity
-      Autumn
-      Adeline
-      Hailey
-      Gianna
-      Valentina
-      Isla
-      Eliana
-      Quinn
-      Nevaeh
-      Ivy
-      Sadie
-      Piper
-      Lydia
-      Alexa
-      Josephine
-      Emery
-      Julia
-      Delilah
-      Arianna
-      Vivian
-      Kaylee
-      Sophie
-      Brielle
-      Madeline
     ]
     NAMES_LAST = %w[
       Smith
@@ -1167,7 +1185,7 @@ class ContactManager
       Taylor
     ]
     def initialize(contacts = nil)
-      @contacts = contacts || 1000.times.map do |n|
+      @contacts = contacts || 100.times.map do |n|
         random_first_name_index = (rand*NAMES_FIRST.size).to_i
         random_last_name_index = (rand*NAMES_LAST.size).to_i
         first_name = NAMES_FIRST[random_first_name_index]
@@ -1328,23 +1346,23 @@ Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObt
 
 Glimmer DSL for SWT Contact Manager
 
-![Glimmer DSL for SWT Contact Manager](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager.png)
+![Glimmer DSL for SWT Contact Manager](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-contact-manager.png)
 
 Glimmer DSL for SWT Contact Manager Find
 
-![Glimmer DSL for SWT Contact Manager Find](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-find.png)
+![Glimmer DSL for SWT Contact Manager Find](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-contact-manager-find.png)
 
 Glimmer DSL for SWT Contact Manager Edit Started
 
-![Glimmer DSL for SWT Contact Manager Edit Started](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-started.png)
+![Glimmer DSL for SWT Contact Manager Edit Started](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-contact-manager-edit-started.png)
 
 Glimmer DSL for SWT Contact Manager Edit In Progress
 
-![Glimmer DSL for SWT Contact Manager Edit In Progress](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-in-progress.png)
+![Glimmer DSL for SWT Contact Manager Edit In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-contact-manager-edit-in-progress.png)
 
 Glimmer DSL for SWT Contact Manager Edit Done
 
-![Glimmer DSL for SWT Contact Manager Edit Done](https://github.com/AndyObtiva/glimmer/raw/master/images/glimmer-contact-manager-edit-done.png)
+![Glimmer DSL for SWT Contact Manager Edit Done](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-contact-manager-edit-done.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 

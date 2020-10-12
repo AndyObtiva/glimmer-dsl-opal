@@ -3,7 +3,7 @@ require 'glimmer/swt/layout_proxy'
 module Glimmer
   module SWT
     class GridLayoutProxy < LayoutProxy
-      attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing
+      attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
     
       def initialize(parent, args)
         super(parent, args)
@@ -15,6 +15,7 @@ module Glimmer
 
       def num_columns=(columns)
         @num_columns = columns
+        # TODO do the following instead of reapply
 #         @parent.add_css_class("num-columns-#{@num_columns}")
         reapply
       end
@@ -37,18 +38,34 @@ module Glimmer
         reapply
       end
       
+      def margin_width=(pixels)
+        @margin_width = pixels
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        @parent.dom_element.css('padding-left', @margin_width)
+        @parent.dom_element.css('padding-right', @margin_width)
+      end
+      
+      def margin_height=(pixels)
+        @margin_height = pixels
+        @parent.dom_element.css('margin-top', @margin_height)
+        @parent.dom_element.css('margin-bottom', @margin_height)
+      end
+            
       def reapply
         layout_css = <<~CSS
           display: grid;
           grid-template-columns: #{'auto ' * @num_columns.to_i};
+          grid-template-rows: min-content;
           grid-row-gap: #{@vertical_spacing}px;
           grid-column-gap: #{@horizontal_spacing}px;
           justify-content: start;
+          align-items: start;
+          align-content: start;
         CSS
         layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
           @parent.dom_element.css(key, value) unless key.nil?
         end      
-      end
+      end      
     end
   end
 end

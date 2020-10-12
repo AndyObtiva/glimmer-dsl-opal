@@ -4,7 +4,10 @@
 
 - Color support
 - Font support
+- Custom Widget Support
 - Hello, Custom Widget! sample
+- Updated Hello, Combo! sample to match the latest changes in Glimmer DSL for SWT
+- `SWT` full re-implementation in Opal as `Glimmer::SWT` with all the `SWT` style constants
 
 ## 0.1.0
 

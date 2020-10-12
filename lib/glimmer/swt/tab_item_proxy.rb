@@ -8,7 +8,6 @@ module Glimmer
       
       def initialize(parent, args)
         super(parent, args)
-        css_classes << 'tab-item'
         content {
           on_widget_selected {
             @parent.hide_all_tab_content
@@ -18,22 +17,20 @@ module Glimmer
       end
       
       def show
-        # TODO refactor/rewrite via simply class application in jquery
-#         Document.find(path).remove_class('hide')
         @content_visible = true
-        redraw
+        dom_element.remove_class('hide')
+        tab_dom_element.add_class('selected')
       end
       
       def hide
-        # TODO refactor/rewrite via simply class application in jquery
-#         Document.find(path).add_class('hide')
         @content_visible = false
-        redraw
+        dom_element.add_class('hide')
+        tab_dom_element.remove_class('selected')
       end
     
       def text=(value)
         @text = value
-        redraw
+        tab_dom_element.html(@text)
       end
     
       def selector
@@ -52,47 +49,33 @@ module Glimmer
         tab_path
       end      
       
-      def redraw        
-        if @tab_dom
-          old_tab_dom = @tab_dom
-          @tab_dom = nil
-          Document.find(tab_path).replace_with(tab_dom)
-        else
-          Document.find(parent.tabs_path).append(tab_dom)
-        end
-        super()
-      end
-      
       def tab_path
         "#{parent.tabs_path} > ##{tab_id}"
+      end
+      
+      def tab_dom_element
+        Document.find(tab_path)
       end
       
       def tab_id
         id + '-tab'
       end
         
+      # This contains the clickable tab area with tab names
       def tab_dom
-        tab_selected = @content_visible ? 'selected' : ''
         @tab_dom ||= html {
-          button(id: tab_id, class: "tab #{tab_selected}") {
+          button(id: tab_id, class: "tab") {
             @text
           }
         }.to_s
       end
       
+      # This contains the tab content
       def dom
-        tab_item_id = id
-        tab_item_id_style = css
-        tab_item_css_classes = css_classes
-        css_classes << name
-        if @content_visible
-          tab_item_css_classes.delete('hide')
-        else
-          tab_item_css_classes << 'hide' 
-        end
-        tab_item_class_string = tab_item_css_classes.to_a.join(' ')
+        tab_item_id = id        
+        tab_item_class_string = [name, 'hide'].join(' ')
         @dom ||= html {
-          div(id: tab_item_id, style: tab_item_id_style, class: tab_item_class_string) {
+          div(id: tab_item_id, class: tab_item_class_string) {
           }
         }.to_s
       end      

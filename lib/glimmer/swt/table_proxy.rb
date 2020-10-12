@@ -105,24 +105,6 @@ module Glimmer
         @columns.to_a.each(&:redraw)  
       end
       
-#       def redraw
-#         if @dom
-#           old_dom = @dom
-#           @dom = nil
-#           old_dom.replace dom
-#         else
-#           dom
-#         end
-#         if @last_redrawn_children != @children
-#           items_dom_element.empty
-#           @last_redrawn_children = @children
-#           @children = []
-#           @last_redrawn_children.each do |child|            
-#             add_child(child)
-#           end
-#         end
-#       end
-      
       def element
         'table'
       end

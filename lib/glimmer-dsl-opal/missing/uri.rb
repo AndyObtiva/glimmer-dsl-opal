@@ -1,3 +1,5 @@
+# Missing URI module class features
+
 module URI
   class HTTP
     REGEX = /([^:]+):\/\/([^\/])\/([^?]*)\??(.*)/

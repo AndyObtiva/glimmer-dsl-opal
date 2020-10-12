@@ -7,7 +7,7 @@ module Glimmer
       
       def url=(value)
         @url = value
-        redraw
+        dom_element.attr('src', @url)
       end
     
       def element

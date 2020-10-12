@@ -58,7 +58,7 @@ module Glimmer
       end
 
       def pack=(value)
-        pd @pack = value
+        @pack = value
         if @pack
           @parent.dom_element.add_class('row-layout-pack')
         else

@@ -1,14 +1,21 @@
 require 'opal'
 
 if RUBY_PLATFORM == 'opal'
+  GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)
+  GLIMMER_DSL_OPAL_LIB = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib')
+  GLIMMER_DSL_OPAL_MISSING = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib', 'glimmer-dsl-opal', 'missing')
+   
+  $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
+  $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
+  
   require 'native' # move this to opal-async
   require 'opal-async'
   require 'async/ext'
-  require 'jquery' # included in glimmer-dsl-opal
+  require 'glimmer-dsl-opal/vendor/jquery'
   require 'opal-jquery'
   require 'glimmer'
   require 'facets/hash/symbolize_keys'  
-  require 'ext/exception'
+  require 'glimmer-dsl-opal/ext/exception'
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger
@@ -19,12 +26,7 @@ if RUBY_PLATFORM == 'opal'
 #       __original_add(*args)
 #     end
 #   end  
-   
-  GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)
-  GLIMMER_DSL_OPAL_LIB = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib')
-   
-  $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
-   
+      
   require 'glimmer/dsl/opal/dsl'
   require 'glimmer/data_binding/ext/observable_model'
    

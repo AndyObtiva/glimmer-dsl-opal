@@ -31,9 +31,14 @@ module Glimmer
         
       def initialize(parent, args)
         @parent = parent
-        @args = args
+        @parent.css_classes.each do |css_class|
+          @parent.remove_css_class(css_class) if css_class.include?('layout')
+        end
+        @args = args        
         @parent.add_css_class(css_class)
         @parent.layout = self
+        self.margin_width = 15 if respond_to?(:margin_width=)
+        self.margin_height = 15 if respond_to?(:margin_height=)        
       end
 
       def css_class

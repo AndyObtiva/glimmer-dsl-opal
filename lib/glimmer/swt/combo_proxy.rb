@@ -23,7 +23,16 @@ module Glimmer
       
       def items=(the_items)
         @items = the_items
-        redraw
+        items_dom = items.to_a.map do |item|
+          option_hash = {value: item}
+          option_hash[:selected] = 'selected' if @text == item
+          html {
+            option(option_hash) {
+              item
+            } 
+          }.to_s
+        end
+        dom_element.html(items_dom)
       end
 
       def observation_request_to_event_mapping      
@@ -41,20 +50,12 @@ module Glimmer
       end
       
       def dom
-        select_text = @text        
         items = @items
         select_id = id
         select_style = css
         select_class = name
         @dom ||= html {
           select(id: select_id, class: select_class, style: select_style) {
-            items.to_a.each do |item|
-              option_hash = {value: item}
-              option_hash[:selected] = 'selected' if select_text == item
-              option(option_hash) {
-                item
-              } 
-            end
           }
         }.to_s
       end

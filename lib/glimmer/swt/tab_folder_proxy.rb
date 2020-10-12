@@ -12,17 +12,13 @@ module Glimmer
       
       def add_child(child)
         unless @children.include?(child)
-          @children << child
+          @children << child 
+          tabs_dom_element.append(child.tab_dom)
+          child.render
         end
+        
         if @children.size == 1
           child.show
-        end
-      end
-      
-      def redraw
-        super()
-        @children.each do |child|
-          add_child(child) # TODO think of impact of this on performance
         end
       end
       
@@ -36,6 +32,10 @@ module Glimmer
       
       def tabs_id
         id + '-tabs'
+      end
+      
+      def tabs_dom_element
+        Document.find(tabs_path)
       end
       
       def dom

@@ -2,9 +2,13 @@
 
 Here is a list of tasks to do (moved to CHANGELOG.md once done). 
 
-## Next (0.1.1)
+## Next
 
-- support automatic table sorting just like glimmer-dsl-swt
+- Hello, Custom Shell! Sample
+
+## Soon
+
+- Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
 
 ## Issues
 
@@ -12,6 +16,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Tasks
 
+- Do away with redraw everywhere possible
 - Listeners
 - Basic data-binding
 - Radio button
@@ -41,4 +46,4 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Desktopify.org (free): freely convert any web app into a desktop app using Glimmer scaffolding. Provide scaffolded app as src, dmg, pkg, app, msi, and jar+script for Linux. 
 - GlimmerAppStore.com: cross platform alternative to Mac App Store to host and sell glimmer apps with auto update support
 - helpmeteachyou.org (free): free education platform
-- social.community (free): online community gathering with DropComm self-moderating technology.
+- social.community (free): online community gathering with DripComm self-moderating technology.

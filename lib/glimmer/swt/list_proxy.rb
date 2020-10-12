@@ -13,7 +13,18 @@ module Glimmer
       
       def items=(items)
         @items = items.map {|item| item.strip == '' ? ITEM_EMPTY : item}
-        redraw # consider repopulating li's instead of redrawing when li's are available.
+        list_selection = selection
+        items_dom = @items.to_a.each_with_index.map do |item, index|
+          li_class = ''
+          li_class += ' selected' if list_selection.include?(item)
+          li_class += ' empty-list-item' if item == ITEM_EMPTY
+          html {
+            li(class: li_class) {
+              item
+            }
+          }.to_s
+        end
+        dom_element.html(items_dom)
       end
       
       def index_of(item)
@@ -23,7 +34,11 @@ module Glimmer
       # used for multi-selection taking an array
       def selection=(selection)
         @selection = selection
-        redraw
+        dom_element.find('li').remove_class('selected')
+        @selection.each do |item|
+          index = @items.index(item)
+          dom_element.find("li:nth-child(#{index + 1})").add_class('selected')
+        end
       end
       
       # used for single selection taking an index
@@ -60,21 +75,11 @@ module Glimmer
       end
       
       def dom
-        list_items = @items
         list_id = id
         list_style = css
         list_selection = selection
         @dom ||= html {
           ul(id: list_id, class: name, style: list_style) {
-            list_items.to_a.each_with_index do |item, index|
-              li_class = ''
-              li_class += ' selected' if list_selection.include?(item)
-              li_class += ' empty-list-item' if item == ITEM_EMPTY
-              li(class: li_class) {
-                item
-              }
-            end
-            nil #TODO   look into glimmer-dsl-xml and why it doesn't ignore collections like each_with_index
           }
         }.to_s
       end

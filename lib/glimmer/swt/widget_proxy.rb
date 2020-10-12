@@ -66,19 +66,48 @@ module Glimmer
         def reset_max_id_numbers!
           @max_id_numbers = {}
         end
+        
+        def underscored_widget_name(widget_proxy)
+          widget_proxy.class.name.split(/::|\./).last.sub(/Proxy$/, '').underscore
+        end        
       end
+      
+      DEFAULT_INITIALIZERS = {
+        "composite" => lambda do |composite_proxy|
+          if composite_proxy.layout.nil?
+            layout = GridLayoutProxy.new(composite_proxy, [])
+            composite_proxy.layout = layout
+            layout.margin_width = 15
+            layout.margin_height = 15
+          end
+        end,
+#         "scrolled_composite" => lambda do |scrolled_composite|
+#           scrolled_composite.expand_horizontal = true
+#           scrolled_composite.expand_vertical = true
+#         end,
+#         "table" => lambda do |table|
+#           table.setHeaderVisible(true)
+#           table.setLinesVisible(true)
+#         end,
+        "table_column" => lambda do |table_column_proxy|
+          table_column_proxy.width = 80
+        end,
+#         "group" => lambda do |group_proxy|
+#           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.layout.nil?
+#         end,
+      }      
       
       def initialize(parent, args)
         @parent = parent        
         @args = args
-        @children = Set.new
+        @children = Set.new # TODO consider moving to composite
         @enabled = true
-        @parent.add_child(self)
+        DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
+        @parent.add_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology        
       end
       
       def css_classes
-        # TODO consider deprecating this in favor of jquery css class setting on dom directly if practical
-        @css_classes ||= Set.new      
+        dom_element.attr('class').to_s.split
       end      
       
       def dispose
@@ -96,13 +125,12 @@ module Glimmer
 
       def add_child(child)
         @children << child
-        child.redraw
+        child.render
       end
       
       def enabled=(value)
         @enabled = value
-        # TODO consider relying less on redraw in setters in the future
-        redraw
+        dom_element.prop('disabled', !@enabled)
       end
       
       def foreground=(value)
@@ -127,19 +155,14 @@ module Glimmer
         @parent.path
       end
 
-      def redraw
-        if @dom && !Document.find(path).empty?
-          old_element = Document.find(path)
-          old_dom = @dom
-          @dom = nil
-          @dom = dom
-          @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
-          old_element.replace_with(@dom.gsub('<html>', '').gsub('</html>', ''))
+      def render
+        old_element = dom_element
+        brand_new = @dom.nil? || old_element.empty?
+        build_dom
+        if brand_new
+          Document.find(parent_path).append(@dom)
         else
-          @dom = nil
-          @dom = dom
-          @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
-          Document.find(parent_path).append(@dom.gsub('<html>', '').gsub('</html>', ''))
+          old_element.replace_with(@dom)
         end
         @observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
@@ -148,8 +171,15 @@ module Glimmer
           end
         end
         children.each do |child|
-          child.redraw
-        end
+          child.render
+        end        
+      end
+      alias redraw render
+      
+      def build_dom
+        @dom = nil
+        @dom = dom
+        @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout        
       end
       
       def content(&block)
@@ -180,28 +210,23 @@ module Glimmer
       end
       
       def add_css_class(css_class)
-        css_classes << css_class
-        redraw
+        dom_element.add_class(css_class)
       end
       
-      def add_css_classes(css_classes)
-        css_classes += css_classes
-        redraw
+      def add_css_classes(css_classes_to_add)
+        css_classes_to_add.each {|css_class| add_css_class(css_class)}
       end
       
       def remove_css_class(css_class)
-        css_classes.delete(css_class)
-        redraw
+        dom_element.remove_class(css_class)
       end
       
-      def remove_css_classes(css_classes)
-        css_classes -= css_classes
-        redraw
+      def remove_css_classes(css_classes_to_remove)
+        css_classes_to_remove.each {|css_class| remove_css_class(css_class)}
       end
       
-      def clear_css_classes(css_class)
-        css_classes.clear
-        redraw
+      def clear_css_classes
+        css_classes.each {|css_class| remove_css_class(css_class)}
       end
       
       def has_style?(symbol)

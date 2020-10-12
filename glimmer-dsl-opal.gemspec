@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-10-11"
+  s.date = "2020-10-12"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -23,8 +23,29 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "VERSION",
-    "lib/ext/exception.rb",
     "lib/glimmer-dsl-opal.rb",
+    "lib/glimmer-dsl-opal/ext/exception.rb",
+    "lib/glimmer-dsl-opal/missing/net/http.rb",
+    "lib/glimmer-dsl-opal/missing/uri.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/contact_manager.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact_manager_presenter.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact_repository.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/login.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe/board.rb",
+    "lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe/cell.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_browser.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_combo.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_computed.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_computed/contact.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_custom_shell.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_custom_widget.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_list_multi_selection.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_list_single_selection.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_tab.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_world.rb",
+    "lib/glimmer-dsl-opal/vendor/jquery.js",
     "lib/glimmer/data_binding/element_binding.rb",
     "lib/glimmer/data_binding/ext/observable_model.rb",
     "lib/glimmer/data_binding/list_selection_binding.rb",
@@ -85,31 +106,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/widget_proxy.rb",
     "lib/glimmer/ui/custom_shell.rb",
     "lib/glimmer/ui/custom_widget.rb",
-    "lib/glimmer/util/proc_tracker.rb",
-    "lib/jquery.js",
-    "lib/net/http.rb",
-    "lib/samples/elaborate/contact_manager.rb",
-    "lib/samples/elaborate/contact_manager/contact.rb",
-    "lib/samples/elaborate/contact_manager/contact_manager_presenter.rb",
-    "lib/samples/elaborate/contact_manager/contact_repository.rb",
-    "lib/samples/elaborate/launch",
-    "lib/samples/elaborate/login.rb",
-    "lib/samples/elaborate/tic_tac_toe.rb",
-    "lib/samples/elaborate/tic_tac_toe/board.rb",
-    "lib/samples/elaborate/tic_tac_toe/cell.rb",
-    "lib/samples/hello/hello_browser.rb",
-    "lib/samples/hello/hello_combo.rb",
-    "lib/samples/hello/hello_computed.rb",
-    "lib/samples/hello/hello_computed/contact.rb",
-    "lib/samples/hello/hello_custom_shell.rb",
-    "lib/samples/hello/hello_custom_widget.rb",
-    "lib/samples/hello/hello_list_multi_selection.rb",
-    "lib/samples/hello/hello_list_single_selection.rb",
-    "lib/samples/hello/hello_tab.rb",
-    "lib/samples/hello/hello_world.rb",
-    "lib/samples/hello/launch",
-    "lib/samples/launch",
-    "lib/uri.rb"
+    "lib/glimmer/util/proc_tracker.rb"
   ]
   s.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal".freeze
   s.licenses = ["MIT".freeze]
@@ -122,7 +119,7 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :add_runtime_dependency then
     s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 1.0.1"])
-    s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.0.0"])
+    s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.1.0"])
     s.add_runtime_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
     s.add_runtime_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])
@@ -135,7 +132,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
   else
     s.add_dependency(%q<glimmer>.freeze, ["~> 1.0.1"])
-    s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.0.0"])
+    s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.1.0"])
     s.add_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
     s.add_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, ["~> 0.8.1"])

@@ -1,4 +1,4 @@
-    require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/point'
 
 module Glimmer
@@ -7,13 +7,19 @@ module Glimmer
       # TODO consider renaming to ShellProxy to match SWT API
       attr_reader :minimum_size
     
+      WIDTH_MIN = 130
+      HEIGHT_MIN = 0
+    
       def initialize(args)
         @args = args
         @children = []
-#         Document.ready? do
+#         Document.ready? do end # TODO consider embedding this jQuery call in so outside consumers don't have to use it
         Document.find('body').empty unless ENV['RUBY_ENV'] == 'test'
-        redraw
-#         end
+        render
+        @layout = FillLayoutProxy.new(self, [])
+        @layout.margin_width = 0
+        @layout.margin_height = 0
+        self.minimum_size = Point.new(WIDTH_MIN, HEIGHT_MIN)
       end
       
       def element
@@ -29,14 +35,14 @@ module Glimmer
       end
 
       def text=(value)
-#         Document.ready? do
-          Document.title = value
-#         end
+        Document.title = value
       end
       
       def minimum_size=(width_or_minimum_size, height = nil)
         @minimum_size = height.nil? ? width_or_minimum_size : Point.new(width_or_minimum_size, height)
-        redraw
+        return if @minimum_size.nil?
+        dom_element.css('min-width', "#{@minimum_size.x}px")
+        dom_element.css('min-height', "#{@minimum_size.y}px")
       end
       
       def style_dom_css
@@ -57,8 +63,12 @@ module Glimmer
             width: 100%;
             height: 100%;
           }
-          body, .shell {
+          body {
             width: 100%;
+            height: 100%;
+            margin: 0;
+          }
+          .shell {
             height: 100%;
             margin: 0;
           }
@@ -194,14 +204,8 @@ module Glimmer
         i = 0
         body_id = id
         body_class = ([name] + css_classes.to_a).join(' ')
-        body_style = '' # a start for more styling further along
-        if @minimum_size
-          body_style += "min-width: #{@minimum_size.x}px; min-height: #{@minimum_size.y}px;" if @minimum_size
-          Document.find('body').css('min-width', "#{@minimum_size.x}px")
-          Document.find('body').css('min-height', "#{@minimum_size.y}px")
-        end
         @dom ||= html {
-          div(id: body_id, class: body_class, style: body_style) {
+          div(id: body_id, class: body_class) {
             style(class: 'common-style') {
               style_dom_css
             }

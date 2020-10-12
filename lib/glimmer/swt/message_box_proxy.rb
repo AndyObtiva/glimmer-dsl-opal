@@ -10,7 +10,6 @@ module Glimmer
         @parent = parent
         @args = args
         @children = Set.new
-        @css_classes = Set.new(['modal', name])
         @enabled = true
         content do
           on_widget_selected {
@@ -21,12 +20,12 @@ module Glimmer
       
       def text=(txt)
         @text = txt
-        redraw if @dom
+        dom_element.find('.modal-content .text').html(@text)
       end
     
       def message=(msg)
         @message = msg
-        redraw if @dom
+        dom_element.find('.modal-content .message').html(@text)
       end
       
       def document
@@ -119,8 +118,7 @@ module Glimmer
         modal_style = css
         modal_text = text
         modal_message = message
-        modal_css_classes = css_classes
-        modal_class = modal_css_classes.to_a.join(' ')
+        modal_class = ['modal', name].join(' ')
         @dom ||= html {        
           div(id: modal_id, style: modal_style, class: modal_class) {
             style(class: 'modal-style') {
@@ -130,7 +128,7 @@ module Glimmer
               header(class: 'text') {
                 modal_text
               }
-              tag(_name: 'p', id: 'message') {
+              tag(_name: 'p', id: 'message', class: 'message') {
                 modal_message
               }
               input(type: 'button', class: 'close', autofocus: 'autofocus', value: 'OK')

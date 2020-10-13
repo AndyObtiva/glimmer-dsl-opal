@@ -28,6 +28,14 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
 - [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)
 
+## Background
+
+The idea behind Glimmer DSL for Opal is that you start by having a [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) desktop app that communicates with a Rails API for any web/cloud concerns. The GUI DSL is very simple in Glimmer DSL for SWT. Once the app is built. You simply embed it in a Rails app as a one line require statement after adding the Glimmer DSL for Opal gem, and BOOM, it just works on the web inside a web browser with the same server/client communication you had in the desktop app (I am working on adding minimal support for net/http in Opal so that desktop apps that use it continue to work in a web browser).
+
+Part of the idea is that web browsers just render GUI widgets similar to those of a desktop app (after all a web browser is a desktop app), so whether you run your GUI on the desktop or on the web should just be a low-level concern, hopefully automated completely with Glimmer DSL for Opal.
+
+Last but not least, you would likely want some special branding on the web, so you can push that off to a web designer who would be more than happy to do the web graphic design and customize the look and feel with pure CSS (no need for programming with Ruby or JavaScript). This enables a clean separation of concerns and distribution of tasks among developers and designers, let alone saving effort on the web GUI by reusing the desktop GUI as a base right off the bat.
+
 ## Supported Glimmer DSL Keywords
 
 The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) have partial support in Opal:
@@ -45,8 +53,8 @@ Widgets:
 - `table`
 - `table_column`
 - `message_box`
-- CustomWidget (ability to define any keyword as a custom widget)
-- CustomShell (ability to define any keyword as a custom shell (aka custom window) that opens in a new browser window)
+- `Glimmer::UI::CustomWidget` (ability to define any keyword as a custom widget)
+- `Glimmer::UI::CustomShell` (ability to define any keyword as a custom shell (aka custom window) that opens in a new browser window)
 
 Layouts:
 - `grid_layout`
@@ -77,12 +85,16 @@ Event loop:
 
 (NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete alpha. Also, there is a slight chance issues you encounter are fixed in master or some other branch that you could check out instead)
 
-Please install a Rails 5 gem (e.g. `gem install rails -v5.2.4.3` )
+Please install a Rails 5 gem: 
+
+```
+gem install rails -v5.2.4.4
+```
 
 Start a new Rails 5 app:
 
 ```
-rails new glimmer_app
+rails new glimmer_app_server
 ```
 
 Add the following to `Gemfile`:
@@ -104,12 +116,6 @@ Edit `config/initializers/assets.rb` and add the following at the bottom:
 Opal.use_gem 'glimmer-dsl-opal'
 ```
 
-Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`)
-
-```ruby
-require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
-```
-
 Run:
 
 ```
@@ -119,14 +125,38 @@ rails g scaffold welcome
 Modify `config/routes.rb`:
 
 ```ruby
-root to: 'welcome#index'
+root to: 'welcomes#index'
 ```
 
-Add more code to `app/assets/javascripts/application.rb` inside a `Document.ready?` block from one of the samples below or a [Glimmer](https://github.com/AndyObtiva/glimmer) [app](https://github.com/AndyObtiva/glimmer#app)/[custom-shell gem](https://github.com/AndyObtiva/glimmer#custom-shell-gem).
+Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`)
+
+```ruby
+require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
+```
+
+Open a `Document.ready?` block and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
 
 ```ruby
 Document.ready? do
   # require-statement/code goes here.
+end
+```
+
+Example to confirm setup is working:
+
+```ruby
+Document.ready? do
+  include Glimmer
+  
+  shell {
+    fill_layout
+    text 'Example to confirm setup is working'
+    label {
+      text "Welcome to Glimmer DSL for Opal!"
+      foreground :red
+      font height: 24
+    }
+  }.open
 end
 ```
 
@@ -137,6 +167,8 @@ Follow the instructions below to try out [glimmer-dsl-swt](https://github.com/An
 Also, this external sample app contains all the samples mentioned below configured inside a Rails 5 [Opal](https://opalrb.com/) app with all the pre-requisites ready to go for convenience:
 
 [https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app)
+
+Some of the screenshots might be out of date with updates done to samples in both [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) and [glimmer-dsl-opal](https://github.com/AndyObtiva/glimmer-dsl-opal).
 
 ### Hello Samples
 

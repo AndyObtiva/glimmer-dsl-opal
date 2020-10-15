@@ -1638,10 +1638,19 @@ rails s
 ```
 
 Visit `http://localhost:3000`
+(or visit: http://glimmer-cs-calculator-server.herokuapp.com)
 
 You should see "Glimmer Calculator"
 
 ![Glimmer Calculator Opal](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-opal.png)
+
+Here is an Apple Calculator CSS themed version (with [CSS only](https://github.com/AndyObtiva/glimmer-cs-calculator/blob/master/server/glimmer-cs-calculator-server/app/assets/stylesheets/welcomes_apple.scss), no app code changes):
+
+Visit http://glimmer-cs-calculator-server.herokuapp.com/welcomes/apple
+
+You should see "Apple Calculator Theme"
+
+![Glimmer Calculator Opal Apple Calculator Theme](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-opal-apple.png)
 
 ## Help
 

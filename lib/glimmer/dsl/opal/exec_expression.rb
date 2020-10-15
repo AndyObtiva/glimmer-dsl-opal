@@ -19,14 +19,36 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/dsl/static_expression'
-require 'glimmer/dsl/opal/exec_expression'
+require 'glimmer/dsl/top_level_expression'
+require 'glimmer/swt/display_proxy'
 
 module Glimmer
   module DSL
     module Opal
-      class AsyncExecExpression < StaticExpression
-        include ExecExpression
+      # Mixin for common code in async_exec and sync_exec expressions
+      # Uses name in subclass to auto-derive exec_operation
+      module ExecExpression
+        include TopLevelExpression
+
+        def exec_operation
+          @exec_operation ||= self.class.name.split(/::/).last.sub(/Expression$/, '').underscore
+        end
+  
+        def can_interpret?(parent, keyword, *args, &block)
+          keyword == exec_operation and
+            block_given? and
+            args.empty?
+        end
+  
+        def interpret(parent, keyword, *args, &block)
+          Glimmer::SWT::DisplayProxy.instance.send(exec_operation) do |*args|
+            begin
+              block.call(*args)
+            rescue => e
+              Glimmer::Config.logger.error e.full_message
+            end
+          end
+        end
       end
     end
   end

@@ -54,8 +54,8 @@ module Glimmer
       
       def margin_height=(pixels)
         @margin_height = pixels
-        @parent.dom_element.css('margin-top', @margin_height)
-        @parent.dom_element.css('margin-bottom', @margin_height)
+        @parent.dom_element.css('padding-top', @margin_height)
+        @parent.dom_element.css('padding-bottom', @margin_height)
       end
       
       def spacing=(spacing)

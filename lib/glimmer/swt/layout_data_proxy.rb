@@ -50,7 +50,7 @@ module Glimmer
       
       def vertical_span=(value)
         @vertical_span = value
-        @parent.dom_element.css('grid-row-start', "span #{@horizontal_span}")
+        @parent.dom_element.css('grid-row-start', "span #{@vertical_span}")
         reapply
       end
       

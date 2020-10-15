@@ -25,6 +25,7 @@ require 'glimmer/dsl/parent_expression'
 require 'glimmer/dsl/top_level_expression'
 require 'glimmer/ui/custom_widget'
 require 'glimmer/ui/custom_shell'
+require 'glimmer/swt/make_shift_shell_proxy'
 
 module Glimmer
   module DSL
@@ -42,18 +43,32 @@ module Glimmer
           custom_widget_class = UI::CustomWidget.for(keyword)
           # TODO clean code by extracting methods into CustomShell
           if !Glimmer::UI::CustomShell.requested? && custom_widget_class.ancestors.include?(Glimmer::UI::CustomShell)
-            options = args.last.is_a?(Hash) ? args.pop : {}
-            options = options.merge('swt_style' => args.join(',')) unless args.join(',').empty?
-            params = {
-              'custom_shell' => keyword
-            }.merge(options)
-            param_string = params.to_a.map {|k, v| "#{k}=#{URI.encode_www_form_component(v)}"}.join('&')
-            url = "#{`document.location.href`}?#{param_string}"
-            `window.open(#{url})`
-             # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
-            Struct.new(:open).new(true)
-          else          
-            custom_widget_class.new(parent, *args, options, &block)
+            if Glimmer::SWT::DisplayProxy.instance.shells.empty?
+              custom_widget_class.new(parent, *args, {}, &block)
+            else
+              options = args.last.is_a?(Hash) ? args.pop : {}
+              options = options.merge('swt_style' => args.join(',')) unless args.join(',').empty?
+              params = {
+                'custom_shell' => keyword
+              }.merge(options)
+              param_string = params.to_a.map {|k, v| "#{k}=#{URI.encode_www_form_component(v)}"}.join('&')
+              url = "#{`document.location.href`}?#{param_string}"            
+              `window.open(#{url})`
+               # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
+              Glimmer::SWT::MakeShiftShellProxy.new
+            end
+          else
+            if Glimmer::UI::CustomShell.requested_and_not_handled?
+              parameters = Glimmer::UI::CustomShell.request_parameter_string.split("&").map {|str| str.split("=")}.to_h
+              `history.pushState(#{parameters.merge('custom_shell_handled' => 'true')}, document.title, #{"?#{Glimmer::UI::CustomShell.encoded_request_parameter_string}&custom_shell_handled=true"})`
+              custom_shell_keyword = parameters.delete('custom_shell')
+              CustomWidgetExpression.new.interpret(nil, custom_shell_keyword, *[parameters])
+              `history.pushState(#{parameters.reject {|k,v| k == 'custom_shell_handled'}}, document.title, #{"?#{Glimmer::UI::CustomShell.encoded_request_parameter_string.sub('&custom_shell_handled=true', '')}"})`
+              # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method            
+              Glimmer::SWT::MakeShiftShellProxy.new
+            else
+              custom_widget_class&.new(parent, *args, {}, &block)
+            end
           end
         end
         

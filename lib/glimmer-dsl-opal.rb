@@ -3,10 +3,13 @@ require 'opal'
 if RUBY_PLATFORM == 'opal'
   GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)
   GLIMMER_DSL_OPAL_LIB = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib')
-  GLIMMER_DSL_OPAL_MISSING = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib', 'glimmer-dsl-opal', 'missing')
+#   GLIMMER_DSL_OPAL_MISSING = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib', 'glimmer-dsl-opal', 'missing')
    
   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
-  $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
+#   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
+  # TODO look into making append_path work (causing some trouble right now)
+#   Opal.append_path pd File.expand_path('../glimmer-dsl-opal/missing', __FILE__)
+#   Opal.append_path GLIMMER_DSL_OPAL_MISSING
   
   require 'opal-parser'
   require 'native' # move this to opal-async
@@ -18,7 +21,7 @@ if RUBY_PLATFORM == 'opal'
   require 'facets/hash/symbolize_keys'  
   require 'glimmer-dsl-opal/ext/exception'
   require 'glimmer-dsl-opal/ext/date'
-  require 'glimmer-dsl-opal/missing/uri'
+  require 'uri'
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger
@@ -43,6 +46,7 @@ if RUBY_PLATFORM == 'opal'
     method = method_symbol.to_s
     result = false
     result ||= method == '<<'
+    result ||= method == 'handle'
   end
   
 end

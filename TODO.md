@@ -4,10 +4,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options)
-
 ## Soon
 
+- Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 - Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
 
 ## Issues
@@ -25,10 +24,18 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
 
+## Opal Ruby Extensions/Missing Features
+- Figure out a way to do File.read in Opal
+- net/http (and dependencies like uri)
+ 
 ## Refactorings
 
 - Do away with redraw everywhere possible
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
+
+## Miscellaneous
+
+- Add a gem 'opal' directory and turn into an official Opal gem with `Opal.append_path File.expand_path('../../../opal', __FILE__)`
 
 ## Samples
 

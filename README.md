@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.3.0 (Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.4.0 (Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +8,10 @@
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.3.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.4.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+
+Hello:
+
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
 - [Hello, Computed!](#hello-computed)
@@ -18,9 +21,16 @@ NOTE: Alpha Version 0.3.0 only supports bare-minimum capabilities for the follow
 - [Hello, Tab!](#hello-tab)
 - [Hello, Custom Widget!](#hello-custom-widget)
 - [Hello, Custom Shell!](#hello-custom-shell)
+
+Elaborate:
+
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
 - [Contact Manager](#contact-manager)
+
+External:
+
+- [Glimmer Calculator](#glimmer-calculator)
 
 Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (JRuby Desktop Development GUI Library)
@@ -53,8 +63,8 @@ Widgets:
 - `table`
 - `table_column`
 - `message_box`
-- `Glimmer::UI::CustomWidget` (ability to define any keyword as a custom widget)
-- `Glimmer::UI::CustomShell` (ability to define any keyword as a custom shell (aka custom window) that opens in a new browser window)
+- Glimmer::UI::CustomWidget: ability to define any keyword as a custom widget
+- Glimmer::UI::CustomShell: ability to define any keyword as a custom shell (aka custom window) that opens in a new browser window (tab) automatically unless there is no shell open in the current browser window (tab)
 
 Layouts:
 - `grid_layout`
@@ -73,6 +83,7 @@ Data-Binding/Observers:
 - `on_modify_text`
 
 Event loop:
+- `display`
 - `async_exec`
 
 ## Pre-requisites
@@ -103,7 +114,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.3.0', require: false
+gem 'glimmer-dsl-opal', '~> 0.4.0', require: false
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -1598,6 +1609,39 @@ Glimmer DSL for Opal Contact Manager Edit In Progress
 Glimmer DSL for Opal Contact Manager Edit Done
 
 ![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
+
+### External Samples
+
+#### Glimmer Calculator
+
+Add the [glimmer-cs-calculator](https://github.com/AndyObtiva/glimmer-cs-calculator) gem to `Gemfile` (without requiring):
+
+```
+gem 'glimmer-cs-calculator', require: false
+```
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-cs-calculator/launch'
+```
+
+Glimmer app on the desktop (using the [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer Calculator Linux](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-linux.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Glimmer Calculator"
+
+![Glimmer Calculator Opal](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-opal.png)
 
 ## Help
 

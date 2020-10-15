@@ -47,8 +47,8 @@ module Glimmer
       
       def margin_height=(pixels)
         @margin_height = pixels
-        @parent.dom_element.css('margin-top', @margin_height)
-        @parent.dom_element.css('margin-bottom', @margin_height)
+        @parent.dom_element.css('padding-top', @margin_height)
+        @parent.dom_element.css('padding-bottom', @margin_height)
       end
             
       def reapply
@@ -59,8 +59,8 @@ module Glimmer
           grid-row-gap: #{@vertical_spacing}px;
           grid-column-gap: #{@horizontal_spacing}px;
           justify-content: start;
-          align-items: start;
-          align-content: start;
+          place-content: start;
+          align-items: stretch;
         CSS
         layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
           @parent.dom_element.css(key, value) unless key.nil?

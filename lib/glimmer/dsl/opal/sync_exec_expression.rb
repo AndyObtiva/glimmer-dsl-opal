@@ -25,7 +25,7 @@ require 'glimmer/dsl/opal/exec_expression'
 module Glimmer
   module DSL
     module Opal
-      class AsyncExecExpression < StaticExpression
+      class SyncExecExpression < StaticExpression
         include ExecExpression
       end
     end

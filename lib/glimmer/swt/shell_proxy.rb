@@ -1,4 +1,5 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/point'
 
 module Glimmer
@@ -240,6 +241,7 @@ module Glimmer
       def open
         # TODO consider the idea of delaying rendering till the open method
         # TODO make it start as hidden and show shell upon open
+        Glimmer::SWT::DisplayProxy.instance.shells << self
       end
     end
   end

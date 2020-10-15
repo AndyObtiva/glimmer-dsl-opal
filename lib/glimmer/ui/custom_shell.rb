@@ -20,6 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'glimmer/ui/custom_widget'
+require 'glimmer/swt/display_proxy'
 require 'glimmer/error'
 
 module Glimmer
@@ -53,7 +54,7 @@ module Glimmer
       
       def initialize(parent, args, options, &content)
         super(parent, args, options, &content)
-        raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy)
+        raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy) || body_root.is_a?(Glimmer::UI::CustomShell)
       end
 
       # Classes may override

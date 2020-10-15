@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.4.0
+
+- Support `display` keyword representing an SWT Display
+- Support display `on_swt_keydown` event listener (display-wide widget observer)
+- Support `DisplayProxy#shells` method keeping track of open shell
+- Make a custom shell open in the same window if there is no shell open already
+- Support `sync_exec` keyword as just an alias to `async_exec`
+- Provide a makeshift require for 'glimmer-dsl-swt' that requires 'glimmer-dsl-opal' instead
+- Fake APIs on the web for OS.os?, File.read, Display.setAppName, Display.setAppVersion
+- Provide a minimal URI class that supports URI::encode_www_form_component and URI::decode_www_form_component from Ruby
+
 ## 0.3.0
 
 - Support opening a custom shell in a browser tab/window by passing in query parameters to URL (e.g. ?custom_shell=keyword+option1=value1 etc...)

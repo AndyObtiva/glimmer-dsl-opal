@@ -259,6 +259,10 @@ module Glimmer
         path
       end
       
+      def listener_dom_element
+        Document.find(listener_path)      
+      end
+      
       def can_handle_observation_request?(observation_request)        
         # TODO sort this out for Opal
         observation_request = observation_request.to_s
@@ -272,19 +276,19 @@ module Glimmer
         end
       end      
       
-      def handle_observation_request(keyword, &event_listener)
+      def handle_observation_request(keyword, &event_listener)        
         return unless observation_request_to_event_mapping.keys.include?(keyword)
         @observation_requests ||= {}
         @observation_requests[keyword] ||= Set.new
         event = nil
         delegate = nil
-        [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+        [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|          
           @observation_requests[keyword] << event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
           potential_event_listener = event_handler&.call(event_listener)
           event_listener = potential_event_listener || event_listener
-          delegate = Document.find(listener_path).on(event, &event_listener)
+          delegate = listener_dom_element.on(event, &event_listener)
         end
         # TODO update code below for new WidgetProxy API
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
@@ -486,5 +490,6 @@ require 'glimmer/swt/table_column_proxy'
 require 'glimmer/swt/table_item_proxy'
 require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
+require 'glimmer/swt/styled_text_proxy'
 
 require 'glimmer/dsl/opal/widget_expression'

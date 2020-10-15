@@ -19,14 +19,19 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/dsl/static_expression'
-require 'glimmer/dsl/opal/exec_expression'
-
 module Glimmer
-  module DSL
-    module Opal
-      class AsyncExecExpression < StaticExpression
-        include ExecExpression
+  module SWT
+    class MakeShiftShellProxy < Glimmer::SWT::ShellProxy
+      def initialize(*args, &block)
+        # No Op
+      end
+      
+      def add_child(child)
+        # No Op
+      end
+      
+      def open
+        # No Op
       end
     end
   end

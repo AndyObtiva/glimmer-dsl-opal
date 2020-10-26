@@ -7,9 +7,10 @@ module Glimmer
         include TopLevelExpression
 
         def can_interpret?(parent, keyword, *args, &block)          
-          parent and 
-            parent.respond_to?(:set_attribute) and 
-            keyword and 
+          parent and
+            parent.respond_to?(:set_attribute) and
+            parent.respond_to?(keyword, *args) and
+            keyword and
             block.nil?
         end
 

@@ -17,6 +17,7 @@ end
 class File
   class << self
     def read(*args, &block)
+      # TODO implement via asset downloads in the future
       # No Op in Opal
     end
   end

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.0
+
+- Add `margin_top`, `margin_right`, `margin_bottom`, and `margin_left` to RowLayoutProxy
+- Fix issue with `label` `alignment` property
+- Fix issues with default `composite` `grid_layout` not getting its styles removed when setting `row_layout`
+
 ## 0.4.0
 
 - Support `display` keyword representing an SWT Display

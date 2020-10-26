@@ -31,7 +31,7 @@ module Glimmer
         }
       CSS
     
-      attr_reader :type, :margin_width, :margin_height, :spacing, :pack
+      attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack
     
       def initialize(parent, args)
         super(parent, args)
@@ -77,6 +77,28 @@ module Glimmer
         @margin_height = pixels
         @parent.dom_element.css('padding-top', @margin_height)
         @parent.dom_element.css('padding-bottom', @margin_height)
+      end
+      
+      def margin_top=(pixels)
+        @margin_top = pixels
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        @parent.dom_element.css('padding-top', @margin_top)
+      end
+      
+      def margin_right=(pixels)
+        @margin_right = pixels
+        @parent.dom_element.css('padding-right', @margin_right)
+      end
+      
+      def margin_bottom=(pixels)
+        @margin_bottom = pixels
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        @parent.dom_element.css('padding-bottom', @margin_bottom)
+      end
+      
+      def margin_left=(pixels)
+        @margin_left = pixels
+        @parent.dom_element.css('padding-left', @margin_left)
       end
       
       def spacing=(spacing)

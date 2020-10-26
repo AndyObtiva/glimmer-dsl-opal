@@ -4,10 +4,26 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Radio button
+- Support button(:radio)
+- Checkbox button
+- `check` keyword
+- button(:check)
+- Group widget
+
 ## Soon
 
-- Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
+- `table` `header_visible`
+- `table` `item_count`
+- Support custom table editor
+- Support context menus `menu`/`menu_item` directly under a widget
+- Support real menus `menu_bar`
+- Support `on_mouse_up` events on all widgets
+- Support `dialog`
 - Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
+- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted) 
+- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
+- Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 
 ## Issues
 
@@ -15,19 +31,18 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Features
 
-- Listeners
-- Basic data-binding
-- Radio button
-- Checkbox button
-- Support multiple windows as multiple tabs
+- Support all variations of button (:radio, :check, :arrow)
 - Support different themes by detecting browser OS (Mac, Windows, Linux)
 - Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
+- Consider the idea of supporting multiple web implementations for a widget to allow different looks, perhaps allowing 3rd parties to plug extra implementations as needed as different "adapters"
+- Support the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
+- Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal
 - net/http (and dependencies like uri)
- 
+
 ## Refactorings
 
 - Do away with redraw everywhere possible

@@ -3,6 +3,15 @@ require 'glimmer/swt/layout_proxy'
 module Glimmer
   module SWT
     class GridLayoutProxy < LayoutProxy
+      STYLE = <<~CSS
+        .grid-layout {
+          display: grid;
+          grid-template-rows: min-content;
+          justify-content: start;
+          place-content: start;
+          align-items: stretch;      
+        }
+      CSS
       attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
     
       def initialize(parent, args)
@@ -52,19 +61,21 @@ module Glimmer
       end
             
       def reapply
+        # TODO get rid of this method
         layout_css = <<~CSS
-          display: grid;
           grid-template-columns: #{'auto ' * @num_columns.to_i};
-          grid-template-rows: min-content;
           grid-row-gap: #{@vertical_spacing}px;
           grid-column-gap: #{@horizontal_spacing}px;
-          justify-content: start;
-          place-content: start;
-          align-items: stretch;
         CSS
-        layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
-          @parent.dom_element.css(key, value) unless key.nil?
-        end      
+        if @parent.css_classes.include?('grid-layout')
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
+            @parent.dom_element.css(key, value) unless key.nil?
+          end
+        else
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
+            @parent.dom_element.css(key, 'initial') unless key.nil?
+          end        
+        end
       end      
     end
   end

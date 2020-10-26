@@ -234,6 +234,12 @@ module Glimmer
             style(class: 'row-layout-style') {
               Glimmer::SWT::RowLayoutProxy::STYLE
             }
+            style(class: 'grid-layout-style') {
+              Glimmer::SWT::GridLayoutProxy::STYLE
+            }
+            style(class: 'scrolled-composite-style') {
+              Glimmer::SWT::ScrolledCompositeProxy::STYLE
+            }
           }
         }.to_s
       end

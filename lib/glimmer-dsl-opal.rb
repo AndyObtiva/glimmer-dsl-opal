@@ -22,6 +22,7 @@ if RUBY_PLATFORM == 'opal'
   require 'glimmer-dsl-opal/ext/exception'
   require 'glimmer-dsl-opal/ext/date'
   require 'uri'
+  require 'base64'
 
   # Spiking async logging
 #   logger = Glimmer::Config.logger

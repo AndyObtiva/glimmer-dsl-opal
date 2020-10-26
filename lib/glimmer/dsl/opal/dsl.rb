@@ -23,6 +23,7 @@ require 'glimmer/dsl/opal/rgb_expression'
 require 'glimmer/dsl/opal/rgba_expression'
 require 'glimmer/dsl/opal/custom_widget_expression'
 require 'glimmer/dsl/opal/swt_expression'
+require 'glimmer/dsl/opal/image_expression'
 
 module Glimmer
   module DSL
@@ -37,6 +38,7 @@ module Glimmer
          list_selection_data_binding
          data_binding
          font
+         image
          layout
          property
          widget

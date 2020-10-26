@@ -29,7 +29,7 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -115,7 +115,7 @@ module Glimmer
       end
       
       def path
-        "#{parent_path} > #{element}##{id}.#{name}"
+        "#{parent_path} #{element}##{id}.#{name}"
       end
 
       # Root element representing widget. Must be overridden by subclasses if different from div
@@ -150,6 +150,16 @@ module Glimmer
         dom_element.css('font-weight', 'bold') if @font&.style == :bold
         dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
+      
+      def focus=(value)
+        @focus = value
+        dom_element.focus # TODO consider if a delay or async_exec is needed here
+      end
+      
+      def set_focus
+        self.focus = true
+      end
+      alias setFocus set_focus
       
       def parent_path
         @parent.path
@@ -481,15 +491,19 @@ end
 require 'glimmer/swt/browser_proxy'
 require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
+require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'
+require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'
 require 'glimmer/swt/list_proxy'
+require 'glimmer/swt/radio_proxy'
 require 'glimmer/swt/tab_folder_proxy'
 require 'glimmer/swt/tab_item_proxy'
 require 'glimmer/swt/table_column_proxy'
 require 'glimmer/swt/table_item_proxy'
 require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
+require 'glimmer/swt/scrolled_composite_proxy'
 require 'glimmer/swt/styled_text_proxy'
 
 require 'glimmer/dsl/opal/widget_expression'

@@ -12,7 +12,7 @@ module Glimmer
         }
                 
         .row-layout-pack-false {
-          display: initial;
+          align-items: stretch;
         }
                 
         .row-layout-horizontal {

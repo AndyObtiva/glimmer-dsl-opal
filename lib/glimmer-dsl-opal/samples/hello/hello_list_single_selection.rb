@@ -1,4 +1,4 @@
-class Person 
+class Person
   attr_accessor :country, :country_options
 
   def initialize

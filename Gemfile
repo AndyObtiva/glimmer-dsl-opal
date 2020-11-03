@@ -14,5 +14,5 @@ group :development, :test do
   gem 'opal-rspec', '~> 0.8.0.alpha2'
   gem 'opal-rails', '~> 1.1.2'
   gem 'opal-jquery', '~> 0.4.4'
-#  gem 'glimmer-dsl-opal', require: false, path: '.'
+#   gem 'glimmer-dsl-opal', require: false, path: '.'
 end

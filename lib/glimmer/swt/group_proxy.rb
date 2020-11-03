@@ -10,17 +10,26 @@ module Glimmer
       
       def text=(value)
         @text = value
-        dom_element.find('legend').html(@text) if @text
+        if @text.nil?
+          legend_dom_element.add_class('hide')
+        else
+          legend_dom_element.remove_class('hide')
+        end
+        legend_dom_element.html(@text)
       end
       
       def element
         'fieldset'
       end
       
+      def legend_dom_element
+        dom_element.find('legend')
+      end
+      
       def dom
         @dom ||= html {
           fieldset(id: id, class: name) {
-            legend {@text} if @text
+            legend(class: 'hide') { text }
           }
         }.to_s
       end

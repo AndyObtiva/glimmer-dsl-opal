@@ -15,6 +15,7 @@
 - `button(:radio)` alias for `radio`
 - `check` alias for `checkbox`
 - `button(:check)` alias for `checkbox`
+- Hello, Group! Sample
 - Group widget
 
 ## 0.4.0

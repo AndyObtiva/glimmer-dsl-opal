@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Hello, Group! Sample
 - Document new samples in README
 
 ## Soon

@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.4.0 (Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.5.0 (Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -22,7 +22,7 @@ Apple Calculator CSS themed version (added CSS only with no app code changes):
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.4.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.5.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello:
 
@@ -35,6 +35,11 @@ Hello:
 - [Hello, Tab!](#hello-tab)
 - [Hello, Custom Widget!](#hello-custom-widget)
 - [Hello, Custom Shell!](#hello-custom-shell)
+- [Hello, Radio!](#hello-radio)
+- [Hello, Radio Group!](#hello-radio-group)
+- [Hello, Group!](#hello-group)
+- [Hello, Checkbox!](#hello-checkbox)
+- [Hello, Checkbox Group!](#hello-checkbox-group)
 
 Elaborate:
 
@@ -110,7 +115,7 @@ Event loop:
 
 (NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete alpha. Also, there is a slight chance issues you encounter are fixed in master or some other branch that you could check out instead)
 
-Please install a Rails 5 gem: 
+Please install a Rails 5 gem:
 
 ```
 gem install rails -v5.2.4.4
@@ -128,7 +133,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.4.0', require: false
+gem 'glimmer-dsl-opal', '~> 0.5.0', require: false
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -268,9 +273,9 @@ class HelloCombo
     shell {
       row_layout(:vertical) {
         pack false
-      }        
+      }
       
-      text 'Hello, Combo!'      
+      text 'Hello, Combo!'
       
       combo(:read_only) {
         selection bind(person, :country)
@@ -437,7 +442,7 @@ require 'glimmer-dsl-opal/samples/hello/hello_list_single_selection'
 Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
-class Person 
+class Person
   attr_accessor :country, :country_options
 
   def initialize
@@ -766,7 +771,7 @@ require 'date'
 class EmailShell
   include Glimmer::UI::CustomShell
   
-  # multiple options without default values  
+  # multiple options without default values
   options :date, :subject, :from, :message
   
   # single option with default value
@@ -781,7 +786,7 @@ class EmailShell
     shell(swt_style) {
       grid_layout(2, false)
       
-      text subject      
+      text subject
 
       label {
         text 'Date:'
@@ -818,7 +823,7 @@ class EmailShell
         }
         
         background :white
-        text message        
+        text message
       }
     }
   }
@@ -889,7 +894,7 @@ class HelloCustomShell
         }
       }
     }.open
-  end  
+  end
 end
 
 HelloCustomShell.new.launch
@@ -916,6 +921,495 @@ You should see "Hello, Custom Widget!"
 ![Glimmer DSL for Opal Hello Custom Shell Email1](images/glimmer-dsl-opal-hello-custom-shell-email1.png)
 ![Glimmer DSL for Opal Hello Custom Shell Email2](images/glimmer-dsl-opal-hello-custom-shell-email2.png)
 ![Glimmer DSL for Opal Hello Custom Shell Email3](images/glimmer-dsl-opal-hello-custom-shell-email3.png)
+
+#### Hello, Radio!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_radio'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloRadio
+  class Person
+    attr_accessor :male, :female, :child, :teen, :adult, :senior
+    
+    def initialize
+      reset
+    end
+    
+    def reset
+      self.male = nil
+      self.female = nil
+      self.child = nil
+      self.teen = nil
+      self.adult = true
+      self.senior = nil
+    end
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    
+    shell {
+      text 'Hello, Radio!'
+      row_layout :vertical
+      
+      label {
+        text 'Gender:'
+        font style: :bold
+      }
+      
+      composite {
+        row_layout
+        
+        radio {
+          text 'Male'
+          selection bind(person, :male)
+        }
+        
+        radio {
+          text 'Female'
+          selection bind(person, :female)
+        }
+      }
+      
+      label {
+        text 'Age Group:'
+        font style: :bold
+      }
+      
+      composite {
+        row_layout
+        
+        radio {
+          text 'Child'
+          selection bind(person, :child)
+        }
+        
+        radio {
+          text 'Teen'
+          selection bind(person, :teen)
+        }
+        
+        radio {
+          text 'Adult'
+          selection bind(person, :adult)
+        }
+        
+        radio {
+          text 'Senior'
+          selection bind(person, :senior)
+        }
+      }
+      
+      button {
+        text 'Reset'
+        
+        on_widget_selected do
+          person.reset
+        end
+      }
+    }.open
+  end
+end
+
+HelloRadio.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Radio](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-radio.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Radio!"
+
+![Glimmer DSL for Opal Hello Radio](images/glimmer-dsl-opal-hello-radio.png)
+
+#### Hello, Radio Group!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_radio_group'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloRadioGroup
+  class Person
+    attr_accessor :gender, :age_group
+    
+    def initialize
+      reset
+    end
+    
+    def gender_options
+      ['Male', 'Female']
+    end
+    
+    def age_group_options
+      ['Child', 'Teen', 'Adult', 'Senior']
+    end
+    
+    def reset
+      self.gender = nil
+      self.age_group = 'Adult'
+    end
+  end
+
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    
+    shell {
+      text 'Hello, Radio Group!'
+      row_layout :vertical
+      
+      label {
+        text 'Gender:'
+        font style: :bold
+      }
+      
+      radio_group {
+        row_layout :horizontal
+        selection bind(person, :gender)
+      }
+            
+      label {
+        text 'Age Group:'
+        font style: :bold
+      }
+      
+      radio_group {
+        row_layout :horizontal
+        selection bind(person, :age_group)
+      }
+      
+      button {
+        text 'Reset'
+        
+        on_widget_selected do
+          person.reset
+        end
+      }
+    }.open
+  end
+end
+
+HelloRadioGroup.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Radio Group](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-radio-group.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Radio Group!"
+
+![Glimmer DSL for Opal Hello Radio Group](images/glimmer-dsl-opal-hello-radio-group.png)
+
+#### Hello, Group!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_group'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloGroup
+  class Person
+    attr_accessor :male, :female, :child, :teen, :adult, :senior
+    
+    def initialize
+      reset
+    end
+    
+    def reset
+      self.male = nil
+      self.female = nil
+      self.child = nil
+      self.teen = nil
+      self.adult = true
+      self.senior = nil
+    end
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    
+    shell {
+      text 'Hello, Group!'
+      row_layout :vertical
+      
+      group {
+        row_layout
+        
+        text 'Gender'
+        font style: :bold
+        
+        radio {
+          text 'Male'
+          selection bind(person, :male)
+        }
+        
+        radio {
+          text 'Female'
+          selection bind(person, :female)
+        }
+      }
+      
+      group {
+        row_layout
+        
+        text 'Age Group'
+        font style: :bold
+        
+        radio {
+          text 'Child'
+          selection bind(person, :child)
+        }
+        
+        radio {
+          text 'Teen'
+          selection bind(person, :teen)
+        }
+        
+        radio {
+          text 'Adult'
+          selection bind(person, :adult)
+        }
+        
+        radio {
+          text 'Senior'
+          selection bind(person, :senior)
+        }
+      }
+      
+      button {
+        text 'Reset'
+        
+        on_widget_selected do
+          person.reset
+        end
+      }
+    }.open
+  end
+end
+
+HelloGroup.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Group](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-group.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Group!"
+
+![Glimmer DSL for Opal Hello Group](images/glimmer-dsl-opal-hello-group.png)
+
+#### Hello, Checkbox!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_checkbox'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloCheckbox
+  class Person
+    attr_accessor :skiing, :snowboarding, :snowmobiling, :snowshoeing
+    
+    def initialize
+      reset_activities
+    end
+    
+    def reset_activities
+      self.skiing = false
+      self.snowboarding = true
+      self.snowmobiling = false
+      self.snowshoeing = false
+    end
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    
+    shell {
+      text 'Hello, Checkbox!'
+      row_layout :vertical
+      
+      label {
+        text 'Check all snow activities you are interested in:'
+        font style: :bold
+      }
+      
+      composite {
+        checkbox {
+          text 'Skiing'
+          selection bind(person, :skiing)
+        }
+        
+        checkbox {
+          text 'Snowboarding'
+          selection bind(person, :snowboarding)
+        }
+        
+        checkbox {
+          text 'Snowmobiling'
+          selection bind(person, :snowmobiling)
+        }
+        
+        checkbox {
+          text 'Snowshoeing'
+          selection bind(person, :snowshoeing)
+        }
+      }
+      
+      button {
+        text 'Reset Activities'
+        
+        on_widget_selected do
+          person.reset_activities
+        end
+      }
+    }.open
+  end
+end
+
+HelloCheckbox.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Checkbox](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-checkbox.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Checkbox!"
+
+![Glimmer DSL for Opal Hello Checkbox](images/glimmer-dsl-opal-hello-checkbox.png)
+
+#### Hello, Checkbox Group!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_checkbox_group'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloCheckboxGroup
+  class Person
+    attr_accessor :activities
+    
+    def initialize
+      reset_activities
+    end
+    
+    def activities_options
+      ['Skiing', 'Snowboarding', 'Snowmobiling', 'Snowshoeing']
+    end
+    
+    def reset_activities
+      self.activities = ['Snowboarding']
+    end
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    
+    shell {
+      text 'Hello, Checkbox Group!'
+      row_layout :vertical
+      
+      label {
+        text 'Check all snow activities you are interested in:'
+        font style: :bold
+      }
+      
+      checkbox_group {
+        selection bind(person, :activities)
+      }
+    
+      button {
+        text 'Reset Activities'
+        
+        on_widget_selected do
+          person.reset_activities
+        end
+      }
+    }.open
+  end
+end
+
+HelloCheckboxGroup.new.launch
+```
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Checkbox Group](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-checkbox-group.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Checkbox Group!"
+
+![Glimmer DSL for Opal Hello Checkbox Group](images/glimmer-dsl-opal-hello-checkbox-group.png)
 
 ### Elaborate Samples
 
@@ -1702,7 +2196,7 @@ These features have been suggested. You might see them in a future version of Gl
 
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2020 - Andy Maleh. 
+Copyright (c) 2020 - Andy Maleh.
 See [LICENSE.txt](LICENSE.txt) for further details.
 
 --

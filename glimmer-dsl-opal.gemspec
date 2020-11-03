@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-11-02"
+  s.date = "2020-11-03"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_computed/contact.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_shell.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_widget.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_group.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_multi_selection.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_single_selection.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_radio.rb",
@@ -57,6 +58,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/data_binding/table_items_binding.rb",
     "lib/glimmer/dsl/opal/async_exec_expression.rb",
     "lib/glimmer/dsl/opal/bind_expression.rb",
+    "lib/glimmer/dsl/opal/checkbox_group_selection_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/color_expression.rb",
     "lib/glimmer/dsl/opal/column_properties_expression.rb",
     "lib/glimmer/dsl/opal/combo_selection_data_binding_expression.rb",
@@ -72,6 +74,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/message_box_expression.rb",
     "lib/glimmer/dsl/opal/observe_expression.rb",
     "lib/glimmer/dsl/opal/property_expression.rb",
+    "lib/glimmer/dsl/opal/radio_group_selection_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/rgb_expression.rb",
     "lib/glimmer/dsl/opal/rgba_expression.rb",
     "lib/glimmer/dsl/opal/shell_expression.rb",
@@ -89,6 +92,8 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/color_proxy.rb",
     "lib/glimmer/swt/combo_proxy.rb",
     "lib/glimmer/swt/composite_proxy.rb",
+    "lib/glimmer/swt/custom/checkbox_group.rb",
+    "lib/glimmer/swt/custom/radio_group.rb",
     "lib/glimmer/swt/display_proxy.rb",
     "lib/glimmer/swt/event_listener_proxy.rb",
     "lib/glimmer/swt/fill_layout_proxy.rb",

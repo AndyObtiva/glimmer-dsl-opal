@@ -8,6 +8,7 @@ module Glimmer
       STYLE = <<~CSS
         .row-layout {
           display: flex;
+          align-items: flex-start;
         }
                 
         .row-layout-pack-false {
@@ -18,8 +19,8 @@ module Glimmer
           flex-direction: row;
         }
         
-        .row-layout-horizontal.row-layout-pack {
-          flex-direction: none;
+        .row-layout-horizontal.row-layout-pack-false {
+          flex-direction: unset;
         }
         
         .row-layout-vertical {

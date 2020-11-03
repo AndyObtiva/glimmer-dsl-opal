@@ -4,14 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `radio` button
-- `radio_group`
-- Support button(:radio)
-- `checkbox` button
-- `check` keyword
-- button(:check)
-- `checkbox_group`
-- Group widget
+- `button(:radio)` alias for `radio`
+- `check` alias for `checkbox`
+- `button(:check)` alias for `checkbox`
+- Hello, Group! Sample
+- Document new samples in README
 
 ## Soon
 

@@ -26,12 +26,12 @@ require 'glimmer/data_binding/element_binding'
 module Glimmer
   module DSL
     module Opal
-      class RadioGroupSelectionDataBindingExpression < Expression
+      class CheckboxGroupSelectionDataBindingExpression < Expression
  
         def can_interpret?(parent, keyword, *args, &block)
           keyword == 'selection' and
             block.nil? and
-            (parent.is_a?(Glimmer::SWT::Custom::RadioGroup) or (parent.is_a?(Glimmer::UI::CustomWidget) and parent.body_root.is_a?(Glimmer::SWT::Custom::RadioGroup)) ) and
+            (parent.is_a?(Glimmer::SWT::Custom::CheckboxGroup) or (parent.is_a?(Glimmer::UI::CustomWidget) and parent.body_root.is_a?(Glimmer::SWT::Custom::CheckboxGroup)) ) and
             args.size == 1 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_options_property.is_a?(Array)

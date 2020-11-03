@@ -3,8 +3,16 @@
 ## 0.5.0
 
 - Add `margin_top`, `margin_right`, `margin_bottom`, and `margin_left` to RowLayoutProxy
+- `radio`
+- Hello, Radio! Sample
+- `radio_group`
+- Hello, Radio Group! Sample
+- `checkbox`
+- Hello, Checkbox! Sample
+- `checkbox_group`
 - Fix issue with `label` `alignment` property
 - Fix issues with default `composite` `grid_layout` not getting its styles removed when setting `row_layout`
+- Group widget
 
 ## 0.4.0
 

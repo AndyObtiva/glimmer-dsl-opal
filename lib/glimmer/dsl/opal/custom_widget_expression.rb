@@ -27,6 +27,7 @@ require 'glimmer/ui/custom_widget'
 require 'glimmer/ui/custom_shell'
 require 'glimmer/swt/make_shift_shell_proxy'
 require 'glimmer/swt/custom/radio_group'
+require 'glimmer/swt/custom/checkbox_group'
 
 module Glimmer
   module DSL

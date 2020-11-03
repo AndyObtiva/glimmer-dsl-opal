@@ -24,74 +24,71 @@ require 'glimmer/ui/custom_widget'
 module Glimmer
   module SWT
     module Custom
-      # A custom widget rendering a group of radios generated via data-binding
-      class RadioGroup
+      # A custom widget rendering a group of checkboxes generated via data-binding
+      class CheckboxGroup
         include Glimmer::UI::CustomWidget
         
         body {
-          composite # just an empty composite to hold radios upon data-binding `selection`
+          composite # just an empty composite to hold checkboxs upon data-binding `selection`
         }
         
         def items=(text_array)
           selection_value = selection
           @items = Array[*text_array]
-          build_radios
+          build_checkboxes
         end
         
         def items
           @items || []
         end
         
-        def selection=(text)
-          radios.count.times do |index|
-            radio = radios[index]
+        def selection=(selection_texts)
+          items.count.times do |index|
+            checkbox = checkboxes[index]
             item = items[index]
-            radio.selection = item == text
+            checkbox_text = checkbox&.text
+            checkbox.selection = selection_texts.to_a.include?(checkbox_text)
           end
+          selection_texts
         end
         
         def selection
-          selection_value = radios[selection_index]&.text unless selection_index == -1
-          selection_value.to_s
+          selection_indices.map do |selection_index|
+            checkboxes[selection_index]&.text
+          end
         end
         
-        def selection_index=(index)
-          self.selection=(items[index])
+        def selection_indices=(indices)
+          self.selection=(indices.to_a.map {|index| items[index]})
         end
-        alias select selection_index=
+        alias select selection_indices=
         
-        def selection_index
-          radios.index(radios.detect(&:selection)) || -1
-        end
-        
-        def radios
-          @radios ||= []
+        def selection_indices
+          checkboxes.each_with_index.map do |checkbox, index|
+            index if checkbox.selection
+          end.to_a.compact
         end
         
-        def observation_request_to_event_mapping
-          # TODO method might not be needed
-          {
-            'on_widget_selected' => {
-              event: 'change'
-            },
-          }
+        def checkboxes
+          @checkboxes ||= []
         end
+        alias checks checkboxes
         
         def can_handle_observation_request?(observation_request)
-          radios.first&.can_handle_observation_request?(observation_request) || super(observation_request)
+          checkboxes.first&.can_handle_observation_request?(observation_request) || super(observation_request)
         end
         
         def handle_observation_request(observation_request, &block)
           observation_requests << [observation_request, block]
-          delegate_observation_request_to_radios(observation_request, &block)
+          delegate_observation_request_to_checkboxes(observation_request, &block)
           super
         end
         
-        def delegate_observation_request_to_radios(observation_request, &block)
+        def delegate_observation_request_to_checkboxes(observation_request, &block)
           if observation_request != 'on_widget_disposed'
-            radios.count.times do |index|
-            radio = radios[index]
-            radio.handle_observation_request(observation_request, &block) if radio.can_handle_observation_request?(observation_request)
+            checkboxes.count.times do |index|
+              checkbox = checkboxes[index]
+              checkbox.handle_observation_request(observation_request, &block) if checkbox.can_handle_observation_request?(observation_request)
             end
           end
         end
@@ -101,7 +98,7 @@ module Glimmer
         end
         
         def has_attribute?(attribute_name, *args)
-          @radios.to_a.map do |widget_proxy|
+          @checkboxes.to_a.map do |widget_proxy|
             return true if widget_proxy.has_attribute?(attribute_name, *args)
           end
           super
@@ -110,7 +107,7 @@ module Glimmer
         def set_attribute(attribute_name, *args)
           excluded_attributes = ['selection']
           unless excluded_attributes.include?(attribute_name.to_s)
-            @radios.to_a.each do |widget_proxy|
+            @checkboxes.to_a.each do |widget_proxy|
               widget_proxy.set_attribute(attribute_name, *args) if widget_proxy.has_attribute?(attribute_name, *args)
             end
           end
@@ -119,25 +116,27 @@ module Glimmer
         
         private
         
-        def build_radios
+        def build_checkboxes
           current_selection = selection
-          @radios = []
+          @checkboxes = []
           items.each do |item|
             body_root.content {
-              radios << radio { |radio_proxy|
+              checkboxes << checkbox { |checkbox_proxy|
                 text item
                 on_widget_selected {
-                  self.selection = items[radios.index(radio_proxy)]
+                  self.selection_indices = checkboxes.each_with_index.map {|cb, i| i if cb.selection}.to_a.compact
                 }
               }
             }
           end
           observation_requests.to_a.each do |observation_request, block|
-            delegate_observation_request_to_radios(observation_request, &block)
+            delegate_observation_request_to_checkboxes(observation_request, &block)
           end
           self.selection = current_selection
         end
       end
+      
+      CheckGroup = CheckboxGroup
     end
   end
 end

@@ -35,7 +35,7 @@ module Glimmer
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args)
           the_widget_class = widget_class(keyword)
-          the_widget_class.new(parent, args)
+          the_widget_class.respond_to?(:create) ? the_widget_class.create(parent, args) : the_widget_class.new(parent, args)
         end
         
         def widget_class(keyword)

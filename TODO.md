@@ -4,9 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `button(:radio)` alias for `radio`
-- `check` alias for `checkbox`
-- `button(:check)` alias for `checkbox`
 - Hello, Group! Sample
 - Document new samples in README
 

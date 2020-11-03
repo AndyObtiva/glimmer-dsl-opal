@@ -12,6 +12,9 @@
 - `checkbox_group`
 - Fix issue with `label` `alignment` property
 - Fix issues with default `composite` `grid_layout` not getting its styles removed when setting `row_layout`
+- `button(:radio)` alias for `radio`
+- `check` alias for `checkbox`
+- `button(:check)` alias for `checkbox`
 - Group widget
 
 ## 0.4.0

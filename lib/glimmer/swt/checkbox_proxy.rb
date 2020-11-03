@@ -71,6 +71,10 @@ module Glimmer
           }
         }.to_s
       end
+      
     end
+    
+    CheckProxy = CheckboxProxy # alias
   end
+  
 end

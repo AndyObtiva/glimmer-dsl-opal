@@ -1,8 +1,22 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/radio_proxy'
+require 'glimmer/swt/checkbox_proxy'
 
 module Glimmer
   module SWT
     class ButtonProxy < WidgetProxy
+      class << self
+        def create(parent, args)
+          if args.to_a.include?(:radio)
+            RadioProxy.new(parent, args)
+          elsif args.to_a.include?(:check)
+            CheckboxProxy.new(parent, args)
+          else
+            new(parent, args)
+          end
+        end
+      end
+    
       attr_reader :text
       
       def text=(value)

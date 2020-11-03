@@ -136,7 +136,7 @@ module Glimmer
         end
       end
       
-      CheckGroup = CheckboxGroup
+      CheckGroup = CheckboxGroup # alias
     end
   end
 end

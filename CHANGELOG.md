@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.1
+
+- Fixed issue with Hello, Combo!, Hello, List...! samples
+
 ## 0.5.0
 
 - Add `margin_top`, `margin_right`, `margin_bottom`, and `margin_left` to RowLayoutProxy

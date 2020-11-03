@@ -8,7 +8,7 @@
 
 Example:
 
-Glimmer Calculator desktop GUI app running in Linux:
+[Glimmer Calculator](https://github.com/AndyObtiva/glimmer-cs-calculator) desktop GUI app running in Linux:
 
 ![Glimmer Calculator Linux](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-linux.png)
 

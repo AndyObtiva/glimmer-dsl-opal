@@ -13,10 +13,12 @@ module Glimmer
         .radio-container {
         }
       CSS
-      attr_reader :text
+      
+      def text
+        label_dom_element.html
+      end
       
       def text=(value)
-        @text = value
         label_dom_element.html(value)
       end
       
@@ -25,8 +27,7 @@ module Glimmer
       end
       
       def selection=(value)
-        @selection = value
-        dom_element.prop('checked', @selection)
+        dom_element.prop('checked', value)
       end
       
       def element

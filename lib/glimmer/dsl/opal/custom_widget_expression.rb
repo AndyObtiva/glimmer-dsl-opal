@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,6 +26,7 @@ require 'glimmer/dsl/top_level_expression'
 require 'glimmer/ui/custom_widget'
 require 'glimmer/ui/custom_shell'
 require 'glimmer/swt/make_shift_shell_proxy'
+require 'glimmer/swt/custom/radio_group'
 
 module Glimmer
   module DSL
@@ -52,7 +53,7 @@ module Glimmer
                 'custom_shell' => keyword
               }.merge(options)
               param_string = params.to_a.map {|k, v| "#{k}=#{URI.encode_www_form_component(v)}"}.join('&')
-              url = "#{`document.location.href`}?#{param_string}"            
+              url = "#{`document.location.href`}?#{param_string}"
               `window.open(#{url})`
                # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
               Glimmer::SWT::MakeShiftShellProxy.new
@@ -64,7 +65,7 @@ module Glimmer
               custom_shell_keyword = parameters.delete('custom_shell')
               CustomWidgetExpression.new.interpret(nil, custom_shell_keyword, *[parameters])
               `history.pushState(#{parameters.reject {|k,v| k == 'custom_shell_handled'}}, document.title, #{"?#{Glimmer::UI::CustomShell.encoded_request_parameter_string.sub('&custom_shell_handled=true', '')}"})`
-              # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method            
+              # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
               Glimmer::SWT::MakeShiftShellProxy.new
             else
               custom_widget_class&.new(parent, *args, {}, &block)

@@ -4,6 +4,7 @@ require 'glimmer/data_binding/observer'
 module Glimmer
   module DataBinding
     class ElementBinding
+      # TODO consider renaming to WidgetBinding since it's no longer dealing with elements directly yet widgets instead
       include Glimmer
       include Observable
       include Observer
@@ -27,7 +28,7 @@ module Glimmer
         @element.set_attribute(@property, converted_value) unless evaluate_property == converted_value
       end
       
-      def evaluate_property        
+      def evaluate_property
         @element.send(@property)
       end
     end

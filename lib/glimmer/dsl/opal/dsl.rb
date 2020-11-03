@@ -23,6 +23,7 @@ require 'glimmer/dsl/opal/rgb_expression'
 require 'glimmer/dsl/opal/rgba_expression'
 require 'glimmer/dsl/opal/custom_widget_expression'
 require 'glimmer/dsl/opal/swt_expression'
+require 'glimmer/dsl/opal/radio_group_selection_data_binding_expression'
 
 module Glimmer
   module DSL
@@ -35,6 +36,7 @@ module Glimmer
          table_items_data_binding
          combo_selection_data_binding
          list_selection_data_binding
+         radio_group_selection_data_binding
          data_binding
          font
          layout

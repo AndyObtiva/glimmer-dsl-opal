@@ -368,9 +368,9 @@ module Glimmer
 #               value
 #             end
 #           end,
-#           :items => lambda do |value|
-#             value.to_java :string
-#           end,
+          :items => lambda do |value|
+            value.to_java :string
+          end,
           :text => lambda do |value|
 #             if swt_widget.is_a?(Browser)
 #               value.to_s

@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -69,7 +69,7 @@ module Glimmer
         
         def underscored_widget_name(widget_proxy)
           widget_proxy.class.name.split(/::|\./).last.sub(/Proxy$/, '').underscore
-        end        
+        end
       end
       
       DEFAULT_INITIALIZERS = {
@@ -95,20 +95,20 @@ module Glimmer
 #         "group" => lambda do |group_proxy|
 #           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.layout.nil?
 #         end,
-      }      
+      }
       
       def initialize(parent, args)
-        @parent = parent        
+        @parent = parent
         @args = args
         @children = Set.new # TODO consider moving to composite
         @enabled = true
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
-        @parent.add_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology        
+        @parent.add_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
       end
       
       def css_classes
         dom_element.attr('class').to_s.split
-      end      
+      end
       
       def dispose
         Document.find(path).remove
@@ -182,14 +182,14 @@ module Glimmer
         end
         children.each do |child|
           child.render
-        end        
+        end
       end
       alias redraw render
       
       def build_dom
         @dom = nil
         @dom = dom
-        @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout        
+        @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
       end
       
       def content(&block)
@@ -244,6 +244,7 @@ module Glimmer
       end
       
       def dom_element
+        # TODO consider making this pick an element in relation to its parent, allowing unhooked dom elements to be built if needed (unhooked to the visible page dom)
         Document.find(path)
       end
       
@@ -270,10 +271,10 @@ module Glimmer
       end
       
       def listener_dom_element
-        Document.find(listener_path)      
+        Document.find(listener_path)
       end
       
-      def can_handle_observation_request?(observation_request)        
+      def can_handle_observation_request?(observation_request)
         # TODO sort this out for Opal
         observation_request = observation_request.to_s
         if observation_request.start_with?('on_swt_')
@@ -284,15 +285,15 @@ module Glimmer
 #           can_add_listener?(event) || can_handle_drag_observation_request?(observation_request) || can_handle_drop_observation_request?(observation_request)
           true # TODO filter by valid listeners only in the future
         end
-      end      
+      end
       
-      def handle_observation_request(keyword, &event_listener)        
+      def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
         @observation_requests ||= {}
         @observation_requests[keyword] ||= Set.new
         event = nil
         delegate = nil
-        [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|          
+        [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
           @observation_requests[keyword] << event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
@@ -380,8 +381,8 @@ module Glimmer
 #           :visible => lambda do |value|
 #             !!value
 #           end,
-        }      
-      end      
+        }
+      end
       
       def widget_property_listener_installers
         @swt_widget_property_listener_installers ||= {
@@ -460,13 +461,13 @@ module Glimmer
 #               }
 #             end,
 #           },
-#           Button => { #radio?
-#             :selection => lambda do |observer|
-#               on_widget_selected { |selection_event|
-#                 observer.call(getSelection)
-#               }
-#             end
-#           },
+          RadioProxy => { #radio?
+            :selection => lambda do |observer|
+              on_widget_selected { |selection_event|
+                observer.call(selection)
+              }
+            end
+          },
 #           Java::OrgEclipseSwtWidgets::MenuItem => {
 #             :selection => lambda do |observer|
 #               on_widget_selected { |selection_event|
@@ -503,6 +504,7 @@ require 'glimmer/swt/table_column_proxy'
 require 'glimmer/swt/table_item_proxy'
 require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
+require 'glimmer/swt/radio_proxy'
 require 'glimmer/swt/scrolled_composite_proxy'
 require 'glimmer/swt/styled_text_proxy'
 

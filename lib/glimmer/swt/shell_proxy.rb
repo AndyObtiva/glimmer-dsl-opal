@@ -54,7 +54,7 @@ module Glimmer
           .selected, .tabs .tab.selected {
             background: rgb(80, 116, 211);
             color: white;
-          }          
+          }
         CSS
       end
             
@@ -122,11 +122,11 @@ module Glimmer
           /* Create an selected/current tablink class */
           .tabs .tab.selected {
             background-color: #ccc;
-          }              
+          }
           /* Change background color of buttons on hover */
           .tabs .tab:hover {
             background-color: #ddd;
-          }              
+          }
           /* Style the tab content */
           .tab-item {
             padding: 6px 12px;
@@ -190,14 +190,14 @@ module Glimmer
       end
       
       def style_dom_table_css
-        <<~CSS        
+        <<~CSS
           table {
             border-spacing: 0;
           }
             
           table tr th,td {
             cursor: default;
-          }   
+          }
         CSS
       end
       
@@ -218,14 +218,14 @@ module Glimmer
             }
             style(class: 'tab-style') {
               style_dom_tab_css
-            }            
+            }
 #             style(class: 'tab-item-style') {
 #               style_dom_tab_item_css
-#             }        
+#             }
 #             style(class: 'modal-style') {
 #               style_dom_modal_css
-#             }        
-            style(class: 'table-style') {            
+#             }
+            style(class: 'table-style') {
               style_dom_table_css
             }
             style(class: 'fill-layout-style') {
@@ -236,6 +236,12 @@ module Glimmer
             }
             style(class: 'grid-layout-style') {
               Glimmer::SWT::GridLayoutProxy::STYLE
+            }
+            style(class: 'checkbox-style') {
+              Glimmer::SWT::CheckboxProxy::STYLE
+            }
+            style(class: 'radio-style') {
+              Glimmer::SWT::RadioProxy::STYLE
             }
             style(class: 'scrolled-composite-style') {
               Glimmer::SWT::ScrolledCompositeProxy::STYLE

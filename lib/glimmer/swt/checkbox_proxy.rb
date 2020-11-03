@@ -3,8 +3,16 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class CheckboxProxy < WidgetProxy
+      STYLE=<<~CSS
+        .checkbox {
+          display: inline;
+        }
+        .checkbox-label {
+          display: inline;
+        }
+      CSS
       # TODO consider reuse of logic in Radioproxy
-      attr_reader :selection, :text
+      attr_reader :text
       
       def text=(value)
         @text = value
@@ -12,6 +20,10 @@ module Glimmer
         label_dom_element.html(@text)
       end
 
+      def selection
+        dom_element.prop('checked')
+      end
+      
       def selection=(value)
         @selection = value
         dom_element.prop('checked', @selection)
@@ -25,7 +37,7 @@ module Glimmer
         {
           'on_widget_selected' => {
             event: 'change'
-          }, 
+          },
         }
       end
       
@@ -48,7 +60,7 @@ module Glimmer
         check_class = name
         check_selection = @selection
         options = {type: 'checkbox', id: check_id, name: parent.id, style: check_style, class: check_class, value: check_text, style: 'min-width: 27px;'}
-        options[checked: 'checked'] if check_selection        
+        options[checked: 'checked'] if check_selection
         @dom ||= html {
           span {
             input(options) {

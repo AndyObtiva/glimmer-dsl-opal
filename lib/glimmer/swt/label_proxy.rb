@@ -1,5 +1,5 @@
 require 'glimmer/swt/widget_proxy'
-require 'glimmer/swt/image_proxy'
+# require 'glimmer/swt/image_proxy'
 
 module Glimmer
   module SWT
@@ -7,8 +7,8 @@ module Glimmer
       attr_reader :text, :background_image, :image, :alignment
       
       def initialize(parent, args)
-        super(parent, args)  
-        self.alignment = (['left', 'center', 'right'] & args.map(&:to_s)).first
+        super(parent, args)
+        self.alignment = [:left, :center, :right].detect {|align| args.detect { |arg| SWTProxy[align] == arg } }
       end
 
       def text=(value)
@@ -19,13 +19,13 @@ module Glimmer
       def background_image=(*image_options)
         # TODO consider if there is a difference between background_image and image in label and to have one reuse the other
         # TODO finish implementation
-        @background_image = Glimmer::SWT::ImageProxy.create(*image_options)
+#         @background_image = Glimmer::SWT::ImageProxy.create(*image_options)
 #         dom_element.css('background-image', @background_image.image_data.dom_element.src)
       end
       
       def image=(*image_options)
         # TODO finish implementation
-        @image = Glimmer::SWT::ImageProxy.create(*image_options)
+#         @image = Glimmer::SWT::ImageProxy.create(*image_options)
 #         dom_element.css('background-image', @image.image_data.dom_element.src)
       end
       
@@ -34,10 +34,12 @@ module Glimmer
       end
 
       def alignment=(value)
+        # TODO consider storing swt value in the future instead
+        @alignment = value
         dom_element.css('text-align', @alignment.to_s)
       end
       
-      def dom        
+      def dom
         label_text = @text
         label_id = id
         label_class = name

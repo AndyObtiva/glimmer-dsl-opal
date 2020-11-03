@@ -6,7 +6,7 @@ module Glimmer
       ITEM_EMPTY = '_____'
       attr_reader :items, :selection
       
-      def initialize(parent, args)        
+      def initialize(parent, args)
         super(parent, args)
         @selection = []
       end
@@ -62,7 +62,7 @@ module Glimmer
                 if event.target.prop('nodeName') == 'LI'
                   selected_item = event.target.text
                   select(index_of(selected_item), event.meta_key)
-                  event_listener.call(event)              
+                  event_listener.call(event)
                 end
               }
             }

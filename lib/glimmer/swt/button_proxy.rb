@@ -18,7 +18,7 @@ module Glimmer
         {
           'on_widget_selected' => {
             event: 'click'
-          }, 
+          },
         }
       end
       

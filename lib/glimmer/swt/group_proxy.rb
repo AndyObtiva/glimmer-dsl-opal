@@ -17,7 +17,7 @@ module Glimmer
         'fieldset'
       end
       
-      def dom        
+      def dom
         @dom ||= html {
           fieldset(id: id, class: name) {
             legend {@text} if @text

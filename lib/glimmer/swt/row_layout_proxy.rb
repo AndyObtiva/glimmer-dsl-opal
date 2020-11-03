@@ -10,7 +10,7 @@ module Glimmer
           display: flex;
         }
                 
-        .row-layout-pack {
+        .row-layout-pack-false {
           display: initial;
         }
                 
@@ -27,7 +27,7 @@ module Glimmer
         }
         
         .row-layout-vertical.row-layout-pack {
-          flex-direction: none;          
+          flex-direction: none;
         }
       CSS
     
@@ -51,7 +51,7 @@ module Glimmer
         @type == :vertical
       end
       
-      def dom(widget_dom)        
+      def dom(widget_dom)
         dom_result = widget_dom
         dom_result += '<br />' if vertical? && @pack
         dom_result
@@ -60,9 +60,9 @@ module Glimmer
       def pack=(value)
         @pack = value
         if @pack
-          @parent.dom_element.add_class('row-layout-pack')
+          @parent.dom_element.remove_class('row-layout-pack-false')
         else
-          @parent.dom_element.remove_class('row-layout-pack')
+          @parent.dom_element.add_class('row-layout-pack-false')
         end
       end
       
@@ -111,7 +111,7 @@ module Glimmer
             elsif vertical?
               margin_bottom "#{@spacing}px"
             end
-          }          
+          }
           s("##{@parent.id} > :last-child") {
             if horizontal?
               margin_right 0

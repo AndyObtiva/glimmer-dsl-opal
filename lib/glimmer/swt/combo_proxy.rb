@@ -29,20 +29,20 @@ module Glimmer
           html {
             option(option_hash) {
               item
-            } 
+            }
           }.to_s
         end
         dom_element.html(items_dom)
       end
 
-      def observation_request_to_event_mapping      
+      def observation_request_to_event_mapping
         {
           'on_widget_selected' => {
             event: 'change',
             event_handler: -> (event_listener) {
-              -> (event) {                
+              -> (event) {
                 @text = event.target.value
-                event_listener.call(event)              
+                event_listener.call(event)
               }
             }
           }

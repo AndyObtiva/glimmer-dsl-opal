@@ -3,14 +3,27 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class RadioProxy < WidgetProxy
-      attr_reader :selection, :text
+      STYLE=<<~CSS
+        .radio {
+          display: inline;
+        }
+        .radio-label {
+          display: inline;
+        }
+        .radio-container {
+        }
+      CSS
+      attr_reader :text
       
       def text=(value)
         @text = value
-        dom_element.val(@text)
-        label_dom_element.html(@text)
+        label_dom_element.html(value)
       end
-
+      
+      def selection
+        dom_element.prop('checked')
+      end
+      
       def selection=(value)
         @selection = value
         dom_element.prop('checked', @selection)
@@ -19,41 +32,45 @@ module Glimmer
       def element
         'input'
       end
-
-      def observation_request_to_event_mapping
-        {
-          'on_widget_selected' => {
-            event: 'change'
-          }, 
-        }
-      end
       
       def label_id
         "#{id}-label"
       end
       
-      def label_class
+      def label_name
         "#{name}-label"
       end
       
+      def label_path
+        "#{parent_path} ##{label_id}"
+      end
+      
       def label_dom_element
-        Element.find("##{label_id}")
+        Document.find(label_path)
+      end
+      
+      def container_id
+        "#{id}-container"
+      end
+
+      def container_name
+        "#{name}-container"
+      end
+
+      def observation_request_to_event_mapping
+        {
+          'on_widget_selected' => {
+            event: 'change'
+          },
+        }
       end
       
       def dom
-        radio_text = @text
-        radio_id = id
-        radio_style = css
-        radio_class = name
-        radio_selection = @selection
-        options = {type: 'radio', id: radio_id, name: parent.id, style: radio_style, class: radio_class, value: radio_text, style: 'min-width: 27px;'}
-        options[checked: 'checked'] if radio_selection        
         @dom ||= html {
-          span {
-            input(options) {
-            }
-            label(id: label_id, class: label_class, for: radio_id) {
-              radio_text
+          span(id: container_id, class: container_name) {
+            input(type: 'radio', id: id, class: name, name: parent&.id)
+            label(id: label_id, class: label_name, for: id) {
+              text
             }
           }
         }.to_s

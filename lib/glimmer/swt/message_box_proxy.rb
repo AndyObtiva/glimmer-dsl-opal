@@ -37,7 +37,7 @@ module Glimmer
       end
       
       def open
-        document.add_child(self)
+        document.post_initialize_child(self)
       end
       
       def hide
@@ -53,11 +53,11 @@ module Glimmer
       end
       
       def selector
-        super + ' .close' 
+        super + ' .close'
       end
     
       def listener_path
-        path + ' .close' 
+        path + ' .close'
       end
     
       def observation_request_to_event_mapping
@@ -66,7 +66,7 @@ module Glimmer
             event: 'click'
           },
         }
-      end      
+      end
  
       def style_dom_modal_css
         <<~CSS
@@ -119,11 +119,11 @@ module Glimmer
         modal_text = text
         modal_message = message
         modal_class = ['modal', name].join(' ')
-        @dom ||= html {        
+        @dom ||= html {
           div(id: modal_id, style: modal_style, class: modal_class) {
             style(class: 'modal-style') {
               style_dom_modal_css #.split("\n").map(&:strip).join(' ')
-            }        
+            }
             div(class: 'modal-content') {
               header(class: 'text') {
                 modal_text

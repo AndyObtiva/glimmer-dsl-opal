@@ -35,7 +35,7 @@ module Glimmer
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args)
           the_widget_class = widget_class(keyword)
-          the_widget_class.respond_to?(:create) ? the_widget_class.create(parent, args) : the_widget_class.new(parent, args)
+          the_widget_class.respond_to?(:create) ? the_widget_class.create(keyword, parent, args) : the_widget_class.new(parent, args)
         end
         
         def widget_class(keyword)
@@ -103,7 +103,18 @@ module Glimmer
         @children = Set.new # TODO consider moving to composite
         @enabled = true
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
-        @parent.add_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
+        @parent.post_initialize_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
+      end
+      
+      # Executes for the parent of a child that just got added
+      def post_initialize_child(child)
+        @children << child
+        child.render
+      end
+      
+      # Executes at the closing of a parent widget curly braces after all children/properties have been added/set
+      def post_add_content
+        # No Op by default
       end
       
       def css_classes
@@ -123,11 +134,6 @@ module Glimmer
         'div'
       end
 
-      def add_child(child)
-        @children << child
-        child.render
-      end
-      
       def enabled=(value)
         @enabled = value
         dom_element.prop('disabled', !@enabled)
@@ -247,6 +253,8 @@ module Glimmer
         # TODO consider making this pick an element in relation to its parent, allowing unhooked dom elements to be built if needed (unhooked to the visible page dom)
         Document.find(path)
       end
+      
+      # TODO consider adding a default #dom method implementation for the common case, automatically relying on #element and other methods to build the dom html
       
       def style_element
         style_element_id = "#{id}-style"
@@ -458,6 +466,13 @@ module Glimmer
 #               }
 #             end,
 #           },
+          DateTimeProxy => { #radio?
+            :date_time => lambda do |observer|
+              on_widget_selected { |selection_event|
+                observer.call(date_time)
+              }
+            end
+          },
           RadioProxy => { #radio?
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|
@@ -491,6 +506,7 @@ require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'
+require 'glimmer/swt/date_time_proxy'
 require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'
 require 'glimmer/swt/list_proxy'

@@ -18,6 +18,11 @@ module Glimmer
         def interpret(parent, keyword, *args, &block)
           Glimmer::SWT::WidgetProxy.for(keyword, parent, args)
         end
+
+        def add_content(parent, &block)
+          super(parent, &block)
+          parent.post_add_content
+        end
       end
     end
   end

@@ -13,14 +13,14 @@ module Glimmer
         include TopLevelExpression
         include ParentExpression
 
-        def interpret(parent, keyword, *args, &block)          
+        def interpret(parent, keyword, *args, &block)
           if Glimmer::UI::CustomShell.requested_and_not_handled?
             parameters = Glimmer::UI::CustomShell.request_parameter_string.split("&").map {|str| str.split("=")}.to_h
             `history.pushState(#{parameters.merge('custom_shell_handled' => 'true')}, document.title, #{"?#{Glimmer::UI::CustomShell.encoded_request_parameter_string}&custom_shell_handled=true"})`
             custom_shell_keyword = parameters.delete('custom_shell')
             CustomWidgetExpression.new.interpret(nil, custom_shell_keyword, *[parameters])
             `history.pushState(#{parameters.reject {|k,v| k == 'custom_shell_handled'}}, document.title, #{"?#{Glimmer::UI::CustomShell.encoded_request_parameter_string.sub('&custom_shell_handled=true', '')}"})`
-            # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method            
+            # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
             Glimmer::SWT::MakeShiftShellProxy.new
           else
             Glimmer::SWT::ShellProxy.new(*args)
@@ -29,6 +29,11 @@ module Glimmer
         
         def add_content(parent, &content)
           content.call(parent) if parent.is_a?(Glimmer::SWT::ShellProxy)
+        end
+
+        def add_content(parent, &block)
+          super(parent, &block)
+          parent.post_add_content
         end
       end
     end

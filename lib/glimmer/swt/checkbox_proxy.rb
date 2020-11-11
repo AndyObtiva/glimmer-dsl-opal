@@ -3,6 +3,7 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class CheckboxProxy < WidgetProxy
+      # TODO add a create method that ensures passing :check style in if not there
       STYLE=<<~CSS
         .checkbox {
           display: inline;

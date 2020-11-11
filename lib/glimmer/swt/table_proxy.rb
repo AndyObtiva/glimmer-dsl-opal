@@ -16,11 +16,11 @@ module Glimmer
       end
       
       # Only table_columns may be added as children
-      def add_child(child)
+      def post_initialize_child(child)
         if child.is_a?(TableColumnProxy)
           @columns << child
         else
-          @children << child        
+          @children << child
         end
         child.redraw
       end
@@ -36,14 +36,14 @@ module Glimmer
         changed.each(&:redraw)
       end
             
-      def items=(new_items)        
+      def items=(new_items)
         @children = new_items
         redraw
       end
       
       def search(&condition)
         items.select {|item| condition.nil? || condition.call(item)}
-      end      
+      end
       
       def index_of(item)
         items.index(item)
@@ -84,9 +84,9 @@ module Glimmer
             event.singleton_class.send(:define_method, :column_index) do
               (table_data || event.target).attr('data-column-index')
             end
-            event_listener.call(event)              
+            event_listener.call(event)
           }
-        } 
+        }
 
         {
           'on_mouse_down' => {
@@ -102,7 +102,7 @@ module Glimmer
       
       def redraw
         super()
-        @columns.to_a.each(&:redraw)  
+        @columns.to_a.each(&:redraw)
       end
       
       def element
@@ -125,7 +125,7 @@ module Glimmer
         Document.find(items_path)
       end
       
-      def columns_dom        
+      def columns_dom
         tr {
         }
       end
@@ -134,9 +134,9 @@ module Glimmer
         thead {
           columns_dom
         }
-      end            
+      end
       
-      def items_dom        
+      def items_dom
         tbody {
         }
       end

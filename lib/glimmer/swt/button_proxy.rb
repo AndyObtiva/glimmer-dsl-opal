@@ -6,7 +6,7 @@ module Glimmer
   module SWT
     class ButtonProxy < WidgetProxy
       class << self
-        def create(parent, args)
+        def create(keyword, parent, args)
           if args.to_a.include?(:radio)
             RadioProxy.new(parent, args)
           elsif args.to_a.include?(:check)

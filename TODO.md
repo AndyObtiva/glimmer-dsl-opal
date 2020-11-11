@@ -4,20 +4,31 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Document new samples in README
+- Support `date_time`, `date`, `date_drop_down`, `time`, `calendar` keywords
+- Hello, Date Time! Sample
+- Make gem into a Rails engine to support importing default assets like CSS styles and images
 
 ## Soon
 
+- Support `spinner` and Hello, Spinner! Sample
+- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
+
+- Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
+- Hello, Pop Up Context Menu! Sample
+
 - `table` `header_visible`
 - `table` `item_count`
-- Support custom table editor
-- Support context menus `menu`/`menu_item` directly under a widget
-- Support real menus `menu_bar`
+- Support custom table column editor
+- Hello, Table! Sample
+
+
 - Support `on_mouse_up` events on all widgets
 - Support `dialog`
+
 - Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
+
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
-- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
+
 - Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 
 ## Issues
@@ -33,6 +44,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Consider the idea of supporting multiple web implementations for a widget to allow different looks, perhaps allowing 3rd parties to plug extra implementations as needed as different "adapters"
 - Support the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
+- Support real menus `menu_bar`
+- Hello, Menu Bar! Sample
+- MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
+- Hello, Message Box!
+- Support `expand_bar` and `expand_item` using the jQuery UI Accordion
+- Support `progress_bar` using the jQuery UI Accordion
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal
@@ -42,6 +59,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Do away with redraw everywhere possible
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
+- Refactor tab_folder/tab_item to use jQuery-UI
+- Refactor message_box to use jQuery-UI dialog
 
 ## Miscellaneous
 

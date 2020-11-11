@@ -16,9 +16,14 @@ if RUBY_PLATFORM == 'opal'
   require 'opal-async'
   require 'async/ext'
   require 'glimmer-dsl-opal/vendor/jquery'
+  require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min'
+  require 'glimmer-dsl-opal/vendor/jquery-ui-timepicker/jquery.ui.timepicker'
+#   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min.css'
+#   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.structure.min.css'
+#   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css'
   require 'opal-jquery'
   require 'glimmer'
-  require 'facets/hash/symbolize_keys'  
+  require 'facets/hash/symbolize_keys'
   require 'glimmer-dsl-opal/ext/exception'
   require 'glimmer-dsl-opal/ext/date'
   require 'uri'
@@ -31,7 +36,7 @@ if RUBY_PLATFORM == 'opal'
 #     Async::Timeout.new 10000 do
 #       __original_add(*args)
 #     end
-#   end  
+#   end
       
   require 'glimmer/dsl/opal/dsl'
   require 'glimmer/data_binding/ext/observable_model'

@@ -19,20 +19,45 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Glimmer
-  module SWT
-    class MakeShiftShellProxy < Glimmer::SWT::ShellProxy
-      def initialize(*args, &block)
-        # No Op
-      end
+class HelloDateTime
+  class Person
+    attr_accessor :date_of_birth
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    person.date_of_birth = DateTime.new(2013, 7, 12, 18, 37, 23)
+    
+    shell {
+      row_layout :vertical
       
-      def post_initialize_child(child)
-        # No Op
-      end
+      text 'Hello, Date Time!'
+      minimum_size 180, 180
       
-      def open
-        # No Op
-      end
-    end
+      label {
+        text 'Date of Birth'
+        font height: 16, style: :bold
+      }
+      
+      date { # alias for date_time(:date)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      date_drop_down { # alias for date_time(:date, :drop_down)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      time { # alias for date_time(:time)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      calendar { # alias for date_time(:calendar)
+        date_time bind(person, :date_of_birth)
+      }
+    }.open
   end
 end
+
+HelloDateTime.new.launch

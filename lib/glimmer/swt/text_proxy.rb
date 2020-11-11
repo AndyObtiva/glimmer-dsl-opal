@@ -21,12 +21,12 @@ module Glimmer
             event_handler: -> (event_listener) {
               -> (event) {
                 @text = event.target.value
-                event_listener.call(event)              
+                event_listener.call(event)
               }
             }
           }
         }
-      end      
+      end
       
       def dom
         text_text = @text

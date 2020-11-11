@@ -2,7 +2,7 @@ require 'glimmer/swt/widget_proxy'
 
 module Glimmer
   module SWT
-    class TabFolderProxy < WidgetProxy      
+    class TabFolderProxy < WidgetProxy
       attr_reader :tabs
       
       def initialize(parent, args)
@@ -10,9 +10,9 @@ module Glimmer
         @tabs = []
       end
       
-      def add_child(child)
+      def post_initialize_child(child)
         unless @children.include?(child)
-          @children << child 
+          @children << child
           tabs_dom_element.append(child.tab_dom)
           child.render
         end

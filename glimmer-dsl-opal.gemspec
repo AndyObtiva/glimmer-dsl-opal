@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-11-12"
+  s.date = "2020-11-13"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -198,3 +198,4 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
   end
 end
+

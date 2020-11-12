@@ -16,6 +16,8 @@ group :development, :test do
   gem 'opal-jquery', '~> 0.4.4'
 end
 
+# Enable when running `rackup` or `rake` to test at http://localhost:9292
+# Disable when pushing gem via `rake release`
 group :test do
-  gem 'glimmer-dsl-opal', require: false, path: '.'
+#  gem 'glimmer-dsl-opal', require: false, path: '.'
 end

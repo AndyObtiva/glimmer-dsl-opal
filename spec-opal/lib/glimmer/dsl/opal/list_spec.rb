@@ -33,7 +33,7 @@ module GlimmerSpec
          
         expect(person.country).to eq('Mexico')
       end
-    end    
+    end
         
     it 'renders and binds list widget for multi selection' do
       person = Person.new
@@ -66,6 +66,6 @@ module GlimmerSpec
         
         # TODO add more expectations for meta (and shift) key presses once you figure out how
       end
-    end    
+    end
   end
 end

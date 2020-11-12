@@ -26,7 +26,10 @@ module Glimmer
       def post_add_content
         # TODO handle date_drop_down version
         if time?
-          dom_element.timepicker
+          dom_element.timepicker({
+            showPeriod: true,
+            showLeadingZero: true
+          })
         else
           dom_element.datepicker
         end
@@ -53,7 +56,19 @@ module Glimmer
       
       def date_time
         if @added_content
-          dom_element.datepicker('getDate')&.to_datetime
+          default_date = DateTime.new if @date_time.nil?
+          default_year = @date_time&.year || default_date.year
+          default_month = @date_time&.month || default_date.month
+          default_day = @date_time&.day || default_date.day
+          default_hour = @date_time&.hour || default_date.hour
+          default_min = @date_time&.min || default_date.min
+          default_sec = @date_time&.sec || default_date.sec
+          if time?
+            @date_time = DateTime.new(default_year, default_month, default_day, dom_element.timepicker('getHour').to_i, dom_element.timepicker('getMinute').to_i, default_sec)
+          else
+            @date_time = DateTime.new(dom_element.datepicker('getDate')&.year.to_i, dom_element.datepicker('getDate')&.month.to_i, dom_element.datepicker('getDate')&.day.to_i, default_hour, default_min, default_sec)
+          end
+          @date_time = @date_time&.to_datetime
         else
           @initial_date_time
         end
@@ -61,13 +76,18 @@ module Glimmer
       
       def date_time=(value)
         if @added_content
-          dom_element.datepicker('setDate', value.to_time) unless value.nil?
+          @date_time = value&.to_datetime || DateTime.new
+          if time?
+            dom_element.timepicker('setTime', "#{@date_time.hour}:#{@date_time.min}")
+          else
+            dom_element.datepicker('setDate', @date_time.to_time)
+          end
         else
           @initial_date_time = value
         end
       end
       
-      # TODO add year, month, day, hours, minutes, seconds attribute methods
+      # TODO add date, time, year, month, day, hours, minutes, seconds attribute methods
       
       def observation_request_to_event_mapping
         {

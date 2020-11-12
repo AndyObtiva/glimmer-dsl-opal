@@ -19,7 +19,7 @@ module GlimmerSpec
         }
          
         expect(@message_box).to be_a(Glimmer::SWT::MessageBoxProxy)
-      end           
+      end
     end
   end
 end

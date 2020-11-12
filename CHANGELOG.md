@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.6.0
+
+- Hello, Date Time! Sample
+- Support `date_time`, `date`, `date_drop_down`, `time`, `calendar` keywords
+- Format Date/Time correctly as per SWT implementation by default
+
 ## 0.5.1
 
 - Fixed issue with Hello, Combo!, Hello, List...! samples

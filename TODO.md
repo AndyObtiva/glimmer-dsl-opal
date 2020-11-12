@@ -4,9 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support `date_time`, `date`, `date_drop_down`, `time`, `calendar` keywords
-- Hello, Date Time! Sample
-- Make gem into a Rails engine to support importing default assets like CSS styles and images
+- Make gem into a Rails engine to support importing default static assets like CSS styles and images
+- Show drop down icon
 
 ## Soon
 
@@ -50,6 +49,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Hello, Message Box!
 - Support `expand_bar` and `expand_item` using the jQuery UI Accordion
 - Support `progress_bar` using the jQuery UI Accordion
+- Provide a way for disabling included CSS altogether for consumers should they want to use CSS with a clean slate
+- Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal

@@ -1,6 +1,7 @@
 class Person
   attr_accessor :country, :country_options
   attr_accessor :provinces, :provinces_options
+  attr_accessor :date_of_birth
   
   def initialize
     self.country_options=["", "Canada", "US", "Mexico"]

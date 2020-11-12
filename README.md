@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.5.1 (Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.6.0 (Auto-Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +8,7 @@
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.5.1 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.6.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello:
 
@@ -26,6 +26,7 @@ Hello:
 - [Hello, Group!](#hello-group)
 - [Hello, Checkbox!](#hello-checkbox)
 - [Hello, Checkbox Group!](#hello-checkbox-group)
+- [Hello, Date Time!](#hello-date-time)
 
 Elaborate:
 
@@ -121,7 +122,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.5.1', require: false
+gem 'glimmer-dsl-opal', '~> 0.6.0'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -1404,6 +1405,78 @@ Visit `http://localhost:3000`
 You should see "Hello, Checkbox Group!"
 
 ![Glimmer DSL for Opal Hello Checkbox Group](images/glimmer-dsl-opal-hello-checkbox-group.png)
+
+#### Hello, Date Time!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_date_time'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloDateTime
+  class Person
+    attr_accessor :date_of_birth
+  end
+  
+  include Glimmer
+  
+  def launch
+    person = Person.new
+    person.date_of_birth = DateTime.new(2013, 7, 12, 18, 37, 23)
+    
+    shell {
+      row_layout :vertical
+      
+      text 'Hello, Date Time!'
+      minimum_size 180, 180
+      
+      label {
+        text 'Date of Birth'
+        font height: 16, style: :bold
+      }
+      
+      date { # alias for date_time(:date)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      date_drop_down { # alias for date_time(:date, :drop_down)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      time { # alias for date_time(:time)
+        date_time bind(person, :date_of_birth)
+      }
+      
+      calendar { # alias for date_time(:calendar)
+        date_time bind(person, :date_of_birth)
+      }
+    }.open
+  end
+end
+
+HelloDateTime.new.launch
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Checkbox Group](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-date-time.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Date Time!"
+
+![Glimmer DSL for Opal Hello Date Time](images/glimmer-dsl-opal-hello-date-time.png)
 
 ### Elaborate Samples
 

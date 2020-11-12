@@ -198,3 +198,4 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
   end
 end
+

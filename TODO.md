@@ -4,13 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Make gem into a Rails engine to support importing default static assets like CSS styles and images
-- Show drop down icon
+- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
+- Support `spinner` and Hello, Spinner! Sample
 
 ## Soon
 
-- Support `spinner` and Hello, Spinner! Sample
-- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Hello, Pop Up Context Menu! Sample

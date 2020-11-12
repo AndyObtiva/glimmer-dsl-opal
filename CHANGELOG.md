@@ -5,6 +5,8 @@
 - Hello, Date Time! Sample
 - Support `date_time`, `date`, `date_drop_down`, `time`, `calendar` keywords
 - Format Date/Time correctly as per SWT implementation by default
+- Make glimmer-dsl-opal gem into a Rails engine to support importing default static assets like CSS styles and images
+- Show drop down icon next to `date_drop_down` and `time`
 
 ## 0.5.1
 

@@ -1,11 +1,13 @@
 require 'opal'
 
+GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)
+GLIMMER_DSL_OPAL_LIB = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib')
+ 
+$LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
+
 if RUBY_PLATFORM == 'opal'
-  GLIMMER_DSL_OPAL_ROOT = File.expand_path('../..', __FILE__)
-  GLIMMER_DSL_OPAL_LIB = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib')
 #   GLIMMER_DSL_OPAL_MISSING = File.join(GLIMMER_DSL_OPAL_ROOT, 'lib', 'glimmer-dsl-opal', 'missing')
    
-  $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_LIB)
 #   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
   # TODO look into making append_path work (causing some trouble right now)
 #   Opal.append_path pd File.expand_path('../glimmer-dsl-opal/missing', __FILE__)
@@ -53,5 +55,6 @@ if RUBY_PLATFORM == 'opal'
     result ||= method == '<<'
     result ||= method == 'handle'
   end
-  
+else
+  require "glimmer/engine"
 end

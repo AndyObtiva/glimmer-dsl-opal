@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-11-10"
+  s.date = "2020-11-12"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -23,6 +23,19 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "VERSION",
+    "app/assets/images/glimmer/images/calendar.gif",
+    "app/assets/images/glimmer/images/ui-icons_222222_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_444444_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_555555_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_777620_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_777777_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_cc0000_256x240.png",
+    "app/assets/images/glimmer/images/ui-icons_ffffff_256x240.png",
+    "app/assets/stylesheets/glimmer.css",
+    "app/assets/stylesheets/glimmer/jquery-ui.css",
+    "app/assets/stylesheets/glimmer/jquery-ui.structure.css",
+    "app/assets/stylesheets/glimmer/jquery-ui.theme.css",
+    "app/assets/stylesheets/glimmer/jquery.ui.timepicker.css",
     "lib/glimmer-dsl-opal.rb",
     "lib/glimmer-dsl-opal/ext/date.rb",
     "lib/glimmer-dsl-opal/ext/exception.rb",
@@ -42,6 +55,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_computed/contact.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_shell.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_widget.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_date_time.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_group.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_multi_selection.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_single_selection.rb",
@@ -49,6 +63,23 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_radio_group.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_tab.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_world.rb",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/GPL-LICENSE.txt",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/MIT-LICENSE.txt",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/jquery.ui.timepicker.css",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/jquery.ui.timepicker.js",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/AUTHORS.txt",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/LICENSE.txt",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_444444_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_555555_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_777620_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_777777_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_cc0000_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_ffffff_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min.css",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min.js",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.structure.min.css",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/package.json",
     "lib/glimmer-dsl-opal/vendor/jquery.js",
     "lib/glimmer-dsl-swt.rb",
     "lib/glimmer/data_binding/element_binding.rb",
@@ -85,6 +116,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/table_items_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/widget_expression.rb",
     "lib/glimmer/dsl/opal/widget_listener_expression.rb",
+    "lib/glimmer/engine.rb",
     "lib/glimmer/swt.rb",
     "lib/glimmer/swt/browser_proxy.rb",
     "lib/glimmer/swt/button_proxy.rb",
@@ -94,6 +126,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/composite_proxy.rb",
     "lib/glimmer/swt/custom/checkbox_group.rb",
     "lib/glimmer/swt/custom/radio_group.rb",
+    "lib/glimmer/swt/date_time_proxy.rb",
     "lib/glimmer/swt/display_proxy.rb",
     "lib/glimmer/swt/event_listener_proxy.rb",
     "lib/glimmer/swt/fill_layout_proxy.rb",
@@ -165,4 +198,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
   end
 end
-

@@ -28,10 +28,21 @@ module Glimmer
         if time?
           dom_element.timepicker({
             showPeriod: true,
-            showLeadingZero: true
+            showLeadingZero: true,
+            showOn: 'both',
+            button: "##{time_button_id}",
           })
         else
-          dom_element.datepicker
+          options = {}
+          if drop_down?
+            options = {
+              showOn: 'both',
+              buttonImage: 'assets/glimmer/images/calendar.gif',
+              buttonImageOnly: true,
+              buttonText: 'Select date'
+            }
+          end
+          dom_element.datepicker(options)
         end
         date_time_value = self.date_time
         @added_content = true
@@ -99,13 +110,24 @@ module Glimmer
         }
       end
       
+      def time_button_id
+        "#{id}-time-button"
+      end
+      
+      def time_button_class
+        "#{name}-time-button"
+      end
+      
       def element
         calendar? ? 'div' : 'input'
       end
       
       def dom
         @dom ||= html {
-          send(element, type: 'text', id: id, class: name)
+          span {
+            send(element, type: 'text', id: id, class: name)
+            button(id: time_button_id, class: time_button_class, style: "border: none; background: url(assets/glimmer/images/ui-icons_222222_256x240.png) -80px, -96px; width: 16px; height: 16px;") if time?
+          }
         }.to_s
       end
       

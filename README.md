@@ -152,6 +152,12 @@ Add the following line to the top of an empty `app/assets/javascripts/applicatio
 require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
 ```
 
+Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
+
+```erb
+<%= stylesheet_link_tag    'glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
+```
+
 Open a `Document.ready?` block and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
 
 ```ruby

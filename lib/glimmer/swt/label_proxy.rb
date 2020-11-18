@@ -6,8 +6,8 @@ module Glimmer
     class LabelProxy < WidgetProxy
       attr_reader :text, :background_image, :image, :alignment
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         self.alignment = [:left, :center, :right].detect {|align| args.detect { |arg| SWTProxy[align] == arg } }
       end
 

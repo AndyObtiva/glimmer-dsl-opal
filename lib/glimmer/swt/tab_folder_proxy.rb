@@ -5,8 +5,8 @@ module Glimmer
     class TabFolderProxy < WidgetProxy
       attr_reader :tabs
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         @tabs = []
       end
       

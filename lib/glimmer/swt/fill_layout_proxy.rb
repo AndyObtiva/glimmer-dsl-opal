@@ -68,7 +68,7 @@ module Glimmer
             elsif vertical?
               margin_bottom "#{@spacing}px"
             end
-          }          
+          }
           s("##{@parent.id} > :last-child") {
             if horizontal?
               margin_right 0

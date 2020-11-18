@@ -25,21 +25,21 @@ module Glimmer
         def layout_exists?(keyword)
           !!layout_class(keyword)
         end
-      end      
+      end
       
       attr_reader :parent, :args
         
-      def initialize(parent, args)      
+      def initialize(parent, args)
         @parent = parent
         @parent = parent.body_root if @parent.is_a?(Glimmer::UI::CustomWidget)
         @parent.css_classes.each do |css_class|
           @parent.remove_css_class(css_class) if css_class.include?('layout')
         end
-        @args = args        
+        @args = args
         @parent.add_css_class(css_class)
         @parent.layout = self
         self.margin_width = 15 if respond_to?(:margin_width=)
-        self.margin_height = 15 if respond_to?(:margin_height=)        
+        self.margin_height = 15 if respond_to?(:margin_height=)
       end
 
       def css_class

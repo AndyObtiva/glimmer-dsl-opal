@@ -66,10 +66,10 @@ module Glimmer
                   event_listener.call(event) if event.key_code != 13 && (event.key_code == 127 || event.key_code <= 31)
                 }
               }
-            }          
+            }
           ]
         }
-      end      
+      end
       
       def shells
         @shells ||= []

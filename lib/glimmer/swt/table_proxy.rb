@@ -8,8 +8,8 @@ module Glimmer
       attr_accessor :column_properties
       alias items children
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         @columns = []
         @children = []
         @selection = []

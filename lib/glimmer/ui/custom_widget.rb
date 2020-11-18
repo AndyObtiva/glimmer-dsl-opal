@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -89,7 +89,7 @@ module Glimmer
         def included(klass)
           klass.extend(ClassMethods)
           unless klass.name.include?('Glimmer::UI::CustomShell')
-            klass.include(Glimmer) 
+            klass.include(Glimmer)
             Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
           end
         end
@@ -107,7 +107,7 @@ module Glimmer
               end
               begin
                 constant = result.const_get(namespace)
-                return constant if constant.ancestors.include?(Glimmer::UI::CustomWidget)
+                return constant if constant&.respond_to?(:ancestors) && constant&.ancestors&.to_a.include?(Glimmer::UI::CustomWidget)
                 constant
               rescue => e
                 # Glimmer::Config.logger.debug {"#{e.message}\n#{e.backtrace.join("\n")}"}
@@ -158,7 +158,7 @@ module Glimmer
           args = []
         end
         options ||= {}
-        args = options.delete('swt_style').split(',').map(&:to_sym) if options['swt_style']                
+        args = options.delete('swt_style').split(',').map(&:to_sym) if options['swt_style']
         @args = args
         @swt_style = SWT::SWTProxy[*@args]
         options ||= {}
@@ -244,7 +244,7 @@ module Glimmer
 
       def has_style?(symbol)
         @args.include?(symbol) # not a very solid implementation. Bring SWT constants eventually
-      end      
+      end
 
       def async_exec(&block)
         SWT::DisplayProxy.instance.async_exec(&block)
@@ -273,7 +273,7 @@ module Glimmer
         end
       end
 
-      alias local_respond_to? respond_to?      
+      alias local_respond_to? respond_to?
       def respond_to?(method, *args, &block)
         super or
           can_handle_observation_request?(method) or

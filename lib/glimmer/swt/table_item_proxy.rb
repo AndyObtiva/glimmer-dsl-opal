@@ -5,8 +5,8 @@ module Glimmer
     class TableItemProxy < WidgetProxy
       attr_reader :data
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         on_widget_selected { |event|
           parent.select(parent.index_of(self), event.meta?)
         }
@@ -70,11 +70,11 @@ module Glimmer
             redraw
           end
         end
-        table_item_edit_cancel_handler = lambda do |event|           
+        table_item_edit_cancel_handler = lambda do |event|
           Async::Task.new do
             table_item_edit_handler.call(event, true)
           end
-        end   
+        end
         table_item_edit_key_handler = lambda do |event|
           Async::Task.new do
             if event.key_code == 13
@@ -91,7 +91,7 @@ module Glimmer
             Async::Task.new do
               table_item_input.focus
               table_item_input.on('keyup', &table_item_edit_key_handler)
-              table_item_input.on('focusout', &table_item_edit_cancel_handler)                
+              table_item_input.on('focusout', &table_item_edit_cancel_handler)
             end
           end
         end
@@ -132,7 +132,7 @@ module Glimmer
           tr(id: table_item_id, style: table_item_id_style, class: table_item_css_classes.to_a.join(' ')) {
             table_item_text_array.each_with_index do |table_item_text, column_index|
               td('data-column-index' => column_index) {
-                if @edit_column_index == column_index                  
+                if @edit_column_index == column_index
                   input(type: 'text', value: table_item_text, style: "max-width: #{table_item_max_width - 11}px;")
                 else
                   table_item_text

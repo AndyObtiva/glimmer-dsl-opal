@@ -4,10 +4,10 @@ module Glimmer
   module SWT
     class TabItemProxy < CompositeProxy
       include Glimmer
-      attr_reader :text, :content_visible      
+      attr_reader :text, :content_visible
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         content {
           on_widget_selected {
             @parent.hide_all_tab_content
@@ -35,7 +35,7 @@ module Glimmer
     
       def selector
         super + '-tab'
-      end      
+      end
       
       def observation_request_to_event_mapping
         {
@@ -47,7 +47,7 @@ module Glimmer
       
       def listener_path
         tab_path
-      end      
+      end
       
       def tab_path
         "#{parent.tabs_path} > ##{tab_id}"
@@ -72,13 +72,13 @@ module Glimmer
       
       # This contains the tab content
       def dom
-        tab_item_id = id        
+        tab_item_id = id
         tab_item_class_string = [name, 'hide'].join(' ')
         @dom ||= html {
           div(id: tab_item_id, class: tab_item_class_string) {
           }
         }.to_s
-      end      
+      end
     end
   end
 end

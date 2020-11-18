@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.6.0 (Auto-Webify Desktop Apps)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal (Auto-Webify Desktop Apps)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +8,7 @@
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.6.0 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: Alpha Version 0.6.1 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello:
 
@@ -102,9 +102,13 @@ Event loop:
 
 ## Setup
 
-(NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete alpha. Also, there is a slight chance issues you encounter are fixed in master or some other branch that you could check out instead)
+(NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete alpha. Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
 
-Please install a Rails 5 gem:
+The [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem is a Rails Engine gem that includes assets.
+
+Please follow the following steps to setup.
+
+Install a Rails 5 gem:
 
 ```
 gem install rails -v5.2.4.4
@@ -122,7 +126,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.6.0'
+gem 'glimmer-dsl-opal', '~> 0.6.1'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -156,7 +160,7 @@ require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
 Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
 
 ```erb
-<%= stylesheet_link_tag    'glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
 ```
 
 Open a `Document.ready?` block and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
@@ -1769,6 +1773,7 @@ class TicTacToe
     @tic_tac_toe_board = Board.new
     @shell = shell {
       text "Tic-Tac-Toe"
+      minimum_size 150, 178
       composite {
         grid_layout 3, true
         (1..3).each { |row|
@@ -1777,6 +1782,7 @@ class TicTacToe
               layout_data :fill, :fill, true, true
               text        bind(@tic_tac_toe_board[row, column], :sign)
               enabled     bind(@tic_tac_toe_board[row, column], :empty)
+              font        style: :bold, height: 20
               on_widget_selected {
                 @tic_tac_toe_board.mark(row, column)
               }

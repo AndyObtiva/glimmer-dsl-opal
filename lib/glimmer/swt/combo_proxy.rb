@@ -7,8 +7,8 @@ module Glimmer
       include Glimmer::DataBinding::ObservableElement
       attr_reader :text, :items
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         @items = []
       end
       

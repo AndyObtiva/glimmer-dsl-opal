@@ -5,10 +5,11 @@ module Glimmer
     class MessageBoxProxy < WidgetProxy
       attr_reader :text, :message
       
-      def initialize(parent, args)
+      def initialize(parent, args, block)
         i = 0
         @parent = parent
         @args = args
+        @block = block
         @children = Set.new
         @enabled = true
         content do

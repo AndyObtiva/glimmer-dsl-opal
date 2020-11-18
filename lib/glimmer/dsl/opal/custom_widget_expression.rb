@@ -44,7 +44,7 @@ module Glimmer
         def interpret(parent, keyword, *args, &block)
           custom_widget_class = UI::CustomWidget.for(keyword)
           # TODO clean code by extracting methods into CustomShell
-          if !Glimmer::UI::CustomShell.requested? && custom_widget_class.ancestors.include?(Glimmer::UI::CustomShell)
+          if !Glimmer::UI::CustomShell.requested? && custom_widget_class&.ancestors&.to_a.include?(Glimmer::UI::CustomShell)
             if Glimmer::SWT::DisplayProxy.instance.shells.empty?
               custom_widget_class.new(parent, *args, {}, &block)
             else

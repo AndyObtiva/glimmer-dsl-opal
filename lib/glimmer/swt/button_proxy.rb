@@ -6,13 +6,13 @@ module Glimmer
   module SWT
     class ButtonProxy < WidgetProxy
       class << self
-        def create(keyword, parent, args)
+        def create(keyword, parent, args, block)
           if args.to_a.include?(:radio)
-            RadioProxy.new(parent, args)
+            RadioProxy.new(parent, args, block)
           elsif args.to_a.include?(:check)
-            CheckboxProxy.new(parent, args)
+            CheckboxProxy.new(parent, args, block)
           else
-            new(parent, args)
+            new(parent, args, block)
           end
         end
       end
@@ -44,7 +44,7 @@ module Glimmer
         input_disabled = @enabled ? {} : {'disabled': 'disabled'}
         input_args = input_args.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
-          button(input_args.merge(id: input_id, class: name, style: input_style, style: 'min-width: 27px; min-height: 27px;').merge(input_disabled)) {
+          button(input_args.merge(id: input_id, class: name, style: input_style, style: 'min-width: 32px; min-height: 32px;').merge(input_disabled)) {
             input_text.to_s == '' ? '&nbsp;' : input_text
           }
         }.to_s

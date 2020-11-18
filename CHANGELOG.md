@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.6.1
+
+- Fix issue with rendering date_time without a block
+- Made listener event handling async to improve performance when triggering multiple events
+- Brought Tic Tac Toe sample up-to-date with changes in Glimmer DSL for SWT
+- Fixed silent error encountered in rendering custom widgets
+
 ## 0.6.0
 
 - Hello, Date Time! Sample

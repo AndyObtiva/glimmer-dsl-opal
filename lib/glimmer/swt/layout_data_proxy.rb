@@ -4,14 +4,14 @@ module Glimmer
   module SWT
     class LayoutDataProxy
       include Glimmer::SWT::PropertyOwner
-      attr_reader :parent, 
-                  :args, 
-                  :horizontal_alignment, 
-                  :vertical_alignment, 
-                  :horizontal_span, 
-                  :vertical_span, 
-                  :horizontal_indent, 
-                  :vertical_indent, 
+      attr_reader :parent,
+                  :args,
+                  :horizontal_alignment,
+                  :vertical_alignment,
+                  :horizontal_span,
+                  :vertical_span,
+                  :horizontal_indent,
+                  :vertical_indent,
                   :grab_excess_horizontal_space,
                   :grab_excess_vertical_space,
                   :width_hint,

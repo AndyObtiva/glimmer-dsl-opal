@@ -4,7 +4,7 @@ module Glimmer
   module SWT
     class DateTimeProxy < WidgetProxy
       class << self
-        def create(keyword, parent, args)
+        def create(keyword, parent, args, block)
           case keyword
           when 'date'
             args += [:date]
@@ -15,12 +15,13 @@ module Glimmer
           when 'calendar'
             args += [:calendar]
           end
-          new(parent, args)
+          new(parent, args, block)
         end
       end
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
+        post_add_content if block.nil?
       end
       
       def post_add_content

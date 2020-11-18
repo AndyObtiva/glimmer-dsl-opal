@@ -4,6 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Fix issue with using layout data fill horizontal and grab excess horizonatl width pushing date_time icon to the next line
+- Fix Tic Tac Toe sample
 - glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
 - Support `spinner` and Hello, Spinner! Sample
 
@@ -67,6 +69,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Samples
 
+- Style all samples with an alternate version
 - Host all internal samples online
 
 ## Production Apps

@@ -6,8 +6,8 @@ module Glimmer
     class CompositeProxy < WidgetProxy
       attr_reader :layout
       
-      def initialize(parent, args)
-        super(parent, args)
+      def initialize(parent, args, block)
+        super(parent, args, block)
         @layout = GridLayoutProxy.new(self, [])
       end
       

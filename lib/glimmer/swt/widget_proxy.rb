@@ -33,9 +33,9 @@ module Glimmer
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
-        def for(keyword, parent, args)
+        def for(keyword, parent, args, block)
           the_widget_class = widget_class(keyword)
-          the_widget_class.respond_to?(:create) ? the_widget_class.create(keyword, parent, args) : the_widget_class.new(parent, args)
+          the_widget_class.respond_to?(:create) ? the_widget_class.create(keyword, parent, args, block) : the_widget_class.new(parent, args, block)
         end
         
         def widget_class(keyword)
@@ -97,9 +97,10 @@ module Glimmer
 #         end,
       }
       
-      def initialize(parent, args)
+      def initialize(parent, args, block)
         @parent = parent
         @args = args
+        @block = block
         @children = Set.new # TODO consider moving to composite
         @enabled = true
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
@@ -305,16 +306,23 @@ module Glimmer
           @observation_requests[keyword] << event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
+          event_element_css_selector = mapping[:event_element_css_selector]
           potential_event_listener = event_handler&.call(event_listener)
           event_listener = potential_event_listener || event_listener
-          delegate = listener_dom_element.on(event, &event_listener)
+          async_event_listener = lambda do |event|
+            Async::Task.new do
+              event_listener.call(event)
+            end
+          end
+          the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
+          delegate = the_listener_dom_element.on(event, &async_event_listener)
         end
         # TODO update code below for new WidgetProxy API
         EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
       end
       
       def add_observer(observer, property_name)
-        property_listener_installers = self.class.ancestors.map {|ancestor| widget_property_listener_installers[ancestor]}.compact
+        property_listener_installers = self.class&.ancestors&.to_a.map {|ancestor| widget_property_listener_installers[ancestor]}.compact
         widget_listener_installers = property_listener_installers.map{|installer| installer[property_name.to_s.to_sym]}.compact if !property_listener_installers.empty?
         widget_listener_installers.to_a.each do |widget_listener_installer|
           widget_listener_installer.call(observer)
@@ -466,7 +474,7 @@ module Glimmer
 #               }
 #             end,
 #           },
-          DateTimeProxy => { #radio?
+          DateTimeProxy => {
             :date_time => lambda do |observer|
               on_widget_selected { |selection_event|
                 observer.call(date_time)
@@ -506,6 +514,7 @@ require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'
+require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/date_time_proxy'
 require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'

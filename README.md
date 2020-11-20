@@ -2231,7 +2231,7 @@ Visit http://glimmer-cs-calculator-server.herokuapp.com/welcomes/apple
 
 You should see "Apple Calculator Theme"
 
-![Glimmer Calculator Opal Apple Calculator Theme](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-opal-apple.png)
+[![Glimmer Calculator Opal Apple Calculator Theme](https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-calculator/master/glimmer-cs-calculator-screenshot-opal-apple.png)](http://glimmer-cs-calculator-server.herokuapp.com/welcomes/apple)
 
 ## Help
 

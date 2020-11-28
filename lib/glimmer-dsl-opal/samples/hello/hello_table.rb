@@ -210,29 +210,29 @@ class HelloTable
         table_column {
           text 'Game Date'
           width 150
-          sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
-          editor :date_drop_down, property: :date_time
+#           sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
+#           editor :date_drop_down, property: :date_time
         }
         table_column {
           text 'Game Time'
           width 150
-          sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
-          editor :time, property: :date_time
+#           sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
+#           editor :time, property: :date_time
         }
         table_column {
           text 'Ballpark'
           width 180
-          editor :none
+#           editor :none
         }
         table_column {
           text 'Home Team'
           width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+#           editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Away Team'
           width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+#           editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Promotion'
@@ -244,23 +244,23 @@ class HelloTable
         items bind(BaseballGame, :schedule), column_properties(:game_date, :game_time, :ballpark, :home_team, :away_team, :promotion)
         
         # Data-bind table selection
-        selection bind(BaseballGame, :selected_game)
+#         selection bind(BaseballGame, :selected_game)
         
         # Default initial sort property
-        sort_property :date
+#         sort_property :date
         
         # Sort by these additional properties after handling sort by the column the user clicked
-        additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
+#         additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
         
-        menu {
-          menu_item {
-            text 'Book'
-            
-            on_widget_selected {
-              book_selected_game
-            }
-          }
-        }
+#         menu {
+#           menu_item {
+#             text 'Book'
+#
+#             on_widget_selected {
+#               book_selected_game
+#             }
+#           }
+#         }
       }
       
       button {

@@ -41,6 +41,10 @@ module Glimmer
         redraw
       end
       
+      def cells_for(model)
+        column_properties.map {|property| model.send(property)}
+      end
+      
       def search(&condition)
         items.select {|item| condition.nil? || condition.call(item)}
       end

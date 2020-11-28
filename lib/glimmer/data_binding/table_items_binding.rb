@@ -16,22 +16,27 @@ module Glimmer
         @table = parent
         @model_binding = model_binding
         @column_properties = column_properties
-        if @table.respond_to?(:column_properties=)
-          @table.column_properties = @column_properties
-        ##else # assume custom widget
-        ##  @table.body_root.column_properties = @column_properties
-        end
-        call(@model_binding.evaluate_property)
-        model = model_binding.base_model
-        observe(model, model_binding.property_name_expression)
         ##@table.on_widget_disposed do |dispose_event| # doesn't seem needed within Opal
         ##  unregister_all_observables
         ##end
+        if @table.respond_to?(:column_properties=)
+          @table.column_properties = @column_properties
+        else # assume custom widget
+         @table.body_root.column_properties = @column_properties
+        end
+        @table_observer_registration = observe(model_binding)
+        call
       end
 
       def call(new_model_collection=nil)
+        new_model_collection = @model_binding.evaluate_property # this ensures applying converters (e.g. :on_read)
+        table_cells = @table.items.map {|item| @table.column_properties.size.times.map {|i| item.get_text(i)} }
+        model_cells = new_model_collection.to_a.map {|m| @table.cells_for(m)}
+        return if table_cells == model_cells
         if new_model_collection and new_model_collection.is_a?(Array)
-          observe(new_model_collection, @column_properties)
+#           @table_items_observer_registration&.unobserve
+          @table_items_observer_registration = observe(new_model_collection, @column_properties)
+          add_dependent(@table_observer_registration => @table_items_observer_registration)
           @model_collection = new_model_collection
         end
         populate_table(@model_collection, @table, @column_properties)
@@ -64,7 +69,7 @@ module Glimmer
         return if model_collection == @last_model_collection
         parent.items = parent.items.sort_by { |item| model_collection.index(item.get_data) }
         @last_model_collection = model_collection
-      end      
+      end
     end
   end
 end

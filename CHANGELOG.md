@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.7.0
+
+- Optimized table updates with comparing data to previous data
+- Hello, Table! Sample
+
 ## 0.6.1
 
 - Fix issue with rendering date_time without a block

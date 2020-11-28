@@ -7,6 +7,7 @@ module Glimmer
       
       def initialize(parent, args, block)
         super(parent, args, block)
+        # TODO check if there is a need to remove this observer when removing widget from table upon items update
         on_widget_selected { |event|
           parent.select(parent.index_of(self), event.meta?)
         }

@@ -10,7 +10,7 @@ if RUBY_ENGINE == 'opal'
    
 #   $LOAD_PATH.unshift(GLIMMER_DSL_OPAL_MISSING) # missing Ruby classes/methods
   # TODO look into making append_path work (causing some trouble right now)
-#   Opal.append_path pd File.expand_path('../glimmer-dsl-opal/missing', __FILE__)
+#   Opal.append_path File.expand_path('../glimmer-dsl-opal/missing', __FILE__)
 #   Opal.append_path GLIMMER_DSL_OPAL_MISSING
   
   require 'opal-parser'
@@ -41,7 +41,6 @@ if RUBY_ENGINE == 'opal'
 #   end
       
   require 'glimmer/dsl/opal/dsl'
-  require 'glimmer/data_binding/ext/observable_model'
    
   require 'glimmer-dsl-xml'
   require 'glimmer-dsl-css'

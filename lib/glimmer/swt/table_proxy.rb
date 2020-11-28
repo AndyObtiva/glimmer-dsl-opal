@@ -5,7 +5,7 @@ module Glimmer
   module SWT
     class TableProxy < WidgetProxy
       attr_reader :columns, :selection
-      attr_accessor :column_properties
+      attr_accessor :column_properties, :item_count
       alias items children
       
       def initialize(parent, args, block)
@@ -51,6 +51,11 @@ module Glimmer
       def items=(new_items)
         @children = new_items
         redraw
+      end
+      
+      def item_count=(value)
+        @item_count = value
+        redraw_empty_items
       end
       
       def cells_for(model)
@@ -132,6 +137,16 @@ module Glimmer
       def redraw
         super()
         @columns.to_a.each(&:redraw)
+        redraw_empty_items
+      end
+      
+      def redraw_empty_items
+        if @children&.size.to_i < item_count.to_i
+          item_count.to_i.times do
+            empty_columns = column_properties&.size.to_i.times.map { |i| "<td data-column-index='#{i}'></td>" }
+            items_dom_element.append("<tr class='table-item empty-table-item'>#{empty_columns}</tr>")
+          end
+        end
       end
       
       def element

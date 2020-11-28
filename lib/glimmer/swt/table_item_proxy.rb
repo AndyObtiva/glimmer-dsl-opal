@@ -55,7 +55,7 @@ module Glimmer
       end
       
       def redraw
-        super() #TODO re-enalbe and remove below lines
+        super() #TODO re-enable and remove below lines
 
         # TODO perhaps turn the following lambdas into methods
         table_item_edit_handler = lambda do |event, cancel = false|

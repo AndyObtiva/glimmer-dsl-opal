@@ -5,7 +5,8 @@
 - Optimized table updates with comparing data to previous data
 - Hello, Table! Sample
 - Add :editable style to Table to enable auto-editing
-- `table` `header_visible`
+- `table` `header_visible` property to hide header when false
+- `table` `item_count` property to set minimum item count (fill empty rows when below in table items)
 
 ## 0.6.1
 

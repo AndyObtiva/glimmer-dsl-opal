@@ -4,12 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `table` `item_count`
+- Support table selection data-binding
 - `table` built-in sorting support
 - Support table column sort
 - Support default table sort
 - Support table additional sort properties
-- Support table selection data-binding
 - Support custom table column editor
 
 

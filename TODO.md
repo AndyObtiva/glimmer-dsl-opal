@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Add :editable style to Table to enable auto-editing
 - `table` `header_visible`
 - `table` `item_count`
 - Support table column sort

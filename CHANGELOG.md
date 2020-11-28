@@ -4,6 +4,7 @@
 
 - Optimized table updates with comparing data to previous data
 - Hello, Table! Sample
+- Add :editable style to Table to enable auto-editing
 
 ## 0.6.1
 

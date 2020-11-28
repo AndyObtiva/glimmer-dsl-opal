@@ -13,6 +13,13 @@ module Glimmer
         @columns = []
         @children = []
         @selection = []
+        if editable?
+          content {
+            on_mouse_up { |event|
+              edit_table_item(event.table_item, event.column_index)
+            }
+          }
+        end
       end
       
       # Only table_columns may be added as children
@@ -29,6 +36,11 @@ module Glimmer
         items.clear
         redraw
       end
+      
+      def editable?
+        args.include?(:editable)
+      end
+      alias editable editable?
       
       def selection=(new_selection)
         changed = (@selection + new_selection) - (@selection & new_selection)

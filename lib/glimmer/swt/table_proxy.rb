@@ -16,7 +16,7 @@ module Glimmer
         if editable?
           content {
             on_mouse_up { |event|
-              edit_table_item(event.table_item, event.column_index)
+              edit_table_item(event.table_item, event.column_index) if event.table_item && event.column_index
             }
           }
         end
@@ -79,6 +79,19 @@ module Glimmer
       
       def edit_table_item(table_item, column_index)
         table_item.edit(column_index)
+      end
+      
+      def header_visible=(value)
+        @header_visible = value
+        if @header_visible
+          thead_dom_element.remove_class('hide')
+        else
+          thead_dom_element.add_class('hide')
+        end
+      end
+      
+      def header_visible
+        @header_visible
       end
       
       def selector
@@ -150,6 +163,10 @@ module Glimmer
         thead {
           columns_dom
         }
+      end
+      
+      def thead_dom_element
+        dom_element.find('thead')
       end
       
       def items_dom

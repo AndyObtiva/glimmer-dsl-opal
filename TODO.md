@@ -4,8 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `table` `header_visible`
 - `table` `item_count`
+- `table` built-in sorting support
 - Support table column sort
 - Support default table sort
 - Support table additional sort properties

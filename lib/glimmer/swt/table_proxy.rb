@@ -16,7 +16,7 @@ module Glimmer
         if editable?
           content {
             on_mouse_up { |event|
-              edit_table_item(event.table_item, event.column_index) if event.table_item && event.column_index
+              edit_table_item(event.table_item, event.column_index)
             }
           }
         end
@@ -42,8 +42,13 @@ module Glimmer
       end
       alias editable editable?
       
+      def selection
+        @selection.to_a
+      end
+      
       def selection=(new_selection)
-        changed = (@selection + new_selection) - (@selection & new_selection)
+        new_selection = new_selection.to_a
+        changed = (selection + new_selection) - (selection & new_selection)
         @selection = new_selection
         changed.each(&:redraw)
       end
@@ -82,8 +87,12 @@ module Glimmer
         self.selection = new_selection
       end
       
+      def search(&condition)
+        items.select {|item| condition.nil? || condition.call(item)}
+      end
+      
       def edit_table_item(table_item, column_index)
-        table_item.edit(column_index)
+        table_item&.edit(column_index) unless column_index.nil?
       end
       
       def header_visible=(value)
@@ -202,6 +211,23 @@ module Glimmer
           }
         }.to_s
       end
+      
+      private
+
+      def property_type_converters
+        super.merge({
+          selection: lambda do |value|
+            if value.is_a?(Array)
+              search {|ti| value.include?(ti.get_data) }
+            else
+              search {|ti| ti.get_data == value}
+            end
+          end,
+        })
+      end
+      
     end
+    
   end
+  
 end

@@ -100,10 +100,6 @@ class HelloTable
       def schedule=(new_schedule)
         @schedule = new_schedule
       end
-      
-      def selected_game=(new_game)
-        @selected_game = new_game
-      end
     end
     
     include Glimmer
@@ -184,7 +180,7 @@ class HelloTable
   end
 
   include Glimmer
-  
+    
   def launch
     shell {
       grid_layout
@@ -244,7 +240,7 @@ class HelloTable
         items bind(BaseballGame, :schedule), column_properties(:game_date, :game_time, :ballpark, :home_team, :away_team, :promotion)
         
         # Data-bind table selection
-#         selection bind(BaseballGame, :selected_game)
+        selection bind(BaseballGame, :selected_game)
         
         # Default initial sort property
 #         sort_property :date

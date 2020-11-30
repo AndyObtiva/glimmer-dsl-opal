@@ -4,7 +4,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support table selection data-binding
+- Support on_key_pressed for table columns to filter on ENTER in Contact Manager sample
 - `table` built-in sorting support
 - Support table column sort
 - Support default table sort
@@ -29,7 +29,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Issues
 
-- Look into edit table item error on sorting table
 
 ## Features
 
@@ -57,6 +56,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Refactorings
 
+- Optimize table sorting/update performance (perhaps by relying on diff/delta and not truly updating when it's a sort operation only)
 - Do away with redraw everywhere possible
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
 - Refactor tab_folder/tab_item to use jQuery-UI

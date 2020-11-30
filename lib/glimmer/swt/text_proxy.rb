@@ -20,8 +20,56 @@ module Glimmer
             event: 'keyup',
             event_handler: -> (event_listener) {
               -> (event) {
+                # TODO consider unifying this event handler with on_key_pressed by relying on its result instead of hooking another keyup event
+                if @last_key_pressed_event.nil? || @last_key_pressed_event.doit
+                  @text = event.target.value
+                  event_listener.call(event)
+                else
+                  # TODO Fix doit false, it's not stopping input
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+              }
+            }
+          },
+          'on_key_pressed' => {
+            event: 'keydown',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                @last_key_pressed_event = event
                 @text = event.target.value
+                # TODO generalize this solution to all widgets that support key presses
+                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:key_code, &event.method(:keyCode))
+                event.define_singleton_method(:character) {event.which.chr}
+                event.define_singleton_method(:stateMask) do
+                  state_mask = 0
+                  state_mask |= SWTProxy[:alt] if event.alt_key
+                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                  state_mask |= SWTProxy[:shift] if event.shift_key
+                  state_mask |= SWTProxy[:command] if event.meta_key
+                  state_mask
+                end
+                event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                doit = true
+                event.define_singleton_method(:doit=) do |value|
+                  doit = value
+                end
+                event.define_singleton_method(:doit) { doit }
                 event_listener.call(event)
+                
+                  # TODO Fix doit false, it's not stopping input
+                unless doit
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+                
+                doit
               }
             }
           }

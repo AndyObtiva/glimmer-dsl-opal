@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support on_key_pressed for table columns to filter on ENTER in Contact Manager sample
 - `table` built-in sorting support
 - Support table column sort
 - Support default table sort
@@ -49,6 +48,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
 - Support `spinner` and Hello, Spinner! Sample
 - Update `date` and `time` to be spinner based, not drop-down based
+- Implement doit in on_key_pressed event for TextProxy et al
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal

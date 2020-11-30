@@ -8,6 +8,7 @@
 - `table` `header_visible` property to hide header when false
 - `table` `item_count` property to set minimum item count (fill empty rows when below in table items)
 - Support table selection data-binding
+- Support on_key_pressed for filter text widgets upon hitting ENTER in Contact Manager sample
 - Fix issue with edit table item error on sorting table
 
 ## 0.6.1

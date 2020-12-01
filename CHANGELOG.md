@@ -8,8 +8,10 @@
 - `table` `item_count` property to set minimum item count (fill empty rows when below in table items)
 - `table` selection data-binding
 - `table` built-in sorting support
+- `table_column` left text alignment and padding of 5px by default
+- `table` sort property and direction in GUI
 - Prevent `table` unnecessary updates by comparing data to previous data and not updating when it's the same
-- Support on_key_pressed for filter text widgets upon hitting ENTER in Contact Manager sample
+- Contact Manager sample support for on_key_pressed in text widgets upon hitting ENTER
 - Fix issue with edit table item error on sorting table
 
 ## 0.6.1

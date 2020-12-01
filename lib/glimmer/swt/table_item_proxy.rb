@@ -3,6 +3,12 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TableItemProxy < WidgetProxy
+      STYLE = <<~CSS
+        tr.table-item:nth-child(even) {
+          background: rgb(243, 244, 246);
+        }
+      CSS
+      
       attr_reader :data
       
       def initialize(parent, args, block)

@@ -1,8 +1,20 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/swt_proxy'
 
 module Glimmer
   module SWT
     class TableColumnProxy < WidgetProxy
+      STYLE = <<~CSS
+        th.table-column {
+          background: rgb(246, 246, 246);
+          text-align: left;
+          padding: 5px;
+        }
+        
+        th.table-column .sort-direction {
+          float: right;
+        }
+      CSS
       include Glimmer
       
       attr_accessor :sort_block, :sort_by_block
@@ -25,6 +37,14 @@ module Glimmer
       def sort_property=(args)
         @sort_property = args unless args.empty?
       end
+      
+      def sort_direction
+        parent.sort_direction if parent.sort_column == self
+      end
+      
+      def redraw_sort_direction
+        # TODO
+      end
             
       def text=(value)
         @text = value
@@ -40,12 +60,6 @@ module Glimmer
         parent.columns_path
       end
       
-      def css
-        <<~CSS
-          width: #{width}px;
-        CSS
-      end
-    
       def element
         'th'
       end
@@ -53,7 +67,13 @@ module Glimmer
       def observation_request_to_event_mapping
         {
           'on_widget_selected' => {
-            event: 'click'
+            event: 'click',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                event_listener.call(event)
+                redraw_sort_direction
+              }
+            }
           },
         }
       end
@@ -61,12 +81,15 @@ module Glimmer
       def dom
         table_column_text = text
         table_column_id = id
-        table_column_id_style = css
+        table_column_id_style = "width: #{width}px;"
         table_column_css_classes = css_classes
         table_column_css_classes << name
+        sort_icon_class = (sort_direction == SWTProxy[:up] ? 'ui-icon-caret-1-n' : 'ui-icon-caret-1-s') unless sort_direction.nil?
+        sort_icon_class = "sort-direction ui-icon #{sort_icon_class}" if sort_icon_class
         @dom ||= html {
           th(id: table_column_id, style: table_column_id_style, class: table_column_css_classes.to_a.join(' ')) {
-            table_column_text
+            span {table_column_text}
+            span(class: sort_icon_class)
           }
         }.to_s
       end

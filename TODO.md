@@ -4,11 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Display sort property and direction in GUI
 - `table_column` sort via property, compare block, and property block
 - `table` default sort via property, compare block, and property block
 - `table` additional sort properties
 - Custom table column editors (combo, date, time)
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 
 ## Soon
 

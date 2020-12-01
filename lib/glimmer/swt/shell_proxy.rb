@@ -21,6 +21,7 @@ module Glimmer
         @layout.margin_width = 0
         @layout.margin_height = 0
         self.minimum_size = Point.new(WIDTH_MIN, HEIGHT_MIN)
+        DisplayProxy.instance.shells << self
       end
       
       def element
@@ -207,6 +208,7 @@ module Glimmer
         body_class = ([name] + css_classes.to_a).join(' ')
         @dom ||= html {
           div(id: body_id, class: body_class) {
+            # TODO support the idea of dynamic CSS building on close of shell that adds only as much CSS as needed for widgets that were mentioned
             style(class: 'common-style') {
               style_dom_css
             }
@@ -245,6 +247,12 @@ module Glimmer
             }
             style(class: 'scrolled-composite-style') {
               Glimmer::SWT::ScrolledCompositeProxy::STYLE
+            }
+            style(class: 'table-item-style') {
+              Glimmer::SWT::TableItemProxy::STYLE
+            }
+            style(class: 'table-column-style') {
+              Glimmer::SWT::TableColumnProxy::STYLE
             }
           }
         }.to_s

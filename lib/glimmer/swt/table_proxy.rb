@@ -5,7 +5,7 @@ module Glimmer
   module SWT
     class TableProxy < WidgetProxy
       attr_reader :columns, :selection,
-                  :sort_type, :sort_direction, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties
+                  :sort_type, :sort_column, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties
       attr_accessor :column_properties, :item_count, :data
       alias items children
       alias model_binding data
@@ -32,6 +32,10 @@ module Glimmer
           @children << child
         end
         child.redraw
+      end
+      
+      def get_data(key=nil)
+        data
       end
       
       def remove_all
@@ -127,6 +131,14 @@ module Glimmer
         end
       end
       
+      def sort_direction
+        @sort_direction == :ascending ? SWTProxy[:up] : SWTProxy[:down]
+      end
+      
+      def sort_direction=(value)
+        @sort_direction = value == SWTProxy[:up] ? :ascending : :descending
+      end
+      
       # Sorts by specified TableColumnProxy object. If nil, it uses the table default sort instead.
       def sort_by_column!(table_column_proxy=nil)
         index = columns.to_a.index(table_column_proxy) unless table_column_proxy.nil?
@@ -146,12 +158,11 @@ module Glimmer
         end
         
         @sort_direction = @sort_direction.nil? || @sort_property.first != new_sort_property.first || @sort_direction == :descending ? :ascending : :descending
-#         @sort_direction = @sort_direction == :ascending ? SWTProxy[:up] : SWTProxy[:down] # TODO remove if not needed, except perhaps for API completion
         
         @sort_property = [new_sort_property].flatten.compact
         table_column_index = column_properties.index(new_sort_property.to_s.to_sym)
         table_column_proxy ||= table_column_proxies[table_column_index] if table_column_index
-#         @sort_column = table_column_proxy if table_column_proxy # TODO Look into setting for API completion and to show on GUI
+        @sort_column = table_column_proxy if table_column_proxy
                 
         if table_column_proxy
           @sort_by_block = nil
@@ -198,7 +209,7 @@ module Glimmer
             end
           end
         end
-        sorted_array = sorted_array.reverse if sort_direction == :descending
+        sorted_array = sorted_array.reverse if @sort_direction == :descending
         model_binding.call(sorted_array)
       end
       
@@ -254,6 +265,9 @@ module Glimmer
           'on_mouse_up' => {
             event: 'mouseup',
             event_handler: mouse_handler,
+          },
+          'on_widget_selected' => {
+            event: 'mouseup',
           }
         }
       end

@@ -1,4 +1,5 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/display_proxy'
 
 module Glimmer
   module SWT
@@ -7,7 +8,7 @@ module Glimmer
       
       def initialize(parent, args, block)
         i = 0
-        @parent = parent
+        @parent = parent || DisplayProxy.instance.shells.first
         @args = args
         @block = block
         @children = Set.new

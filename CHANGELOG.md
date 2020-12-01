@@ -2,12 +2,13 @@
 
 ## 0.7.0
 
-- Optimized table updates with comparing data to previous data
 - Hello, Table! Sample
-- Add :editable style to Table to enable auto-editing
+- `table` :editable style to enable auto-editing
 - `table` `header_visible` property to hide header when false
 - `table` `item_count` property to set minimum item count (fill empty rows when below in table items)
-- Support table selection data-binding
+- `table` selection data-binding
+- `table` built-in sorting support
+- Prevent `table` unnecessary updates by comparing data to previous data and not updating when it's the same
 - Support on_key_pressed for filter text widgets upon hitting ENTER in Contact Manager sample
 - Fix issue with edit table item error on sorting table
 

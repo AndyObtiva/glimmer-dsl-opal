@@ -5,8 +5,27 @@ module Glimmer
     class TableColumnProxy < WidgetProxy
       include Glimmer
       
-      attr_reader :text, :width      
+      attr_accessor :sort_block, :sort_by_block
+      attr_reader :text, :width,
+                  :no_sort, :sort_property, :editor
+      alias no_sort? no_sort
       
+      def initialize(parent, args, block)
+        @no_sort = args.delete(:no_sort)
+        super(parent, args, block)
+        unless no_sort?
+          content {
+            on_widget_selected { |event|
+              parent.sort_by_column!(self)
+            }
+          }
+        end
+      end
+      
+      def sort_property=(args)
+        @sort_property = args unless args.empty?
+      end
+            
       def text=(value)
         @text = value
         redraw
@@ -37,7 +56,7 @@ module Glimmer
             event: 'click'
           },
         }
-      end      
+      end
       
       def dom
         table_column_text = text
@@ -50,7 +69,7 @@ module Glimmer
             table_column_text
           }
         }.to_s
-      end      
+      end
     end
   end
 end

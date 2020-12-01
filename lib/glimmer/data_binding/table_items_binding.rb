@@ -16,6 +16,7 @@ module Glimmer
         @table = parent
         @model_binding = model_binding
         @column_properties = column_properties
+        @table.data = @model_binding
         ##@table.on_widget_disposed do |dispose_event| # doesn't seem needed within Opal
         ##  unregister_all_observables
         ##end

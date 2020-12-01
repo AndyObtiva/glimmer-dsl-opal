@@ -4,9 +4,11 @@ require 'glimmer/swt/table_column_proxy'
 module Glimmer
   module SWT
     class TableProxy < WidgetProxy
-      attr_reader :columns, :selection
-      attr_accessor :column_properties, :item_count
+      attr_reader :columns, :selection,
+                  :sort_type, :sort_direction, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties
+      attr_accessor :column_properties, :item_count, :data
       alias items children
+      alias model_binding data
       
       def initialize(parent, args, block)
         super(parent, args, block)
@@ -89,6 +91,119 @@ module Glimmer
       
       def search(&condition)
         items.select {|item| condition.nil? || condition.call(item)}
+      end
+      
+      def sort_block=(comparator)
+        @sort_block = comparator
+      end
+      
+      def sort_by_block=(property_picker)
+        @sort_by_block = property_picker
+      end
+      
+      def sort_property=(new_sort_property)
+        @sort_property = [new_sort_property].flatten.compact
+      end
+      
+      def detect_sort_type
+        @sort_type = sort_property.size.times.map { String }
+        array = model_binding.evaluate_property
+        sort_property.each_with_index do |a_sort_property, i|
+          values = array.map { |object| object.send(a_sort_property) }
+          value_classes = values.map(&:class).uniq
+          if value_classes.size == 1
+            @sort_type[i] = value_classes.first
+          elsif value_classes.include?(Integer)
+            @sort_type[i] = Integer
+          elsif value_classes.include?(Float)
+            @sort_type[i] = Float
+          end
+        end
+      end
+      
+      def column_sort_properties
+        column_properties.zip(table_column_proxies.map(&:sort_property)).map do |pair|
+          [pair.compact.last].flatten.compact
+        end
+      end
+      
+      # Sorts by specified TableColumnProxy object. If nil, it uses the table default sort instead.
+      def sort_by_column!(table_column_proxy=nil)
+        index = columns.to_a.index(table_column_proxy) unless table_column_proxy.nil?
+        new_sort_property = table_column_proxy.nil? ? @sort_property : table_column_proxy.sort_property || [column_properties[index]]
+        return if table_column_proxy.nil? && new_sort_property.nil? && @sort_block.nil? && @sort_by_block.nil?
+        if new_sort_property && table_column_proxy.nil? && new_sort_property.size == 1 && (index = column_sort_properties.index(new_sort_property))
+          table_column_proxy = table_column_proxies[index]
+        end
+        if new_sort_property && new_sort_property.size == 1 && !additional_sort_properties.to_a.empty?
+          selected_additional_sort_properties = additional_sort_properties.clone
+          if selected_additional_sort_properties.include?(new_sort_property.first)
+            selected_additional_sort_properties.delete(new_sort_property.first)
+            new_sort_property += selected_additional_sort_properties
+          else
+            new_sort_property += additional_sort_properties
+          end
+        end
+        
+        @sort_direction = @sort_direction.nil? || @sort_property.first != new_sort_property.first || @sort_direction == :descending ? :ascending : :descending
+#         @sort_direction = @sort_direction == :ascending ? SWTProxy[:up] : SWTProxy[:down] # TODO remove if not needed, except perhaps for API completion
+        
+        @sort_property = [new_sort_property].flatten.compact
+        table_column_index = column_properties.index(new_sort_property.to_s.to_sym)
+        table_column_proxy ||= table_column_proxies[table_column_index] if table_column_index
+#         @sort_column = table_column_proxy if table_column_proxy # TODO Look into setting for API completion and to show on GUI
+                
+        if table_column_proxy
+          @sort_by_block = nil
+          @sort_block = nil
+        end
+        @sort_type = nil
+        if table_column_proxy&.sort_by_block
+          @sort_by_block = table_column_proxy.sort_by_block
+        elsif table_column_proxy&.sort_block
+          @sort_block = table_column_proxy.sort_block
+        else
+          detect_sort_type
+        end
+                
+        sort!
+      end
+      
+      def initial_sort!
+        sort_by_column!
+      end
+      
+      def sort!
+        return unless sort_property && (sort_type || sort_block || sort_by_block)
+        array = model_binding.evaluate_property
+        array = array.sort_by(&:hash) # this ensures consistent subsequent sorting in case there are equivalent sorts to avoid an infinite loop
+        # Converting value to_s first to handle nil cases. Should work with numeric, boolean, and date fields
+        if sort_block
+          sorted_array = array.sort(&sort_block)
+        elsif sort_by_block
+          sorted_array = array.sort_by(&sort_by_block)
+        else
+          sorted_array = array.sort_by do |object|
+            sort_property.each_with_index.map do |a_sort_property, i|
+              value = object.send(a_sort_property)
+              # handle nil and difficult to compare types gracefully
+              if sort_type[i] == Integer
+                value = value.to_i
+              elsif sort_type[i] == Float
+                value = value.to_f
+              elsif sort_type[i] == String
+                value = value.to_s
+              end
+              value
+            end
+          end
+        end
+        sorted_array = sorted_array.reverse if sort_direction == :descending
+        model_binding.call(sorted_array)
+      end
+      
+      def additional_sort_properties=(args)
+        @additional_sort_properties = args unless args.empty?
       end
       
       def edit_table_item(table_item, column_index)

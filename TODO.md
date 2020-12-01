@@ -4,12 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `table` built-in sorting support
-- Support table column sort
-- Support default table sort
-- Support table additional sort properties
-- Support custom table column editor
-
+- Display sort property and direction in GUI
+- `table_column` sort via property, compare block, and property block
+- `table` default sort via property, compare block, and property block
+- `table` additional sort properties
+- Custom table column editors (combo, date, time)
 
 ## Soon
 

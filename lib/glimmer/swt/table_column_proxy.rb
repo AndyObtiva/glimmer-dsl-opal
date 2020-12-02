@@ -43,7 +43,7 @@ module Glimmer
       end
       
       def redraw_sort_direction
-        # TODO
+        sort_icon_dom_element.attr('class', sort_icon_class)
       end
             
       def text=(value)
@@ -62,6 +62,16 @@ module Glimmer
       
       def element
         'th'
+      end
+      
+      def sort_icon_class
+        @sort_icon_class = 'sort-direction'
+        @sort_icon_class += (sort_direction == SWTProxy[:up] ? ' ui-icon ui-icon-caret-1-n' : ' ui-icon ui-icon-caret-1-s') unless sort_direction.nil?
+        @sort_icon_class
+      end
+      
+      def sort_icon_dom_element
+        dom_element.find('.sort-direction')
       end
       
       def observation_request_to_event_mapping
@@ -84,8 +94,6 @@ module Glimmer
         table_column_id_style = "width: #{width}px;"
         table_column_css_classes = css_classes
         table_column_css_classes << name
-        sort_icon_class = (sort_direction == SWTProxy[:up] ? 'ui-icon-caret-1-n' : 'ui-icon-caret-1-s') unless sort_direction.nil?
-        sort_icon_class = "sort-direction ui-icon #{sort_icon_class}" if sort_icon_class
         @dom ||= html {
           th(id: table_column_id, style: table_column_id_style, class: table_column_css_classes.to_a.join(' ')) {
             span {table_column_text}

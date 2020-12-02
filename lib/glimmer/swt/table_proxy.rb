@@ -157,9 +157,10 @@ module Glimmer
           end
         end
         
+        new_sort_property = [new_sort_property].flatten.compact unless new_sort_property.is_a?(Array)
         @sort_direction = @sort_direction.nil? || @sort_property.first != new_sort_property.first || @sort_direction == :descending ? :ascending : :descending
         
-        @sort_property = [new_sort_property].flatten.compact
+        @sort_property = new_sort_property
         table_column_index = column_properties.index(new_sort_property.to_s.to_sym)
         table_column_proxy ||= table_column_proxies[table_column_index] if table_column_index
         @sort_column = table_column_proxy if table_column_proxy

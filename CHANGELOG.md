@@ -10,6 +10,7 @@
 - `table` built-in sorting support
 - `table_column` left text alignment and padding of 5px by default
 - `table` sort property and direction in GUI
+- `table_column` sort_property
 - Prevent `table` unnecessary updates by comparing data to previous data and not updating when it's the same
 - Contact Manager sample support for on_key_pressed in text widgets upon hitting ENTER
 - Fix issue with edit table item error on sorting table

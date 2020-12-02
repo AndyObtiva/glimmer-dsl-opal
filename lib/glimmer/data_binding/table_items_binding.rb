@@ -12,7 +12,7 @@ module Glimmer
       include DataBinding::Observer
 
       def initialize(parent, model_binding, column_properties)
-        @last_model_collection = nil
+        @last_populated_model_collection = nil
         @table = parent
         @model_binding = model_binding
         @column_properties = column_properties
@@ -45,8 +45,8 @@ module Glimmer
       end
       
       def populate_table(model_collection, parent, column_properties)
-        return if model_collection&.sort_by(&:hash) == @last_model_collection&.sort_by(&:hash)
-        @last_model_collection = model_collection
+        return if model_collection&.sort_by(&:hash) == @last_populated_model_collection&.sort_by(&:hash)
+        @last_populated_model_collection = model_collection
         # TODO improve performance
         selected_table_item_models = parent.selection.map(&:get_data)
         old_items = parent.items
@@ -61,15 +61,20 @@ module Glimmer
           table_item.id = old_item_ids_per_model[model.hash] if old_item_ids_per_model[model.hash]
         end
         selected_table_items = parent.search {|item| selected_table_item_models.include?(item.get_data) }
-        selected_table_items = [parent.items.first] if selected_table_items.empty? && !parent.items.empty?
-        parent.selection = selected_table_items unless selected_table_items.empty?
+        parent.selection = selected_table_items
         parent.redraw
       end
       
       def sort_table(model_collection, parent, column_properties)
-        return if model_collection == @last_model_collection
-        parent.items = parent.items.sort_by { |item| model_collection.index(item.get_data) }
-        @last_model_collection = model_collection
+        return if model_collection == @last_sorted_model_collection
+        if model_collection == @last_populated_model_collection
+          # Reapply the last table sort. The model collection has just been populated since it diverged from what it was before
+          parent.sort!
+        else
+          # The model collection was sorted by the model, but beyond sorting, it did not change from the last populated model collection.
+          parent.items = parent.items.sort_by { |item| model_collection.index(item.get_data) }
+          @last_sorted_model_collection = @last_populated_model_collection = model_collection
+        end
       end
     end
   end

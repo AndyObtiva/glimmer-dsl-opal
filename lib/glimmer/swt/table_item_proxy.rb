@@ -4,7 +4,7 @@ module Glimmer
   module SWT
     class TableItemProxy < WidgetProxy
       STYLE = <<~CSS
-        tr.table-item:nth-child(even) {
+        tr.table-item:nth-child(even):not(.selected) {
           background: rgb(243, 244, 246);
         }
       CSS

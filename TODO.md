@@ -4,11 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Fix issue with not updating sort sign when updating table items collection
-- Ensure selection doesn't break when sorting by property on table column
-- Ensure selection is maintained after filtering (currently showing white text without blue background for some reason)
-- Do not inadvertantly select on filtering table if no selection was there to begin with (seems like an issue in Glimmer DSL for SWT too)
-- Make sure selection is captured correctly when pressing inside the text of a table item cell
 - `table_column` sort block
 - `table_column` sort_by block
 - `table` default sort via property, compare block, and property block
@@ -16,6 +11,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 
 ## Soon
+
 - Custom table column editors (combo, date, time)
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)

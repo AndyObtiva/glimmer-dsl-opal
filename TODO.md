@@ -4,14 +4,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `table_column` sort block
-- `table_column` sort_by block
-- `table` default sort via property, compare block, and property block
 - `table` additional sort properties
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 
 ## Soon
 
+- Specify table default sort direction
 - Custom table column editors (combo, date, time)
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)

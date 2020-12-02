@@ -16,10 +16,8 @@ module Glimmer
         @children = []
         @selection = []
         if editable?
-          content {
-            on_mouse_up { |event|
-              edit_table_item(event.table_item, event.column_index)
-            }
+          on_mouse_up { |event|
+            edit_table_item(event.table_item, event.column_index)
           }
         end
       end
@@ -32,6 +30,12 @@ module Glimmer
           @children << child
         end
         child.redraw
+      end
+      
+      def post_add_content
+        return if @initially_sorted
+        initial_sort!
+        @initially_sorted = true
       end
       
       def get_data(key=nil)
@@ -126,7 +130,7 @@ module Glimmer
       end
       
       def column_sort_properties
-        column_properties.zip(table_column_proxies.map(&:sort_property)).map do |pair|
+        column_properties.zip(columns.map(&:sort_property)).map do |pair|
           [pair.compact.last].flatten.compact
         end
       end
@@ -143,9 +147,10 @@ module Glimmer
       def sort_by_column!(table_column_proxy=nil)
         index = columns.to_a.index(table_column_proxy) unless table_column_proxy.nil?
         new_sort_property = table_column_proxy.nil? ? @sort_property : table_column_proxy.sort_property || [column_properties[index]]
+        
         return if table_column_proxy.nil? && new_sort_property.nil? && @sort_block.nil? && @sort_by_block.nil?
         if new_sort_property && table_column_proxy.nil? && new_sort_property.size == 1 && (index = column_sort_properties.index(new_sort_property))
-          table_column_proxy = table_column_proxies[index]
+          table_column_proxy = columns[index]
         end
         if new_sort_property && new_sort_property.size == 1 && !additional_sort_properties.to_a.empty?
           selected_additional_sort_properties = additional_sort_properties.clone
@@ -162,7 +167,7 @@ module Glimmer
         
         @sort_property = new_sort_property
         table_column_index = column_properties.index(new_sort_property.to_s.to_sym)
-        table_column_proxy ||= table_column_proxies[table_column_index] if table_column_index
+        table_column_proxy ||= columns[table_column_index] if table_column_index
         @sort_column = table_column_proxy if table_column_proxy
                 
         if table_column_proxy

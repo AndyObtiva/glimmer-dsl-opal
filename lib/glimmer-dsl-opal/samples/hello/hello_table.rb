@@ -243,7 +243,7 @@ class HelloTable
         selection bind(BaseballGame, :selected_game)
         
         # Default initial sort property
-#         sort_property :date
+        sort_property :date
         
         # Sort by these additional properties after handling sort by the column the user clicked
 #         additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion

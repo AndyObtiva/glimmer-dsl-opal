@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 1.0.4' #, path: '../glimmer'
+gem 'glimmer', '~> 1.0.5' #, path: '../glimmer'
 gem 'glimmer-dsl-xml', '~> 1.1.0'
 gem 'glimmer-dsl-css', '~> 1.1.0'
 gem 'opal-async', '~> 1.2.0'
 
 group :development, :test do
-  gem "puts_debuggerer", "~> 0.8.1", require: false
+  gem "puts_debuggerer", require: false
   gem 'rake', '>= 10.1.0', '< 14.0.0'
   gem 'rake-tui'
   gem 'jeweler', '>= 2.3.9', '< 3.0.0'

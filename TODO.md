@@ -4,12 +4,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
-
 ## Soon
 
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Specify table default sort direction
 - Custom table column editors (combo, date, time)
+- Fix issue with hello_table button/combo not being centered yet stretched
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Hello, Pop Up Context Menu! Sample

@@ -246,7 +246,7 @@ class HelloTable
         sort_property :date
         
         # Sort by these additional properties after handling sort by the column the user clicked
-#         additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
+        additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
         
 #         menu {
 #           menu_item {

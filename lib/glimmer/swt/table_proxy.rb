@@ -219,7 +219,7 @@ module Glimmer
         model_binding.call(sorted_array)
       end
       
-      def additional_sort_properties=(args)
+      def additional_sort_properties=(*args)
         @additional_sort_properties = args unless args.empty?
       end
       

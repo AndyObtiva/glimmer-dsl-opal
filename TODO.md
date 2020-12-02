@@ -4,22 +4,15 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Fix issue with using layout data fill horizontal and grab excess horizonatl width pushing date_time icon to the next line
-- Fix Tic Tac Toe sample
-- glimmer-cw-cdatetime-nebula (demonstrating how to support Glimmer DSL for Opal with custom widgets)
-- Support `spinner` and Hello, Spinner! Sample
-
 ## Soon
 
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Specify table default sort direction
+- Custom table column editors (combo, date, time)
+- Fix issue with hello_table button/combo not being centered yet stretched
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Hello, Pop Up Context Menu! Sample
-
-- `table` `header_visible`
-- `table` `item_count`
-- Support custom table column editor
-- Hello, Table! Sample
-
 
 - Support `on_mouse_up` events on all widgets
 - Support `dialog`
@@ -29,10 +22,10 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
 
 - Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
+- Support having any widget contribute static document-wide CSS to ShellProxy
 
 ## Issues
 
-- Look into edit table item error on sorting table
 
 ## Features
 
@@ -51,6 +44,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support `progress_bar` using the jQuery UI Accordion
 - Provide a way for disabling included CSS altogether for consumers should they want to use CSS with a clean slate
 - Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
+- Support `spinner` and Hello, Spinner! Sample
+- Update `date` and `time` to be spinner based, not drop-down based
+- Implement doit in on_key_pressed event for TextProxy et al
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal
@@ -58,6 +54,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Refactorings
 
+- Optimize table sorting/update performance (perhaps by relying on diff/delta and not truly updating when it's a sort operation only)
 - Do away with redraw everywhere possible
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
 - Refactor tab_folder/tab_item to use jQuery-UI

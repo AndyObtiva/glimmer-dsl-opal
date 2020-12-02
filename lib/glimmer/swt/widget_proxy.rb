@@ -488,6 +488,17 @@ module Glimmer
               }
             end
           },
+          TableProxy => {
+            :selection => lambda do |observer|
+              on_widget_selected { |selection_event|
+                if has_style?(:multi)
+                  observer.call(selection.map(&:get_data))
+                else
+                  observer.call(selection.first&.get_data)
+                end
+              }
+            end,
+          },
 #           Java::OrgEclipseSwtWidgets::MenuItem => {
 #             :selection => lambda do |observer|
 #               on_widget_selected { |selection_event|
@@ -509,12 +520,12 @@ module Glimmer
   end
 end
 
+require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/browser_proxy'
 require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'
-require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/date_time_proxy'
 require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'

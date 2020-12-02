@@ -24,6 +24,10 @@ module Glimmer
         Document
       end
       
+      def shells
+        @shells ||= []
+      end
+      
       def render
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility
       end

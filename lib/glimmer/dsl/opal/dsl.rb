@@ -25,6 +25,7 @@ require 'glimmer/dsl/opal/custom_widget_expression'
 require 'glimmer/dsl/opal/swt_expression'
 require 'glimmer/dsl/opal/radio_group_selection_data_binding_expression'
 require 'glimmer/dsl/opal/checkbox_group_selection_data_binding_expression'
+require 'glimmer/dsl/opal/block_property_expression'
 
 module Glimmer
   module DSL
@@ -42,6 +43,7 @@ module Glimmer
          data_binding
          font
          layout
+         block_property
          property
          widget
        ]

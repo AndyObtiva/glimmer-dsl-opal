@@ -7,7 +7,7 @@ module Glimmer
       end
     
       def set_attribute(attribute_name, *args)
-        send(attribute_setter(attribute_name), *args) unless send(attribute_getter(attribute_name)) == args.first
+        send(attribute_setter(attribute_name), *args) unless args.size == 1 && send(attribute_getter(attribute_name)) == args.first
       end
       
       def attribute_setter(attribute_name)
@@ -16,7 +16,7 @@ module Glimmer
       
       def attribute_getter(attribute_name)
         attribute_name.to_s.underscore
-      end      
+      end
     end
   end
 end

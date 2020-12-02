@@ -1,5 +1,24 @@
 # Change Log
 
+## 0.7.0
+
+- Hello, Table! Sample
+- `table` :editable style to enable auto-editing
+- `table` `header_visible` property to hide header when false
+- `table` `item_count` property to set minimum item count (fill empty rows when below in table items)
+- `table` selection data-binding
+- `table` built-in sorting support
+- `table_column` left text alignment and padding of 5px by default
+- `table` sort property and direction in GUI
+- `table_column` sort_property
+- `table_column` sort_by block
+- `table_column` sort block
+- `table` default sort via property, compare block, and property block
+- `table` additional sort properties
+- Prevent `table` unnecessary updates by comparing data to previous data and not updating when it's the same
+- Contact Manager sample support for on_key_pressed in text widgets upon hitting ENTER
+- Fix issue with edit table item error on sorting table
+
 ## 0.6.1
 
 - Fix issue with rendering date_time without a block

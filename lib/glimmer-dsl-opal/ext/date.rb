@@ -41,6 +41,17 @@ class Date
 end
 
 class Time
+  class << self
+    alias new_original new
+    def new(*args)
+      if args.size >= 7
+        puts "Dropped timezone #{args[6]} from Time.new(#{args.map(&:to_s)}) constructor arguments since Opal does not support it!"
+        args = args[0...6]
+      end
+      new_original(*args)
+    end
+  end
+  
   def to_datetime
     # TODO support timezone
     DateTime.new(year, month, day, hour, min, sec)

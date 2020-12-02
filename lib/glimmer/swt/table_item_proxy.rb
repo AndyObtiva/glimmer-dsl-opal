@@ -3,10 +3,17 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TableItemProxy < WidgetProxy
+      STYLE = <<~CSS
+        tr.table-item:nth-child(even):not(.selected) {
+          background: rgb(243, 244, 246);
+        }
+      CSS
+      
       attr_reader :data
       
       def initialize(parent, args, block)
         super(parent, args, block)
+        # TODO check if there is a need to remove this observer when removing widget from table upon items update
         on_widget_selected { |event|
           parent.select(parent.index_of(self), event.meta?)
         }
@@ -54,7 +61,7 @@ module Glimmer
       end
       
       def redraw
-        super() #TODO re-enalbe and remove below lines
+        super() #TODO re-enable and remove below lines
 
         # TODO perhaps turn the following lambdas into methods
         table_item_edit_handler = lambda do |event, cancel = false|

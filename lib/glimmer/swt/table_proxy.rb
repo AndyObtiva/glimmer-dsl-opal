@@ -1,20 +1,242 @@
+# Copyright (c) 2020 Andy Maleh
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/table_column_proxy'
+require 'glimmer/swt/table_item_proxy'
+require 'glimmer/swt/table_editor'
 
 module Glimmer
   module SWT
-    class TableProxy < WidgetProxy
+    class TableProxy < CompositeProxy
       attr_reader :columns, :selection,
-                  :sort_type, :sort_column, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties
+                  :sort_type, :sort_column, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties,
+                  :editor
       attr_accessor :column_properties, :item_count, :data
       alias items children
       alias model_binding data
+      
+      class << self
+        include Glimmer
+        
+        def editors
+          @editors ||= {
+            # ensure editor can work with string keys not just symbols (leave one string in for testing)
+            text: {
+              widget_value_property: :text,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                table_proxy.table_editor.minimumHeight = 20
+                table_editor_widget_proxy = text(*args) {
+                  text model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+#                 table_editor_widget_proxy.swt_widget.selectAll # TODO select all
+                table_editor_widget_proxy
+              end,
+            },
+            combo: {
+              widget_value_property: :text,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                table_editor_widget_proxy = combo(*args) {
+                  items model.send("#{property}_options")
+                  text model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                  on_widget_selected {
+                    if !OS.windows? || !first_time || first_time && model.send(property) != table_editor_widget_proxy.text
+                      table_proxy.finish_edit!
+                    end
+                  }
+                }
+                table_editor_widget_proxy
+              end,
+            },
+            checkbox: {
+              widget_value_property: :selection,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                checkbox(*args) {
+                  selection model.send(property)
+                  focus true
+                  on_widget_selected {
+                    table_proxy.finish_edit!
+                  }
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+              end,
+            },
+            date: {
+              widget_value_property: :date_time,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                date(*args) {
+                  date_time model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+              end,
+            },
+            date_drop_down: {
+              widget_value_property: :date_time,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                date_drop_down(*args) {
+                  date_time model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+              end,
+            },
+            time: {
+              widget_value_property: :date_time,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                time(*args) {
+                  date_time model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+              end,
+            },
+            radio: {
+              widget_value_property: :selection,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                radio(*args) {
+                  selection model.send(property)
+                  focus true
+                  on_widget_selected {
+                    table_proxy.finish_edit!
+                  }
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+              end,
+            },
+            spinner: {
+              widget_value_property: :selection,
+              editor_gui: lambda do |args, model, property, table_proxy|
+                first_time = true
+                table_proxy.table_editor.minimumHeight = 25
+                table_editor_widget_proxy = spinner(*args) {
+                  selection model.send(property)
+                  focus true
+                  on_focus_lost {
+                    table_proxy.finish_edit!
+                  }
+                  on_key_pressed { |key_event|
+                    if key_event.keyCode == swt(:cr)
+                      table_proxy.finish_edit!
+                    elsif key_event.keyCode == swt(:esc)
+                      table_proxy.cancel_edit!
+                    end
+                  }
+                }
+                table_editor_widget_proxy
+              end,
+            },
+          }
+        end
+      end
       
       def initialize(parent, args, block)
         super(parent, args, block)
         @columns = []
         @children = []
+        @editors = []
         @selection = []
+        @table_editor = TableEditor.new(self)
+        @table_editor.horizontalAlignment = SWTProxy[:left]
+        @table_editor.grabHorizontal = true
+        @table_editor.minimumHeight = 20
         if editable?
           on_mouse_up { |event|
             edit_table_item(event.table_item, event.column_index)
@@ -26,16 +248,34 @@ module Glimmer
       def post_initialize_child(child)
         if child.is_a?(TableColumnProxy)
           @columns << child
-        else
+          child.redraw
+        elsif child.is_a?(TableItemProxy)
           @children << child
+          child.redraw
+        else
+          @editors << child
         end
-        child.redraw
+      end
+      
+      # Executes for the parent of a child that just got disposed
+      def post_dispose_child(child)
+        if child.is_a?(TableColumnProxy)
+          @columns&.delete(child)
+        elsif child.is_a?(TableItemProxy)
+          @children&.delete(child)
+        else
+          @editors&.delete(child)
+        end
       end
       
       def post_add_content
         return if @initially_sorted
         initial_sort!
         @initially_sorted = true
+      end
+      
+      def default_layout
+        nil
       end
       
       def get_data(key=nil)
@@ -223,9 +463,117 @@ module Glimmer
         @additional_sort_properties = args unless args.empty?
       end
       
-      def edit_table_item(table_item, column_index)
-        table_item&.edit(column_index) unless column_index.nil?
+      def editor=(args)
+        @editor = args
       end
+      
+      # Indicates if table is in edit mode, thus displaying a text widget for a table item cell
+      def edit_mode?
+        !!@edit_mode
+      end
+      
+      def cancel_edit!
+        @cancel_edit&.call if @edit_mode
+      end
+
+      def finish_edit!
+        @finish_edit&.call if @edit_mode
+      end
+
+      # Indicates if table is editing a table item because the user hit ENTER or focused out after making a change in edit mode to a table item cell.
+      # It is set to false once change is saved to model
+      def edit_in_progress?
+        !!@edit_in_progress
+      end
+      
+      def edit_selected_table_item(column_index, before_write: nil, after_write: nil, after_cancel: nil)
+        edit_table_item(selection.first, column_index, before_write: before_write, after_write: after_write, after_cancel: after_cancel)
+      end
+
+        # TODO migrate the following to the next method
+#       def edit_table_item(table_item, column_index)
+#         table_item&.edit(column_index) unless column_index.nil?
+#       end
+      
+      def edit_table_item(table_item, column_index, before_write: nil, after_write: nil, after_cancel: nil)
+        return if table_item.nil? || (@edit_mode && @edit_table_item == table_item && @edit_column_index == column_index)
+        @edit_column_index = column_index
+        @edit_table_item = table_item
+        column_index = column_index.to_i
+        model = table_item.data
+        property = column_properties[column_index]
+        cancel_edit!
+        return unless columns[column_index].editable?
+        action_taken = false
+        @edit_mode = true
+        
+        editor_config = columns[column_index].editor || editor
+        editor_config = editor_config.to_a
+        editor_widget_options = editor_config.last.is_a?(Hash) ? editor_config.last : {}
+        editor_widget_arg_last_index = editor_config.last.is_a?(Hash) ? -2 : -1
+        editor_widget = (editor_config[0] || :text).to_sym
+        editor_widget_args = editor_config[1..editor_widget_arg_last_index]
+        model_editing_property = editor_widget_options[:property] || property
+        widget_value_property = TableProxy::editors.symbolize_keys[editor_widget][:widget_value_property]
+        
+        @cancel_edit = lambda do |event=nil|
+          # TODO cancel @edit_column_index & @edit_table_item
+          @cancel_in_progress = true
+          @table_editor.cancel!
+          @table_editor_widget_proxy&.dispose
+          @table_editor_widget_proxy = nil
+          after_cancel&.call
+          @edit_in_progress = false
+          @cancel_in_progress = false
+          @cancel_edit = nil
+          @edit_mode = false
+        end
+        
+        @finish_edit = lambda do |event=nil|
+          new_value = @table_editor_widget_proxy&.send(widget_value_property)
+          if table_item.disposed?
+            @cancel_edit.call
+          elsif !new_value.nil? && !action_taken && !@edit_in_progress && !@cancel_in_progress
+            action_taken = true
+            @edit_in_progress = true
+            if new_value == model.send(model_editing_property)
+              @cancel_edit.call
+            else
+              before_write&.call
+              model.send("#{model_editing_property}=", new_value) # makes table update itself, so must search for selected table item again
+              # Table refresh happens here because of model update triggering observers, so must retrieve table item again
+              @table_editor.save!(widget_value_property: widget_value_property)
+              edited_table_item = search { |ti| ti.data == model }.first
+              show_item(edited_table_item)
+              @table_editor_widget_proxy&.dispose
+              @table_editor_widget_proxy = nil
+              after_write&.call(edited_table_item)
+              @edit_in_progress = false
+            end
+          end
+        end
+
+        content {
+          @table_editor_widget_proxy = TableProxy::editors.symbolize_keys[editor_widget][:editor_gui].call(editor_widget_args, model, model_editing_property, self)
+        }
+        @table_editor.set_editor(@table_editor_widget_proxy, table_item, column_index)
+      rescue => e
+        Glimmer::Config.logger.error {e.full_message}
+        raise e
+      end
+      
+      def show_item(table_item)
+        table_item.dom_element.focus
+      end
+      
+      def add_listener(underscored_listener_name, &block)
+        enhanced_block = lambda do |event|
+          event.extend(TableListenerEvent)
+          block.call(event)
+        end
+        super(underscored_listener_name, &enhanced_block)
+      end
+              
       
       def header_visible=(value)
         @header_visible = value
@@ -337,7 +685,8 @@ module Glimmer
         table_id = id
         table_id_style = css
         table_id_css_classes = css_classes
-        table_id_css_classes << 'table'
+        table_id_css_classes << 'table' unless table_id_css_classes.include?('table')
+        table_id_css_classes << 'editable' if editable? && !table_id_css_classes.include?('editable')
         table_id_css_classes_string = table_id_css_classes.to_a.join(' ')
         @dom ||= html {
           table(id: table_id, style: table_id_style, class: table_id_css_classes_string) {

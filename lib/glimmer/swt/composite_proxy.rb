@@ -8,7 +8,11 @@ module Glimmer
       
       def initialize(parent, args, block)
         super(parent, args, block)
-        @layout = GridLayoutProxy.new(self, [])
+        @layout = default_layout
+      end
+      
+      def default_layout
+        GridLayoutProxy.new(self, [])
       end
       
       def dom

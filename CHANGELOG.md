@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.7.1
+
+- Fix issue with table cell selection for editing not working
+- Remove child from parent upon dispose
+
 ## 0.7.0
 
 - Hello, Table! Sample

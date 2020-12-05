@@ -29,7 +29,9 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?
+      alias isDisposed disposed?
+      alias is_disposed disposed?
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -103,6 +105,7 @@ module Glimmer
         @block = block
         @children = Set.new # TODO consider moving to composite
         @enabled = true
+        @data = {}
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
         @parent.post_initialize_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
       end
@@ -113,10 +116,27 @@ module Glimmer
         child.render
       end
       
+      # Executes for the parent of a child that just got disposed
+      def post_dispose_child(child)
+        @children&.delete(child)
+      end
+      
       # Executes at the closing of a parent widget curly braces after all children/properties have been added/set
       def post_add_content
         # No Op by default
       end
+      
+      def set_data(key=nil, value)
+        @data[key] = value
+      end
+      alias setData set_data
+      alias data= set_data
+      
+      def get_data(key=nil)
+        @data[key]
+      end
+      alias getData get_data
+      alias data get_data
       
       def css_classes
         dom_element.attr('class').to_s.split
@@ -124,6 +144,9 @@ module Glimmer
       
       def dispose
         Document.find(path).remove
+        parent&.post_dispose_child(self)
+        # TODO fire on_widget_disposed listener
+        @disposed = true
       end
       
       def path
@@ -172,12 +195,17 @@ module Glimmer
         @parent.path
       end
 
-      def render
+      def parent_dom_element
+        Document.find(parent_path)
+      end
+      
+      def render(custom_parent_dom_element = nil)
+        the_parent_dom_element = custom_parent_dom_element || parent_dom_element
         old_element = dom_element
         brand_new = @dom.nil? || old_element.empty?
-        build_dom
+        build_dom(!custom_parent_dom_element) # TODO handle custom parent layout by passing parent instead of parent dom element
         if brand_new
-          Document.find(parent_path).append(@dom)
+          the_parent_dom_element.append(@dom)
         else
           old_element.replace_with(@dom)
         end
@@ -193,10 +221,12 @@ module Glimmer
       end
       alias redraw render
       
-      def build_dom
+      def build_dom(layout=true)
+        # TODO consider passing parent element instead and having table item include a table cell widget only for opal
         @dom = nil
         @dom = dom
         @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
+        @dom
       end
       
       def content(&block)
@@ -271,10 +301,6 @@ module Glimmer
         element
       end
       
-      def parent_dom_element
-        Document.find(parent_path)
-      end
-      
       def listener_path
         path
       end
@@ -332,6 +358,14 @@ module Glimmer
       def set_attribute(attribute_name, *args)
         apply_property_type_converters(attribute_name, args)
         super(attribute_name, *args) # PropertyOwner
+      end
+      
+      def method_missing(method, *args, &block)
+        if method.to_s.start_with?('on_')
+          handle_observation_request(method, &block)
+        else
+          super(method, *args, &block)
+        end
       end
       
       def apply_property_type_converters(attribute_name, args)

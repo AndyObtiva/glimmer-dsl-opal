@@ -18,7 +18,7 @@ module Glimmer
           a_layout_class = Glimmer::SWT.const_get(class_name_main.to_sym) rescue Glimmer::SWT.const_get(class_name_alternative.to_sym)
           a_layout_class if a_layout_class.ancestors.include?(Glimmer::SWT::LayoutProxy)
         rescue => e
-          puts "Layout #{keyword} was not found!"
+          Glimmer::Config.logger.debug "Layout #{keyword} was not found!"
           nil
         end
         

@@ -170,6 +170,8 @@ Edit `app/views/layouts/application.html.erb` and add the following below other 
 <%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
 ```
 
+Clear the file `app/views/welcomes/index.html.erb` from any content.
+
 Open a `Document.ready?` block and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
 
 ```ruby

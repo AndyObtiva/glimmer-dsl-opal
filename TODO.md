@@ -4,15 +4,18 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-## Soon
-
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
-- Specify table default sort direction
 - Custom table column editors (combo, date, time)
+- Specify table default sort direction
 - Fix issue with hello_table button/combo not being centered yet stretched
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Document Tic Tac Toe sample at the top of the README file after rebasing
+
+## Soon
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Hello, Pop Up Context Menu! Sample
+
+- Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 
 - Support `on_mouse_up` events on all widgets
 - Support `dialog`
@@ -35,7 +38,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
 - Consider the idea of supporting multiple web implementations for a widget to allow different looks, perhaps allowing 3rd parties to plug extra implementations as needed as different "adapters"
 - Support the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
-- Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 - Support real menus `menu_bar`
 - Hello, Menu Bar! Sample
 - MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
@@ -47,6 +49,10 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support `spinner` and Hello, Spinner! Sample
 - Update `date` and `time` to be spinner based, not drop-down based
 - Implement doit in on_key_pressed event for TextProxy et al
+
+## Technical Tasks
+
+- fire on_widget_disposed listener in WidgetProxy on calling `#dispose`
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal

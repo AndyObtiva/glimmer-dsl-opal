@@ -45,7 +45,7 @@ class Time
     alias new_original new
     def new(*args)
       if args.size >= 7
-        puts "Dropped timezone #{args[6]} from Time.new(#{args.map(&:to_s)}) constructor arguments since Opal does not support it!"
+        Glimmer::Config.logger.debug "Dropped timezone #{args[6]} from Time.new(#{args.map(&:to_s)}) constructor arguments since Opal does not support it!"
         args = args[0...6]
       end
       new_original(*args)

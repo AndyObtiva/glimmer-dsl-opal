@@ -74,6 +74,15 @@ module Glimmer
         dom_element.find('.sort-direction')
       end
       
+      # Sets editor (e.g. combo)
+      def editor=(args)
+        @editor = args
+      end
+      
+      def editable?
+        !@editor&.include?(:none)
+      end
+      
       def observation_request_to_event_mapping
         {
           'on_widget_selected' => {

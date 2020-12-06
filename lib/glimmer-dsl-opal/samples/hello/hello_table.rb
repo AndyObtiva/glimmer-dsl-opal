@@ -207,28 +207,28 @@ class HelloTable
           text 'Game Date'
           width 150
           sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
-#           editor :date_drop_down, property: :date_time
+          editor :date_drop_down, property: :date_time
         }
         table_column {
           text 'Game Time'
           width 150
           sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
-#           editor :time, property: :date_time
+          editor :time, property: :date_time
         }
         table_column {
           text 'Ballpark'
           width 180
-#           editor :none
+          editor :none
         }
         table_column {
           text 'Home Team'
           width 150
-#           editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Away Team'
           width 150
-#           editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Promotion'

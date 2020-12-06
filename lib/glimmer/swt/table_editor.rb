@@ -37,21 +37,27 @@ module Glimmer
         editor_widget.render(table_item.cell_dom_element(table_column_index))
         # TODO tweak the width perfectly so it doesn't expand the table cell
 #         editor_widget.dom_element.css('width', 'calc(100% - 20px)')
-        editor_widget.dom_element.css('width', '98%') # just a good enough approximation
-        editor_widget.dom_element.css('height', '11px')
+        editor_widget.dom_element.css('width', '90%') # just a good enough approximation
+        editor_widget.dom_element.css('height', "#{minimumHeight}px")
         editor_widget.dom_element.add_class('table-editor')
+        # TODO consider relying on autofocus instead
         editor_widget.dom_element.focus
+        # TODO consider doing the following line only for :text editor
         editor_widget.dom_element.select
       end
       alias set_editor editor=
       alias setEditor editor=
       
       def cancel!
-        @table_item.cell_dom_element(@table_column_index).html(@old_value) unless @old_value.nil?
+        done!
       end
       
-      def save!(widget_value_property: 'text')
-        @table_item.cell_dom_element(@table_column_index).html(@editor_widget.send(widget_value_property))
+      def save!
+        done!
+      end
+      
+      def done!
+        @table_item.cell_dom_element(@table_column_index).html(@old_value) unless @old_value.nil?
         @old_value = nil
       end
     end

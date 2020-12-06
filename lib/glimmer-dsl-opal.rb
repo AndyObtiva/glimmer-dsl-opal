@@ -76,6 +76,42 @@ if RUBY_ENGINE == 'opal'
     result ||= method == '<<'
     result ||= method == 'handle'
   end
+  
+  class OS
+    class << self
+      def windows?
+        # No Op in Opal
+      end
+      
+      def mac?
+        # No Op in Opal
+      end
+      
+      def linux?
+        # No Op in Opal
+      end
+    end
+  end
+  
+  class File
+    class << self
+      def read(*args, &block)
+        # TODO implement via asset downloads in the future
+        # No Op in Opal
+      end
+    end
+  end
+  
+  class Display
+    class << self
+      def setAppName(app_name)
+        # No Op in Opal
+      end
+      def setAppVersion(version)
+        # No Op in Opal
+      end
+    end
+  end
 else
   require_relative 'glimmer/engine'
 end

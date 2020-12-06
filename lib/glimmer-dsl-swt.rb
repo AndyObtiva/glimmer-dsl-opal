@@ -19,40 +19,4 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class OS
-  class << self
-    def windows?
-      # No Op in Opal
-    end
-    
-    def mac?
-      # No Op in Opal
-    end
-    
-    def linux?
-      # No Op in Opal
-    end
-  end
-end
-
-class File
-  class << self
-    def read(*args, &block)
-      # TODO implement via asset downloads in the future
-      # No Op in Opal
-    end
-  end
-end
-
-class Display
-  class << self
-    def setAppName(app_name)
-      # No Op in Opal
-    end
-    def setAppVersion(version)
-      # No Op in Opal
-    end
-  end
-end
-
 require 'glimmer-dsl-opal'

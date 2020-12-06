@@ -29,9 +29,10 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered
       alias isDisposed disposed?
       alias is_disposed disposed?
+      alias rendered? rendered
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -143,10 +144,25 @@ module Glimmer
       end
       
       def dispose
+        remove_all_listeners
         Document.find(path).remove
         parent&.post_dispose_child(self)
         # TODO fire on_widget_disposed listener
         @disposed = true
+      end
+      
+      def remove_all_listeners
+        observation_request_to_event_mapping.keys.each do |keyword|
+          [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+            @observation_requests[keyword].to_a.each do |event_listener|
+              event = mapping[:event]
+              event_handler = mapping[:event_handler]
+              event_element_css_selector = mapping[:event_element_css_selector]
+              the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
+              the_listener_dom_element.off(event)
+            end
+          end
+        end
       end
       
       def path
@@ -218,8 +234,22 @@ module Glimmer
         children.each do |child|
           child.render
         end
+        @rendered = true
+        content_on_render_blocks.each { |content_block| content(&content_block) }
       end
       alias redraw render
+      
+      def content_on_render_blocks
+        @content_on_render_blocks ||= []
+      end
+      
+      def add_content_on_render(&content_block)
+        if rendered?
+          content_block.call
+        else
+          content_on_render_blocks << content_block
+        end
+      end
       
       def build_dom(layout=true)
         # TODO consider passing parent element instead and having table item include a table cell widget only for opal

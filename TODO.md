@@ -9,6 +9,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Fix issue with hello_table button/combo not being centered yet stretched
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Document Tic Tac Toe sample at the top of the README file after rebasing
+- #           @table_items_observer_registration&.unobserve # TODO re-enable
 
 ## Soon
 
@@ -17,21 +18,20 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 
-- Support `on_mouse_up` events on all widgets
-- Support `dialog`
-
-- Implement part of net/http with jQuery for use in Glimmer apps since it is not implemented by Opal
-
-- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
+- Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 
 - Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 - Support having any widget contribute static document-wide CSS to ShellProxy
+
+- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
 
 ## Issues
 
 
 ## Features
 
+- Support Authentication (username/password)
+- Support `dialog`
 - Support all variations of button (:radio, :check, :arrow)
 - Support different themes by detecting browser OS (Mac, Windows, Linux)
 - Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it

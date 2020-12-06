@@ -20,8 +20,12 @@ module Glimmer
         end
 
         def add_content(parent, &block)
-          super(parent, &block)
-          parent.post_add_content
+          if parent.rendered?
+            super(parent, &block)
+            parent.post_add_content
+          else
+            parent.add_content_on_render(&block)
+          end
         end
       end
     end

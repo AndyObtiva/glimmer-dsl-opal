@@ -29,7 +29,7 @@ module Glimmer
     class TableProxy < CompositeProxy
       attr_reader :columns, :selection,
                   :sort_type, :sort_column, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties,
-                  :editor
+                  :editor, :table_editor
       attr_accessor :column_properties, :item_count, :data
       alias items children
       alias model_binding data
@@ -43,7 +43,7 @@ module Glimmer
             text: {
               widget_value_property: :text,
               editor_gui: lambda do |args, model, property, table_proxy|
-                table_proxy.table_editor.minimumHeight = 20
+                table_proxy.table_editor.minimumHeight = 10
                 table_editor_widget_proxy = text(*args) {
                   text model.send(property)
                   focus true
@@ -66,7 +66,7 @@ module Glimmer
               widget_value_property: :text,
               editor_gui: lambda do |args, model, property, table_proxy|
                 first_time = true
-                table_proxy.table_editor.minimumHeight = 25
+                table_proxy.table_editor.minimumHeight = 18
                 table_editor_widget_proxy = combo(*args) {
                   items model.send("#{property}_options")
                   text model.send(property)
@@ -248,10 +248,10 @@ module Glimmer
       def post_initialize_child(child)
         if child.is_a?(TableColumnProxy)
           @columns << child
-          child.redraw
+          child.render
         elsif child.is_a?(TableItemProxy)
           @children << child
-          child.redraw
+          child.render
         else
           @editors << child
         end
@@ -335,10 +335,6 @@ module Glimmer
           new_selection << selected_item
         end
         self.selection = new_selection
-      end
-      
-      def search(&condition)
-        items.select {|item| condition.nil? || condition.call(item)}
       end
       
       def sort_block=(comparator)
@@ -508,7 +504,7 @@ module Glimmer
         @edit_mode = true
         
         editor_config = columns[column_index].editor || editor
-        editor_config = editor_config.to_a
+        editor_config = [editor_config].flatten.compact
         editor_widget_options = editor_config.last.is_a?(Hash) ? editor_config.last : {}
         editor_widget_arg_last_index = editor_config.last.is_a?(Hash) ? -2 : -1
         editor_widget = (editor_config[0] || :text).to_sym
@@ -517,7 +513,6 @@ module Glimmer
         widget_value_property = TableProxy::editors.symbolize_keys[editor_widget][:widget_value_property]
         
         @cancel_edit = lambda do |event=nil|
-          # TODO cancel @edit_column_index & @edit_table_item
           @cancel_in_progress = true
           @table_editor.cancel!
           @table_editor_widget_proxy&.dispose
@@ -526,6 +521,7 @@ module Glimmer
           @edit_in_progress = false
           @cancel_in_progress = false
           @cancel_edit = nil
+          @edit_table_item = @edit_column_index = nil if (@edit_mode && @edit_table_item == table_item && @edit_column_index == column_index)
           @edit_mode = false
         end
         
@@ -540,15 +536,16 @@ module Glimmer
               @cancel_edit.call
             else
               before_write&.call
+              @table_editor.save!(widget_value_property: widget_value_property)
               model.send("#{model_editing_property}=", new_value) # makes table update itself, so must search for selected table item again
               # Table refresh happens here because of model update triggering observers, so must retrieve table item again
-              @table_editor.save!(widget_value_property: widget_value_property)
               edited_table_item = search { |ti| ti.data == model }.first
               show_item(edited_table_item)
               @table_editor_widget_proxy&.dispose
               @table_editor_widget_proxy = nil
               after_write&.call(edited_table_item)
               @edit_in_progress = false
+              @edit_table_item = @edit_column_index = nil
             end
           end
         end

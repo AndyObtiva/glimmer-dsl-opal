@@ -4,6 +4,7 @@
 
 - Fix issue with table cell selection for editing not working
 - Remove child from parent upon dispose
+- Combo table editor
 
 ## 0.7.0
 
@@ -132,3 +133,4 @@
 
 - Initial support for webifying Glimmer SWT apps
 - Support for Shell and Label widgets (text property only).
+- Hello, World! sample support

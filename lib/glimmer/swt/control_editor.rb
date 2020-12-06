@@ -27,6 +27,7 @@ module Glimmer
       attr_accessor *ATTRIBUTES
       ATTRIBUTES.each do |attribute|
         alias_method attribute.underscore, attribute
+        alias_method "#{attribute.underscore}=", "#{attribute}="
       end
       
       # TODO consider supporting a java_attr_accessor to get around having to generate all the aliases manually

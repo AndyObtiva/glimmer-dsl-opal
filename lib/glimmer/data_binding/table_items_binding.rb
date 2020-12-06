@@ -35,7 +35,7 @@ module Glimmer
         model_cells = new_model_collection.to_a.map {|m| @table.cells_for(m)}
         return if table_cells == model_cells
         if new_model_collection and new_model_collection.is_a?(Array)
-#           @table_items_observer_registration&.unobserve
+#           @table_items_observer_registration&.unobserve # TODO re-enable
           @table_items_observer_registration = observe(new_model_collection, @column_properties)
           add_dependent(@table_observer_registration => @table_items_observer_registration)
           @model_collection = new_model_collection
@@ -45,8 +45,10 @@ module Glimmer
       end
       
       def populate_table(model_collection, parent, column_properties)
-        return if model_collection&.sort_by(&:hash) == @last_populated_model_collection&.sort_by(&:hash)
+        @skip_populate_table = model_collection&.sort_by(&:hash).map {|m| @table.column_properties.map {|p| m.send(p)}} == @last_populated_model_collection_properties
+        return if @skip_populate_table
         @last_populated_model_collection = model_collection
+        @last_populated_model_collection_properties = model_collection&.sort_by(&:hash).map {|m| @table.column_properties.map {|p| m.send(p)}}
         # TODO improve performance
         selected_table_item_models = parent.selection.map(&:get_data)
         old_items = parent.items

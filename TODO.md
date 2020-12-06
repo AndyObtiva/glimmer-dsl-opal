@@ -4,8 +4,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Custom table column editors (combo, date, time)
-- Specify table default sort direction
+- `date_drop_down` table editor
+- `time` table editor
+- Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending
 - Fix issue with hello_table button/combo not being centered yet stretched
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Document Tic Tac Toe sample at the top of the README file after rebasing
@@ -24,13 +25,14 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support having any widget contribute static document-wide CSS to ShellProxy
 
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
+- Support Authentication (username/password)
 
 ## Issues
 
 
 ## Features
 
-- Support Authentication (username/password)
+- `spinner` table editor
 - Support `dialog`
 - Support all variations of button (:radio, :check, :arrow)
 - Support different themes by detecting browser OS (Mac, Windows, Linux)

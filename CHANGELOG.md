@@ -2,9 +2,10 @@
 
 ## 0.7.1
 
+- Combo table editor (enabled in Hello, Table! sample)
 - Fix issue with table cell selection for editing not working
-- Remove child from parent upon dispose
-- Combo table editor
+- Remove widget from parent upon dispose
+- Remove listeners upon widget dispose
 
 ## 0.7.0
 

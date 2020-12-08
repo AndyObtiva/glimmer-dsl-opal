@@ -622,7 +622,7 @@ module Glimmer
           'on_widget_selected' => {
             event: 'mouseup',
             event_handler: mouse_handler,
-          }
+          },
         }
       end
       

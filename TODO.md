@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Fix keyboard event handling for text and combo table editors (ENTER and ESCAPE keys)
 - `date_drop_down` table editor
 - `time` table editor
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT

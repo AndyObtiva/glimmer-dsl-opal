@@ -72,7 +72,7 @@ module Glimmer
                 doit
               }
             }
-          }
+          },
         }
       end
       

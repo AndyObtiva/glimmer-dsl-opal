@@ -23,6 +23,7 @@ module Glimmer
   module SWT
     # Emulates SWT's native org.eclipse.swt.custom.ControlEditor
     class ControlEditor
+      # TODO implement behavior for all these attributes
       ATTRIBUTES = [:grabHorizontal, :grabVertical, :horizontalAlignment, :verticalAlignment, :minimumWidth, :minimumHeight]
       attr_accessor *ATTRIBUTES
       ATTRIBUTES.each do |attribute|

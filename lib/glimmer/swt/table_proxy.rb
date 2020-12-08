@@ -43,6 +43,7 @@ module Glimmer
             text: {
               widget_value_property: :text,
               editor_gui: lambda do |args, model, property, table_proxy|
+                table_proxy.table_editor.minimumWidth = 90
                 table_proxy.table_editor.minimumHeight = 10
                 table_editor_widget_proxy = text(*args) {
                   text model.send(property)
@@ -66,6 +67,7 @@ module Glimmer
               widget_value_property: :text,
               editor_gui: lambda do |args, model, property, table_proxy|
                 first_time = true
+                table_proxy.table_editor.minimumWidth = 90
                 table_proxy.table_editor.minimumHeight = 18
                 table_editor_widget_proxy = combo(*args) {
                   items model.send("#{property}_options")
@@ -142,7 +144,8 @@ module Glimmer
               widget_value_property: :date_time,
               editor_gui: lambda do |args, model, property, table_proxy|
                 first_time = true
-                table_proxy.table_editor.minimumHeight = 25
+                table_proxy.table_editor.minimumWidth = 80
+                table_proxy.table_editor.minimumHeight = 15
                 date_drop_down(*args) {
                   date_time model.send(property)
                   focus true
@@ -245,6 +248,7 @@ module Glimmer
         @table_editor = TableEditor.new(self)
         @table_editor.horizontalAlignment = SWTProxy[:left]
         @table_editor.grabHorizontal = true
+        @table_editor.minimumWidth = 90
         @table_editor.minimumHeight = 20
         if editable?
           on_mouse_up { |event|

@@ -37,7 +37,7 @@ module Glimmer
         editor_widget.render(table_item.cell_dom_element(table_column_index))
         # TODO tweak the width perfectly so it doesn't expand the table cell
 #         editor_widget.dom_element.css('width', 'calc(100% - 20px)')
-        editor_widget.dom_element.css('width', '90%') # just a good enough approximation
+        editor_widget.dom_element.css('width', "#{minimumWidth}%") # TODO implement property with pixels (and perhaps derive percentage separately from pixels)
         editor_widget.dom_element.css('height', "#{minimumHeight}px")
         editor_widget.dom_element.add_class('table-editor')
         # TODO consider relying on autofocus instead

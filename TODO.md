@@ -4,10 +4,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Fix keyboard event handling for text and combo table editors (ENTER and ESCAPE keys)
 - `date_drop_down` table editor
 - `time` table editor
-- Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending
+- Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
 - Fix issue with hello_table button/combo not being centered yet stretched
+
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Document Tic Tac Toe sample at the top of the README file after rebasing
 - #           @table_items_observer_registration&.unobserve # TODO re-enable
@@ -18,6 +20,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Hello, Pop Up Context Menu! Sample
 
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
+this can be done by providing "parent_path" option (css selector) to Shell (e.g. shell(parent_path: 'div#glimmer-app')
 
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 
@@ -51,6 +54,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support `spinner` and Hello, Spinner! Sample
 - Update `date` and `time` to be spinner based, not drop-down based
 - Implement doit in on_key_pressed event for TextProxy et al
+- Support table multi-selection
 
 ## Technical Tasks
 

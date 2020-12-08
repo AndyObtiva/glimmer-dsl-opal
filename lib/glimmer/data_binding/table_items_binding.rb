@@ -62,8 +62,7 @@ module Glimmer
           table_item.set_data(model)
           table_item.id = old_item_ids_per_model[model.hash] if old_item_ids_per_model[model.hash]
         end
-        selected_table_items = parent.search {|item| selected_table_item_models.include?(item.get_data) }
-        parent.selection = selected_table_items
+        parent.selection = parent.search {|item| selected_table_item_models.include?(item.get_data) }
         parent.redraw
       end
       
@@ -71,6 +70,7 @@ module Glimmer
         return if model_collection == @last_sorted_model_collection
         if model_collection == @last_populated_model_collection
           # Reapply the last table sort. The model collection has just been populated since it diverged from what it was before
+          # TODO optimize in the future by sorting elements in DOM directly
           parent.sort!
         else
           # The model collection was sorted by the model, but beyond sorting, it did not change from the last populated model collection.

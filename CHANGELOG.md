@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.2
+
+- Fix issue with table item selection for booking not working after editing has been added
+
 ## 0.7.1
 
 - Combo table editor (enabled in Hello, Table! sample)

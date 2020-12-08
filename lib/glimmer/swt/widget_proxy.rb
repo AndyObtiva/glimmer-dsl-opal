@@ -555,11 +555,7 @@ module Glimmer
           TableProxy => {
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|
-                if has_style?(:multi)
-                  observer.call(selection.map(&:get_data))
-                else
-                  observer.call(selection.first&.get_data)
-                end
+                observer.call(selection_event.table_item.get_data)  # TODO ensure selection doesn't conflict with editing
               }
             end,
           },

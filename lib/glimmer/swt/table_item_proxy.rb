@@ -139,6 +139,14 @@ module Glimmer
         redraw
       end
       
+      def redraw_selection
+        if parent.selection.include?(self)
+          dom_element.add_class('selected')
+        else
+          dom_element.remove_class('selected')
+        end
+      end
+      
       def on_widget_selected(&block)
         event = 'click'
         delegate = $document.on(event, selector, &block)

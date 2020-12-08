@@ -300,11 +300,12 @@ module Glimmer
         new_selection = new_selection.to_a
         changed = (selection + new_selection) - (selection & new_selection)
         @selection = new_selection
-        changed.each(&:redraw)
+        changed.each(&:redraw_selection)
       end
             
       def items=(new_items)
         @children = new_items
+        # TODO optimize in the future by sorting elements in DOM directly when no change to elements occur other than sort
         redraw
       end
       
@@ -604,7 +605,8 @@ module Glimmer
             event.singleton_class.send(:define_method, :column_index) do
               (table_data || event.target).attr('data-column-index')
             end
-            event_listener.call(event)
+            
+            event_listener.call(event) unless event.table_item.nil? && event.column_index.nil?
           }
         }
 
@@ -619,6 +621,7 @@ module Glimmer
           },
           'on_widget_selected' => {
             event: 'mouseup',
+            event_handler: mouse_handler,
           }
         }
       end

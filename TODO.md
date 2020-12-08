@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- `time` table editor
 - Implement on_focus_lost universally on all widgets
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
 - Fix issue with hello_table button/combo not being centered yet stretched

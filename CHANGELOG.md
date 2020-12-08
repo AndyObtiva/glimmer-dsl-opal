@@ -3,6 +3,8 @@
 ## 0.7.2
 
 - `date_drop_down` `table_column` `editor`
+- `date` `table_column` `editor`
+- `time` `table_column` `editor`
 - Fix issue with table item selection for booking not working after editing has been added
 - Fix escape keyboard event handling for combo table editor
 

@@ -31,7 +31,13 @@ module Glimmer
             showPeriod: true,
             showLeadingZero: true,
             showOn: 'both',
+            showNowButton: true,
+            showCloseButton: true,
             button: "##{time_button_id}",
+            onClose: ->(v) {
+              @timepicker_done = true
+              dom_element.trigger('change')
+            },
           })
         else
           options = {}
@@ -105,7 +111,16 @@ module Glimmer
         {
           'on_widget_selected' => [
             {
-              event: 'change'
+              event: 'change',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  if @timepicker_done
+                    @timepicker_done = false
+                    Document.find('.ui-timepicker-close').click
+                    event_listener.call(event)
+                  end
+                }
+              }
             },
           ],
           'on_key_pressed' => {

@@ -120,7 +120,8 @@ module Glimmer
               widget_value_property: :date_time,
               editor_gui: lambda do |args, model, property, table_proxy|
                 first_time = true
-                table_proxy.table_editor.minimumHeight = 25
+                table_proxy.table_editor.minimumWidth = 90
+                table_proxy.table_editor.minimumHeight = 15
                 date(*args) {
                   date_time model.send(property)
                   focus true
@@ -169,7 +170,8 @@ module Glimmer
               widget_value_property: :date_time,
               editor_gui: lambda do |args, model, property, table_proxy|
                 first_time = true
-                table_proxy.table_editor.minimumHeight = 25
+                table_proxy.table_editor.minimumWidth = 80
+                table_proxy.table_editor.minimumHeight = 15
                 time(*args) {
                   date_time model.send(property)
                   focus true

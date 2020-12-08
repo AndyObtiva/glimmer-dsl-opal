@@ -213,7 +213,7 @@ class HelloTable
           text 'Game Time'
           width 150
           sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
-#           editor :time, property: :date_time
+          editor :time, property: :date_time
         }
         table_column {
           text 'Ballpark'

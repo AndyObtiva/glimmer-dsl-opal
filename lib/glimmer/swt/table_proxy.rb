@@ -122,6 +122,9 @@ module Glimmer
                 date(*args) {
                   date_time model.send(property)
                   focus true
+                  on_widget_selected {
+                    table_proxy.finish_edit!
+                  }
                   on_focus_lost {
                     table_proxy.finish_edit!
                   }
@@ -143,6 +146,9 @@ module Glimmer
                 date_drop_down(*args) {
                   date_time model.send(property)
                   focus true
+                  on_widget_selected {
+                    table_proxy.finish_edit!
+                  }
                   on_focus_lost {
                     table_proxy.finish_edit!
                   }
@@ -164,6 +170,9 @@ module Glimmer
                 time(*args) {
                   date_time model.send(property)
                   focus true
+                  on_widget_selected {
+                    table_proxy.finish_edit!
+                  }
                   on_focus_lost {
                     table_proxy.finish_edit!
                   }

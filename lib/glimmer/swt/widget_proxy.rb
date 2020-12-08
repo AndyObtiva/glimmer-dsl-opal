@@ -154,7 +154,7 @@ module Glimmer
       def remove_all_listeners
         observation_request_to_event_mapping.keys.each do |keyword|
           [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
-            @observation_requests[keyword].to_a.each do |event_listener|
+            observation_requests[keyword].to_a.each do |event_listener|
               event = mapping[:event]
               event_handler = mapping[:event_handler]
               event_element_css_selector = mapping[:event_element_css_selector]
@@ -225,9 +225,9 @@ module Glimmer
         else
           old_element.replace_with(@dom)
         end
-        @observation_requests&.clone&.each do |keyword, event_listener_set|
+        observation_requests&.clone&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
-            @observation_requests[keyword].delete(event_listener)
+            observation_requests[keyword].delete(event_listener) # TODO look into the implications of this and if it's needed.
             handle_observation_request(keyword, &event_listener)
           end
         end
@@ -352,14 +352,17 @@ module Glimmer
         end
       end
       
+      def observation_requests
+        @observation_requests ||= {}
+      end
+      
       def handle_observation_request(keyword, &event_listener)
         return unless observation_request_to_event_mapping.keys.include?(keyword)
-        @observation_requests ||= {}
-        @observation_requests[keyword] ||= Set.new
         event = nil
         delegate = nil
         [observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
-          @observation_requests[keyword] << event_listener
+          observation_requests[keyword] ||= Set.new
+          observation_requests[keyword] << event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
           event_element_css_selector = mapping[:event_element_css_selector]

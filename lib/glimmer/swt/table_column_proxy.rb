@@ -75,7 +75,7 @@ module Glimmer
       end
       
       # Sets editor (e.g. combo)
-      def editor=(args)
+      def editor=(*args)
         @editor = args
       end
       

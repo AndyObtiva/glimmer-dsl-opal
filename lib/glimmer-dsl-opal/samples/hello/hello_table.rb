@@ -207,7 +207,7 @@ class HelloTable
           text 'Game Date'
           width 150
           sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
-#           editor :date_drop_down, property: :date_time
+          editor :date_drop_down, property: :date_time
         }
         table_column {
           text 'Game Time'

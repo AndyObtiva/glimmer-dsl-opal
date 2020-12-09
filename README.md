@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.3 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.4 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -58,7 +58,7 @@ Tic Tac Toe on the desktop with the same exact code (using the [`glimmer-dsl-swt
 ![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
 ![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
 
-NOTE: **Alpha Version** 0.7.3 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: **Alpha Version** 0.7.4 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello:
 
@@ -78,6 +78,7 @@ Hello:
 - [Hello, Checkbox Group!](#hello-checkbox-group)
 - [Hello, Date Time!](#hello-date-time)
 - [Hello, Table!](#hello-table)
+- [Hello, Button!](#hello-button)
 
 Elaborate:
 
@@ -145,6 +146,12 @@ Last but not least, you would likely want some special branding on the web, so y
 
 Alternatively, web developers may directly use [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) to build the GUI of web apps since it is as simple as desktop development, thus requiring a lot less code that is in pure Ruby only (as demonstrated in examples below) and avoiding opaque web concepts like 'render' and 'reactive' due to treating GUI as persistent just like desktop apps do. No HTML/JS/CSS skills are even required. Still, web designers may be involved with CSS only if needed, thanks to the clean semantic markup [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) automatically produces.
 
+## Principles
+
+- Live purely in Rubyland via the Glimmer GUI DSL, completely oblivious to web browser technologies.
+- Forget Routers! Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
+- HTML is strictly made for creating documents not interactive applications. As such, software engineers can avoid and focus on creating web applications with Glimmer DSL for Opal in pure Ruby while content creators and web designers are the ones responsible for creating HTML documents for content purposes only as HTML was originally intended. As such, Glimmer web GUI built by software engineers gets embedded in the body of a web page with content around it maintained by content creators and web designers. This achieves a correct separation of responsibilities and better maintainability.
+
 ## Pre-requisites
 
 - Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
@@ -179,7 +186,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.7.3'
+gem 'glimmer-dsl-opal', '~> 0.7.4'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -808,6 +815,10 @@ You should see "Hello, Custom Widget!"
 ![Glimmer DSL for Opal Hello Custom Widget](images/glimmer-dsl-opal-hello-custom-widget.gif)
 
 #### Hello, Custom Shell!
+
+This sample demonstrates Glimmer DSL for Opal's ability to open multiple shells (windows) as web browser tabs.
+
+It automatically handles routing so that tab URLs are bookmarkable. Web developers do not have to do any routing configuration manually.
 
 Add the following require statement to `app/assets/javascripts/application.rb`
 
@@ -1885,6 +1896,64 @@ Hello, Table! Playoff Type Changed
 Hello, Table! Game Booked
 
 ![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-game-booked.png)
+
+#### Hello, Button!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_button'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+class HelloButton
+  include Glimmer
+  
+  attr_accessor :count
+  
+  def initialize
+    @count = 0
+  end
+  
+  def launch
+    shell {
+      text 'Hello, Button!'
+      
+      button {
+        text bind(self, :count) {|value| "Click To Increment: #{value}  "}
+        
+        on_widget_selected {
+          self.count += 1
+        }
+      }
+    }.open
+  end
+end
+
+HelloButton.new.launch
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Button](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-button.png)
+![Glimmer DSL for SWT Hello Button](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-button-incremented.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Button!"
+
+![Glimmer DSL for Opal Hello Button](images/glimmer-dsl-opal-hello-button.png)
+![Glimmer DSL for Opal Hello Button](images/glimmer-dsl-opal-hello-button-incremented.png)
+
 
 ### Elaborate Samples
 

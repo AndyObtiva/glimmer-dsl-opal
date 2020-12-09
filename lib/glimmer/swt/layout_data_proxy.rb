@@ -3,6 +3,7 @@ require 'glimmer/swt/property_owner'
 module Glimmer
   module SWT
     class LayoutDataProxy
+      # TODO make this polymorphic as GridData or RowData subclasses
       include Glimmer::SWT::PropertyOwner
       attr_reader :parent,
                   :args,
@@ -48,6 +49,8 @@ module Glimmer
           @parent.dom_element.css('width', '100%') if width_hint.nil?
         else
           @parent.dom_element.css('text-align', @horizontal_alignment)
+          @parent.dom_element.css('margin-left', 'auto') if ['right', 'center'].include?(@horizontal_alignment.to_s)
+          @parent.dom_element.css('margin-right', 'auto') if ['left', 'center'].include?(@horizontal_alignment.to_s)
         end
         # TODO
 #         reapply
@@ -85,13 +88,13 @@ module Glimmer
       
       def grab_excess_horizontal_space=(grab_excess_horizontal_space)
         @grab_excess_horizontal_space = grab_excess_horizontal_space
-        @parent.dom_element.css('width', "100%") if @grab_excess_horizontal_space && width_hint.nil?
+        @parent.dom_element.css('width', "100%") if @grab_excess_horizontal_space && @horizontal_alignment == 'fill' && width_hint.nil?
 #         reapply
       end
 
       def grab_excess_vertical_space=(grab_excess_vertical_space)
         @grab_excess_vertical_space = grab_excess_vertical_space
-        @parent.dom_element.css('height', "100%") if @grab_excess_vertical_space && height_hint.nil?
+        @parent.dom_element.css('height', "100%") if @grab_excess_vertical_space && @vertical_alignment == 'fill' && height_hint.nil?
         # TODO
 #         reapply
       end

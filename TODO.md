@@ -4,10 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Implement on_focus_lost universally on all widgets
-- Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
-- Fix issue with hello_table button/combo not being centered yet stretched
-
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Document Tic Tac Toe sample at the top of the README file after rebasing
 - #           @table_items_observer_registration&.unobserve # TODO re-enable
@@ -53,6 +49,7 @@ this can be done by providing "parent_path" option (css selector) to Shell (e.g.
 - Update `date` and `time` to be spinner based, not drop-down based
 - Implement doit in on_key_pressed event for TextProxy et al
 - Support table multi-selection
+- Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
 
 ## Technical Tasks
 

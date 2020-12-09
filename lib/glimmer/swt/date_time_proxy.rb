@@ -116,7 +116,19 @@ module Glimmer
                 -> (event) {
                   if @timepicker_done
                     @timepicker_done = false
-                    Document.find('.ui-timepicker-close').click
+                    event_listener.call(event)
+                  end
+                }
+              }
+            },
+          ],
+          'on_focus_lost' => [
+            {
+              event: 'blur',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  if @timepicker_done
+                    @timepicker_done = false
                     event_listener.call(event)
                   end
                 }

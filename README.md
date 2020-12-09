@@ -20,7 +20,7 @@ Add the following require statement to `app/assets/javascripts/application.rb` i
 require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
 ```
 
-Glimmer GUI code from [glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb](glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb):
+Glimmer GUI code from [glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb](lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb):
 
 ```ruby
 # ...
@@ -1539,7 +1539,7 @@ You should see "Hello, Date Time!"
 
 #### Hello, Table!
 
-Note: This [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) sample has near-complete support, but is missing table context menus and table editing at the moment.
+Note: This [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) sample has near-complete support, but is missing table context menus at the moment.
 
 Add the following require statement to `app/assets/javascripts/application.rb`
 
@@ -1738,23 +1738,28 @@ class HelloTable
           text 'Game Date'
           width 150
           sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
+          editor :date_drop_down, property: :date_time
         }
         table_column {
           text 'Game Time'
           width 150
           sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
+          editor :time, property: :date_time
         }
         table_column {
           text 'Ballpark'
           width 180
+          editor :none
         }
         table_column {
           text 'Home Team'
           width 150
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Away Team'
           width 150
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
         }
         table_column {
           text 'Promotion'
@@ -1803,6 +1808,39 @@ Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObt
 
 ![Glimmer DSL for SWT Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table.png)
 
+Hello, Table! Editing Game Date
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-date.png)
+
+Hello, Table! Editing Game Time
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-time.png)
+
+Hello, Table! Editing Home Team
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-home-team.png)
+
+Hello, Table! Sorted Game Date Ascending
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-ascending.png)
+
+Hello, Table! Sorted Game Date Descending
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-descending.png)
+
+Hello, Table! Playoff Type Combo
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-combo.png)
+
+Hello, Table! Playoff Type Changed
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-changed.png)
+
+Hello, Table! Game Booked
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-game-booked.png)
+
+
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
 Start the Rails server:
@@ -1815,6 +1853,38 @@ Visit `http://localhost:3000`
 You should see "Hello, Date Time!"
 
 ![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table.png)
+
+Hello, Table! Editing Game Date
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-date.png)
+
+Hello, Table! Editing Game Time
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-time.png)
+
+Hello, Table! Editing Home Team
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-home-team.png)
+
+Hello, Table! Sorted Game Date Ascending
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-ascending.png)
+
+Hello, Table! Sorted Game Date Descending
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-descending.png)
+
+Hello, Table! Playoff Type Combo
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-combo.png)
+
+Hello, Table! Playoff Type Changed
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-changed.png)
+
+Hello, Table! Game Booked
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-game-booked.png)
 
 ### Elaborate Samples
 

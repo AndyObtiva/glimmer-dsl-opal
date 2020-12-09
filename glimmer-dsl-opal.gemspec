@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-12-07"
+  s.date = "2020-12-09"
   s.description = "Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -36,9 +36,12 @@ Gem::Specification.new do |s|
     "app/assets/stylesheets/glimmer/jquery-ui.structure.css",
     "app/assets/stylesheets/glimmer/jquery-ui.theme.css",
     "app/assets/stylesheets/glimmer/jquery.ui.timepicker.css",
+    "lib/display.rb",
+    "lib/file.rb",
     "lib/glimmer-dsl-opal.rb",
     "lib/glimmer-dsl-opal/ext/date.rb",
     "lib/glimmer-dsl-opal/ext/exception.rb",
+    "lib/glimmer-dsl-opal/ext/struct.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/contact_manager.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact_manager_presenter.rb",
@@ -162,6 +165,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/ui/custom_widget.rb",
     "lib/glimmer/util/proc_tracker.rb",
     "lib/net/http.rb",
+    "lib/os.rb",
     "lib/uri.rb"
   ]
   s.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal".freeze

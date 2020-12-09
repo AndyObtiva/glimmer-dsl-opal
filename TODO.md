@@ -4,13 +4,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
-- Document Tic Tac Toe sample at the top of the README file after rebasing
-- #           @table_items_observer_registration&.unobserve # TODO re-enable
-
 ## Soon
 
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
+- Add more hello_table.rb screenshots
 - Hello, Pop Up Context Menu! Sample
 
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)

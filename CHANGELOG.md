@@ -5,9 +5,10 @@
 - `date_drop_down` `table_column` `editor`
 - `date` `table_column` `editor`
 - `time` `table_column` `editor`
-- Fix issue with table item selection for booking not working after editing has been added
 - Implement `on_focus_gained`, `on_focus_lost` universally on all widgets
+- Add support for Struct keyword_init to Opal
 - Fix issue with hello_table button/combo not being centered (yet stretched)
+- Fix issue with table item selection for booking not working after editing has been added
 - Fix escape keyboard event handling for combo table editor
 
 ## 0.7.1

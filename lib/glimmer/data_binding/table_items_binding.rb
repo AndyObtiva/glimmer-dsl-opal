@@ -35,7 +35,7 @@ module Glimmer
         model_cells = new_model_collection.to_a.map {|m| @table.cells_for(m)}
         return if table_cells == model_cells
         if new_model_collection and new_model_collection.is_a?(Array)
-#           @table_items_observer_registration&.unobserve # TODO re-enable
+          @table_items_observer_registration&.unobserve
           @table_items_observer_registration = observe(new_model_collection, @column_properties)
           add_dependent(@table_observer_registration => @table_items_observer_registration)
           @model_collection = new_model_collection

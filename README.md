@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.1 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.2 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -12,7 +12,53 @@ Use in one of two ways:
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-NOTE: Alpha Version 0.7.1 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+#### Tic Tac Toe Sample
+
+Add the following require statement to `app/assets/javascripts/application.rb` in a [Glimmer setup](#setup) Rails app:
+
+```ruby
+require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
+```
+
+Glimmer GUI code from [glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb](glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb):
+
+```ruby
+# ...
+    @shell = shell {
+      text "Tic-Tac-Toe"
+      minimum_size 150, 178
+      composite {
+        grid_layout 3, true
+        (1..3).each { |row|
+          (1..3).each { |column|
+            button {
+              layout_data :fill, :fill, true, true
+              text        bind(@tic_tac_toe_board[row, column], :sign)
+              enabled     bind(@tic_tac_toe_board[row, column], :empty)
+              font        style: :bold, height: 20
+              on_widget_selected {
+                @tic_tac_toe_board.mark(row, column)
+              }
+            }
+          }
+        }
+      }
+    }
+# ...
+```
+Tic Tac Toe on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem):
+
+![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
+![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
+![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
+
+Tic Tac Toe on the desktop with the same exact code (using the [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
+![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
+![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
+
+NOTE: Alpha Version 0.7.2 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
 
 Hello:
 
@@ -133,7 +179,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.7.1'
+gem 'glimmer-dsl-opal', '~> 0.7.2'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -172,7 +218,7 @@ Edit `app/views/layouts/application.html.erb` and add the following below other 
 
 Clear the file `app/views/welcomes/index.html.erb` from any content.
 
-Open a `Document.ready?` block and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
+Open `app/assets/javascripts/application.rb`, add a `Document.ready?` block, and add inside it Glimmer GUI DSL code or a require statement for one of the samples below.
 
 ```ruby
 Document.ready? do

@@ -45,8 +45,10 @@ if RUBY_ENGINE == 'opal'
 #   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.structure.min.css'
 #   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css'
   require 'opal-jquery'
-  require 'glimmer'
+ 
   require 'facets/hash/symbolize_keys'
+  require 'glimmer-dsl-opal/ext/struct'
+  require 'glimmer'
   require 'glimmer-dsl-opal/ext/exception'
   require 'glimmer-dsl-opal/ext/date'
   require 'uri'
@@ -77,41 +79,6 @@ if RUBY_ENGINE == 'opal'
     result ||= method == 'handle'
   end
   
-  class OS
-    class << self
-      def windows?
-        # No Op in Opal
-      end
-      
-      def mac?
-        # No Op in Opal
-      end
-      
-      def linux?
-        # No Op in Opal
-      end
-    end
-  end
-  
-  class File
-    class << self
-      def read(*args, &block)
-        # TODO implement via asset downloads in the future
-        # No Op in Opal
-      end
-    end
-  end
-  
-  class Display
-    class << self
-      def setAppName(app_name)
-        # No Op in Opal
-      end
-      def setAppVersion(version)
-        # No Op in Opal
-      end
-    end
-  end
 else
   require_relative 'glimmer/engine'
 end

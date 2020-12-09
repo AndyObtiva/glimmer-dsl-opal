@@ -19,36 +19,13 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Glimmer
-  module SWT
-    # Emulates SWT's native org.eclipse.swt.custom.ControlEditor
-    class ControlEditor
-      # TODO implement behavior for all these attributes
-      ATTRIBUTES = [:grabHorizontal, :grabVertical, :horizontalAlignment, :verticalAlignment, :minimumWidth, :minimumHeight]
-      attr_accessor(*ATTRIBUTES)
-      ATTRIBUTES.each do |attribute|
-        alias_method attribute.underscore, attribute
-        alias_method "#{attribute.underscore}=", "#{attribute}="
-      end
-      
-      # TODO consider supporting a java_attr_accessor to get around having to generate all the aliases manually
-      attr_accessor :editor
-      alias getEditor editor
-      alias get_editor editor
-      alias setEditor editor=
-      alias set_editor editor=
-      
-      # TODO implement `#layout` method if needed
-      
-      attr_reader :composite
-      
-      def initialize(composite)
-        @composite = composite
-      end
-      
-      # TODO implement showing editor for composite or canvas
-#       def editor=(widget)
-#       end
+class Display
+  class << self
+    def setAppName(app_name)
+      # No Op in Opal
+    end
+    def setAppVersion(version)
+      # No Op in Opal
     end
   end
 end

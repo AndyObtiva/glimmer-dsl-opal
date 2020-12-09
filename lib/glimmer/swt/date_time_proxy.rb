@@ -114,8 +114,8 @@ module Glimmer
               event: 'change',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  if @timepicker_done
-                    @timepicker_done = false
+                  if date? || (time? && @timepicker_done)
+                    @timepicker_done = false if time?
                     event_listener.call(event)
                   end
                 }
@@ -127,8 +127,9 @@ module Glimmer
               event: 'blur',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  if @timepicker_done
-                    @timepicker_done = false
+                  # TODO support blur event for date?
+                  if time? && @timepicker_done
+                    @timepicker_done = false if time?
                     event_listener.call(event)
                   end
                 }

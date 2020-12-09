@@ -153,7 +153,7 @@ module Glimmer
       
       def remove_all_listeners
         effective_observation_request_to_event_mapping.keys.each do |keyword|
-          [effective_observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+          effective_observation_request_to_event_mapping[keyword].to_collection.each do |mapping|
             observation_requests[keyword].to_a.each do |event_listener|
               event = mapping[:event]
               event_handler = mapping[:event_handler]
@@ -375,7 +375,7 @@ module Glimmer
         return unless effective_observation_request_to_event_mapping.keys.include?(keyword)
         event = nil
         delegate = nil
-        [effective_observation_request_to_event_mapping[keyword]].flatten.each do |mapping|
+        effective_observation_request_to_event_mapping[keyword].to_collection.each do |mapping|
           observation_requests[keyword] ||= Set.new
           observation_requests[keyword] << event_listener
           event = mapping[:event]

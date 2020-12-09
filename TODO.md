@@ -4,23 +4,23 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-## Soon
-
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Add more hello_table.rb screenshots
 - Hello, Pop Up Context Menu! Sample
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Support having any widget contribute static document-wide CSS to ShellProxy
+
+## Soon
+
+- Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
+- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
+- Support Authentication (username/password)
 
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 this can be done by providing "parent_path" option (css selector) to Shell (e.g. shell(parent_path: 'div#glimmer-app')
-
-- Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
-
 - Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
-- Support having any widget contribute static document-wide CSS to ShellProxy
-
-- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets. Otherwise, any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
-- Support Authentication (username/password)
+- Support downloading any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
+Consider a security model where you pre-add all gem Ruby files to make available for download, but only enable download at runtime when a file is requested (keeping all other fiels sealed and protected) using some authorized scheme/model (e.g. pundit)
 
 ## Issues
 
@@ -48,6 +48,7 @@ this can be done by providing "parent_path" option (css selector) to Shell (e.g.
 - Implement doit in on_key_pressed event for TextProxy et al
 - Support table multi-selection
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
+
 
 ## Technical Tasks
 

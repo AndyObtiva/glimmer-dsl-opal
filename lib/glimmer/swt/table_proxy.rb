@@ -128,9 +128,6 @@ module Glimmer
                   on_widget_selected {
                     table_proxy.finish_edit!
                   }
-                  on_focus_lost {
-                    table_proxy.finish_edit!
-                  }
                   on_key_pressed { |key_event|
                     if key_event.keyCode == swt(:cr)
                       table_proxy.finish_edit!
@@ -151,9 +148,6 @@ module Glimmer
                   date_time model.send(property)
                   focus true
                   on_widget_selected {
-                    table_proxy.finish_edit!
-                  }
-                  on_focus_lost {
                     table_proxy.finish_edit!
                   }
                   on_key_pressed { |key_event|
@@ -362,7 +356,7 @@ module Glimmer
       end
       
       def sort_property=(new_sort_property)
-        @sort_property = [new_sort_property].flatten.compact
+        @sort_property = new_sort_property.to_collection
       end
       
       def detect_sort_type
@@ -383,7 +377,7 @@ module Glimmer
       
       def column_sort_properties
         column_properties.zip(columns.map(&:sort_property)).map do |pair|
-          [pair.compact.last].flatten.compact
+          pair.compact.last.to_collection
         end
       end
       
@@ -414,7 +408,7 @@ module Glimmer
           end
         end
         
-        new_sort_property = [new_sort_property].flatten.compact unless new_sort_property.is_a?(Array)
+        new_sort_property = new_sort_property.to_collection unless new_sort_property.is_a?(Array)
         @sort_direction = @sort_direction.nil? || @sort_property.first != new_sort_property.first || @sort_direction == :descending ? :ascending : :descending
         
         @sort_property = new_sort_property
@@ -520,7 +514,7 @@ module Glimmer
         @edit_mode = true
         
         editor_config = columns[column_index].editor || editor
-        editor_config = [editor_config].flatten.compact
+        editor_config = editor_config.to_collection
         editor_widget_options = editor_config.last.is_a?(Hash) ? editor_config.last : {}
         editor_widget_arg_last_index = editor_config.last.is_a?(Hash) ? -2 : -1
         editor_widget = (editor_config[0] || :text).to_sym

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.3
+
+- Refactor to use to_collection gem
+- Fix issue with breaking `date`/`date_drop_down` data-binding as table editor on focus lost
+- Fix issue with requiring OS, File, and Display class after they've been extracted out
+
 ## 0.7.2
 
 - `date_drop_down` `table_column` `editor`

@@ -215,6 +215,7 @@ GEM
     thread_safe (0.3.6)
     thread_safe (0.3.6-java)
     tilt (2.0.10)
+    to_collection (2.0.1)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.22.0)
@@ -252,6 +253,7 @@ DEPENDENCIES
   rake (>= 10.1.0, < 14.0.0)
   rake-tui
   rdoc (>= 6.2.1, < 7.0.0)
+  to_collection (~> 2.0.1)
 
 BUNDLED WITH
    2.1.4

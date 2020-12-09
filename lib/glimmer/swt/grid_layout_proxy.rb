@@ -7,9 +7,8 @@ module Glimmer
         .grid-layout {
           display: grid;
           grid-template-rows: min-content;
-          justify-content: start;
           place-content: start;
-          align-items: stretch;      
+          align-items: stretch;
         }
       CSS
       attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
@@ -18,7 +17,7 @@ module Glimmer
         super(parent, args)
         self.horizontal_spacing = 10
         self.vertical_spacing = 10
-        self.num_columns = @args.first || 1        
+        self.num_columns = @args.first || 1
         reapply
       end
 
@@ -30,7 +29,7 @@ module Glimmer
       end
       
       def make_columns_equal_width=(equal_width)
-        @make_columns_equal_width = equal_width        
+        @make_columns_equal_width = equal_width
 #         @parent.add_css_class('make_columns_equal_width') if @make_columns_equal_width
         reapply
       end
@@ -68,15 +67,15 @@ module Glimmer
           grid-column-gap: #{@horizontal_spacing}px;
         CSS
         if @parent.css_classes.include?('grid-layout')
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
             @parent.dom_element.css(key, value) unless key.nil?
           end
         else
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|          
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
             @parent.dom_element.css(key, 'initial') unless key.nil?
-          end        
+          end
         end
-      end      
+      end
     end
   end
 end

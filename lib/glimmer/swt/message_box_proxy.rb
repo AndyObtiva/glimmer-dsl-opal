@@ -8,7 +8,7 @@ module Glimmer
       
       def initialize(parent, args, block)
         i = 0
-        @parent = parent || DisplayProxy.instance.shells.first
+        @parent = parent || DisplayProxy.instance.shells.last
         @args = args
         @block = block
         @children = Set.new
@@ -30,16 +30,8 @@ module Glimmer
         dom_element.find('.modal-content .message').html(@text)
       end
       
-      def document
-        element = self
-        begin
-          element = element.parent
-        end while(element.parent)
-        element
-      end
-      
       def open
-        document.post_initialize_child(self)
+        parent.post_initialize_child(self)
       end
       
       def hide

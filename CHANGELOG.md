@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.7.4
+
+- Hello, Button! Sample
+- Fix issue with aligning label as :left, :center, or :right via style style when fill_layout is used
+- Fix Hello, Browser sample by accessing https ssl website
+- Fix issue with filling space horizontally when using grid layout
+- Fix broken embedded `calendar` widget data-binding for hello_date_time.rb sample
+- Fix broken message_box after opening multiple shells
+- Fix issue with opening custom shells in new tabs/windows when CustomShell subclass is required conditionally
+
 ## 0.7.3
 
 - Refactor to use to_collection gem

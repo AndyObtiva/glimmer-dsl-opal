@@ -155,7 +155,7 @@ Alternatively, web developers may directly use [Glimmer DSL for Opal](https://ru
 
 ## Setup
 
-(NOTE: if you run into issues, keep in mind this is a very early experimental and incomplete **alpha**. Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
+(NOTE: Keep in mind this is a very early experimental and incomplete **alpha**. If you run into issues, try to go back to a [previous revision](https://rubygems.org/gems/glimmer-dsl-opal/versions). Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
 
 The [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem is a Rails Engine gem that includes assets.
 

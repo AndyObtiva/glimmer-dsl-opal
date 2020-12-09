@@ -5,10 +5,11 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 ## Next
 
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
-- Add more hello_table.rb screenshots
 - Hello, Pop Up Context Menu! Sample
+- [Refactoring] Support having any widget contribute static document-wide CSS to ShellProxy
+- Add hello_table.rb screenshot for context menu
+
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
-- Support having any widget contribute static document-wide CSS to ShellProxy
 
 ## Soon
 
@@ -16,11 +17,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
 - Support Authentication (username/password)
 
-- Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
-this can be done by providing "parent_path" option (css selector) to Shell (e.g. shell(parent_path: 'div#glimmer-app')
-- Secure Custom Shell options by passing through localStorage instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
+- Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into via a global Display#shell_element_path, shell_element_id or something of the like. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
+this can be done by providing "parent_path" option (css selector) to Shell (e.g. shell(parent_path: 'div#glimmer-app'). Also, generate shell IDs in localStorage since multiple shells can be spawned in separate tabs and cannot keep track of IDs in the same JS runtime
+- Secure Custom Shell options by passing through localStorage database instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 - Support downloading any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
 Consider a security model where you pre-add all gem Ruby files to make available for download, but only enable download at runtime when a file is requested (keeping all other fiels sealed and protected) using some authorized scheme/model (e.g. pundit)
+- Always open a second shell in a separate browser tab/window even if not a custom shell (id'ing uniquely)
 
 ## Issues
 
@@ -34,7 +36,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
 - Consider the idea of supporting multiple web implementations for a widget to allow different looks, perhaps allowing 3rd parties to plug extra implementations as needed as different "adapters"
-- Support the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
+- Consider the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
 - Support real menus `menu_bar`
 - Hello, Menu Bar! Sample
 - MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations

@@ -42,6 +42,11 @@ module Glimmer
         end
   
         def interpret(parent, keyword, *args, &block)
+          begin
+            require `localStorage[#{keyword}]`
+          rescue => e
+            Glimmer::Config.logger.debug e.message
+          end
           custom_widget_class = UI::CustomWidget.for(keyword)
           # TODO clean code by extracting methods into CustomShell
           if !Glimmer::UI::CustomShell.requested? && custom_widget_class&.ancestors&.to_a.include?(Glimmer::UI::CustomShell)

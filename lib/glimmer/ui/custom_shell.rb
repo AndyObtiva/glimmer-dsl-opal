@@ -1,5 +1,5 @@
 # Copyright (c) 2020 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -31,8 +31,10 @@ module Glimmer
       class << self
         def included(klass)
           klass.extend(CustomWidget::ClassMethods)
-          klass.include(Glimmer) 
+          klass.include(Glimmer)
           Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
+          keyword = klass.name.split(':').last.underscore
+          `localStorage[#{keyword}] = #{$LOADED_FEATURES.last}`
         end
           
         def request_parameter_string
@@ -44,12 +46,12 @@ module Glimmer
         end
         
         def requested_and_not_handled?
-          requested? && !request_parameter_string.include?('custom_shell_handled=true')        
-        end   
+          requested? && !request_parameter_string.include?('custom_shell_handled=true')
+        end
         
         def requested?
           request_parameter_string.include?('custom_shell=')
-        end   
+        end
       end
       
       def initialize(parent, args, options, &content)

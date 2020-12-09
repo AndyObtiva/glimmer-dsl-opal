@@ -4,11 +4,10 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class LabelProxy < WidgetProxy
-      attr_reader :text, :background_image, :image, :alignment
+      attr_reader :text, :background_image, :image
       
       def initialize(parent, args, block)
         super(parent, args, block)
-        self.alignment = [:left, :center, :right].detect {|align| args.detect { |arg| SWTProxy[align] == arg } }
       end
 
       def text=(value)
@@ -32,6 +31,15 @@ module Glimmer
       def element
         'label'
       end
+      
+      def alignment
+        if @alignment.nil?
+          found_arg = nil
+          @alignment = [:left, :center, :right].detect {|align| found_arg = args.detect { |arg| SWTProxy[align] == SWTProxy[arg] } }
+          args.delete(found_arg)
+        end
+        @alignment
+      end
 
       def alignment=(value)
         # TODO consider storing swt value in the future instead
@@ -44,7 +52,7 @@ module Glimmer
         label_id = id
         label_class = name
         @dom ||= html {
-          label(id: label_id, class: label_class) {
+          label(id: label_id, class: label_class, style: "text-align: #{alignment};") {
             label_text
           }
         }.to_s

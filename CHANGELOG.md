@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.7.5
+
+- Update login sample from Glimmer DSL for SWT's latest changes
+- Update contact_manager sample from Glimmer DSL for SWT's latest changes
+- Fixed issue regarding unavailable localStorage data when accessed by custom_widget_expression in hello_checkbox_group, hello_radio_group, and hello_custom_widget
+
 ## 0.7.4
 
 - Hello, Button! Sample

@@ -43,7 +43,8 @@ module Glimmer
   
         def interpret(parent, keyword, *args, &block)
           begin
-            require `localStorage[#{keyword}]`
+            require_path = `localStorage[#{keyword}]`
+            require(require_path) if require_path
           rescue => e
             Glimmer::Config.logger.debug e.message
           end

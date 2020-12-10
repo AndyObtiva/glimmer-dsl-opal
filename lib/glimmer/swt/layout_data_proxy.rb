@@ -45,9 +45,7 @@ module Glimmer
       def horizontal_alignment=(horizontal_alignment)
         @horizontal_alignment = horizontal_alignment
         return if @horizontal_alignment.nil?
-        if @horizontal_alignment == 'fill'
-          @parent.dom_element.css('width', '100%') if width_hint.nil?
-        else
+        if @horizontal_alignment != 'fill'
           @parent.dom_element.css('text-align', @horizontal_alignment.to_s)
           @parent.dom_element.css('place-self', @horizontal_alignment.to_s)
           @parent.dom_element.css('margin-left', 'auto') if ['right', 'center'].include?(@horizontal_alignment.to_s)
@@ -89,7 +87,6 @@ module Glimmer
       
       def grab_excess_horizontal_space=(grab_excess_horizontal_space)
         @grab_excess_horizontal_space = grab_excess_horizontal_space
-        @parent.dom_element.css('width', "100%") if @grab_excess_horizontal_space && @horizontal_alignment == 'fill' && width_hint.nil?
         @parent.dom_element.css('justify-self', @horizontal_alignment) if @grab_excess_horizontal_space && @horizontal_alignment != 'fill' && width_hint.nil?
         @parent.parent.dom_element.css('justify-content', "normal") if @grab_excess_horizontal_space
 #         reapply
@@ -98,11 +95,11 @@ module Glimmer
       def grab_excess_vertical_space=(grab_excess_vertical_space)
         @grab_excess_vertical_space = grab_excess_vertical_space
         @parent.dom_element.css('height', "100%") if @grab_excess_vertical_space && @vertical_alignment == 'fill' && height_hint.nil?
-        # TODO
 #         reapply
       end
 
       def reapply
+        # TODO remove reapply method
 #         @parent.css = <<~CSS
 #         CSS
       end

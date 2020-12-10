@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.4 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.5 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -52,15 +52,15 @@ Tic Tac Toe on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/g
 ![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
 ![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
 
-Tic Tac Toe on the desktop with the same exact code (using the [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+Tic Tac Toe on the desktop with the same exact code (using the [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
 ![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
 ![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
 
-NOTE: **Alpha Version** 0.7.4 only supports bare-minimum capabilities for the following [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) [samples](https://github.com/AndyObtiva/glimmer#samples):
+NOTE: **Alpha Version** 0.7.5 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally made for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
 
-Hello:
+[Hello samples](#hello-samples):
 
 - [Hello, World!](#hello-world)
 - [Hello, Combo!](#hello-combo)
@@ -80,7 +80,7 @@ Hello:
 - [Hello, Table!](#hello-table)
 - [Hello, Button!](#hello-button)
 
-Elaborate:
+[Elaborate samples](#elaborate-samples):
 
 - [Login](#login)
 - [Tic Tac Toe](#tic-tac-toe)
@@ -136,6 +136,13 @@ Event loop:
 - `display`
 - `async_exec`
 
+## Principles
+
+- **Live purely in Rubyland via the Glimmer GUI DSL**, completely oblivious to web browser technologies.
+- **Forget Routers!** Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
+- **HTML is strictly made for creating documents not interactive applications**. As such, software engineers can avoid it and focus on creating web applications more productively with Glimmer DSL for Opal in pure Ruby (just like they do in desktop development) while content creators and web designers can be the ones responsible for creating HTML documents for web content purposes only as HTML was originally intended. Web designers may also style Glimmer DSL for Opal applications since they auto-generate symantic markup. That way, Glimmer web GUI is used and embedded in web pages that provide users with applications while the rest of the web pages are maintained by non-engineers. This achieves a correct separation of responsibilities and better productivity and maintainability.
+- **Web servers are used just like servers in traditional client/server architecture**, meaning they simply provide RMI services to enable centralizing some of the application logic and data in the cloud to make available everywhere and enable data-sharing with others.
+
 ## Background
 
 The original idea behind Glimmer DSL for Opal was that you start by having a [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) desktop app that communicates with a Rails API for any web/cloud concerns. The pure Ruby [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) is very simple, so it is more productive to build GUI in it since it does not go through a server/client request/response cycle and can be iterated on locally with a much shorter feedback cycle. Once the GUI and the rest of the app is built. You simply embed it in a Rails app as a one line require statement after adding the Glimmer DSL for Opal gem, and BOOM, it just works on the web inside a web browser with the same server/client communication you had in the desktop app (I am working on adding minimal support for net/http in Opal so that desktop apps that use it continue to work in a web browser. Until then, just use [Opal-jQuery](https://github.com/opal/opal-jquery) http support). That way, you get two apps for one: desktop and web.
@@ -145,12 +152,6 @@ Part of the idea is that web browsers just render GUI widgets similar to those o
 Last but not least, you would likely want some special branding on the web, so you can push that off to a web designer who would be more than happy to do the web graphic design and customize the look and feel with pure CSS (no need for programming with Ruby or JavaScript). This enables a clean separation of concerns and distribution of tasks among developers and designers, let alone saving effort on the web GUI by reusing the desktop GUI as a base right off the bat.
 
 Alternatively, web developers may directly use [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) to build the GUI of web apps since it is as simple as desktop development, thus requiring a lot less code that is in pure Ruby only (as demonstrated in examples below) and avoiding opaque web concepts like 'render' and 'reactive' due to treating GUI as persistent just like desktop apps do. No HTML/JS/CSS skills are even required. Still, web designers may be involved with CSS only if needed, thanks to the clean semantic markup [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) automatically produces.
-
-## Principles
-
-- Live purely in Rubyland via the Glimmer GUI DSL, completely oblivious to web browser technologies.
-- Forget Routers! Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
-- HTML is strictly made for creating documents not interactive applications. As such, software engineers can avoid and focus on creating web applications with Glimmer DSL for Opal in pure Ruby while content creators and web designers are the ones responsible for creating HTML documents for content purposes only as HTML was originally intended. As such, Glimmer web GUI built by software engineers gets embedded in the body of a web page with content around it maintained by content creators and web designers. This achieves a correct separation of responsibilities and better maintainability.
 
 ## Pre-requisites
 
@@ -186,7 +187,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.7.4'
+gem 'glimmer-dsl-opal', '~> 0.7.5'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -255,11 +256,17 @@ end
 
 Follow the instructions below to try out [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) samples webified via [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal)
 
-Also, this external sample app contains all the samples mentioned below configured inside a Rails 5 [Opal](https://opalrb.com/) app with all the pre-requisites ready to go for convenience:
+The [Hello samples](#hello-samples) demonstrate tiny building blocks for building full fledged applications. The [Elaborate samples](#elaborate-samples) demonstrate more advanced sample applications that assemble multiple building blocks.
 
-[https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails5-app)
+This external sample app contains all the samples mentioned below configured inside a Rails [Opal](https://opalrb.com/) app with all the pre-requisites ready to go for convenience:
 
-Some of the screenshots might be out of date with updates done to samples in both [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) and [glimmer-dsl-opal](https://github.com/AndyObtiva/glimmer-dsl-opal).
+[https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app)
+
+You may visit a Heroku hosted version at:
+
+https://sample-glimmer-dsl-opal-app.herokuapp.com/
+
+Note: Some of the screenshots might be out of date with updates done to samples in both [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) and [glimmer-dsl-opal](https://github.com/AndyObtiva/glimmer-dsl-opal).
 
 ### Hello Samples
 
@@ -1970,7 +1977,6 @@ Or add the Glimmer code directly if you prefer to play around with it:
 ```ruby
 require "observer"
 
-#Presents login screen data
 class LoginPresenter
 
   attr_accessor :user_name
@@ -1986,9 +1992,12 @@ class LoginPresenter
   def status=(status)
     @status = status
 
-    #TODO add feature to bind dependent properties to master property (2017-07-25 nested data binding)
     notify_observers("logged_in")
     notify_observers("logged_out")
+  end
+  
+  def valid?
+    !@user_name.to_s.strip.empty? && !@password.to_s.strip.empty?
   end
 
   def logged_in
@@ -2000,6 +2009,7 @@ class LoginPresenter
   end
 
   def login
+    return unless valid?
     self.status = "Logged In"
   end
 
@@ -2011,7 +2021,6 @@ class LoginPresenter
 
 end
 
-#Login screen
 class Login
   include Glimmer
 
@@ -2023,15 +2032,21 @@ class Login
         grid_layout 2, false #two columns with differing widths
 
         label { text "Username:" } # goes in column 1
-        text {                     # goes in column 2
+        @user_name_text = text {   # goes in column 2
           text bind(presenter, :user_name)
           enabled bind(presenter, :logged_out)
+          on_key_pressed { |event|
+            @password_text.set_focus if event.keyCode == swt(:cr)
+          }
         }
 
         label { text "Password:" }
-        text(:password, :border) {
+        @password_text = text(:password, :border) {
           text bind(presenter, :password)
           enabled bind(presenter, :logged_out)
+          on_key_pressed { |event|
+            presenter.login if event.keyCode == swt(:cr)
+          }
         }
 
         label { text "Status:" }
@@ -2041,12 +2056,21 @@ class Login
           text "Login"
           enabled bind(presenter, :logged_out)
           on_widget_selected { presenter.login }
+          on_key_pressed { |event|
+            presenter.login if event.keyCode == swt(:cr)
+          }
         }
 
         button {
           text "Logout"
           enabled bind(presenter, :logged_in)
           on_widget_selected { presenter.logout }
+          on_key_pressed { |event|
+            if event.keyCode == swt(:cr)
+              presenter.logout
+              @user_name_text.set_focus
+            end
+          }
         }
       }
     }
@@ -2529,41 +2553,76 @@ class ContactManager
     shell {
       text "Contact Manager"
       composite {
-        composite {
-          grid_layout 2, false
-          label {text "First &Name: "}
+        group {
+          grid_layout(2, false) {
+            margin_width 0
+            margin_height 0
+          }
+          layout_data :fill, :center, true, false
+          text 'Lookup Contacts'
+          font height: 24
+          
+          label {
+            layout_data :right, :center, false, false
+            text "First &Name: "
+            font height: 16
+          }
           text {
+            layout_data :fill, :center, true, false
             text bind(@contact_manager_presenter, :first_name)
             on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
             }
           }
-          label {text "&Last Name: "}
+          
+          label {
+            layout_data :right, :center, false, false
+            text "&Last Name: "
+            font height: 16
+          }
           text {
+            layout_data :fill, :center, true, false
             text bind(@contact_manager_presenter, :last_name)
             on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
             }
           }
-          label {text "&Email: "}
+          
+          label {
+            layout_data :right, :center, false, false
+            text "&Email: "
+            font height: 16
+          }
           text {
+            layout_data :fill, :center, true, false
             text bind(@contact_manager_presenter, :email)
             on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == Glimmer::SWT::SWTProxy[:cr]
+              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
             }
           }
+          
           composite {
-            grid_layout 2, false
+            row_layout {
+              margin_width 0
+              margin_height 0
+            }
+            layout_data(:right, :center, false, false) {
+              horizontal_span 2
+            }
+            
             button {
               text "&Find"
-              on_widget_selected {
-                @contact_manager_presenter.find
+              on_widget_selected { @contact_manager_presenter.find }
+              on_key_pressed {|key_event|
+                @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
               }
             }
+            
             button {
               text "&List All"
-              on_widget_selected {
-                @contact_manager_presenter.list
+              on_widget_selected { @contact_manager_presenter.list }
+              on_key_pressed {|key_event|
+                @contact_manager_presenter.list if key_event.keyCode == swt(:cr)
               }
             }
           }
@@ -2580,26 +2639,18 @@ class ContactManager
           table_column {
             text "First Name"
             width 80
-            on_widget_selected {
-              @contact_manager_presenter.toggle_sort(:first_name)
-            }
           }
           table_column {
             text "Last Name"
             width 80
-            on_widget_selected {
-              @contact_manager_presenter.toggle_sort(:last_name)
-            }
           }
           table_column {
             text "Email"
             width 200
-            on_widget_selected {
-              @contact_manager_presenter.toggle_sort(:email)
-            }
           }
-          items bind(@contact_manager_presenter, :results), column_properties(:first_name, :last_name, :email)
-          on_mouse_down { |event|
+          items bind(@contact_manager_presenter, :results),
+          column_properties(:first_name, :last_name, :email)
+          on_mouse_up { |event|
             table_proxy.edit_table_item(event.table_item, event.column_index)
           }
         }
@@ -2609,7 +2660,6 @@ class ContactManager
 end
 
 ContactManager.new.launch
-
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 

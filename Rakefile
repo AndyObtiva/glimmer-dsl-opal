@@ -21,7 +21,7 @@ unless jeweler_required.nil?
     gem.homepage = "http://github.com/AndyObtiva/glimmer-dsl-opal"
     gem.license = "MIT"
     gem.summary = %Q{Glimmer DSL for Opal}
-    gem.description = %Q{Glimmer DSL for Opal (Web GUI Adapter for Desktop Apps)}
+    gem.description = %Q{Glimmer DSL for Opal (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps Running via Opal on Rails)}
     gem.email = "andy.am@gmail.com"
     gem.authors = ["AndyMaleh"]
     gem.executables = []

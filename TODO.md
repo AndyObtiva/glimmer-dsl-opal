@@ -4,6 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Hello, Link!
+- Add all Canadian provinces & territories to multi list selection sample
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - Hello, Pop Up Context Menu! Sample
 - [Refactoring] Support having any widget contribute static document-wide CSS to ShellProxy
@@ -26,6 +28,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 ## Issues
 
+- Focus on next enabled widget when disabling a widget
 
 ## Features
 

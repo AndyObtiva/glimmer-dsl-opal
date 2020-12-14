@@ -7,6 +7,7 @@ module Glimmer
     module Opal
       class WidgetExpression < Expression
         include ParentExpression
+        
         EXCLUDED_KEYWORDS = %w[shell display]
   
         def can_interpret?(parent, keyword, *args, &block)
@@ -18,9 +19,9 @@ module Glimmer
         def interpret(parent, keyword, *args, &block)
           Glimmer::SWT::WidgetProxy.for(keyword, parent, args, block)
         end
-
+        
         def add_content(parent, &block)
-          if parent.rendered?
+          if parent.rendered? || parent.skip_content_on_render_blocks?
             super(parent, &block)
             parent.post_add_content
           else

@@ -23,16 +23,20 @@ require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 require 'glimmer/swt/swt_proxy'
 
+# TODO implement menu (which delays building it till render using add_content_on_render)
+
 module Glimmer
   module SWT
     class WidgetProxy
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered, :menu_requested
+      attr_accessor :menu
       alias isDisposed disposed?
       alias is_disposed disposed?
       alias rendered? rendered
+      alias menu_requested? menu_requested
       
       class << self
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
@@ -76,7 +80,7 @@ module Glimmer
       end
       
       DEFAULT_INITIALIZERS = {
-        "composite" => lambda do |composite_proxy|
+        composite: lambda do |composite_proxy|
           if composite_proxy.layout.nil?
             layout = GridLayoutProxy.new(composite_proxy, [])
             composite_proxy.layout = layout
@@ -84,18 +88,18 @@ module Glimmer
             layout.margin_height = 15
           end
         end,
-#         "scrolled_composite" => lambda do |scrolled_composite|
+#         scrolled_composite: lambda do |scrolled_composite|
 #           scrolled_composite.expand_horizontal = true
 #           scrolled_composite.expand_vertical = true
 #         end,
-#         "table" => lambda do |table|
+#         table: lambda do |table|
 #           table.setHeaderVisible(true)
 #           table.setLinesVisible(true)
 #         end,
-        "table_column" => lambda do |table_column_proxy|
+        table_column: lambda do |table_column_proxy|
           table_column_proxy.width = 80
         end,
-#         "group" => lambda do |group_proxy|
+#         group: lambda do |group_proxy|
 #           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.layout.nil?
 #         end,
       }
@@ -107,7 +111,7 @@ module Glimmer
         @children = Set.new # TODO consider moving to composite
         @enabled = true
         @data = {}
-        DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self)]&.call(self)
+        DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self).to_s.to_sym]&.call(self)
         @parent.post_initialize_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
       end
       
@@ -124,7 +128,19 @@ module Glimmer
       
       # Executes at the closing of a parent widget curly braces after all children/properties have been added/set
       def post_add_content
-        # No Op by default
+        if !menu.nil? && !is_a?(MenuProxy) && !is_a?(MenuItemProxy)
+          on_mouse_down { |mouse_event|
+            if mouse_event.button == 3 # right-click
+              @menu_requested = true
+              dom_element.css('position', 'relative')
+              menu&.render
+              menu.dom_element.css('position', 'absolute')
+              menu.dom_element.css('left', mouse_event.x - parent.layout&.margin_width.to_i) # TODO - parent.layout&.margin_left.to_i)
+              menu.dom_element.css('top', mouse_event.y - parent.layout&.margin_height.to_i - 5) # TODO - parent.layout&.margin_top.to_i)
+              @menu_requested = false
+            end
+          }
+        end
       end
       
       def set_data(key=nil, value)
@@ -148,6 +164,7 @@ module Glimmer
         Document.find(path).remove
         parent&.post_dispose_child(self)
         # TODO fire on_widget_disposed listener
+#         children.each(:dispose) # TODO enable this safely
         @disposed = true
       end
       
@@ -160,6 +177,7 @@ module Glimmer
               event_element_css_selector = mapping[:event_element_css_selector]
               the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
               the_listener_dom_element.off(event)
+              # TODO improve to precisely remove the listeners that were added, no more no less. (or use the event_listener_proxies method instead or in collaboration)
             end
           end
         end
@@ -215,32 +233,35 @@ module Glimmer
         Document.find(parent_path)
       end
       
-      def render(custom_parent_dom_element = nil)
+      def render(custom_parent_dom_element: nil, brand_new: false)
         the_parent_dom_element = custom_parent_dom_element || parent_dom_element
         old_element = dom_element
-        brand_new = @dom.nil? || old_element.empty?
-        build_dom(!custom_parent_dom_element) # TODO handle custom parent layout by passing parent instead of parent dom element
+        brand_new = @dom.nil? || old_element.empty? || brand_new
+        build_dom(layout: !custom_parent_dom_element) # TODO handle custom parent layout by passing parent instead of parent dom element
         if brand_new
           the_parent_dom_element.append(@dom)
         else
           old_element.replace_with(@dom)
         end
-        observation_requests&.clone&.each do |keyword, event_listener_set|
+        observation_requests&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
-            observation_requests[keyword].delete(event_listener) # TODO look into the implications of this and if it's needed.
-            handle_observation_request(keyword, &event_listener)
+            handle_observation_request(keyword, event_listener)
           end
         end
         children.each do |child|
           child.render
         end
         @rendered = true
-        content_on_render_blocks.each { |content_block| content(&content_block) }
+        content_on_render_blocks.each { |content_block| content(&content_block) } unless skip_content_on_render_blocks?
       end
       alias redraw render
       
       def content_on_render_blocks
         @content_on_render_blocks ||= []
+      end
+      
+      def skip_content_on_render_blocks?
+        false
       end
       
       def add_content_on_render(&content_block)
@@ -251,7 +272,7 @@ module Glimmer
         end
       end
       
-      def build_dom(layout=true)
+      def build_dom(layout: true)
         # TODO consider passing parent element instead and having table item include a table cell widget only for opal
         @dom = nil
         @dom = dom
@@ -273,12 +294,251 @@ module Glimmer
       end
       
       def default_observation_request_to_event_mapping
+        mouse_event_handler = -> (event_listener) {
+          -> (event) {
+            # TODO generalize this solution to all widgets that support key presses
+            # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:button, &event.method(:which))
+            event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
+            event.define_singleton_method(:x, &event.method(:page_x))
+            event.define_singleton_method(:y, &event.method(:page_y))
+            doit = true
+            event.define_singleton_method(:doit=) do |value|
+              doit = value
+            end
+            event.define_singleton_method(:doit) { doit }
+            
+            if event.which == 1
+#               event.prevent # TODO consider if this is needed
+              event_listener.call(event)
+            end
+            
+            # TODO Imlement doit properly for all different kinds of events
+#             unless doit
+#               event.prevent
+#               event.stop
+#               event.stop_immediate
+#             end
+          }
+        }
+        context_menu_handler = -> (event_listener) {
+          -> (event) {
+            # TODO generalize this solution to all widgets that support key presses
+            # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:button, &event.method(:which))
+            event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
+            event.define_singleton_method(:x, &event.method(:page_x))
+            event.define_singleton_method(:y, &event.method(:page_y))
+            doit = true
+            event.define_singleton_method(:doit=) do |value|
+              doit = value
+            end
+            event.define_singleton_method(:doit) { doit }
+            
+            if event.which == 3
+              event.prevent
+              event_listener.call(event)
+            end
+            
+            # TODO Imlement doit properly for all different kinds of events
+#             unless doit
+#               event.prevent
+#               event.stop
+#               event.stop_immediate
+#             end
+          }
+        }
         {
           'on_focus_gained' => {
             event: 'focus',
           },
           'on_focus_lost' => {
             event: 'blur',
+          },
+          'on_mouse_up' => [
+            {
+              event: 'mouseup',
+              event_handler: mouse_event_handler,
+            },
+            {
+              event: 'contextmenu',
+              event_handler: context_menu_handler,
+            },
+          ],
+          'on_mouse_down' => [
+            {
+              event: 'mousedown',
+              event_handler: mouse_event_handler,
+            },
+            {
+              event: 'contextmenu',
+              event_handler: context_menu_handler,
+            },
+          ],
+          'on_swt_mouseup' => [
+            {
+              event: 'mouseup',
+              event_handler: mouse_event_handler,
+            },
+            {
+              event: 'contextmenu',
+              event_handler: context_menu_handler,
+            },
+          ],
+          'on_swt_mousedown' => [
+            {
+              event: 'mousedown',
+              event_handler: mouse_event_handler,
+            },
+            {
+              event: 'contextmenu',
+              event_handler: context_menu_handler,
+            },
+          ],
+          'on_key_pressed' => {
+            event: 'keypress',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                # TODO generalize this solution to all widgets that support key presses
+                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:key_code, &event.method(:keyCode))
+                event.define_singleton_method(:character) {event.which.chr}
+                event.define_singleton_method(:stateMask) do
+                  state_mask = 0
+                  state_mask |= SWTProxy[:alt] if event.alt_key
+                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                  state_mask |= SWTProxy[:shift] if event.shift_key
+                  state_mask |= SWTProxy[:command] if event.meta_key
+                  state_mask
+                end
+                event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                doit = true
+                event.define_singleton_method(:doit=) do |value|
+                  doit = value
+                end
+                event.define_singleton_method(:doit) { doit }
+                event_listener.call(event)
+                
+                  # TODO Fix doit false, it's not stopping input
+                unless doit
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+                
+                doit
+              }
+            }          },
+          'on_key_released' => {
+            event: 'keydown',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                # TODO generalize this solution to all widgets that support key presses
+                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:key_code, &event.method(:keyCode))
+                event.define_singleton_method(:character) {event.which.chr}
+                event.define_singleton_method(:stateMask) do
+                  state_mask = 0
+                  state_mask |= SWTProxy[:alt] if event.alt_key
+                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                  state_mask |= SWTProxy[:shift] if event.shift_key
+                  state_mask |= SWTProxy[:command] if event.meta_key
+                  state_mask
+                end
+                event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                doit = true
+                event.define_singleton_method(:doit=) do |value|
+                  doit = value
+                end
+                event.define_singleton_method(:doit) { doit }
+                event_listener.call(event)
+                
+                  # TODO Fix doit false, it's not stopping input
+                unless doit
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+                
+                doit
+              }
+            }          },
+          'on_swt_keydown' => {
+            event: 'keypress',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                # TODO generalize this solution to all widgets that support key presses
+                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:key_code, &event.method(:keyCode))
+                event.define_singleton_method(:character) {event.which.chr}
+                event.define_singleton_method(:stateMask) do
+                  state_mask = 0
+                  state_mask |= SWTProxy[:alt] if event.alt_key
+                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                  state_mask |= SWTProxy[:shift] if event.shift_key
+                  state_mask |= SWTProxy[:command] if event.meta_key
+                  state_mask
+                end
+                event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                doit = true
+                event.define_singleton_method(:doit=) do |value|
+                  doit = value
+                end
+                event.define_singleton_method(:doit) { doit }
+                event_listener.call(event)
+                
+                  # TODO Fix doit false, it's not stopping input
+                unless doit
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+                
+                doit
+              }
+            }          },
+          'on_swt_keyup' => {
+            event: 'keydown',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                # TODO generalize this solution to all widgets that support key presses
+                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:key_code, &event.method(:keyCode))
+                event.define_singleton_method(:character) {event.which.chr}
+                event.define_singleton_method(:stateMask) do
+                  state_mask = 0
+                  state_mask |= SWTProxy[:alt] if event.alt_key
+                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                  state_mask |= SWTProxy[:shift] if event.shift_key
+                  state_mask |= SWTProxy[:command] if event.meta_key
+                  state_mask
+                end
+                event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                doit = true
+                event.define_singleton_method(:doit=) do |value|
+                  doit = value
+                end
+                event.define_singleton_method(:doit) { doit }
+                event_listener.call(event)
+                
+                  # TODO Fix doit false, it's not stopping input
+                unless doit
+                  event.prevent
+                  event.prevent_default
+                  event.stop_propagation
+                  event.stop_immediate_propagation
+                end
+                
+                doit
+              }
+            }
           },
         }
       end
@@ -354,6 +614,14 @@ module Glimmer
         Document.find(listener_path)
       end
       
+      def observation_requests
+        @observation_requests ||= {}
+      end
+      
+      def event_listener_proxies
+        @event_listener_proxies ||= []
+      end
+      
       def can_handle_observation_request?(observation_request)
         # TODO sort this out for Opal
         observation_request = observation_request.to_s
@@ -367,32 +635,40 @@ module Glimmer
         end
       end
       
-      def observation_requests
-        @observation_requests ||= {}
-      end
-      
-      def handle_observation_request(keyword, &event_listener)
+      def handle_observation_request(keyword, original_event_listener)
         return unless effective_observation_request_to_event_mapping.keys.include?(keyword)
         event = nil
         delegate = nil
         effective_observation_request_to_event_mapping[keyword].to_collection.each do |mapping|
           observation_requests[keyword] ||= Set.new
-          observation_requests[keyword] << event_listener
+          observation_requests[keyword] << original_event_listener
           event = mapping[:event]
           event_handler = mapping[:event_handler]
           event_element_css_selector = mapping[:event_element_css_selector]
-          potential_event_listener = event_handler&.call(event_listener)
-          event_listener = potential_event_listener || event_listener
+          potential_event_listener = event_handler&.call(original_event_listener)
+          event_listener = potential_event_listener || original_event_listener
           async_event_listener = lambda do |event|
-            Async::Task.new do
+            # TODO look into the issue with using async::task.new here. maybe put it in event listener (like not being able to call preventDefault or return false successfully )
+            # maybe consider pushing inside the widget classes instead where needed only or implement universal doit support correctly to bypass this issue
+#             Async::Task.new do
               event_listener.call(event)
-            end
+#             end
           end
           the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
-          delegate = the_listener_dom_element.on(event, &async_event_listener)
+          unless the_listener_dom_element.empty?
+            the_listener_dom_element.on(event, &async_event_listener)
+            # TODO ensure uniqueness of insertion (perhaps adding equals/hash method to event listener proxy)
+            
+            event_listener_proxies << EventListenerProxy.new(element_proxy: self, selector: selector, dom_element: the_listener_dom_element, event: event, listener: async_event_listener, original_event_listener: original_event_listener)
+          end
         end
-        # TODO update code below for new WidgetProxy API
-        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
+      end
+      
+      def remove_event_listener_proxies
+        event_listener_proxies.each do |event_listener_proxy|
+          event_listener_proxy.unregister
+        end
+        event_listener_proxies.clear
       end
       
       def add_observer(observer, property_name)
@@ -410,10 +686,15 @@ module Glimmer
       
       def method_missing(method, *args, &block)
         if method.to_s.start_with?('on_')
-          handle_observation_request(method, &block)
+          handle_observation_request(method, block)
         else
           super(method, *args, &block)
         end
+      end
+      
+      def swt_widget
+        # only added for compatibility/adaptibility with Glimmer DSL for SWT
+        self
       end
       
       def apply_property_type_converters(attribute_name, args)
@@ -608,6 +889,8 @@ require 'glimmer/swt/date_time_proxy'
 require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'
 require 'glimmer/swt/list_proxy'
+require 'glimmer/swt/menu_item_proxy'
+require 'glimmer/swt/menu_proxy'
 require 'glimmer/swt/radio_proxy'
 require 'glimmer/swt/tab_folder_proxy'
 require 'glimmer/swt/tab_item_proxy'

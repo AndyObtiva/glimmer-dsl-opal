@@ -34,7 +34,7 @@ module Glimmer
         @editor_widget = editor_widget
         @old_value = table_item.cell_dom_element(table_column_index).html
         table_item.cell_dom_element(table_column_index).html('')
-        editor_widget.render(table_item.cell_dom_element(table_column_index))
+        editor_widget.render(custom_parent_dom_element: table_item.cell_dom_element(table_column_index))
         # TODO tweak the width perfectly so it doesn't expand the table cell
 #         editor_widget.dom_element.css('width', 'calc(100% - 20px)')
         editor_widget.dom_element.css('width', "#{minimumWidth}%") # TODO implement property with pixels (and perhaps derive percentage separately from pixels)

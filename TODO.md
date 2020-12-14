@@ -4,16 +4,20 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Hello, Link!
-- Add all Canadian provinces & territories to multi list selection sample
-- Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
+- Close menu on focus elsewhere
 - Hello, Pop Up Context Menu! Sample
+- Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
 - [Refactoring] Support having any widget contribute static document-wide CSS to ShellProxy
-- Add hello_table.rb screenshot for context menu
+- Test Glimmer Calculator with latest changes
 
+- Add include_package shim in kernel file
+- Add hello_table.rb screenshot for context menu
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 
 ## Soon
+
+- Hello, Link!
+- Support for shell :no_trim style (via absolute position divs)
 
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
@@ -50,9 +54,10 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
 - Support `spinner` and Hello, Spinner! Sample
 - Update `date` and `time` to be spinner based, not drop-down based
-- Implement doit in on_key_pressed event for TextProxy et al
+- Implement doit in on_key_pressed event for TextProxy and other events
 - Support table multi-selection
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
+- Support double-click events
 
 
 ## Technical Tasks
@@ -70,6 +75,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
 - Refactor tab_folder/tab_item to use jQuery-UI
 - Refactor message_box to use jQuery-UI dialog
+- Boilerplate dom method on most widgets that follow the default in markup (perhaps relying only on specifying `#element`)
 
 ## Miscellaneous
 
@@ -97,3 +103,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - GlimmerAppStore.com: cross platform alternative to Mac App Store to host and sell glimmer apps with auto update support
 - helpmeteachyou.org (free): free education platform
 - social.community (free): online community gathering with DripComm self-moderating technology.
+
+## Documentation
+
+- Document a styled Tic Tac Toe at the top of the README

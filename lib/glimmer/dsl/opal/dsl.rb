@@ -26,6 +26,8 @@ require 'glimmer/dsl/opal/swt_expression'
 require 'glimmer/dsl/opal/radio_group_selection_data_binding_expression'
 require 'glimmer/dsl/opal/checkbox_group_selection_data_binding_expression'
 require 'glimmer/dsl/opal/block_property_expression'
+require 'glimmer/dsl/opal/menu_expression'
+# require 'glimmer/dsl/opal/menu_bar_expression'
 
 module Glimmer
   module DSL

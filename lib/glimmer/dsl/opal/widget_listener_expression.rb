@@ -20,10 +20,10 @@ module Glimmer
 #           Glimmer::Config.logger.debug {"can add listener? #{result}"}
 #           raise Glimmer::Error, "Invalid listener keyword: #{keyword}" unless result
           true
-        end        
+        end
 
         def interpret(parent, keyword, *args, &block)
-          parent.handle_observation_request(keyword, &block)
+          parent.handle_observation_request(keyword, block)
         end
       end
     end

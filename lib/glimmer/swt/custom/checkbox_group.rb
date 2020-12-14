@@ -78,7 +78,7 @@ module Glimmer
           checkboxes.first&.can_handle_observation_request?(observation_request) || super(observation_request)
         end
         
-        def handle_observation_request(observation_request, &block)
+        def handle_observation_request(observation_request, block)
           observation_requests << [observation_request, block]
           delegate_observation_request_to_checkboxes(observation_request, &block)
           super
@@ -88,7 +88,7 @@ module Glimmer
           if observation_request != 'on_widget_disposed'
             checkboxes.count.times do |index|
               checkbox = checkboxes[index]
-              checkbox.handle_observation_request(observation_request, &block) if checkbox.can_handle_observation_request?(observation_request)
+              checkbox.handle_observation_request(observation_request, block) if checkbox.can_handle_observation_request?(observation_request)
             end
           end
         end

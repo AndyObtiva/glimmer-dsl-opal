@@ -34,7 +34,7 @@ module Glimmer
           klass.include(Glimmer)
           Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
           keyword = klass.name.split(':').last.underscore
-          `localStorage[#{keyword}] = #{$LOADED_FEATURES.last}`
+          LocalStorage[keyword] = $LOADED_FEATURES.last
         end
           
         def request_parameter_string

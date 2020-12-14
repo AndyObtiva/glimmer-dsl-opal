@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.0
+
+- Update hello list samples
+
 ## 0.7.5
 
 - Update login sample from Glimmer DSL for SWT's latest changes

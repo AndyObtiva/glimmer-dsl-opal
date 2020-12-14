@@ -19,52 +19,69 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# TODO implement set_menu or self.menu=
+
 require 'glimmer/swt/widget_proxy'
 
 module Glimmer
   module SWT
-    class TabFolderProxy < WidgetProxy
-      attr_reader :tabs
-      
-      def initialize(parent, args, block)
-        super(parent, args, block)
-        @tabs = []
-      end
-      
+    # Proxy for org.eclipse.swt.widgets.MenuItem
+    #
+    # Follows the Proxy Design Pattern since it's a proxy for an HTML based menu
+    # Follows the Adapter Design Pattern since it's adapting a Glimmer DSL for SWT widget
+    class MenuItemProxy < WidgetProxy
       def post_initialize_child(child)
-        unless @children.include?(child)
-          @children << child
-          tabs_dom_element.append(child.tab_dom)
-          child.render
-        end
-        
-        if @children.size == 1
-          child.show
-        end
+        @children << child
       end
       
-      def hide_all_tab_content
-        @children.each(&:hide)
-      end
-    
-      def tabs_path
-        path + " > ##{tabs_id}"
+      def text
+        @text
       end
       
-      def tabs_id
-        id + '-tabs'
+      def text=(value)
+        @text = value
+        dom_element.html(html {div {value}}.to_s)
+        @text
       end
       
-      def tabs_dom_element
-        Document.find(tabs_path)
+      def root_menu
+        the_menu = parent
+        the_menu = the_menu.parent_menu until the_menu.root_menu?
+        the_menu
+      end
+      
+      def skip_content_on_render_blocks?
+        true
+      end
+      
+      def observation_request_to_event_mapping
+        {
+          'on_widget_selected' => {
+            event: 'mouseup',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                event_listener.call(event)
+                remove_event_listener_proxies
+#                 dom_element.remove
+#                 root_menu.dom_element.remove
+#                 dispose
+#                 root_menu.dispose
+              }
+            },
+          },
+        }
+      end
+      
+      def element
+        'li'
       end
       
       def dom
-        tab_folder_id = id
-        tab_folder_id_style = css
         @dom ||= html {
-          div(id: tab_folder_id, style: tab_folder_id_style, class: 'tab-folder') {
-            div(id: tabs_id, class: 'tabs')
+          li(id: id, class: name) {
+            div {
+              @text
+            }
           }
         }.to_s
       end

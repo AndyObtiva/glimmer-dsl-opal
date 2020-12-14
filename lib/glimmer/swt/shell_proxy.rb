@@ -7,6 +7,7 @@ module Glimmer
     class ShellProxy < CompositeProxy
       # TODO consider renaming to ShellProxy to match SWT API
       attr_reader :minimum_size
+      attr_accessor :menu_bar # TODO implement menu bar rendering
     
       WIDTH_MIN = 130
       HEIGHT_MIN = 0
@@ -91,6 +92,24 @@ module Glimmer
             cursor: default;
             padding-left: 10px;
             padding-right: 10px;
+          }
+          li.menu-item {
+            padding-left: initial;
+            padding-right: initial;
+          }
+          .ui-menu {
+            /* TODO consider auto-sizing in the future */
+            font-size: initial;
+            width: 150px;
+            border-radius: 5px;
+          }
+          .ui-menu-item:first-child > .ui-menu-item-wrapper {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+          }
+          .ui-menu-item:last-child > .ui-menu-item-wrapper {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
           }
           li.empty-list-item {
             color: transparent;

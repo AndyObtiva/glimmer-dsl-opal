@@ -187,13 +187,13 @@ module Glimmer
         result || body_root&.can_handle_observation_request?(observation_request)
       end
 
-      def handle_observation_request(observation_request, &block)
+      def handle_observation_request(observation_request, block)
         observation_request = observation_request.to_s
         if observation_request.start_with?('on_updated_')
           property = observation_request.sub(/^on_updated_/, '') # TODO look into eliminating duplication from above
           add_observer(DataBinding::Observer.proc(&block), property) if can_add_observer?(property)
         else
-          body_root.handle_observation_request(observation_request, &block)
+          body_root.handle_observation_request(observation_request, block)
         end
       end
 
@@ -267,7 +267,7 @@ module Glimmer
 
       def method_missing(method, *args, &block)
         if can_handle_observation_request?(method)
-          handle_observation_request(method, &block)
+          handle_observation_request(method, block)
         else
           body_root.send(method, *args, &block)
         end

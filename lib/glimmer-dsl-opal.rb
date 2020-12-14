@@ -33,6 +33,11 @@ if RUBY_ENGINE == 'opal'
   # TODO look into making append_path work (causing some trouble right now)
 #   Opal.append_path File.expand_path('../glimmer-dsl-opal/missing', __FILE__)
 #   Opal.append_path GLIMMER_DSL_OPAL_MISSING
+  module Kernel
+    def include_package(package)
+      # No Op (just a shim)
+    end
+  end
   
   require 'opal-parser'
   require 'native' # move this to opal-async
@@ -49,6 +54,7 @@ if RUBY_ENGINE == 'opal'
 #   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.structure.min.css'
 #   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css'
   require 'opal-jquery'
+  require 'opal/jquery/local_storage'
  
   require 'facets/hash/symbolize_keys'
   require 'glimmer-dsl-opal/ext/struct'

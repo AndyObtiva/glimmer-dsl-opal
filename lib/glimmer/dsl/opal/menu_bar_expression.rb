@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Andy Maleh
+# Copyright (c) 2007-2020 Andy Maleh
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -19,54 +19,35 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/swt/widget_proxy'
+require 'glimmer'
+require 'glimmer/dsl/static_expression'
+require 'glimmer/dsl/parent_expression'
+require 'glimmer/swt/menu_proxy'
+
+# TODO implement for Opal
 
 module Glimmer
-  module SWT
-    class TabFolderProxy < WidgetProxy
-      attr_reader :tabs
-      
-      def initialize(parent, args, block)
-        super(parent, args, block)
-        @tabs = []
-      end
-      
-      def post_initialize_child(child)
-        unless @children.include?(child)
-          @children << child
-          tabs_dom_element.append(child.tab_dom)
-          child.render
+  module DSL
+    module SWT
+      class MenuBarExpression < StaticExpression
+        include ParentExpression
+  
+        def can_interpret?(parent, keyword, *args, &block)
+          initial_condition = (keyword == 'menu_bar')
+          if initial_condition
+            if parent.swt_widget.is_a?(Shell)
+              return true
+            else
+              raise Glimmer::Error, "menu_bar may only be nested under a shell!"
+            end
+          end
+          false
         end
-        
-        if @children.size == 1
-          child.show
+  
+        def interpret(parent, keyword, *args, &block)
+          args = args.unshift(:bar)
+          Glimmer::SWT::MenuProxy.new(parent, args)
         end
-      end
-      
-      def hide_all_tab_content
-        @children.each(&:hide)
-      end
-    
-      def tabs_path
-        path + " > ##{tabs_id}"
-      end
-      
-      def tabs_id
-        id + '-tabs'
-      end
-      
-      def tabs_dom_element
-        Document.find(tabs_path)
-      end
-      
-      def dom
-        tab_folder_id = id
-        tab_folder_id_style = css
-        @dom ||= html {
-          div(id: tab_folder_id, style: tab_folder_id_style, class: 'tab-folder') {
-            div(id: tabs_id, class: 'tabs')
-          }
-        }.to_s
       end
     end
   end

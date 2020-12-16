@@ -4,10 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Close menu on focus elsewhere
-- Hello, Pop Up Context Menu! Sample
-- Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
-- [Refactoring] Support having any widget contribute static document-wide CSS to ShellProxy
 - Test Glimmer Calculator with latest changes
 
 - Add include_package shim in kernel file
@@ -16,8 +12,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
-- Hello, Link!
-- Support for shell :no_trim style (via absolute position divs)
 
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
@@ -36,6 +30,8 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 ## Features
 
+- Hello, Link!
+- Support for shell :no_trim style (via absolute position divs)
 - `spinner` table editor
 - Support `dialog`
 - Support all variations of button (:radio, :check, :arrow)

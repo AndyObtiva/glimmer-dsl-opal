@@ -12,7 +12,11 @@ module Glimmer
 
       def text=(value)
         @text = value
-        dom_element.html(value)
+        dom_element.html(html_text)
+      end
+      
+      def html_text
+        text.gsub("\n", '<br />')
       end
       
       def background_image=(*image_options)
@@ -48,12 +52,11 @@ module Glimmer
       end
       
       def dom
-        label_text = @text
         label_id = id
         label_class = name
         @dom ||= html {
           label(id: label_id, class: label_class, style: "text-align: #{alignment};") {
-            label_text
+            html_text
           }
         }.to_s
       end

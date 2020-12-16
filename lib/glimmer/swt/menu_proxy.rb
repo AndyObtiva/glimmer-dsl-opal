@@ -125,14 +125,18 @@ module Glimmer
             `$(#{id_css}).menu();`
             @close_event_handler = lambda do |event|
               if event.target.parents('.ui-menu').empty?
-                dom_element.remove
-                Element['body'].off('click', &@close_event_handler)
+                close
               end
             end
             Element['body'].on('click', &@close_event_handler)
             @menu_initialized = true
           end
         end
+      end
+      
+      def close
+        dom_element.remove
+        Element['body'].off('click', &@close_event_handler)
       end
       
       def root_menu?

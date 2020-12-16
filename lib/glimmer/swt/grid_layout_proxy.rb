@@ -11,6 +11,7 @@ module Glimmer
           align-items: stretch;
         }
       CSS
+      
       attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
     
       def initialize(parent, args)

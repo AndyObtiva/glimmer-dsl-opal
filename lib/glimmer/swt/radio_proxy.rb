@@ -4,7 +4,7 @@ module Glimmer
   module SWT
     class RadioProxy < WidgetProxy
       # TODO add a create method that ensures passing :radio style in if not there
-      STYLE=<<~CSS
+      STYLE = <<~CSS
         .radio {
           display: inline;
         }

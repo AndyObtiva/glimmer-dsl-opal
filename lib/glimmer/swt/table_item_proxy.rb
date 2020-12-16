@@ -39,7 +39,7 @@ module Glimmer
         super(parent, args, block)
         # TODO check if there is a need to remove this observer when removing widget from table upon items update
         on_widget_selected { |event|
-          parent.select(parent.index_of(self), event.meta?)
+          parent.select(parent.index_of(self), (event.meta? if event.respond_to?(:meta?)))
         }
       end
       
@@ -147,10 +147,12 @@ module Glimmer
         end
       end
       
-      def on_widget_selected(&block)
-        event = 'click'
-        delegate = $document.on(event, selector, &block)
-        EventListenerProxy.new(element_proxy: self, event: event, selector: selector, delegate: delegate)
+      def observation_request_to_event_mapping
+        {
+          'on_widget_selected' => {
+            event: 'mouseup',
+          }
+        }
       end
       
       def max_column_width(column_index)

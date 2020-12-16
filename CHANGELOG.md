@@ -2,7 +2,12 @@
 
 ## 0.8.0
 
+- Close menu on focus elsewhere
+- Hello, Pop Up Context Menu! Sample
 - Update hello list samples
+- Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
+- Support generating new lines when entering label text with \n (converting to <br />)
+- Support having any widget contribute static document-wide CSS to ShellProxy
 
 ## 0.7.5
 

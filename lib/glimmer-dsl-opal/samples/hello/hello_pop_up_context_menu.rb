@@ -30,8 +30,8 @@ shell {
   text 'Hello, Pop Up Context Menu!'
   
   label {
-    text 'Right-Click on the Text to Pop Up a Context Menu'
-    font height: 32
+    text "Right-Click on the Text to\nPop Up a Context Menu"
+    font height: 50
     
     menu {
       menu {
@@ -53,6 +53,27 @@ shell {
               message_box {
                 text 'File 2'
                 message 'File 2 Contents'
+              }.open
+            }
+          }
+        }
+        menu {
+          text '&Archived'
+          menu_item {
+            text 'File 3'
+            on_widget_selected {
+              message_box {
+                text 'File 3'
+                message 'File 3 Contents'
+              }.open
+            }
+          }
+          menu_item {
+            text 'File 4'
+            on_widget_selected {
+              message_box {
+                text 'File 4'
+                message 'File 4 Contents'
               }.open
             }
           }

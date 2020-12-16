@@ -60,12 +60,9 @@ module Glimmer
             event: 'mouseup',
             event_handler: -> (event_listener) {
               -> (event) {
-                event_listener.call(event)
                 remove_event_listener_proxies
-#                 dom_element.remove
-#                 root_menu.dom_element.remove
-#                 dispose
-#                 root_menu.dispose
+                root_menu.close
+                event_listener.call(event)
               }
             },
           },

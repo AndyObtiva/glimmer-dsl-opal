@@ -4,6 +4,8 @@ require 'glimmer/swt/swt_proxy'
 module Glimmer
   module SWT
     class TableColumnProxy < WidgetProxy
+      include Glimmer
+      
       STYLE = <<~CSS
         th.table-column {
           background: rgb(246, 246, 246);
@@ -15,8 +17,7 @@ module Glimmer
           float: right;
         }
       CSS
-      include Glimmer
-      
+            
       attr_accessor :sort_block, :sort_by_block
       attr_reader :text, :width,
                   :no_sort, :sort_property, :editor

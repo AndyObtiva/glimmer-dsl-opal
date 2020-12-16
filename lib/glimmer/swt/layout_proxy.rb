@@ -6,6 +6,14 @@ module Glimmer
       include Glimmer::SWT::PropertyOwner
       
       class << self
+        def inherited(klass)
+          descendants << klass
+        end
+        
+        def descendants
+          @descendants ||= []
+        end
+        
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args)
           the_layout_class = layout_class(keyword) || Glimmer::SWT::GridLayoutProxy

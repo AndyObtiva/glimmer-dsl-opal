@@ -44,7 +44,6 @@ module Glimmer
         def interpret(parent, keyword, *args, &block)
           begin
             require_path = LocalStorage[keyword]
-            pd require_path: require_path
             require(require_path) if require_path
           rescue => e
             Glimmer::Config.logger.debug e.message

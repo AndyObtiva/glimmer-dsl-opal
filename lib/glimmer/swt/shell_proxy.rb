@@ -1,4 +1,5 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/layout_proxy'
 require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/point'
 
@@ -232,13 +233,13 @@ module Glimmer
               style_dom_css
             }
             style(class: 'shell-style') {
-              style_dom_shell_css
+              style_dom_shell_css # TODO move to shell proxy style constant
             }
             style(class: 'list-style') {
-              style_dom_list_css
+              style_dom_list_css # TODO move to list proxy
             }
             style(class: 'tab-style') {
-              style_dom_tab_css
+              style_dom_tab_css # TODO move to tab proxy
             }
 #             style(class: 'tab-item-style') {
 #               style_dom_tab_item_css
@@ -249,30 +250,14 @@ module Glimmer
             style(class: 'table-style') {
               style_dom_table_css
             }
-            style(class: 'fill-layout-style') {
-              Glimmer::SWT::FillLayoutProxy::STYLE
-            }
-            style(class: 'row-layout-style') {
-              Glimmer::SWT::RowLayoutProxy::STYLE
-            }
-            style(class: 'grid-layout-style') {
-              Glimmer::SWT::GridLayoutProxy::STYLE
-            }
-            style(class: 'checkbox-style') {
-              Glimmer::SWT::CheckboxProxy::STYLE
-            }
-            style(class: 'radio-style') {
-              Glimmer::SWT::RadioProxy::STYLE
-            }
-            style(class: 'scrolled-composite-style') {
-              Glimmer::SWT::ScrolledCompositeProxy::STYLE
-            }
-            style(class: 'table-item-style') {
-              Glimmer::SWT::TableItemProxy::STYLE
-            }
-            style(class: 'table-column-style') {
-              Glimmer::SWT::TableColumnProxy::STYLE
-            }
+            [LayoutProxy, WidgetProxy].map(&:descendants).reduce(:+).each do |style_class|
+              if style_class.constants.include?('STYLE')
+                style(class: "#{style_class.name.split(':').last.underscore.gsub('_', '-').sub(/-proxy$/, '')}-style") {
+                  style_class::STYLE
+                }
+              end
+            end
+            ''
           }
         }.to_s
       end

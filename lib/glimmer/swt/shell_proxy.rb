@@ -6,6 +6,26 @@ require 'glimmer/swt/point'
 module Glimmer
   module SWT
     class ShellProxy < CompositeProxy
+      STYLE = <<~CSS
+        html {
+          width: 100%;
+          height: 100%;
+        }
+        body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+        }
+        .shell {
+          height: 100%;
+          margin: 0;
+        }
+        .shell iframe {
+          width: 100%;
+          height: 100%;
+        }
+      CSS
+    
       # TODO consider renaming to ShellProxy to match SWT API
       attr_reader :minimum_size
       attr_accessor :menu_bar # TODO implement menu bar rendering
@@ -61,28 +81,6 @@ module Glimmer
         CSS
       end
             
-      def style_dom_shell_css
-        <<~CSS
-          html {
-            width: 100%;
-            height: 100%;
-          }
-          body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-          }
-          .shell {
-            height: 100%;
-            margin: 0;
-          }
-          .shell iframe {
-            width: 100%;
-            height: 100%;
-          }
-        CSS
-      end
-      
       def style_dom_list_css
         <<~CSS
           ul {
@@ -231,9 +229,6 @@ module Glimmer
             # TODO support the idea of dynamic CSS building on close of shell that adds only as much CSS as needed for widgets that were mentioned
             style(class: 'common-style') {
               style_dom_css
-            }
-            style(class: 'shell-style') {
-              style_dom_shell_css # TODO move to shell proxy style constant
             }
             style(class: 'list-style') {
               style_dom_list_css # TODO move to list proxy

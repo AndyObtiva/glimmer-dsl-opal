@@ -40,11 +40,12 @@ module Glimmer
       
       class << self
         def inherited(klass)
-          descendants << klass
+          @descendants ||= []
+          @descendants << klass
         end
         
         def descendants
-          @descendants ||= []
+          @descendants.to_collection.map { |klass| [klass] + (klass.descendants if klass.respond_to?(:descendants)).to_a }.flatten.compact
         end
         
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object

@@ -3,6 +3,39 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class ListProxy < WidgetProxy
+      STYLE = <<~CSS
+        ul {
+          list-style: none;
+          padding: 0;
+        }
+        li {
+          cursor: default;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        li.menu-item {
+          padding-left: initial;
+          padding-right: initial;
+        }
+        .ui-menu {
+          /* TODO consider auto-sizing in the future */
+          font-size: initial;
+          width: 150px;
+          border-radius: 5px;
+        }
+        .ui-menu-item:first-child > .ui-menu-item-wrapper {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+        .ui-menu-item:last-child > .ui-menu-item-wrapper {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        li.empty-list-item {
+          color: transparent;
+        }
+      CSS
+    
       ITEM_EMPTY = '_____'
       attr_reader :items, :selection
       

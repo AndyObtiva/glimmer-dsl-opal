@@ -57,6 +57,7 @@ if RUBY_ENGINE == 'opal'
   require 'opal/jquery/local_storage'
  
   require 'facets/hash/symbolize_keys'
+  require 'glimmer-dsl-opal/ext/class'
   require 'glimmer-dsl-opal/ext/struct'
   require 'glimmer'
   require 'glimmer-dsl-opal/ext/exception'

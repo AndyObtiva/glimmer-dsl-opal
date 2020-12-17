@@ -39,15 +39,6 @@ module Glimmer
       alias menu_requested? menu_requested
       
       class << self
-        def inherited(klass)
-          @descendants ||= []
-          @descendants << klass
-        end
-        
-        def descendants
-          @descendants.to_collection.map { |klass| [klass] + (klass.descendants if klass.respond_to?(:descendants)).to_a }.flatten.compact
-        end
-        
         # Factory Method that translates a Glimmer DSL keyword into a WidgetProxy object
         def for(keyword, parent, args, block)
           the_widget_class = widget_class(keyword)

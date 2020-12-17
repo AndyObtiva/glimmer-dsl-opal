@@ -5,6 +5,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 ## Next
 
 - Test Glimmer Calculator with latest changes
+- Hello Message Box!
 
 - Add include_package shim in kernel file
 - Add hello_table.rb screenshot for context menu

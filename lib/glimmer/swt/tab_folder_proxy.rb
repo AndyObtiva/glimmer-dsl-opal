@@ -24,6 +24,28 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TabFolderProxy < WidgetProxy
+      STYLE = <<~CSS
+        .tabs .tab.selected {
+          background: rgb(80, 116, 211);
+          color: white;
+        }
+        .tabs .tab {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+        .tabs {
+          overflow: hidden;
+          border: 1px solid #ccc;
+          background-color: #f1f1f1;
+        }
+      CSS
+      
       attr_reader :tabs
       
       def initialize(parent, args, block)

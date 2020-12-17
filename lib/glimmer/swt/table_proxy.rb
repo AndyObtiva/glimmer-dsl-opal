@@ -27,6 +27,16 @@ require 'glimmer/swt/table_editor'
 module Glimmer
   module SWT
     class TableProxy < CompositeProxy
+      STYLE = <<~CSS
+        table {
+          border-spacing: 0;
+        }
+          
+        table tr th,td {
+          cursor: default;
+        }
+      CSS
+
       attr_reader :columns, :selection,
                   :sort_type, :sort_column, :sort_property, :sort_block, :sort_by_block, :additional_sort_properties,
                   :editor, :table_editor

@@ -4,6 +4,49 @@ require 'glimmer/swt/display_proxy'
 module Glimmer
   module SWT
     class MessageBoxProxy < WidgetProxy
+      STYLE = <<~CSS
+        .modal {
+          position: fixed;
+          z-index: 1;
+          padding-top: 100px;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgb(0,0,0);
+          background-color: rgba(0,0,0,0.4);
+          text-align: center;
+        }
+        .modal-content .text {
+          background: rgb(80, 116, 211);
+          color: white;
+          padding: 5px;
+        }
+        .modal-content .message {
+          padding: 20px;
+        }
+        .modal-content {
+          background-color: #fefefe;
+          padding-bottom: 15px;
+          border: 1px solid #888;
+          display: inline-block;
+          min-width: 200px;
+        }
+      CSS
+#         .close {
+#           color: #aaaaaa;
+#           float: right;
+#           font-weight: bold;
+#           margin: 5px;
+#         }
+#         .close:hover,
+#         .close:focus {
+#           color: #000;
+#           text-decoration: none;
+#           cursor: pointer;
+#         }
+      
       attr_reader :text, :message
       
       def initialize(parent, args, block)
@@ -62,51 +105,6 @@ module Glimmer
         }
       end
  
-      def style_dom_modal_css
-        <<~CSS
-          .modal {
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            text-align: center;
-          }
-          .modal-content .text {
-            background: rgb(80, 116, 211);
-            color: white;
-            padding: 5px;
-          }
-          .modal-content .message {
-            padding: 20px;
-          }
-          .modal-content {
-            background-color: #fefefe;
-            padding-bottom: 15px;
-            border: 1px solid #888;
-            display: inline-block;
-            min-width: 200px;
-          }
-        CSS
-#           .close {
-#             color: #aaaaaa;
-#             float: right;
-#             font-weight: bold;
-#             margin: 5px;
-#           }
-#           .close:hover,
-#           .close:focus {
-#             color: #000;
-#             text-decoration: none;
-#             cursor: pointer;
-#           }
-      end
-      
       def dom
         modal_id = id
         modal_style = css
@@ -115,9 +113,6 @@ module Glimmer
         modal_class = ['modal', name].join(' ')
         @dom ||= html {
           div(id: modal_id, style: modal_style, class: modal_class) {
-            style(class: 'modal-style') {
-              style_dom_modal_css #.split("\n").map(&:strip).join(' ')
-            }
             div(class: 'modal-content') {
               header(class: 'text') {
                 modal_text

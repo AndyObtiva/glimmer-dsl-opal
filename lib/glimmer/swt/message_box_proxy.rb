@@ -68,9 +68,13 @@ module Glimmer
         dom_element.find('.modal-content .text').html(@text)
       end
     
+      def html_message
+        message.gsub("\n", '<br />')
+      end
+      
       def message=(msg)
         @message = msg
-        dom_element.find('.modal-content .message').html(@text)
+        dom_element.find('.modal-content .message').html(html_message)
       end
       
       def open
@@ -106,19 +110,14 @@ module Glimmer
       end
  
       def dom
-        modal_id = id
-        modal_style = css
-        modal_text = text
-        modal_message = message
-        modal_class = ['modal', name].join(' ')
         @dom ||= html {
-          div(id: modal_id, style: modal_style, class: modal_class) {
+          div(id: id, class: "modal #{name}") {
             div(class: 'modal-content') {
               header(class: 'text') {
-                modal_text
+                text
               }
               tag(_name: 'p', id: 'message', class: 'message') {
-                modal_message
+                html_message
               }
               input(type: 'button', class: 'close', autofocus: 'autofocus', value: 'OK')
             }

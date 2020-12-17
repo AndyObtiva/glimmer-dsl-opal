@@ -2,12 +2,15 @@
 
 ## 0.8.0
 
-- Close menu on focus elsewhere
 - Hello, Pop Up Context Menu! Sample
+- Hello Message Box!
 - Update hello list samples
 - Support context menus `menu`/`menu_item` directly under a widget (using jQuery UI)
-- Support generating new lines when entering label text with \n (converting to <br />)
-- Support having any widget contribute static document-wide CSS to ShellProxy
+- Support generating new lines when entering `label` `text` with \n (auto-converting to <br />)
+- Support generating new lines when entering `message_box` `message` with \n (auto-converting to <br />)
+- Support having any widget contribute static CSS to ShellProxy
+- Add Kernel#include_package shim to allow running JRuby include_package from Glimmer DSL for SWT without failing
+- Add WidgetProxy#swt_widget to allow running include_package from Glimmer DSL for SWT without failing
 
 ## 0.7.5
 

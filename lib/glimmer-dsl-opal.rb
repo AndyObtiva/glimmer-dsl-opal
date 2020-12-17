@@ -58,6 +58,7 @@ if RUBY_ENGINE == 'opal'
  
   require 'facets/hash/symbolize_keys'
   require 'glimmer-dsl-opal/ext/class'
+  require 'glimmer-dsl-opal/ext/file'
   require 'glimmer-dsl-opal/ext/struct'
   require 'glimmer'
   require 'glimmer-dsl-opal/ext/exception'

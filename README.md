@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.7.5 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.8.0 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -60,7 +60,7 @@ Tic Tac Toe on the desktop with the same exact code (using the [glimmer-dsl-swt]
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.7.5 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally made for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
+**Alpha Version** 0.8.0 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written in [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
 
 [Hello samples](#hello-samples):
 
@@ -81,6 +81,8 @@ NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contr
 - [Hello, Date Time!](#hello-date-time)
 - [Hello, Table!](#hello-table)
 - [Hello, Button!](#hello-button)
+- [Hello, Message Box!](#hello-message-box)
+- [Hello, Pop Up Context Menu!](#hello-pop-up-context-menu)
 
 [Elaborate samples](#elaborate-samples):
 
@@ -115,6 +117,8 @@ Widgets:
 - `group`
 - `label`
 - `list` (w/ optional `:multi` SWT style)
+- `menu`
+- `menu_item`
 - `message_box`
 - `radio`
 - `radio_group`
@@ -147,10 +151,10 @@ Data-Binding/Observers:
 - `observe`
 - `on_widget_selected`
 - `on_modify_text`
-- `on_key_pressed`
-- `on_key_released`
-- `on_mouse_down`
-- `on_mouse_up`
+- `on_key_pressed` (and SWT alias `on_swt_keydown`)
+- `on_key_released` (and SWT alias `on_swt_keyup`)
+- `on_mouse_down` (and SWT alias `on_swt_mousedown`)
+- `on_mouse_up` (and SWT alias `on_swt_mouseup`)
 
 Event loop:
 - `display`
@@ -208,7 +212,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.7.5'
+gem 'glimmer-dsl-opal', '~> 0.8.0'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -1983,6 +1987,149 @@ You should see "Hello, Button!"
 
 ![Glimmer DSL for Opal Hello Button](images/glimmer-dsl-opal-hello-button.png)
 ![Glimmer DSL for Opal Hello Button](images/glimmer-dsl-opal-hello-button-incremented.png)
+
+#### Hello, Message Box!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_message_box'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+include Glimmer
+
+shell {
+  text 'Hello, Message Box!'
+  
+  button {
+    text 'Please Click To Win a Surprise'
+    
+    on_widget_selected {
+      message_box {
+        text 'Surprise'
+        message "Congratulations!\n\nYou won $1,000,000!"
+      }.open
+    }
+  }
+}.open
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Message Box](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-message-box.png)
+![Glimmer DSL for SWT Message Box Dialog](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-message-box-dialog.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Message Box!"
+
+![Glimmer DSL for Opal Hello Message Box](images/glimmer-dsl-opal-hello-message-box.png)
+![Glimmer DSL for Opal Hello Message Box Dialog](images/glimmer-dsl-opal-hello-message-box-dialog.png)
+
+#### Hello, Pop Up Context Menu!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_pop_up_context_menu'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+include Glimmer
+
+shell {
+  grid_layout {
+    margin_width 0
+    margin_height 0
+  }
+  
+  text 'Hello, Pop Up Context Menu!'
+  
+  label {
+    text "Right-Click on the Text to\nPop Up a Context Menu"
+    font height: 50
+    
+    menu {
+      menu {
+        text '&History'
+        menu {
+          text '&Recent'
+          menu_item {
+            text 'File 1'
+            on_widget_selected {
+              message_box {
+                text 'File 1'
+                message 'File 1 Contents'
+              }.open
+            }
+          }
+          menu_item {
+            text 'File 2'
+            on_widget_selected {
+              message_box {
+                text 'File 2'
+                message 'File 2 Contents'
+              }.open
+            }
+          }
+        }
+        menu {
+          text '&Archived'
+          menu_item {
+            text 'File 3'
+            on_widget_selected {
+              message_box {
+                text 'File 3'
+                message 'File 3 Contents'
+              }.open
+            }
+          }
+          menu_item {
+            text 'File 4'
+            on_widget_selected {
+              message_box {
+                text 'File 4'
+                message 'File 4 Contents'
+              }.open
+            }
+          }
+        }
+      }
+    }
+  }
+}.open
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Pop Up Context Menu Popped Up](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-pop-up-context-menu.png)
+![Glimmer DSL for SWT Hello Pop Up Context Menu](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-pop-up-context-menu-popped-up.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Pop Up Context Menu!"
+
+![Glimmer DSL for Opal Hello Pop Up Context Menu](images/glimmer-dsl-opal-hello-pop-up-context-menu.png)
+![Glimmer DSL for Opal Hello Pop Up Context Menu Popped Up](images/glimmer-dsl-opal-hello-pop-up-context-menu-popped-up.png)
 
 
 ### Elaborate Samples

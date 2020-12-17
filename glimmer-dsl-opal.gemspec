@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-12-14"
+  s.date = "2020-12-17"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -37,10 +37,11 @@ Gem::Specification.new do |s|
     "app/assets/stylesheets/glimmer/jquery-ui.theme.css",
     "app/assets/stylesheets/glimmer/jquery.ui.timepicker.css",
     "lib/display.rb",
-    "lib/file.rb",
     "lib/glimmer-dsl-opal.rb",
+    "lib/glimmer-dsl-opal/ext/class.rb",
     "lib/glimmer-dsl-opal/ext/date.rb",
     "lib/glimmer-dsl-opal/ext/exception.rb",
+    "lib/glimmer-dsl-opal/ext/file.rb",
     "lib/glimmer-dsl-opal/ext/struct.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/contact_manager.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/contact_manager/contact.rb",
@@ -63,6 +64,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_group.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_multi_selection.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_list_single_selection.rb",
+    "lib/glimmer-dsl-opal/samples/hello/hello_message_box.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_pop_up_context_menu.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_radio.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_radio_group.rb",
@@ -188,7 +190,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.1.0"])
     s.add_runtime_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
     s.add_runtime_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
-    s.add_runtime_dependency(%q<to_collection>.freeze, ["~> 2.0.1"])
+    s.add_runtime_dependency(%q<to_collection>.freeze, [">= 2.0.1", "< 3.0.0"])
     s.add_development_dependency(%q<puts_debuggerer>.freeze, [">= 0"])
     s.add_development_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
     s.add_development_dependency(%q<rake-tui>.freeze, [">= 0"])
@@ -202,7 +204,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.1.0"])
     s.add_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.1.0"])
     s.add_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
-    s.add_dependency(%q<to_collection>.freeze, ["~> 2.0.1"])
+    s.add_dependency(%q<to_collection>.freeze, [">= 2.0.1", "< 3.0.0"])
     s.add_dependency(%q<puts_debuggerer>.freeze, [">= 0"])
     s.add_dependency(%q<rake>.freeze, [">= 10.1.0", "< 14.0.0"])
     s.add_dependency(%q<rake-tui>.freeze, [">= 0"])

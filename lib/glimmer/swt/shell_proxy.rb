@@ -28,7 +28,7 @@ module Glimmer
     
       # TODO consider renaming to ShellProxy to match SWT API
       attr_reader :minimum_size
-      attr_accessor :menu_bar # TODO implement menu bar rendering
+      attr_accessor :menu_bar
     
       WIDTH_MIN = 130
       HEIGHT_MIN = 0

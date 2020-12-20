@@ -12,51 +12,163 @@ Use in one of two ways:
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-#### Tic Tac Toe Sample
+#### Hello, Table! Sample
 
-Add the following require statement to `app/assets/javascripts/application.rb` in a [Glimmer setup](#setup) Rails app:
-
-```ruby
-require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
-```
-
-Glimmer GUI code from [glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb](lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb):
+Glimmer GUI code from [glimmer-dsl-opal/samples/hello/hello_table.rb](lib/glimmer-dsl-opal/samples/hello/hello_table.rb):
 
 ```ruby
 # ...
-    @shell = shell {
-      text "Tic-Tac-Toe"
-      minimum_size 150, 178
-      composite {
-        grid_layout 3, true
-        (1..3).each { |row|
-          (1..3).each { |column|
-            button {
-              layout_data :fill, :fill, true, true
-              text        bind(@tic_tac_toe_board[row, column], :sign)
-              enabled     bind(@tic_tac_toe_board[row, column], :empty)
-              font        style: :bold, height: 20
-              on_widget_selected {
-                @tic_tac_toe_board.mark(row, column)
-              }
-            }
-          }
+    shell {
+      grid_layout
+      
+      text 'Hello, Table!'
+      
+      label {
+        layout_data :center, :center, true, false
+        
+        text 'Baseball Playoff Schedule'
+        font height: 30, style: :bold
+      }
+      
+      combo(:read_only) {
+        layout_data :center, :center, true, false
+        selection bind(BaseballGame, :playoff_type)
+        font height: 16
+      }
+      
+      table(:editable) { |table_proxy|
+        layout_data :fill, :fill, true, true
+      
+        table_column {
+          text 'Game Date'
+          width 150
+          sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
+          editor :date_drop_down, property: :date_time
+        }
+        table_column {
+          text 'Game Time'
+          width 150
+          sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
+          editor :time, property: :date_time
+        }
+        table_column {
+          text 'Ballpark'
+          width 180
+          editor :none
+        }
+        table_column {
+          text 'Home Team'
+          width 150
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+        }
+        table_column {
+          text 'Away Team'
+          width 150
+          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
+        }
+        table_column {
+          text 'Promotion'
+          width 150
+          # default text editor is used here
+        }
+        
+        # Data-bind table items (rows) to a model collection property, specifying column properties ordering per nested model
+        items bind(BaseballGame, :schedule), column_properties(:game_date, :game_time, :ballpark, :home_team, :away_team, :promotion)
+        
+        # Data-bind table selection
+        selection bind(BaseballGame, :selected_game)
+        
+        # Default initial sort property
+        sort_property :date
+        
+        # Sort by these additional properties after handling sort by the column the user clicked
+        additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
+      }
+      
+      button {
+        text 'Book Selected Game'
+        layout_data :center, :center, true, false
+        font height: 16
+        enabled bind(BaseballGame, :selected_game)
+        
+        on_widget_selected {
+          book_selected_game
         }
       }
-    }
+    }.open
 # ...
 ```
-Tic Tac Toe on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem):
+Hello, Table! on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem):
 
-![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
-![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
-![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table.png)
 
-Tic Tac Toe on the desktop with the same exact code (using the [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+Hello, Table! Editing Game Date
 
-![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
-![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
-![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-date.png)
+
+Hello, Table! Editing Game Time
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-time.png)
+
+Hello, Table! Editing Home Team
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-home-team.png)
+
+Hello, Table! Sorted Game Date Ascending
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-ascending.png)
+
+Hello, Table! Sorted Game Date Descending
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-descending.png)
+
+Hello, Table! Playoff Type Combo
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-combo.png)
+
+Hello, Table! Playoff Type Changed
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-changed.png)
+
+Hello, Table! Game Booked
+
+![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-game-booked.png)
+
+Hello, Table! on the desktop with the same exact code (using the [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table.png)
+
+Hello, Table! Editing Game Date
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-date.png)
+
+Hello, Table! Editing Game Time
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-time.png)
+
+Hello, Table! Editing Home Team
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-home-team.png)
+
+Hello, Table! Sorted Game Date Ascending
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-ascending.png)
+
+Hello, Table! Sorted Game Date Descending
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-descending.png)
+
+Hello, Table! Playoff Type Combo
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-combo.png)
+
+Hello, Table! Playoff Type Changed
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-changed.png)
+
+Hello, Table! Game Booked
+
+![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-game-booked.png)
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
@@ -162,7 +274,7 @@ Event loop:
 
 ## Principles
 
-- **Live purely in Rubyland via the Glimmer GUI DSL**, completely oblivious to inferior web browser technologies.
+- **Live purely in Rubyland via the Glimmer GUI DSL**, completely oblivious to web browser technologies.
 - **Forget Routers!** Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
 - **HTML is strictly made for creating documents not interactive applications**. As such, software engineers can avoid it and focus on creating web applications more productively with Glimmer DSL for Opal in pure Ruby instead (just like they do in desktop development) while content creators and web designers can be the ones responsible for creating HTML documents for web content purposes only as HTML was originally intended. That way, Glimmer web GUI is used and embedded in web pages when providing users with applications while the rest of the web pages are maintained by non-engineers as pure HTML. This achieves a correct separation of responsibilities and better productivity and maintainability.
 - **Approximate styles by developers via the Glimmer GUI DSL. Perfect styles by designers via pure CSS**. Developers can simply build GUI with approximate styling similar to desktop GUI without worrying about pixel-perfect aethetics. Web designers can take styling further with pure CSS since every HTML element auto-generated by Glimmer DSL for Opal has a predictable ID and CSS class. This achieves a proper separation of responsibilities between developers and designers.

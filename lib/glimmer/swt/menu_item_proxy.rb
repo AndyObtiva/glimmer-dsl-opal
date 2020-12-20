@@ -30,8 +30,50 @@ module Glimmer
     # Follows the Proxy Design Pattern since it's a proxy for an HTML based menu
     # Follows the Adapter Design Pattern since it's adapting a Glimmer DSL for SWT widget
     class MenuItemProxy < WidgetProxy
+      STYLE = <<~CSS
+        .menu-item.disabled {
+          background-color: lightgrey;
+          color: grey;
+        }
+        .menu-item.disabled .menu, .menu-item.disabled .menu * {
+          display: none;
+          opacity: 0;
+        }
+      CSS
+      
+      attr_accessor :accelerator # TODO consider doing something with it
+    
+      def initialize(parent, args)
+        args.push(:push) if args.empty?
+        super(parent, args)
+        # TODO do not add the following event till post_add_content to avoid adding if already one on_widget_selected event existed
+        on_widget_selected {
+          # No Op, just trigger selection
+        }
+      end
+      
       def post_initialize_child(child)
         @children << child
+      end
+      
+      def cascade?
+        args.include?(:cascade)
+      end
+      
+      def push?
+        args.include?(:push)
+      end
+      
+      def radio?
+        args.include?(:radio)
+      end
+      
+      def check?
+        args.include?(:check)
+      end
+      
+      def separator?
+        args.include?(:separator)
       end
       
       def text
@@ -40,8 +82,45 @@ module Glimmer
       
       def text=(value)
         @text = value
-        dom_element.html(html {div {value}}.to_s)
+        dom_element.find('.menu-item-text').html(@text)
         @text
+      end
+      
+      def selection
+        @selection
+      end
+      
+      def selection=(value)
+        @selection = value
+        icon_suffix = check? ? 'check' : 'bullet'
+        dom_element.find('.menu-item-selection').toggle_class("ui-icon ui-icon-#{icon_suffix}", @selection)
+        @selection
+      end
+      
+      def toggle_selection!
+        self.selection = !selection
+      end
+      
+      def enabled=(value)
+        @enabled = value
+        dom_element.toggle_class('disabled', !@enabled)
+        @enabled
+      end
+      
+      def div_content
+        div_attributes = {}
+        div_attributes['style'] = 'border-bottom: 1px solid black;' if separator?
+        icon_suffix = check? ? 'check' : 'bullet'
+        div(div_attributes) {
+          unless separator?
+            span(class: "menu-item-selection #{"ui-icon ui-icon-#{icon_suffix}" if selection}") {}
+            span(class: 'ui-menu-icon ui-icon ui-icon-caret-1-e') {} if cascade? && !parent.bar?
+            span(class: 'menu-item-text') {
+              @text
+            }
+            ''
+          end
+        }
       end
       
       def root_menu
@@ -60,9 +139,21 @@ module Glimmer
             event: 'mouseup',
             event_handler: -> (event_listener) {
               -> (event) {
-                remove_event_listener_proxies
-                root_menu.close
-                event_listener.call(event)
+                if enabled
+                  if check?
+                    self.toggle_selection!
+                  elsif radio?
+                    unless selection
+                      parent.children.detect(&:selection)&.selection = false
+                      self.selection = true
+                    end
+                  end
+                  unless root_menu.bar?
+                    remove_event_listener_proxies
+                    root_menu.close
+                  end
+                  event_listener.call(event)
+                end
               }
             },
           },
@@ -74,11 +165,10 @@ module Glimmer
       end
       
       def dom
+        # TODO support rendering image
         @dom ||= html {
-          li(id: id, class: name) {
-            div {
-              @text
-            }
+          li(id: id, class: "#{name} #{'disabled' unless enabled}") {
+            div_content
           }
         }.to_s
       end

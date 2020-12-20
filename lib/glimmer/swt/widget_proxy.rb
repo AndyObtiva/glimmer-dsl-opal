@@ -191,6 +191,14 @@ module Glimmer
       def element
         'div'
       end
+      
+      def pack(*args)
+        # No Op (just a shim) TODO consider if it should be implemented
+      end
+
+      def layout(*args)
+        # No Op (just a shim) TODO consider if it should be implemented
+      end
 
       def enabled=(value)
         @enabled = value
@@ -198,11 +206,13 @@ module Glimmer
       end
       
       def foreground=(value)
+        value = ColorProxy.new(value) if value.is_a?(String)
         @foreground = value
         dom_element.css('color', foreground.to_css) unless foreground.nil?
       end
       
       def background=(value)
+        value = ColorProxy.new(value) if value.is_a?(String)
         @background = value
         dom_element.css('background-color', background.to_css) unless background.nil?
       end
@@ -239,8 +249,9 @@ module Glimmer
         brand_new = @dom.nil? || old_element.empty? || brand_new
         build_dom(layout: !custom_parent_dom_element) # TODO handle custom parent layout by passing parent instead of parent dom element
         if brand_new
-          the_parent_dom_element.append(@dom)
+          the_parent_dom_element.append(@dom) # TODO make a method attach to allow subclasses to override if needed
         else
+          old_element.replace_with(@dom)
           old_element.replace_with(@dom)
         end
         observation_requests&.each do |keyword, event_listener_set|

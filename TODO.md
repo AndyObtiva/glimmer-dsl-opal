@@ -4,16 +4,14 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Test Glimmer Calculator with latest changes
-- Add screenshot for hello pop up context menu
-- Add screenshot for hello message box
+- Suppot ordering menu_bar before or after other widgets or in between even
+- Update list multi selection screenshot
+- Document each widget separately in each hello sample
 
 ## Soon
 
-- Support real menus `menu_bar`
-- Hello, Menu Bar! Sample
-
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
+
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
 - Support Authentication (username/password)
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into via a global Display#shell_element_path, shell_element_id or something of the like. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
@@ -22,7 +20,10 @@ Consider the idea of having shells render a div without as an addition to curren
 - Secure Custom Shell options by passing through localStorage database instead of query parameters (and remove query parameter support for options and utilize custom_shell_handled in localStorage)
 - Support downloading any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
 Consider a security model where you pre-add all gem Ruby files to make available for download, but only enable download at runtime when a file is requested (keeping all other fiels sealed and protected) using some authorized scheme/model (e.g. pundit)
-- Always open a second shell in a separate browser tab/window even if not a custom shell (id'ing uniquely)
+
+- Nav Bar Sample (Web-Only Sample using a `menu_bar` as a navbar, styled with CSS)
+- Always open a second shell in a separate browser tab/window even if not a custom shell (auto-id'ing uniquely via shell title text using as hashtag)
+- Support hiding a shell and opening a new one while staying in the same page (equivalent of page changes with shell title text used to autogenerate hashtag unique URL)
 
 ## Issues
 
@@ -52,7 +53,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Support table multi-selection
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
 - Support double-click events
-
+- Consider including mobile-responsive CSS themes that auto-convert menu bar into a drop-down mobile-menu button
 
 ## Technical Tasks
 
@@ -79,6 +80,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 - Style all samples with an alternate version
 - Host all internal samples online
+- Web-Only Samples
 
 ## Production Apps
 

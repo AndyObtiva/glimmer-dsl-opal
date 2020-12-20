@@ -45,33 +45,85 @@ module Glimmer
     #
     # Follows the Proxy Design Pattern
     class MenuProxy < WidgetProxy
+      STYLE = <<~CSS
+        .menu.menu-bar {
+          position: absolute;
+          top: -30px;
+          border-radius: 0;
+          width: 100%;
+        }
+        .menu.menu-bar .menu {
+          border-radius: 0;
+        }
+        .menu-bar .menu-item {
+          width: 180px;
+        }
+        .menu-bar > .menu-item {
+          display: inline-block;
+          width: 150px;
+        }
+        li.menu-item {
+          padding-left: initial;
+          padding-right: initial;
+        }
+        .menu {
+          /* TODO consider auto-sizing in the future */
+          font-size: initial;
+          border-radius: 5px;
+        }
+        .menu:not(.menu-bar) {
+          width: 150px;
+        }
+        .menu-bar .ui-menu:not(.menu-bar) {
+          width: 180px;
+        }
+        .ui-menu-item:first-child > .ui-menu-item-wrapper {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+        }
+        .ui-menu-item:last-child > .ui-menu-item-wrapper {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+        .menu-bar .ui-menu-item:first-child > .ui-menu-item-wrapper {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+        .menu-bar .ui-menu-item:last-child > .ui-menu-item-wrapper {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        
+      CSS
+      
       attr_reader :menu_item_proxy, :menu_parent
 
       def initialize(parent, args)
-        # TODO handle :bar swt style
-        # TODO handle :pop_up swt style
-        # TODO handle :cascade swt style
+        # TODO refactor/simplify code below
         @children = []
         index = args.delete(args.last) if args.last.is_a?(Numeric)
-        styles = args.map(&:to_sym)
-        if !styles.include?(:bar) && !parent.is_a?(MenuProxy)
-          styles = styles.unshift(:pop_up)
+        args = args.map {|arg| arg.is_a?(String) ? arg.to_sym : arg}
+        if parent.is_a?(ShellProxy)
+          args = args.unshift(:bar)
+        elsif parent.is_a?(MenuProxy)
+          args = args.unshift(:drop_down)
+        else
+          args = args.unshift(:pop_up)
         end
-
         if parent.is_a?(MenuProxy)
           @menu_item_proxy = SWT::WidgetProxy.for('menu_item', parent, [:cascade] + [index].compact)
-          super(@menu_item_proxy)
+          super(@menu_item_proxy, args)
           @menu_item_proxy.menu = self
         elsif parent.is_a?(ShellProxy)
-          super(parent, style('menu', styles))
-        else
-          super(parent)
+          super(parent, args)
+        else # widget pop up
+          super(parent, args)
         end
 
-        if styles.include?(:bar)
+        if bar?
           # Assumes a parent shell
           parent.menu_bar = self
-        elsif styles.include?(:pop_up)
+        elsif pop_up?
           parent.menu = self
         end
         # TODO IMPLEMENT PROPERLY
@@ -80,12 +132,38 @@ module Glimmer
 #         }
       end
       
+      def bar?
+        args.include?(:bar)
+      end
+      
+      def pop_up?
+        args.include?(:pop_up)
+      end
+      
+      def drop_down?
+        args.include?(:drop_down)
+      end
+      
       def text
         @menu_item_proxy&.text
       end
       
       def text=(text_value)
         @menu_item_proxy&.text = text_value
+      end
+      
+      def enabled
+        if drop_down?
+          menu_item_proxy.enabled
+        else
+          true
+        end
+      end
+      
+      def enabled=(value)
+        if drop_down?
+          menu_item_proxy.enabled = value
+        end
       end
       
       def can_handle_observation_request?(observation_request, super_only: false)
@@ -115,21 +193,43 @@ module Glimmer
         end
       end
       
-      def render
+      def post_add_content
+        if bar?
+          # delay this till all children rendered (perhaps post_add_content block)
+          parent_dom_element.css('position', 'relative')
+          parent_dom_element.css('margin-top', '30px')
+          redraw
+          `$(#{path}).menu({
+            position: { my: "top", at: "bottom" },
+            icons: { submenu: "ui-icon-blank" }
+          });`
+          the_element = dom_element
+          the_element.on('mouseover') { |event|
+            if event.page_x.between?(the_element.offset.left, the_element.offset.left + the_element.width) and
+               event.page_y.between?(the_element.offset.top, the_element.offset.top + the_element.height)
+              `$(#{path}).menu('option', 'position', { my: 'left top', at: 'left bottom' });`
+            end
+          }
+          the_element.on('menublur') {
+            `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' });`
+          }
+          last_child = children.to_a.last
+          minimum_width = last_child.dom_element.offset.left + last_child.dom_element.width - the_element.offset.left
+          the_element.css('min-width', minimum_width)
+        end
+      end
+      
+      def render(brand_new: false)
         # TODO attach to top nav bar if parent is shell
         # TODO attach listener to parent to display on right click
-        if parent.is_a?(MenuProxy) || parent.is_a?(MenuItemProxy) || parent.menu_requested?
-          super
-          if root_menu?
-            id_css = "##{id}"
-            `$(#{id_css}).menu();`
+        if parent.is_a?(MenuProxy) || parent.is_a?(MenuItemProxy) || parent.menu_requested? || parent.is_a?(ShellProxy)
+          super(brand_new: brand_new)
+          if root_menu? && !bar?
+            `$(#{path}).menu();`
             @close_event_handler = lambda do |event|
-              if event.target.parents('.ui-menu').empty?
-                close
-              end
+              close if event.target.parents('.ui-menu').empty?
             end
             Element['body'].on('click', &@close_event_handler)
-            @menu_initialized = true
           end
         end
       end
@@ -143,6 +243,12 @@ module Glimmer
         !parent.is_a?(MenuProxy) && !parent.is_a?(MenuItemProxy)
       end
       
+      def root_menu
+        the_menu = self
+        the_menu = the_menu.parent_menu until the_menu.root_menu?
+        the_menu
+      end
+      
       def parent_menu
         parent.parent unless root_menu?
       end
@@ -152,11 +258,17 @@ module Glimmer
       end
       
       def dom
+        css_class = name
+        css_class += ' menu-bar' if bar?
+        css_class += ' menu-drop-down' if drop_down?
+        css_class += ' menu-pop-up' if pop_up?
         @dom ||= html {
-          ul(id: id, class: name) {
+          ul(id: id, class: css_class) {
           }
         }.to_s
       end
     end
+    
+    MenuBarProxy = MenuProxy
   end
 end

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.9.0
+
+- Support `menu_bar`
+- Hello, Menu Bar! Sample
+
 ## 0.8.0
 
 - Hello, Pop Up Context Menu! Sample

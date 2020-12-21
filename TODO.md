@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support ordering menu_bar before or after other widgets or in between even
 - Update list multi selection screenshot
 - Document each widget separately in each hello sample
 - Support creating a shell if needed to show a message_box

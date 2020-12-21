@@ -138,16 +138,14 @@ module Glimmer
             event: 'mouseup',
             event_handler: -> (event_listener) {
               -> (event) {
-                if enabled
+                if enabled && (push? || radio? || check?)
                   if check?
                     self.toggle_selection!
-                  elsif radio?
-                    unless selection
-                      parent.children.detect(&:selection)&.selection = false
-                      self.selection = true
-                    end
+                  elsif radio? && !selection
+                    parent.children.detect(&:selection)&.selection = false
+                    self.selection = true
                   end
-                  unless root_menu.bar?
+                  if !root_menu.bar?
                     remove_event_listener_proxies
                     root_menu.close
                   end

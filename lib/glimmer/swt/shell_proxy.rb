@@ -36,7 +36,6 @@ module Glimmer
       def initialize(args)
         @args = args
         @children = []
-#         Document.ready? do end # TODO consider embedding this jQuery call in so outside consumers don't have to use it
         Document.find('body').empty unless ENV['RUBY_ENV'] == 'test'
         render
         @layout = FillLayoutProxy.new(self, [])

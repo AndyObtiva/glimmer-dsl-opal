@@ -213,17 +213,16 @@ module Glimmer
           the_element.on('menublur') {
             `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' });`
           }
-          last_child = children.to_a.last
-          minimum_width = last_child.dom_element.offset.left + last_child.dom_element.width - the_element.offset.left
+          minimum_width = children.to_a.map(&:dom_element).map(&:width).reduce(:+)
           the_element.css('min-width', minimum_width)
         end
       end
       
-      def render(brand_new: false)
+      def render(custom_parent_dom_element: nil, brand_new: false)
         # TODO attach to top nav bar if parent is shell
         # TODO attach listener to parent to display on right click
         if parent.is_a?(MenuProxy) || parent.is_a?(MenuItemProxy) || parent.menu_requested? || parent.is_a?(ShellProxy)
-          super(brand_new: brand_new)
+          super(custom_parent_dom_element: custom_parent_dom_element, brand_new: brand_new)
           if root_menu? && !bar?
             `$(#{path}).menu();`
             @close_event_handler = lambda do |event|

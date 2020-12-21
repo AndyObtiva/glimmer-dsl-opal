@@ -4,6 +4,7 @@
 
 - Support `menu_bar`
 - Hello, Menu Bar! Sample
+- Remove the need to call Document.ready? before opening a Glimmer shell
 
 ## 0.8.0
 

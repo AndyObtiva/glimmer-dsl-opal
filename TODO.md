@@ -4,9 +4,10 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Suppot ordering menu_bar before or after other widgets or in between even
+- Support ordering menu_bar before or after other widgets or in between even
 - Update list multi selection screenshot
 - Document each widget separately in each hello sample
+- Support creating a shell if needed to show a message_box
 
 ## Soon
 
@@ -24,6 +25,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Nav Bar Sample (Web-Only Sample using a `menu_bar` as a navbar, styled with CSS)
 - Always open a second shell in a separate browser tab/window even if not a custom shell (auto-id'ing uniquely via shell title text using as hashtag)
 - Support hiding a shell and opening a new one while staying in the same page (equivalent of page changes with shell title text used to autogenerate hashtag unique URL)
+- Extract glimmer dsl engine code to glimmer gem
 
 ## Issues
 

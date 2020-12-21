@@ -51,7 +51,7 @@ module Glimmer
       
       def initialize(parent, args, block)
         i = 0
-        @parent = parent || DisplayProxy.instance.shells.last
+        @parent = parent || DisplayProxy.instance.shells.last # TODO support creating a shell if needed || ShellProxy.new
         @args = args
         @block = block
         @children = Set.new

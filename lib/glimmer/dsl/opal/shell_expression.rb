@@ -27,10 +27,6 @@ module Glimmer
           end
         end
         
-        def add_content(parent, &content)
-          content.call(parent) if parent.is_a?(Glimmer::SWT::ShellProxy)
-        end
-
         def add_content(parent, &block)
           super(parent, &block)
           parent.post_add_content

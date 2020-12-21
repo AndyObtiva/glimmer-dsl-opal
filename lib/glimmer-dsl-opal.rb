@@ -63,8 +63,9 @@ if RUBY_ENGINE == 'opal'
   require 'glimmer'
   require 'glimmer-dsl-opal/ext/exception'
   require 'glimmer-dsl-opal/ext/date'
+  require 'glimmer-dsl-opal/ext/glimmer/dsl/engine'
   require 'uri'
-
+  
   # Spiking async logging
 #   logger = Glimmer::Config.logger
 #   original_add_method = logger.class.instance_method(:add)

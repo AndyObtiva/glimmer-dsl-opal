@@ -109,10 +109,9 @@ module Glimmer
       
       def div_content
         div_attributes = {}
-        div_attributes['style'] = 'border-bottom: 1px solid black;' if separator?
         icon_suffix = check? ? 'check' : 'bullet'
         div(div_attributes) {
-          unless separator?
+          unless separator? # empty content automatically gets a separator style in jQuery-UI
             span(class: "menu-item-selection #{"ui-icon ui-icon-#{icon_suffix}" if selection}") {}
             span(class: 'ui-menu-icon ui-icon ui-icon-caret-1-e') {} if cascade? && !parent.bar?
             span(class: 'menu-item-text') {

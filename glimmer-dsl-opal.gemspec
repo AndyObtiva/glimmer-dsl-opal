@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2020-12-21"
+  s.date = "2020-12-22"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -147,6 +147,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/grid_layout_proxy.rb",
     "lib/glimmer/swt/group_proxy.rb",
     "lib/glimmer/swt/label_proxy.rb",
+    "lib/glimmer/swt/latest_message_box_proxy.rb",
     "lib/glimmer/swt/layout_data_proxy.rb",
     "lib/glimmer/swt/layout_proxy.rb",
     "lib/glimmer/swt/list_proxy.rb",

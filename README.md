@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.8.0 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.9.0 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -12,167 +12,55 @@ Use in one of two ways:
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of powerful Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web.
 
-#### Hello, Table! Sample
+#### Tic Tac Toe Sample
 
-Glimmer GUI code from [glimmer-dsl-opal/samples/hello/hello_table.rb](lib/glimmer-dsl-opal/samples/hello/hello_table.rb):
+Add the following require statement to `app/assets/javascripts/application.rb` in a [Glimmer setup](#setup) Rails app:
+
+```ruby
+require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
+```
+
+Glimmer GUI code from [glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb](lib/glimmer-dsl-opal/samples/elaborate/tic_tac_toe.rb):
 
 ```ruby
 # ...
-    shell {
-      grid_layout
-      
-      text 'Hello, Table!'
-      
-      label {
-        layout_data :center, :center, true, false
-        
-        text 'Baseball Playoff Schedule'
-        font height: 30, style: :bold
-      }
-      
-      combo(:read_only) {
-        layout_data :center, :center, true, false
-        selection bind(BaseballGame, :playoff_type)
-        font height: 16
-      }
-      
-      table(:editable) { |table_proxy|
-        layout_data :fill, :fill, true, true
-      
-        table_column {
-          text 'Game Date'
-          width 150
-          sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
-          editor :date_drop_down, property: :date_time
-        }
-        table_column {
-          text 'Game Time'
-          width 150
-          sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
-          editor :time, property: :date_time
-        }
-        table_column {
-          text 'Ballpark'
-          width 180
-          editor :none
-        }
-        table_column {
-          text 'Home Team'
-          width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
-        }
-        table_column {
-          text 'Away Team'
-          width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
-        }
-        table_column {
-          text 'Promotion'
-          width 150
-          # default text editor is used here
-        }
-        
-        # Data-bind table items (rows) to a model collection property, specifying column properties ordering per nested model
-        items bind(BaseballGame, :schedule), column_properties(:game_date, :game_time, :ballpark, :home_team, :away_team, :promotion)
-        
-        # Data-bind table selection
-        selection bind(BaseballGame, :selected_game)
-        
-        # Default initial sort property
-        sort_property :date
-        
-        # Sort by these additional properties after handling sort by the column the user clicked
-        additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
-      }
-      
-      button {
-        text 'Book Selected Game'
-        layout_data :center, :center, true, false
-        font height: 16
-        enabled bind(BaseballGame, :selected_game)
-        
-        on_widget_selected {
-          book_selected_game
+    @shell = shell {
+      text "Tic-Tac-Toe"
+      minimum_size 150, 178
+      composite {
+        grid_layout 3, true
+        (1..3).each { |row|
+          (1..3).each { |column|
+            button {
+              layout_data :fill, :fill, true, true
+              text        bind(@tic_tac_toe_board[row, column], :sign)
+              enabled     bind(@tic_tac_toe_board[row, column], :empty)
+              font        style: :bold, height: 20
+              on_widget_selected {
+                @tic_tac_toe_board.mark(row, column)
+              }
+            }
+          }
         }
       }
-    }.open
+    }
 # ...
 ```
-Hello, Table! on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem):
+Tic Tac Toe on the web (using the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem):
 
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table.png)
+![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
+![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
+![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
 
-Hello, Table! Editing Game Date
+Tic Tac Toe on the desktop with the same exact code (using the [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-date.png)
-
-Hello, Table! Editing Game Time
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-game-time.png)
-
-Hello, Table! Editing Home Team
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-editing-home-team.png)
-
-Hello, Table! Sorted Game Date Ascending
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-ascending.png)
-
-Hello, Table! Sorted Game Date Descending
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-sorted-game-date-descending.png)
-
-Hello, Table! Playoff Type Combo
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-combo.png)
-
-Hello, Table! Playoff Type Changed
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-playoff-type-changed.png)
-
-Hello, Table! Game Booked
-
-![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-game-booked.png)
-
-Hello, Table! on the desktop with the same exact code (using the [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
-
-![Glimmer DSL for SWT Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table.png)
-
-Hello, Table! Editing Game Date
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-date.png)
-
-Hello, Table! Editing Game Time
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-game-time.png)
-
-Hello, Table! Editing Home Team
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-editing-home-team.png)
-
-Hello, Table! Sorted Game Date Ascending
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-ascending.png)
-
-Hello, Table! Sorted Game Date Descending
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-sorted-game-date-descending.png)
-
-Hello, Table! Playoff Type Combo
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-combo.png)
-
-Hello, Table! Playoff Type Changed
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-playoff-type-changed.png)
-
-Hello, Table! Game Booked
-
-![Hello Table](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-table-game-booked.png)
+![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
+![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
+![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.8.0 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written in [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
+**Alpha Version** 0.9.0 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written in [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
 
 [Hello samples](#hello-samples):
 
@@ -195,6 +83,7 @@ NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contr
 - [Hello, Button!](#hello-button)
 - [Hello, Message Box!](#hello-message-box)
 - [Hello, Pop Up Context Menu!](#hello-pop-up-context-menu)
+- [Hello, Menu Bar!](#hello-menu-bar)
 
 [Elaborate samples](#elaborate-samples):
 
@@ -230,6 +119,7 @@ Widgets:
 - `label`
 - `list` (w/ optional `:multi` SWT style)
 - `menu`
+- `menu_bar`
 - `menu_item`
 - `message_box`
 - `radio`
@@ -324,7 +214,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.8.0'
+gem 'glimmer-dsl-opal', '~> 0.9.0'
 gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
 gem 'glimmer-dsl-css', '~> 1.1.0', require: false
 
@@ -712,44 +602,53 @@ require 'glimmer-dsl-opal/samples/hello/hello_list_multi_selection'
 Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
-class Person
-  attr_accessor :provinces, :provinces_options
-
-  def initialize
-    self.provinces_options=[
-      "",
-      "Quebec",
-      "Ontario",
-      "Manitoba",
-      "Saskatchewan",
-      "Alberta",
-      "British Columbia",
-      "Nova Skotia",
-      "Newfoundland"
-    ]
-    self.provinces = ["Quebec", "Manitoba", "Alberta"]
-  end
-
-  def reset_provinces
-    self.provinces = ["Quebec", "Manitoba", "Alberta"]
-  end
-end
-
 class HelloListMultiSelection
+  class Person
+    attr_accessor :provinces, :provinces_options
+  
+    def initialize
+      self.provinces_options = [
+        '',
+        'Alberta',
+        'British Columbia',
+        'Manitoba',
+        'New Brunswick',
+        'Newfoundland and Labrador',
+        'Northwest Territories',
+        'Nova Scotia',
+        'Nunavut',
+        'Ontario',
+        'Prince Edward Island',
+        'Quebec',
+        'Saskatchewan',
+        'Yukon'
+      ]
+      reset_provinces
+    end
+  
+    def reset_provinces
+      self.provinces = ['Quebec', 'Manitoba', 'Alberta']
+    end
+  end
+  
   include Glimmer
+  
   def launch
     person = Person.new
+    
     shell {
-      composite {
-        list(:multi) {
-          selection bind(person, :provinces)
-        }
-        button {
-          text "Reset"
-          on_widget_selected do
-            person.reset_provinces
-          end
-        }
+      grid_layout
+      
+      text 'Hello, List Multi Selection!'
+      
+      list(:multi) {
+        selection bind(person, :provinces)
+      }
+      
+      button {
+        text 'Reset Selections To Default Values'
+        
+        on_widget_selected { person.reset_provinces }
       }
     }.open
   end
@@ -2243,6 +2142,299 @@ You should see "Hello, Pop Up Context Menu!"
 ![Glimmer DSL for Opal Hello Pop Up Context Menu](images/glimmer-dsl-opal-hello-pop-up-context-menu.png)
 ![Glimmer DSL for Opal Hello Pop Up Context Menu Popped Up](images/glimmer-dsl-opal-hello-pop-up-context-menu-popped-up.png)
 
+#### Hello, Menu Bar!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_menu_bar'
+```
+
+Or add the Glimmer code directly if you prefer to play around with it:
+
+```ruby
+include Glimmer
+
+COLORS = [:white, :red, :yellow, :green, :blue, :magenta, :gray, :black]
+
+shell {
+  grid_layout {
+    margin_width 0
+    margin_height 0
+  }
+  
+  text 'Hello, Menu Bar!'
+  
+  @label = label(:center) {
+    font height: 50
+    text 'Check Out The Menu Bar Above!'
+  }
+  
+  menu_bar {
+    menu {
+      text '&File'
+      menu_item {
+        text '&New'
+        accelerator :command, :N
+
+        on_widget_selected {
+          message_box {
+            text 'New'
+            message 'New file created.'
+          }.open
+        }
+      }
+      menu_item {
+        text '&Open...'
+        accelerator :command, :O
+
+        on_widget_selected {
+          message_box {
+            text 'Open'
+            message 'Opening File...'
+          }.open
+        }
+      }
+      menu {
+        text 'Open &Recent'
+        menu_item {
+          text 'File 1'
+          on_widget_selected {
+            message_box {
+              text 'File 1'
+              message 'File 1 Contents'
+            }.open
+          }
+        }
+        menu_item {
+          text 'File 2'
+          on_widget_selected {
+            message_box {
+              text 'File 2'
+              message 'File 2 Contents'
+            }.open
+          }
+        }
+      }
+      menu_item(:separator)
+      menu_item {
+        text 'E&xit'
+
+        on_widget_selected {
+          exit(0)
+        }
+      }
+    }
+    menu {
+      text '&Edit'
+      menu_item {
+        text 'Cut'
+        accelerator :command, :X
+      }
+      menu_item {
+        text 'Copy'
+        accelerator :command, :C
+      }
+      menu_item {
+        text 'Paste'
+        accelerator :command, :V
+      }
+    }
+    menu {
+      text '&Options'
+
+      menu_item(:radio) {
+        text '&Enabled'
+
+        on_widget_selected {
+          @select_one_menu.enabled = true
+          @select_multiple_menu.enabled = true
+        }
+      }
+      @select_one_menu = menu {
+        text '&Select One'
+        enabled false
+
+        menu_item(:radio) {
+          text 'Option 1'
+        }
+        menu_item(:radio) {
+          text 'Option 2'
+        }
+        menu_item(:radio) {
+          text 'Option 3'
+        }
+      }
+      @select_multiple_menu = menu {
+        text '&Select Multiple'
+        enabled false
+
+        menu_item(:check) {
+          text 'Option 4'
+        }
+        menu_item(:check) {
+          text 'Option 5'
+        }
+        menu_item(:check) {
+          text 'Option 6'
+        }
+      }
+    }
+    menu {
+      text '&Format'
+      menu {
+        text '&Background Color'
+        COLORS.each { |color_style|
+          menu_item(:radio) {
+            text color_style.to_s.split('_').map(&:capitalize).join(' ')
+
+            on_widget_selected {
+              @label.background = color_style
+            }
+          }
+        }
+      }
+      menu {
+        text 'Foreground &Color'
+        COLORS.each { |color_style|
+          menu_item(:radio) {
+            text color_style.to_s.split('_').map(&:capitalize).join(' ')
+
+            on_widget_selected {
+              @label.foreground = color_style
+            }
+          }
+        }
+      }
+    }
+    menu {
+      text '&View'
+      menu_item(:radio) {
+        text 'Small'
+
+        on_widget_selected {
+          @label.font = {height: 25}
+          @label.parent.pack
+        }
+      }
+      menu_item(:radio) {
+        text 'Medium'
+        selection true
+
+        on_widget_selected {
+          @label.font = {height: 50}
+          @label.parent.pack
+        }
+      }
+      menu_item(:radio) {
+        text 'Large'
+
+        on_widget_selected {
+          @label.font = {height: 75}
+          @label.parent.pack
+        }
+      }
+    }
+    menu {
+      text '&Help'
+      menu_item {
+        text '&Manual'
+        accelerator :command, :shift, :M
+
+        on_widget_selected {
+          message_box {
+            text 'Manual'
+            message 'Manual Contents'
+          }.open
+        }
+      }
+      menu_item {
+        text '&Tutorial'
+        accelerator :command, :shift, :T
+
+        on_widget_selected {
+          message_box {
+            text 'Tutorial'
+            message 'Tutorial Contents'
+          }.open
+        }
+      }
+      menu_item(:separator)
+      menu_item {
+        text '&Report an Issue...'
+
+        on_widget_selected {
+          message_box {
+            text 'Report an Issue'
+            message 'Reporting an issue...'
+          }.open
+        }
+      }
+    }
+  }
+}.open
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Hello Menu Bar](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar.png)
+
+![Hello Menu Bar File Menu](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-file-menu.png)
+
+![Hello Menu Bar Edit Menu](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-edit-menu.png)
+
+![Hello Menu Bar Options Menu Disabled](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-options-menu-disabled.png)
+
+![Hello Menu Bar Options Menu Select One](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-options-menu-select-one.png)
+
+![Hello Menu Bar Options Menu Select Multiple](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-options-menu-select-multiple.png)
+
+![Hello Menu Bar Format Menu Background Color](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-format-menu-background-color.png)
+
+![Hello Menu Bar Format Menu Foreground Color](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-format-menu-foreground-color.png)
+
+![Hello Menu Bar View Menu](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-view-menu.png)
+
+![Hello Menu Bar View Small](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-view-small.png)
+
+![Hello Menu Bar View Large](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-view-large.png)
+
+![Hello Menu Bar Help Menu](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-menu-bar-help-menu.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Menu Bar!"
+
+![Hello Menu Bar](images/glimmer-dsl-opal-hello-menu-bar.png)
+
+![Hello Menu Bar File Menu](images/glimmer-dsl-opal-hello-menu-bar-file-menu.png)
+
+![Hello Menu Bar Edit Menu](images/glimmer-dsl-opal-hello-menu-bar-edit-menu.png)
+
+![Hello Menu Bar Options Menu Disabled](images/glimmer-dsl-opal-hello-menu-bar-options-menu-disabled.png)
+
+![Hello Menu Bar Options Menu Select One](images/glimmer-dsl-opal-hello-menu-bar-options-menu-select-one.png)
+
+![Hello Menu Bar Options Menu Select Multiple](images/glimmer-dsl-opal-hello-menu-bar-options-menu-select-multiple.png)
+
+![Hello Menu Bar Format Menu Background Color](images/glimmer-dsl-opal-hello-menu-bar-format-menu-background-color.png)
+
+![Hello Menu Bar Format Menu Foreground Color](images/glimmer-dsl-opal-hello-menu-bar-format-menu-foreground-color.png)
+
+![Hello Menu Bar View Menu](images/glimmer-dsl-opal-hello-menu-bar-view-menu.png)
+
+![Hello Menu Bar View Small](images/glimmer-dsl-opal-hello-menu-bar-view-small.png)
+
+![Hello Menu Bar View Large](images/glimmer-dsl-opal-hello-menu-bar-view-large.png)
+
+![Hello Menu Bar Help Menu](images/glimmer-dsl-opal-hello-menu-bar-help-menu.png)
 
 ### Elaborate Samples
 

@@ -1,3 +1,5 @@
+require 'glimmer/swt/latest_message_box_proxy'
+
 module Glimmer
   module DSL
     class Engine
@@ -9,8 +11,15 @@ module Glimmer
               dsl_stack.pop
             end
           end
-          if keyword.to_s == 'shell'
+          if keyword == 'shell'
             Document.ready?(&work)
+          elsif keyword == 'message_box'
+            if Glimmer::SWT::DisplayProxy.instance.shells.empty?
+              Document.ready?(&work)
+              Glimmer::SWT::LatestMessageBoxProxy.new
+            else
+              work.call
+            end
           else
             work.call
           end

@@ -36,6 +36,7 @@ module Glimmer
       def initialize(args)
         @args = args
         @children = []
+        # TODO consider the implication of emptying the body
         Document.find('body').empty unless ENV['RUBY_ENV'] == 'test'
         render
         @layout = FillLayoutProxy.new(self, [])
@@ -105,7 +106,7 @@ module Glimmer
       def open
         # TODO consider the idea of delaying rendering till the open method
         # TODO make it start as hidden and show shell upon open
-        Glimmer::SWT::DisplayProxy.instance.shells << self
+#         DisplayProxy.instance.shells << self
       end
     end
   end

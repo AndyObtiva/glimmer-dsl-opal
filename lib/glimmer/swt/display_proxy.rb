@@ -28,6 +28,11 @@ module Glimmer
         @shells ||= []
       end
       
+      def message_boxes
+        @message_boxes ||= []
+      end
+      alias message_boxs message_boxes # ensures consistency when meta-programming plurals based on s suffix
+      
       def render
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility
       end
@@ -73,10 +78,6 @@ module Glimmer
             }
           ]
         }
-      end
-      
-      def shells
-        @shells ||= []
       end
     end
   end

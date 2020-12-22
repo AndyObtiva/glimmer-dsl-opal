@@ -6,7 +6,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Update list multi selection screenshot
 - Document each widget separately in each hello sample
-- Support creating a shell if needed to show a message_box
+- Document Hello, Menu Bar! Sample
 
 ## Soon
 

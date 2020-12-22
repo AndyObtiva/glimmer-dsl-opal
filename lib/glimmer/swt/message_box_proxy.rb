@@ -51,16 +51,15 @@ module Glimmer
       
       def initialize(parent, args, block)
         i = 0
-        @parent = parent || DisplayProxy.instance.shells.last # TODO support creating a shell if needed || ShellProxy.new
+        @parent = parent || DisplayProxy.instance.shells.last || ShellProxy.new([])
         @args = args
         @block = block
         @children = Set.new
         @enabled = true
-        content do
-          on_widget_selected {
-            hide
-          }
-        end
+        on_widget_selected {
+          hide
+        }
+        DisplayProxy.instance.message_boxes << self
       end
       
       def text=(txt)

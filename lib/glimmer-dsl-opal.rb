@@ -77,14 +77,17 @@ if RUBY_ENGINE == 'opal'
 #   end
       
   require 'glimmer/dsl/opal/dsl'
-   
+  require 'glimmer/config/opal_logger'
   require 'glimmer-dsl-xml'
   require 'glimmer-dsl-css'
   Element.alias_native :replace_with, :replaceWith
   Element.alias_native :select
   
-#   Glimmer::Config.loop_max_count = 20
+#   Glimmer::Config.loop_max_count = 20 # TODO disable
   
+  original_logger_level = Glimmer::Config.logger.level
+  Glimmer::Config.logger = Glimmer::Config::OpalLogger.new(STDOUT)
+  Glimmer::Config.logger.level = original_logger_level
   Glimmer::Config.excluded_keyword_checkers << lambda do |method_symbol, *args|
     method = method_symbol.to_s
     result = false

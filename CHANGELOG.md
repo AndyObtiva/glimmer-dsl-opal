@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.9.1
+
+- Log errors to error stream ($stderr) instead of standard out (STDOUT)
+- Fixed issue with opening shell caused by internalizing the Document.ready? block
+
 ## 0.9.0
 
 - Support `menu_bar`

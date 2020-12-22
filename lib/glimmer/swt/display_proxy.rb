@@ -31,6 +31,7 @@ module Glimmer
       def message_boxes
         @message_boxes ||= []
       end
+      alias message_boxs message_boxes # alias for automating processing as plural from keyword by adding s only
       
       def render
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility

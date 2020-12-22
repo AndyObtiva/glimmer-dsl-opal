@@ -4,8 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Document each widget separately in each hello sample
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
+- Document each widget separately in each hello sample
 
 ## Soon
 

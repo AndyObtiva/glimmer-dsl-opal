@@ -6,6 +6,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Document each widget separately in each hello sample
+- User Profile Sample
 
 ## Soon
 
@@ -31,6 +32,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 - Hello, Link!
 - Support for shell :no_trim style (via absolute position divs)
+- Support `spinner` and Hello, Spinner! Sample / User Profile Sample
 - `spinner` table editor
 - Support `dialog`
 - Support all variations of button (:radio, :check, :arrow)
@@ -45,7 +47,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Support `progress_bar` using the jQuery UI Accordion
 - Provide a way for disabling included CSS altogether for consumers should they want to use CSS with a clean slate
 - Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
-- Support `spinner` and Hello, Spinner! Sample
+
 - Update `date` and `time` to be spinner based, not drop-down based
 - Implement doit in on_key_pressed event for TextProxy and other events
 - Support table multi-selection

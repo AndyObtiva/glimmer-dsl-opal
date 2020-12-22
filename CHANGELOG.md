@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.9.2
+
+- Fixed issue with opening message_box after internalizing the Document.ready? block
+- Fixed issue with replacing newlines with HTML newlines in `label` and `message_box` text
+
 ## 0.9.1
 
 - Log errors to error stream ($stderr) instead of standard out (STDOUT)

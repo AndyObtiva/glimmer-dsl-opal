@@ -25,10 +25,17 @@ require_relative '../uri'
 
 module Net
   # TODO Implement HTTP with jQuery for use in Glimmer DSL for Opal
+  # TODO Re-Implement in Fetch in the future
   # Note: ignore Protocol superclass for now
   class HTTP
-    def post_form(uri, params)
-      # TODO
+    class << self
+      def post_form(uri, params)
+        response_body = nil
+        result = ::HTTP.post(uri, payload: params) do |response|
+           response_body = response.body
+        end
+        response_body
+      end
     end
   end
 end

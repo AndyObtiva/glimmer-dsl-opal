@@ -22,17 +22,30 @@
 module Glimmer
   module SWT
     class LatestShellProxy #< ShellProxy
-      # TODO consider overriding all methods from ShellProxy and proxying to them
-      # TODO consider the idea of promoting this object into the real shell once Document is ready
-      
       def initialize(parent, args, block)
         # No Op
       end
       
+      def method_missing(method, *args, &block)
+        if latest_shell.nil?
+          super(method, *args, &block)
+        else
+          latest_shell.send(method, *args, &block)
+        end
+      end
+      
+      def respond_to?(method, *args, &block)
+        super || latest_shell&.respond_to?(method, *args, &block)
+      end
+      
       def open
         Document.ready? do
-          DisplayProxy.instance.shells.last&.open
+          latest_shell&.open
         end
+      end
+      
+      def latest_shell
+        @latest_shell ||= DisplayProxy.instance.shells.last
       end
 
     end

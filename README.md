@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.9.2 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.9.3 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -141,7 +141,7 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.9.2 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written in [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
+**Alpha Version** 0.9.3 only supports bare-minimum capabilities for the following [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)):
 
 [Hello samples](#hello-samples):
 
@@ -172,7 +172,7 @@ NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contr
 - [Tic Tac Toe](#tic-tac-toe)
 - [Contact Manager](#contact-manager)
 
-External:
+[External samples](#external-samples):
 
 - [Glimmer Calculator](#glimmer-calculator)
 
@@ -181,6 +181,164 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-tk](https://github.com/AndyObtiva/glimmer-dsl-tk): Glimmer DSL for Tk (Ruby Desktop Development GUI Library)
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)
 - [glimmer-dsl-css](https://github.com/AndyObtiva/glimmer-dsl-css): Glimmer DSL for CSS (Cascading Style Sheets)
+
+## Table of Contents
+
+- [Glimmer DSL for Opal 0.9.2 (Pure Ruby Web GUI)](#-glimmer-dsl-for-opal-092-pure-ruby-web-gui)
+  - [Principles](#principles)
+  - [Background](#background)
+  - [Pre-requisites](#pre-requisites)
+  - [Setup](#setup)
+  - [Supported Glimmer DSL Keywords](#supported-glimmer-dsl-keywords)
+  - [Samples](#samples)
+    - [Hello Samples](#hello-samples)
+      - [Hello, World!](#hello-world)
+      - [Hello, Combo!](#hello-combo)
+      - [Hello, Computed!](#hello-computed)
+      - [Hello, List Single Selection!](#hello-list-single-selection)
+      - [Hello, List Multi Selection!](#hello-list-multi-selection)
+      - [Hello, Browser!](#hello-browser)
+      - [Hello, Tab!](#hello-tab)
+      - [Hello, Custom Widget!](#hello-custom-widget)
+      - [Hello, Custom Shell!](#hello-custom-shell)
+      - [Hello, Radio!](#hello-radio)
+      - [Hello, Radio Group!](#hello-radio-group)
+      - [Hello, Group!](#hello-group)
+      - [Hello, Checkbox!](#hello-checkbox)
+      - [Hello, Checkbox Group!](#hello-checkbox-group)
+      - [Hello, Date Time!](#hello-date-time)
+      - [Hello, Table!](#hello-table)
+      - [Hello, Button!](#hello-button)
+      - [Hello, Message Box!](#hello-message-box)
+      - [Hello, Pop Up Context Menu!](#hello-pop-up-context-menu)
+      - [Hello, Menu Bar!](#hello-menu-bar)
+    - [Elaborate Samples](#elaborate-samples)
+      - [Login](#login)
+      - [Tic Tac Toe](#tic-tac-toe)
+      - [Contact Manager](#contact-manager)
+    - [External Samples](#external-samples)
+      - [Glimmer Calculator](#glimmer-calculator)
+  - [Glimmer Supporting Libraries](#glimmer-supporting-libraries)
+  - [Glimmer Process](#glimmer-process)
+  - [Help](#help)
+    - [Issues](#issues)
+    - [Chat](#chat)
+  - [Feature Suggestions](#feature-suggestions)
+  - [Change Log](#change-log)
+  - [Contributing](#contributing)
+  - [Contributors](#contributors)
+  - [License](#license)
+
+## Principles
+
+- **Live purely in Rubyland via the Glimmer GUI DSL**, completely oblivious to web browser technologies.
+- **Forget Routers!** Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
+- **HTML is strictly made for creating documents not interactive applications**. As such, software engineers can avoid it and focus on creating web applications more productively with Glimmer DSL for Opal in pure Ruby instead (just like they do in desktop development) while content creators and web designers can be the ones responsible for creating HTML documents for web content purposes only as HTML was originally intended. That way, Glimmer web GUI is used and embedded in web pages when providing users with applications while the rest of the web pages are maintained by non-engineers as pure HTML. This achieves a correct separation of responsibilities and better productivity and maintainability.
+- **Approximate styles by developers via the Glimmer GUI DSL. Perfect styles by designers via pure CSS**. Developers can simply build GUI with approximate styling similar to desktop GUI and mockups without worrying about pixel-perfect aesthetics. Web designers can take styling further with pure CSS since every HTML element auto-generated by Glimmer DSL for Opal has a predictable ID and CSS class. This achieves a proper separation of responsibilities between developers and designers.
+- **Web servers are used just like servers in traditional client/server architecture**, meaning they simply provide RMI services to enable centralizing some of the application logic and data in the cloud to make available everywhere and enable data-sharing with others.
+
+## Background
+
+The original idea behind Glimmer DSL for Opal was that you start by having a [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) desktop app that communicates with a Rails API for any web/cloud concerns. The pure Ruby [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) is very simple, so it is more productive to build GUI in it since it does not go through a server/client request/response cycle and can be iterated on locally with a much shorter feedback cycle. Once the GUI and the rest of the app is built. You simply embed it in a Rails app as a one line require statement, and BOOM, it just works on the web inside a web browser with the same server/client communication you had in the desktop app (I am working on adding minimal support for net/http in Opal so that desktop apps that use it continue to work in a web browser. Until then, just use [Opal-jQuery](https://github.com/opal/opal-jquery) http support). That way, you get two apps for one: desktop and web.
+
+Part of the idea is that web browsers just render GUI widgets similar to those of a desktop app (after all a web browser is a desktop app), so whether you run your GUI on the desktop or on the web should just be a low-level concern, hopefully automated completely with Glimmer DSL for Opal.
+
+Last but not least, you would likely want some special branding on the web, so you can push that off to a web designer who would be more than happy to do the web graphic design and customize the look and feel with pure CSS (no need for programming with Ruby or JavaScript). This enables a clean separation of concerns and distribution of tasks among developers and designers, let alone saving effort on the web GUI by reusing the desktop GUI as a base right off the bat.
+
+Alternatively, web developers may directly use [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) to build the GUI of web apps since it is as simple as desktop development, thus requiring a lot less code that is in pure Ruby only (as demonstrated in examples below) and avoiding opaque web concepts like 'render' and 'reactive' due to treating GUI as persistent just like desktop apps do. No HTML/JS/CSS skills are even required. Still, web designers may be involved with CSS only if needed, thanks to the clean semantic markup [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) automatically produces.
+
+## Pre-requisites
+
+- Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
+- Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
+- jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
+- jQuery-UI 1.12: [https://code.jquery.com/](https://jqueryui.com/) (jQuery-UI 1.12.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
+- jQuery-UI Timepicker 0.3: [https://code.jquery.com/](https://fgelinas.com/code/timepicker/) (jQuery-UI Timepicker 0.3.3 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
+
+## Setup
+
+(NOTE: Keep in mind this is a very early experimental and incomplete **alpha**. If you run into issues, try to go back to a [previous revision](https://rubygems.org/gems/glimmer-dsl-opal/versions). Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
+
+The [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem is a Rails Engine gem that includes assets.
+
+Please follow the following steps to setup.
+
+Install a Rails 5 gem:
+
+```
+gem install rails -v5.2.4.4
+```
+
+Start a new Rails 5 app:
+
+```
+rails new glimmer_app_server
+```
+
+Add the following to `Gemfile`:
+
+```
+gem 'opal-rails', '~> 1.1.2'
+gem 'opal-async', '~> 1.2.0'
+gem 'opal-jquery', '~> 0.4.4'
+gem 'glimmer-dsl-opal', '~> 0.9.3'
+gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
+gem 'glimmer-dsl-css', '~> 1.1.0', require: false
+
+```
+
+Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb
+
+Edit `config/initializers/assets.rb` and add the following at the bottom:
+```
+Opal.use_gem 'glimmer-dsl-opal'
+```
+
+Run:
+
+```
+rails g scaffold welcome
+```
+
+Modify `config/routes.rb`:
+
+```ruby
+root to: 'welcomes#index'
+```
+
+Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
+
+```erb
+<%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
+```
+
+Clear the file `app/views/welcomes/index.html.erb` from any content.
+
+Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`), and add Glimmer GUI DSL code or a require statement for one of the samples below.
+
+```ruby
+require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
+
+# require-statement/code goes here.
+```
+
+Example to confirm setup is working:
+
+```ruby
+require 'glimmer-dsl-opal'
+
+include Glimmer
+
+shell {
+  fill_layout
+  text 'Example to confirm setup is working'
+  label {
+    text "Welcome to Glimmer DSL for Opal!"
+    foreground :red
+    font height: 24
+  }
+}.open
+```
 
 ## Supported Glimmer DSL Keywords
 
@@ -241,117 +399,6 @@ Data-Binding/Observers:
 Event loop:
 - `display`: featured in [Tic Tac Toe](#tic-tac-toe)
 - `async_exec`: featured in [Hello, Custom Widget!](#hello-custom-widget) / [Hello, Custom Shell!](#hello-custom-shell)
-
-## Principles
-
-- **Live purely in Rubyland via the Glimmer GUI DSL**, completely oblivious to web browser technologies.
-- **Forget Routers!** Glimmer DSL for Opal supports auto-routing of custom shells (windows), which are opened as separate tabs in a web browser with automatically generated routes and bookmarkable URLs.
-- **HTML is strictly made for creating documents not interactive applications**. As such, software engineers can avoid it and focus on creating web applications more productively with Glimmer DSL for Opal in pure Ruby instead (just like they do in desktop development) while content creators and web designers can be the ones responsible for creating HTML documents for web content purposes only as HTML was originally intended. That way, Glimmer web GUI is used and embedded in web pages when providing users with applications while the rest of the web pages are maintained by non-engineers as pure HTML. This achieves a correct separation of responsibilities and better productivity and maintainability.
-- **Approximate styles by developers via the Glimmer GUI DSL. Perfect styles by designers via pure CSS**. Developers can simply build GUI with approximate styling similar to desktop GUI without worrying about pixel-perfect aethetics. Web designers can take styling further with pure CSS since every HTML element auto-generated by Glimmer DSL for Opal has a predictable ID and CSS class. This achieves a proper separation of responsibilities between developers and designers.
-- **Web servers are used just like servers in traditional client/server architecture**, meaning they simply provide RMI services to enable centralizing some of the application logic and data in the cloud to make available everywhere and enable data-sharing with others.
-
-## Background
-
-The original idea behind Glimmer DSL for Opal was that you start by having a [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) desktop app that communicates with a Rails API for any web/cloud concerns. The pure Ruby [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) is very simple, so it is more productive to build GUI in it since it does not go through a server/client request/response cycle and can be iterated on locally with a much shorter feedback cycle. Once the GUI and the rest of the app is built. You simply embed it in a Rails app as a one line require statement after adding the Glimmer DSL for Opal gem, and BOOM, it just works on the web inside a web browser with the same server/client communication you had in the desktop app (I am working on adding minimal support for net/http in Opal so that desktop apps that use it continue to work in a web browser. Until then, just use [Opal-jQuery](https://github.com/opal/opal-jquery) http support). That way, you get two apps for one: desktop and web.
-
-Part of the idea is that web browsers just render GUI widgets similar to those of a desktop app (after all a web browser is a desktop app), so whether you run your GUI on the desktop or on the web should just be a low-level concern, hopefully automated completely with Glimmer DSL for Opal.
-
-Last but not least, you would likely want some special branding on the web, so you can push that off to a web designer who would be more than happy to do the web graphic design and customize the look and feel with pure CSS (no need for programming with Ruby or JavaScript). This enables a clean separation of concerns and distribution of tasks among developers and designers, let alone saving effort on the web GUI by reusing the desktop GUI as a base right off the bat.
-
-Alternatively, web developers may directly use [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) to build the GUI of web apps since it is as simple as desktop development, thus requiring a lot less code that is in pure Ruby only (as demonstrated in examples below) and avoiding opaque web concepts like 'render' and 'reactive' due to treating GUI as persistent just like desktop apps do. No HTML/JS/CSS skills are even required. Still, web designers may be involved with CSS only if needed, thanks to the clean semantic markup [Glimmer DSL for Opal](https://rubygems.org/gems/glimmer-dsl-opal) automatically produces.
-
-## Pre-requisites
-
-- Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
-- Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
-- jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
-- jQuery-UI 1.12: [https://code.jquery.com/](https://jqueryui.com/) (jQuery-UI 1.12.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
-- jQuery-UI Timepicker 0.3: [https://code.jquery.com/](https://fgelinas.com/code/timepicker/) (jQuery-UI Timepicker 0.3.3 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
-
-## Setup
-
-(NOTE: Keep in mind this is a very early experimental and incomplete **alpha**. If you run into issues, try to go back to a [previous revision](https://rubygems.org/gems/glimmer-dsl-opal/versions). Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
-
-The [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem is a Rails Engine gem that includes assets.
-
-Please follow the following steps to setup.
-
-Install a Rails 5 gem:
-
-```
-gem install rails -v5.2.4.4
-```
-
-Start a new Rails 5 app:
-
-```
-rails new glimmer_app_server
-```
-
-Add the following to `Gemfile`:
-
-```
-gem 'opal-rails', '~> 1.1.2'
-gem 'opal-async', '~> 1.2.0'
-gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.9.2'
-gem 'glimmer-dsl-xml', '~> 1.1.0', require: false
-gem 'glimmer-dsl-css', '~> 1.1.0', require: false
-
-```
-
-Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb
-
-Edit `config/initializers/assets.rb` and add the following at the bottom:
-```
-Opal.use_gem 'glimmer-dsl-opal'
-```
-
-Run:
-
-```
-rails g scaffold welcome
-```
-
-Modify `config/routes.rb`:
-
-```ruby
-root to: 'welcomes#index'
-```
-
-Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
-
-```erb
-<%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
-```
-
-Clear the file `app/views/welcomes/index.html.erb` from any content.
-
-Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`), and add Glimmer GUI DSL code or a require statement for one of the samples below.
-
-```ruby
-require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
-
-# require-statement/code goes here.
-```
-
-Example to confirm setup is working:
-
-```ruby
-require 'glimmer-dsl-opal'
-
-include Glimmer
-
-shell {
-  fill_layout
-  text 'Example to confirm setup is working'
-  label {
-    text "Welcome to Glimmer DSL for Opal!"
-    foreground :red
-    font height: 24
-  }
-}.open
-```
 
 ## Samples
 

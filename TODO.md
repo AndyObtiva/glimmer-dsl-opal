@@ -4,13 +4,25 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Support `dialog` and Hello, Dialog!
+- MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
+- Refactor message_box to use jQuery-UI dialog
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
-- Document each widget separately in each hello sample
-- User Profile Sample
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Drip Drop Chat: Distraction-Free General Chat with Drip Drop Technology to ensure chats are balanced and one cannot send too many messages without another's acknowledgment. Drip Drop Technology allows no more than one short message without a reply, requiring a reply before you can make another reply, thus auto-moderating itself). It will be free and open-source under the MIT license.
+  - Support multiple users
+  - No login to start
+  - One chat room to start
+  - Threaded chat in 2D space open for all
+  - Maintain user identity in cookies (store identity cookies in Glimmer DSL for Opal)
+- Nav Bar web-only sample (using a `menu_bar` as a navbar, styled with CSS)
 
 ## Soon
 
+- Document each widget separately in each hello sample
+- Support `progress_bar` using jQuery UI and Hello, Progress Bar!
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
+- Support the idea of a virtual hard drive pretending to be local with full permissions, but actually lives on the server
 - Support Authentication (username/password)
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into via a global Display#shell_element_path, shell_element_id or something of the like. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
 this can be done by providing "parent_path" option (css selector) to Shell (e.g. shell(parent_path: 'div#glimmer-app'). Also, generate shell IDs in localStorage since multiple shells can be spawned in separate tabs and cannot keep track of IDs in the same JS runtime.
@@ -19,13 +31,13 @@ Consider the idea of having shells render a div without as an addition to curren
 - Support downloading any file accessed by File.read could be exposed as a downloadable on the fly and cached in a list that persists across server restarts (save for files being deleted)
 Consider a security model where you pre-add all gem Ruby files to make available for download, but only enable download at runtime when a file is requested (keeping all other fiels sealed and protected) using some authorized scheme/model (e.g. pundit)
 
-- Nav Bar Sample (Web-Only Sample using a `menu_bar` as a navbar, styled with CSS)
 - Always open a second shell in a separate browser tab/window even if not a custom shell (auto-id'ing uniquely via shell title text using as hashtag)
 - Support hiding a shell and opening a new one while staying in the same page (equivalent of page changes with shell title text used to autogenerate hashtag unique URL)
 - Extract glimmer dsl engine code to glimmer gem
 
 ## Issues
 
+- Fix issue with enter key triggering button behind a message_box (like in Hello, Message Box!)
 - Focus on next enabled widget when disabling a widget
 
 ## Features
@@ -33,18 +45,15 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Hello, Link!
 - Support for shell :no_trim style (via absolute position divs)
 - Support `spinner` and Hello, Spinner! Sample / User Profile Sample
+- User Profile Sample (dependent on spinner support)
 - `spinner` table editor
-- Support `dialog`
 - Support all variations of button (:radio, :check, :arrow)
 - Support different themes by detecting browser OS (Mac, Windows, Linux)
-- Support Document.ready? as part of Glimmer's top level keywords so clients don't need to use it
 - Test and document opal-hot-reloader as an option for hot loading glimmer-dsl-opal
 - Consider the idea of supporting multiple web implementations for a widget to allow different looks, perhaps allowing 3rd parties to plug extra implementations as needed as different "adapters"
 - Consider the idea of configuration of whether to open new custom shells in the same browser tab/window or the default of new tabs/windows. Perhaps even support configuring on a specific custom shell by custom shell basis
-- MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
 - Hello, Message Box!
 - Support `expand_bar` and `expand_item` using the jQuery UI Accordion
-- Support `progress_bar` using the jQuery UI Accordion
 - Provide a way for disabling included CSS altogether for consumers should they want to use CSS with a clean slate
 - Update DateTimeProxy to add date, time, year, month, day, hours, minutes, seconds attribute methods
 
@@ -62,6 +71,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal
 - net/http (and dependencies like uri)
+- consider reimplementing net/http through fetch instead of opal-jquery
 
 ## Refactorings
 
@@ -69,7 +79,6 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Do away with redraw everywhere possible
 - Have Shell/CustomShell render content without attaching to the DOM until #open is called by having each child grab DOM relative to parent (instead of absolute CSS path) while having Shell render to an in-memory DOM until ready to attach with #open
 - Refactor tab_folder/tab_item to use jQuery-UI
-- Refactor message_box to use jQuery-UI dialog
 - Boilerplate dom method on most widgets that follow the default in markup (perhaps relying only on specifying `#element`)
 
 ## Miscellaneous
@@ -85,22 +94,20 @@ Consider a security model where you pre-add all gem Ruby files to make available
 ## Production Apps
 
 - Desktopify.org (free): freely convert any web app into a desktop app using Glimmer scaffolding. Provide scaffolded app as src, dmg, pkg, app, msi, and jar+script for Linux.
-- DripComm.com: Distraction-Free Business Chat (paid business account) with DripComm technology to ensure chats are balanced and one cannot send too many messages without another's acknowledgment. DripComm allows no more than one short message without a reply, requiring a reply before you make another reply, thus auto-moderating itself). DripComm is short for Drip Communication. It will be open-source, but under a special license that requires a paid business account to reuse by 3rd party developers.
-- ThoughtBarf (free) to barf thoughts online with short messages relying on self moderating DripComm technology
-- DripBlog (free) with comment self moderating DripComm technology and Glimmer Blog as first customer
-- FriendsOnly (free): a friends only social networking site that intentionally avoids supporting family-tree and dating relationships/status. This makes it a safe place for networking with friends only. Leverages the DripComm technology
+- ThoughtBarf (free) to barf thoughts online with short messages relying on self moderating Drip Drop Technology
+- DripBlog (free) with comment self moderating Drip Drop Technology and Glimmer Blog as first customer
+- FriendsOnly (free): a friends only social networking site that intentionally avoids supporting family-tree and dating relationships/status. This makes it a safe place for networking with friends only. Leverages the Drip Drop Technology
 - FreeHire: Web app for requesting software development project services and hiring developers for free in exchange for marketing them with finished software online citation from the start. No guarantees for maintenance though. It is done freely only.
-- DripEmail (paid business account) email service using DripComm technology
-- DripForum (with self moderating DripComm technology that allows no more than one message without a reply, requiring a reply before you make another reply, thus auto-moderating)
-- PublishOrPerish (free) a site to publish articles and receive comments. Leveraged self moderating DripComm technology.
-- ProfessionalOpinion: a professional question/answer website relying on self-moderating DripComm technology (free for answering and browsing but not for asking)
+- DripEmail (paid business account) email service using Drip Drop Technology
+- DripForum (with self moderating Drip Drop Technology that allows no more than one message without a reply, requiring a reply before you make another reply, thus auto-moderating)
+- PublishOrPerish (free) a site to publish articles and receive comments. Leveraged self moderating Drip Drop Technology.
+- ProfessionalOpinion: a professional question/answer website relying on self-moderating Drip Drop Technology (free for answering and browsing but not for asking)
 - indextheworld.org or cyclopedia.world (free): a publicly co-authored encyclopedia. Circumvents many issues in wikipedia by making pages available for authorship by one person only (thus eliminating the issues of different writing styles and inconsistencies per page on wikipedia). If changes were needed, other people may submit inquiries to the page author to update the page. If the author does not respond in a year and a half, the page is released to the public to be claimed by a different author. If the page author puts inaccurate info, people can complain. Once there are 8 complaints, the page is flagged for review by website volunteer moderators approved by website owner (me). They can accept the complaints or deny them. If they accept the complaints, the page author is revoked and the page becomes available to be claimed by a differnet author. If not, then the page author stays and next time needs 1.5x the complains (12 for example) to flag page for review. This auto-punishes complainers if they complain without the page having any issues as next time it becomes harder to flag it.
-- Build FolkAdvice.com (free): a website for asking for and giving advice. Also relies on DripComm self-moderating technology
+- Build FolkAdvice.com (free): a website for asking for and giving advice. Also relies on Drip Drop self-moderating technology
 - GlimmerAppStore.com: cross platform alternative to Mac App Store to host and sell glimmer apps with auto update support
 - helpmeteachyou.org (free): free education platform
-- social.community (free): online community gathering with DripComm self-moderating technology.
+- social.community (free): online community gathering with Drip Drop self-moderating technology.
 
 ## Documentation
 
 - Document a styled Tic Tac Toe at the top of the README
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee

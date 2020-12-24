@@ -207,11 +207,11 @@ module Glimmer
           the_element.on('mouseover') { |event|
             if event.page_x.between?(the_element.offset.left, the_element.offset.left + the_element.width) and
                event.page_y.between?(the_element.offset.top, the_element.offset.top + the_element.height)
-              `$(#{path}).menu('option', 'position', { my: 'left top', at: 'left bottom' });`
+              `$(#{path}).menu('option', 'position', { my: 'left top', at: 'left bottom' })`
             end
           }
           the_element.on('menublur') {
-            `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' });`
+            `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' })`
           }
           minimum_width = children.to_a.map(&:dom_element).map(&:width).reduce(:+)
           the_element.css('min-width', minimum_width)

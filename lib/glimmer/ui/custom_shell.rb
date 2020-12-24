@@ -56,7 +56,7 @@ module Glimmer
       
       def initialize(parent, args, options, &content)
         super(parent, args, options, &content)
-        raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy) || body_root.is_a?(Glimmer::UI::CustomShell)
+        raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy) || body_root.is_a?(Glimmer::UI::CustomShell) || body_root.is_a?(Glimmer::SWT::LatestShellProxy)
       end
 
       # Classes may override

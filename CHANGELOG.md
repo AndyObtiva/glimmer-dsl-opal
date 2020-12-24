@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.9.3
+
+- Extracted pure Ruby Struct to pure-struct gem (since it's also used by YASL)
+- Alpha experimental incomplete implementation of Net::HTTP.post_form
+- Fixed issue with not being able to interact with a shell proxy (LatestShellProxy) after opening (made class autoupgradable to attached ShellProxy after document ready)
+
 ## 0.9.2
 
 - Fixed issue with opening message_box after internalizing the Document.ready? block

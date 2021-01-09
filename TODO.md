@@ -4,11 +4,17 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support `dialog` and Hello, Dialog!
+- Hello, Dialog! Sample
+- Support `dialog` widget
 - MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
 - Refactor message_box to use jQuery-UI dialog
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
+- relicense 2021
+
+## Soon
+
 - Drip Drop Chat: Distraction-Free General Chat with Drip Drop Technology to ensure chats are balanced and one cannot send too many messages without another's acknowledgment. Drip Drop Technology allows no more than one short message without a reply, requiring a reply before you can make another reply, thus auto-moderating itself). It will be free and open-source under the MIT license.
   - Support multiple users
   - No login to start
@@ -16,8 +22,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
   - Threaded chat in 2D space open for all
   - Maintain user identity in cookies (store identity cookies in Glimmer DSL for Opal)
 - Nav Bar web-only sample (using a `menu_bar` as a navbar, styled with CSS)
-
-## Soon
 
 - Document each widget separately in each hello sample
 - Support `progress_bar` using jQuery UI and Hello, Progress Bar!

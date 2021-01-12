@@ -17,6 +17,8 @@ module Glimmer
                   :grab_excess_vertical_space,
                   :width_hint,
                   :height_hint
+      alias width width_hint
+      alias height height_hint
     
       def initialize(parent, args)
         @parent = parent
@@ -35,12 +37,14 @@ module Glimmer
         @parent.dom_element.css('width', "#{@width_hint}px")
 #         reapply
       end
+      alias width= width_hint=
 
       def height_hint=(height_hint)
         @height_hint = height_hint
         @parent.dom_element.css('height', "#{@height_hint}px")
 #         reapply
       end
+      alias height= height_hint=
 
       def horizontal_alignment=(horizontal_alignment)
         @horizontal_alignment = horizontal_alignment

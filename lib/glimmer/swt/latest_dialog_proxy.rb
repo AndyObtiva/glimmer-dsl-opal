@@ -19,29 +19,24 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/swt/latest_shell_proxy'
-require 'glimmer/swt/latest_message_box_proxy'
-require 'glimmer/swt/latest_dialog_proxy'
-
 module Glimmer
-  module DSL
-    class Engine
-      class << self
-        def interpret_expression(expression, keyword, *args, &block)
-          work = lambda do
-            expression.interpret(parent, keyword, *args, &block).tap do |ui_object|
-              add_content(ui_object, expression, &block)
-              dsl_stack.pop
-            end
-          end
-          if ['shell', 'message_box', 'dialog'].include?(keyword) && Glimmer::SWT::DisplayProxy.instance.shells.empty?
-            Document.ready?(&work)
-            Glimmer::SWT.const_get("Latest#{keyword.camelcase(:upper)}Proxy").new
-          else
-            work.call
-          end
+  module SWT
+    class LatestDialogProxy #< DialogProxy
+      # TODO consider overriding all methods from DialogProxy and proxying to them
+      # TODO consider the idea of promoting this object into the real dialog once Document is ready
+      
+      def initialize(parent, args, block)
+        # No Op
+      end
+      
+      def open
+        Document.ready? do
+          DisplayProxy.instance.dialogs.last&.open
         end
       end
+
     end
+    
   end
+  
 end

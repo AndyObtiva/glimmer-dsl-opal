@@ -78,7 +78,7 @@ GEM
       hashie (>= 3.4)
       mime-types (>= 1.16, < 3.0)
       oauth2 (~> 1.0)
-    glimmer (1.0.6)
+    glimmer (1.0.7)
       array_include_methods (>= 1.0.4, < 2.0.0)
       facets (>= 3.1.0, < 4.0.0)
     glimmer-dsl-css (1.1.0)
@@ -169,7 +169,7 @@ GEM
     psych (3.3.0)
     psych (3.3.0-java)
       jar-dependencies (>= 0.1.7)
-    pure-struct (1.0.1)
+    pure-struct (1.0.2)
     puts_debuggerer (0.11.0)
       awesome_print (~> 1.8.0)
     racc (1.5.2)
@@ -246,7 +246,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  glimmer (~> 1.0.5)
+  glimmer (~> 1.0.7)
   glimmer-dsl-css (~> 1.1.0)
   glimmer-dsl-xml (~> 1.1.0)
   jeweler (>= 2.3.9, < 3.0.0)
@@ -254,7 +254,7 @@ DEPENDENCIES
   opal-jquery (~> 0.4.4)
   opal-rails (~> 1.1.2)
   opal-rspec (~> 0.8.0.alpha2)
-  pure-struct (>= 1.0.1, < 2.0.0)
+  pure-struct (>= 1.0.2, < 2.0.0)
   puts_debuggerer
   rake (>= 10.1.0, < 14.0.0)
   rake-tui

@@ -4,17 +4,15 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Hello, Dialog! Sample
-- Support `dialog` widget
-- MessageBox reimplemented with jQuery UI Dialog supporting all YES/NO button variations
 - Refactor message_box to use jQuery-UI dialog
-- Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
+- Ensure MessageBox/Dialog is blocking in the sense that if a shell is opened after its open method is blocking, it is supposed to get scheduled in a queue and wait its turn till the dialog/message_box is closed
+- MessageBox support for all YES/NO button variations
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
-- relicense 2021
 
 ## Soon
 
+- Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Drip Drop Chat: Distraction-Free General Chat with Drip Drop Technology to ensure chats are balanced and one cannot send too many messages without another's acknowledgment. Drip Drop Technology allows no more than one short message without a reply, requiring a reply before you can make another reply, thus auto-moderating itself). It will be free and open-source under the MIT license.
   - Support multiple users
   - No login to start
@@ -67,6 +65,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Specify table default sort direction (e.g. sort_direction property or otherwise an option on sort_property :some_prop, direction: :ascending ; and add that to Glimmer DSL for SWT
 - Support double-click events
 - Consider including mobile-responsive CSS themes that auto-convert menu bar into a drop-down mobile-menu button
+- glimmer command for adding a gem automatically appending gem to assets via Opal.use_gem
 
 ## Technical Tasks
 

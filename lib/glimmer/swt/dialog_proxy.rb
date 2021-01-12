@@ -24,35 +24,29 @@ require 'glimmer/swt/display_proxy'
 
 module Glimmer
   module SWT
-    class MessageBoxProxy < WidgetProxy
+    class DialogProxy < CompositeProxy
       STYLE = <<~CSS
-        .modal {
+        .ui-dialog .ui-dialog-content {
+          background: rgb(235, 235, 235);
+        }
+        .ui-dialog * {
+          z-index: 100 !important;
+        }
+        .ui-dialog:after {
+          content: " ";
           position: fixed;
-          z-index: 1000;
+          z-index: 10;
           padding-top: 100px;
           left: 0;
           top: 0;
           width: 100%;
           height: 100%;
           overflow: auto;
-          background-color: rgb(0,0,0);
           background-color: rgba(0,0,0,0.4);
-          text-align: center;
         }
-        .modal-content .text {
+        .ui-dialog-titlebar {
           background: rgb(80, 116, 211);
           color: white;
-          padding: 5px;
-        }
-        .modal-content .message {
-          padding: 20px;
-        }
-        .modal-content {
-          background-color: #fefefe;
-          padding-bottom: 15px;
-          border: 1px solid #888;
-          display: inline-block;
-          min-width: 200px;
         }
       CSS
 #         .close {
@@ -68,7 +62,7 @@ module Glimmer
 #           cursor: pointer;
 #         }
       
-      attr_reader :text, :message
+      attr_reader :text
       
       def initialize(parent, args, block)
         i = 0
@@ -79,66 +73,90 @@ module Glimmer
         @block = block
         @children = Set.new
         @enabled = true
-        on_widget_selected {
-          hide
-        }
-        DisplayProxy.instance.message_boxes << self
+#         on_widget_selected {
+#           hide
+#         }
+        DisplayProxy.instance.dialogs << self
+        @parent.post_initialize_child(self)
       end
       
       def text=(txt)
         @text = txt
-        dom_element.find('.modal-content .text').html(@text)
+        if @init
+          dom_element.dialog('option', 'title', @text)
+        else
+          dom_element.attr('title', @text)
+        end
       end
     
-      def html_message
-        message&.gsub("\n", '<br />')
-      end
-      
-      def message=(msg)
-        @message = msg
-        dom_element.find('.modal-content .message').html(html_message)
-      end
-      
       def open
-        parent.post_initialize_child(self)
+        unless @init
+          dom_element.remove_class('hide')
+          dom_element.dialog(modal: true, closeOnEscape: true)
+          @init = true
+          dom_element.dialog('option', 'width', 'auto')
+          dom_element.on('dialogclose') do
+            unless @hiding
+              close
+            else
+              @hiding = false
+            end
+          end
+        else
+          dom_element.dialog('open')
+        end
+        @open = true
+      end
+      
+      def open?
+        @open
       end
       
       def hide
-        dom_element.remove
+        @hiding = true
+        dom_element.dialog('close')
+        @open = false
       end
+      
+      def close
+        dom_element.dialog('destroy')
+        dom_element.remove
+        @open = false
+        @init = false
+      end
+      
       
       def content(&block)
-        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::MessageBoxExpression.new, &block)
+        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::DialogExpression.new, &block)
       end
       
-      def selector
-        super + ' .close'
+      def path
+        if @init # it gets moved once initialized by jQuery UI, so only ID is reliable then
+          "##{id}"
+        else
+          super
+        end
       end
-    
-      def listener_path
-        path + ' .close'
-      end
-    
-      def observation_request_to_event_mapping
-        {
-          'on_widget_selected' => {
-            event: 'click'
-          },
-        }
-      end
+      
+#       def selector
+#         super + ' .close'
+#       end
+#
+#       def listener_path
+#         widget_path + ' .close'
+#       end
+#
+#       def observation_request_to_event_mapping
+#         {
+#           'on_widget_selected' => {
+#             event: 'click'
+#           },
+#         }
+#       end
  
       def dom
         @dom ||= html {
-          div(id: id, class: "modal #{name}") {
-            div(class: 'modal-content') {
-              header(class: 'text') {
-                "#{text}&nbsp;" # ensure title area occuppied when there is no text by adding non-breaking space (&nbsp;)
-              }
-              tag(_name: 'p', id: 'message', class: 'message') {
-                html_message
-              }
-              input(type: 'button', class: 'close', autofocus: 'autofocus', value: 'OK')
-            }
+          div(id: id, class: "#{name} hide", title: text) {
           }
         }.to_s
       end
@@ -146,4 +164,4 @@ module Glimmer
   end
 end
 
-require 'glimmer/dsl/opal/message_box_expression'
+require 'glimmer/dsl/opal/dialog_expression'

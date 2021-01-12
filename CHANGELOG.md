@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.10.0
+
+- Hello, Dialog! Sample
+- Support `dialog` widget
+- Support `width` and `height` on `layout_data` for `row_layout`
+- Support `center` for `row_layout`
+
 ## 0.9.3
 
 - Extracted pure Ruby Struct to pure-struct gem (since it's also used by YASL)

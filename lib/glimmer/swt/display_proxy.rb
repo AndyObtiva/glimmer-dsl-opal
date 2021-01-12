@@ -32,6 +32,10 @@ module Glimmer
         @message_boxes ||= []
       end
       
+      def dialogs
+        @dialogs ||= []
+      end
+      
       def render
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility
       end

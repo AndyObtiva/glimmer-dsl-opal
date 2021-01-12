@@ -82,6 +82,7 @@ if RUBY_ENGINE == 'opal'
   require 'glimmer-dsl-css'
   Element.alias_native :replace_with, :replaceWith
   Element.alias_native :select
+  Element.alias_native :dialog
   
 #   Glimmer::Config.loop_max_count = 20 # TODO disable
   

@@ -186,6 +186,7 @@ module Glimmer
       def path
         "#{parent_path} #{element}##{id}.#{name}"
       end
+      alias widget_path path # pure path without subchildren modifications
 
       # Root element representing widget. Must be overridden by subclasses if different from div
       def element
@@ -251,7 +252,6 @@ module Glimmer
         if brand_new
           the_parent_dom_element.append(@dom) # TODO make a method attach to allow subclasses to override if needed
         else
-          old_element.replace_with(@dom)
           old_element.replace_with(@dom)
         end
         observation_requests&.each do |keyword, event_listener_set|
@@ -896,6 +896,7 @@ require 'glimmer/swt/button_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'
+require 'glimmer/swt/dialog_proxy'
 require 'glimmer/swt/date_time_proxy'
 require 'glimmer/swt/group_proxy'
 require 'glimmer/swt/label_proxy'

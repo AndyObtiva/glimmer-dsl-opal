@@ -14,6 +14,16 @@ module Glimmer
         .row-layout-pack-false {
           align-items: stretch;
         }
+        
+        .row-layout-center.row-layout-horizontal > * {
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+                
+        .row-layout-center.row-layout-vertical > * {
+          margin-left: auto;
+          margin-right: auto;
+        }
                 
         .row-layout-horizontal {
           flex-direction: row;
@@ -32,7 +42,7 @@ module Glimmer
         }
       CSS
     
-      attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack
+      attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center
     
       def initialize(parent, args)
         super(parent, args)
@@ -64,6 +74,16 @@ module Glimmer
           @parent.dom_element.remove_class('row-layout-pack-false')
         else
           @parent.dom_element.add_class('row-layout-pack-false')
+        end
+      end
+      
+      def center=(center_value)
+        @center = center_value
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        if @center
+          parent.dom_element.add_class("row-layout-center")
+        else
+          parent.dom_element.remove_class("row-layout-center")
         end
       end
       
@@ -101,7 +121,7 @@ module Glimmer
         @margin_left = pixels
         @parent.dom_element.css('padding-left', @margin_left)
       end
-      
+            
       def spacing=(spacing)
         @spacing = spacing.to_i
         # TODO implement changes to accomodate layout_data in the future

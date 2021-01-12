@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 1.0.5' #, path: '../glimmer'
+gem 'glimmer', '~> 1.0.7' #, path: '../glimmer'
 gem 'glimmer-dsl-xml', '~> 1.1.0'
 gem 'glimmer-dsl-css', '~> 1.1.0'
 gem 'opal-async', '~> 1.2.0'
 gem 'to_collection', '>= 2.0.1', '< 3.0.0'
-gem 'pure-struct', '>= 1.0.1', '< 2.0.0'
+gem 'pure-struct', '>= 1.0.2', '< 2.0.0'
 
 group :development, :test do
   gem "puts_debuggerer", require: false

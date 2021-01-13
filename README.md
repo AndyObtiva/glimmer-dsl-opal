@@ -2547,8 +2547,63 @@ require 'glimmer-dsl-opal/samples/hello/hello_dialog'
 Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
+include Glimmer
 
+shell {
+  row_layout :vertical
+  
+  text 'Hello, Dialog!'
+  
+  7.times { |n|
+    dialog_number = n + 1
+    
+    button {
+      layout_data {
+        width 200
+        height 50
+      }
+      text "Dialog #{dialog_number}"
+      
+      on_widget_selected {
+        dialog { |dialog_proxy|
+          row_layout(:vertical) {
+            center true
+          }
+          
+          text "Dialog #{dialog_number}"
+          
+          label {
+            text "Given `dialog` is modal, you cannot interact with the main window till the dialog is closed."
+          }
+          composite {
+            row_layout {
+              margin_height 0
+              margin_top 0
+              margin_bottom 0
+            }
 
+            label {
+              text "Unlike `message_box`, `dialog` can contain arbitrary widgets:"
+            }
+            radio {
+              text 'Radio'
+            }
+            checkbox {
+              text 'Checkbox'
+            }
+          }
+          button {
+            text 'Close'
+            
+            on_widget_selected {
+              dialog_proxy.close
+            }
+          }
+        }.open
+      }
+    }
+  }
+}.open
 ```
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):

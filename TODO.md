@@ -4,14 +4,17 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Refactor message_box to use jQuery-UI dialog
-- Ensure MessageBox/Dialog is blocking in the sense that if a shell is opened after its open method is blocking, it is supposed to get scheduled in a queue and wait its turn till the dialog/message_box is closed
-- MessageBox support for all YES/NO button variations
-- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
-- Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
+
 
 ## Soon
 
+- When nesting dialogs on top of each other, disable all previously opened ones leaving only the top-most dialog active
+- Refactor message_box to use jQuery-UI dialog
+- Ensure MessageBox/Dialog is blocking in the sense that if a shell is opened after its open method is blocking, it is supposed to get scheduled in a queue and wait its turn till the dialog/message_box is closed
+- MessageBox support for all YES/NO button variations
+
+- Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
+- Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
 - Drip Drop Chat: Distraction-Free General Chat with Drip Drop Technology to ensure chats are balanced and one cannot send too many messages without another's acknowledgment. Drip Drop Technology allows no more than one short message without a reply, requiring a reply before you can make another reply, thus auto-moderating itself). It will be free and open-source under the MIT license.
   - Support multiple users
@@ -70,6 +73,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 ## Technical Tasks
 
 - fire on_widget_disposed listener in WidgetProxy on calling `#dispose`
+- Consider making it a configurable option to whether open a secondary shell as a new tab or an internal modeless dialog
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal

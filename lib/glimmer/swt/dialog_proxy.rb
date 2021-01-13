@@ -29,26 +29,21 @@ module Glimmer
         .ui-dialog .ui-dialog-content {
           background: rgb(235, 235, 235);
         }
-        .ui-dialog * {
-          z-index: 100 !important;
-        }
-        .ui-dialog:after {
-          content: " ";
-          position: fixed;
-          z-index: 10;
-          padding-top: 100px;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgba(0,0,0,0.4);
-        }
         .ui-dialog-titlebar {
           background: rgb(80, 116, 211);
           color: white;
         }
+        .ui-dialog .dialog .ui-widget-overlay {
+          z-index: 10 !important;
+          background-color: rgba(0, 0, 0, 0.4);
+          opacity: 1;
+        }
+        .ui-dialog * {
+          z-index: 200 !important;
+        }
       CSS
+
+      
 #         .close {
 #           color: #aaaaaa;
 #           float: right;
@@ -92,9 +87,17 @@ module Glimmer
       def open
         unless @init
           dom_element.remove_class('hide')
-          dom_element.dialog(modal: true, closeOnEscape: true)
+          dom_element.dialog({'auto_open' => false})
           @init = true
+          dom_element.dialog('option', 'appendTo', parent.path)
+          dom_element.dialog('option', 'modal', true) # NOTE: Not Working! Doing manually below by relying on overlay in ShellProxy.
+          if DisplayProxy.instance.dialogs.size == 1 # only add for first dialog open
+            Element['.dialog-overlay'].remove_class('hide')
+          end
+          dom_element.dialog('option', 'closeOnEscape', true)
+          dom_element.dialog('option', 'draggable', true)
           dom_element.dialog('option', 'width', 'auto')
+          dom_element.dialog('option', 'minHeight', 'none')
           dom_element.on('dialogclose') do
             unless @hiding
               close
@@ -116,6 +119,7 @@ module Glimmer
         @hiding = true
         dom_element.dialog('close')
         @open = false
+        Element['.dialog-overlay'].add_class('hide') unless DisplayProxy.instance.dialogs.any?(&:open?)
       end
       
       def close
@@ -123,6 +127,8 @@ module Glimmer
         dom_element.remove
         @open = false
         @init = false
+        Element['.dialog-overlay'].add_class('hide') unless DisplayProxy.instance.dialogs.any?(&:open?)
+        DisplayProxy.instance.dialogs.delete(self)
       end
       
       

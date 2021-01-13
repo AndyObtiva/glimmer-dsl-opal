@@ -24,6 +24,17 @@ module Glimmer
           width: 100%;
           height: 100%;
         }
+        .shell .dialog-overlay {
+          position: fixed;
+          z-index: 10;
+          padding-top: 100px;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+        }
       CSS
     
       # TODO consider renaming to ShellProxy to match SWT API
@@ -98,7 +109,8 @@ module Glimmer
                 }
               end
             end
-            ''
+            div(class: 'dialog-overlay hide') {
+            }
           }
         }.to_s
       end

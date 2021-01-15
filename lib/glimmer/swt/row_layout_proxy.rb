@@ -43,12 +43,10 @@ module Glimmer
       CSS
     
       attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center
-    
+        
       def initialize(parent, args)
         super(parent, args)
-        @type = @args.first || :horizontal
-        @marign_width = 15
-        @margin_height = 15
+        @type = args.first || :horizontal
         self.pack = true
         @parent.dom_element.add_class('row-layout')
         @parent.dom_element.add_class(horizontal? ? 'row-layout-horizontal' : 'row-layout-vertical')

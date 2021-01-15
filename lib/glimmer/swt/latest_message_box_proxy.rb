@@ -31,7 +31,9 @@ module Glimmer
       
       def open
         Document.ready? do
-          DisplayProxy.instance.message_boxes.last&.open
+          DisplayProxy.instance.async_exec {
+            DisplayProxy.instance.message_boxes.last&.open
+          }
         end
       end
 

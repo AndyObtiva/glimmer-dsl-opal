@@ -63,7 +63,7 @@ module Glimmer
         i = 0
         @parent = parent
         @parent = nil if parent.is_a?(LatestShellProxy)
-        @parent ||= DisplayProxy.instance.shells.last || ShellProxy.new([])
+        @parent ||= DisplayProxy.instance.shells.detect(&:open?) || ShellProxy.new([])
         @args = args
         @block = block
         @children = Set.new
@@ -71,6 +71,7 @@ module Glimmer
 #         on_widget_selected {
 #           hide
 #         }
+        DisplayProxy.instance.opened_dialogs.last&.suspend_event_handling
         DisplayProxy.instance.dialogs << self
         @parent.post_initialize_child(self)
       end
@@ -84,35 +85,39 @@ module Glimmer
         end
       end
     
-      def open
-        unless @init
-          dom_element.remove_class('hide')
-          dom_element.dialog({'auto_open' => false})
-          @init = true
-          dom_element.dialog('option', 'appendTo', parent.path)
-          dom_element.dialog('option', 'modal', true) # NOTE: Not Working! Doing manually below by relying on overlay in ShellProxy.
-          if DisplayProxy.instance.dialogs.size == 1 # only add for first dialog open
-            Element['.dialog-overlay'].remove_class('hide')
-          end
-          dom_element.dialog('option', 'closeOnEscape', true)
-          dom_element.dialog('option', 'draggable', true)
-          dom_element.dialog('option', 'width', 'auto')
-          dom_element.dialog('option', 'minHeight', 'none')
-          dom_element.on('dialogclose') do
-            unless @hiding
-              close
-            else
-              @hiding = false
-            end
-          end
-        else
-          dom_element.dialog('open')
-        end
-        @open = true
-      end
-      
       def open?
         @open
+      end
+      
+      def open
+        owned_proc = Glimmer::Util::ProcTracker.new(owner: self) {
+          shell.open(async: false) unless shell.open?
+          unless @init
+            dom_element.remove_class('hide')
+            dom_element.dialog('auto_open' => false)
+            @init = true
+            dom_element.dialog('option', 'appendTo', parent.path)
+            dom_element.dialog('option', 'modal', true) # NOTE: Not Working! Doing manually below by relying on overlay in ShellProxy.
+            unless DisplayProxy.instance.dialogs.any?(&:open?) # only add for first dialog open
+              Element['.dialog-overlay'].remove_class('hide')
+            end
+            dom_element.dialog('option', 'closeOnEscape', true)
+            dom_element.dialog('option', 'draggable', true)
+            dom_element.dialog('option', 'width', 'auto')
+            dom_element.dialog('option', 'minHeight', 'none')
+            dom_element.on('dialogclose') do
+              unless @hiding
+                close
+              else
+                @hiding = false
+              end
+            end
+          else
+            dom_element.dialog('open')
+          end
+          @open = true
+        }
+        DisplayProxy.instance.async_exec(owned_proc)
       end
       
       def hide
@@ -128,7 +133,10 @@ module Glimmer
         @open = false
         @init = false
         Element['.dialog-overlay'].add_class('hide') unless DisplayProxy.instance.dialogs.any?(&:open?)
+        parent.children.delete(self)
+        shell.close if shell.children.empty?
         DisplayProxy.instance.dialogs.delete(self)
+        DisplayProxy.instance.opened_dialogs.last&.resume_event_handling
       end
       
       
@@ -142,6 +150,16 @@ module Glimmer
         else
           super
         end
+      end
+      
+      def suspend_event_handling
+        super
+        Element["[aria-describedby=#{id}]"].css('z-index', 9)
+      end
+      
+      def resume_event_handling
+        super
+        Element["[aria-describedby=#{id}]"].css('z-index', 100)
       end
       
 #       def selector
@@ -162,7 +180,7 @@ module Glimmer
  
       def dom
         @dom ||= html {
-          div(id: id, class: "#{name} hide", title: text) {
+          div(id: id, class: "#{name} modal hide", title: text) {
           }
         }.to_s
       end

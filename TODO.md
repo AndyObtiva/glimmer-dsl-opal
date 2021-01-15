@@ -4,15 +4,15 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-
+- Support for multiple consecutive message boxes feeding results to each other
+- Support for multiple dialogs opened inside a listener
+- Update Hello, Message Box! Sample include Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
+- MessageBox support for all Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
 
 ## Soon
 
-- When nesting dialogs on top of each other, disable all previously opened ones leaving only the top-most dialog active
-- Refactor message_box to use jQuery-UI dialog
-- Ensure MessageBox/Dialog is blocking in the sense that if a shell is opened after its open method is blocking, it is supposed to get scheduled in a queue and wait its turn till the dialog/message_box is closed
-- MessageBox support for all YES/NO button variations
 
+- Refactor message_box to use jQuery-UI dialog
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal

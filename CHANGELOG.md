@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.10.1
+
+- Delaying shell rendering till `#open` method is called as per the right expectation
+- When nesting dialogs on top of each other, disable all previously opened ones leaving only the top-most dialog active
+
 ## 0.10.0
 
 - Hello, Dialog! Sample

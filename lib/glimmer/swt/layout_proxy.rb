@@ -31,29 +31,32 @@ module Glimmer
         
       def initialize(parent, args)
         @parent = parent
+        @args = args
         @parent = parent.body_root if @parent.is_a?(Glimmer::UI::CustomWidget)
         @parent.css_classes.each do |css_class|
           @parent.remove_css_class(css_class) if css_class.include?('layout')
         end
-        @args = args
         @parent.add_css_class(css_class)
         @parent.layout = self
         self.margin_width = 15 if respond_to?(:margin_width=)
         self.margin_height = 15 if respond_to?(:margin_height=)
       end
-
-      def css_class
-        self.class.name.split('::').last.underscore.sub(/_proxy$/, '').gsub('_', '-')
+              
+      def layout​(composite = nil, flush_cache = false)
+        # TODO implement def layout​(composite = nil, flush_cache = false) as per SWT API
+        composite ||= @parent
+        initialize(composite, @args)
       end
       
-      def reapply
-        # subclasses can override this
+      def css_class
+        self.class.name.split('::').last.underscore.sub(/_proxy$/, '').gsub('_', '-')
       end
       
       # Decorates widget dom. Subclasses may override. Returns widget dom by default.
       def dom(widget_dom)
         widget_dom
       end
+      
     end
   end
 end

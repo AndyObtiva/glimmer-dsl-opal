@@ -1,3 +1,5 @@
+require 'glimmer/swt/widget_proxy'
+
 module Glimmer
   module SWT
     class DisplayProxy < WidgetProxy
@@ -36,20 +38,43 @@ module Glimmer
         @dialogs ||= []
       end
       
+      def modals
+        message_boxes + dialogs
+      end
+      
+      def message_box_open?
+        message_boxes.any?(&:open?)
+      end
+      
+      def dialog_open?
+        dialogs.any?(&:open?)
+      end
+      
+      def opened_dialogs
+        dialogs.select(&:open?)
+      end
+      
+      def modal_open?
+        message_box_open? or dialog_open?
+      end
+      
       def render
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility
       end
       
-      def async_exec(&block)
+      def async_exec(proc_tracker = nil, &block)
+        block = proc_tracker unless proc_tracker.nil?
+        can_open_modal = !modal_open?
+        return block.call if !can_open_modal && dialog_open? && block.respond_to?(:owner) && !block.owner.nil? && block.owner.is_a?(DialogProxy) && opened_dialogs.last == WidgetProxy.widget_handling_listener&.dialog_ancestor
+        return block.call if !can_open_modal && block.respond_to?(:owner) && !block.owner.nil? && block.owner.is_a?(MessageBoxProxy)
         executer = lambda do
-          if Document.find('.modal').to_a.empty?
+          if !modal_open?
             block.call
           else
-            sleep(0.05)
-            Async::Task.new(&executer)
+            Async::Task.new(delay: 100, &executer)
           end
         end
-        Async::Task.new(&executer)
+        Async::Task.new(delay: 1, &executer)
       end
       # sync_exec kept for API compatibility reasons
       alias sync_exec async_exec

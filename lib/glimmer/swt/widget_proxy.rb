@@ -77,15 +77,20 @@ module Glimmer
         def underscored_widget_name(widget_proxy)
           widget_proxy.class.name.split(/::|\./).last.sub(/Proxy$/, '').underscore
         end
+        
+        def widget_handling_listener
+          @@widget_handling_listener
+        end
       end
       
       DEFAULT_INITIALIZERS = {
+        # TODO remove if built in class initializer is taking care of this
         composite: lambda do |composite_proxy|
-          if composite_proxy.layout.nil?
-            layout = GridLayoutProxy.new(composite_proxy, [])
-            composite_proxy.layout = layout
-            layout.margin_width = 15
-            layout.margin_height = 15
+          if composite_proxy.get_layout.nil?
+            the_layout = GridLayoutProxy.new(composite_proxy, [])
+            composite_proxy.layout = the_layout
+            the_layout.margin_width = 15
+            the_layout.margin_height = 15
           end
         end,
 #         scrolled_composite: lambda do |scrolled_composite|
@@ -100,7 +105,7 @@ module Glimmer
           table_column_proxy.width = 80
         end,
 #         group: lambda do |group_proxy|
-#           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.layout.nil?
+#           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.get_layout.nil?
 #         end,
       }
       
@@ -135,8 +140,8 @@ module Glimmer
               dom_element.css('position', 'relative')
               menu&.render
               menu.dom_element.css('position', 'absolute')
-              menu.dom_element.css('left', mouse_event.x - parent.layout&.margin_width.to_i) # TODO - parent.layout&.margin_left.to_i)
-              menu.dom_element.css('top', mouse_event.y - parent.layout&.margin_height.to_i - 5) # TODO - parent.layout&.margin_top.to_i)
+              menu.dom_element.css('left', mouse_event.x - parent.get_layout&.margin_width.to_i) # TODO - parent.get_layout&.margin_left.to_i)
+              menu.dom_element.css('top', mouse_event.y - parent.get_layout&.margin_height.to_i - 5) # TODO - parent.get_layout&.margin_top.to_i)
               @menu_requested = false
             end
           }
@@ -193,12 +198,24 @@ module Glimmer
         'div'
       end
       
-      def pack(*args)
-        # No Op (just a shim) TODO consider if it should be implemented
+      def shell
+        current_widget = self
+        current_widget = current_widget.parent until current_widget.parent.nil?
+        current_widget
       end
 
-      def layout(*args)
-        # No Op (just a shim) TODO consider if it should be implemented
+      def parents
+        parents_array = []
+        current_widget = self
+        until current_widget.parent.nil?
+          current_widget = current_widget.parent
+          parents_array << current_widget
+        end
+        parents_array
+      end
+
+      def dialog_ancestor
+        parents.detect {|p| p.is_a?(DialogProxy)}
       end
 
       def enabled=(value)
@@ -237,7 +254,7 @@ module Glimmer
       alias setFocus set_focus
       
       def parent_path
-        @parent.path
+        @parent&.path
       end
 
       def parent_dom_element
@@ -287,7 +304,7 @@ module Glimmer
         # TODO consider passing parent element instead and having table item include a table cell widget only for opal
         @dom = nil
         @dom = dom
-        @dom = @parent.layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.layout
+        @dom = @parent.get_layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.get_layout
         @dom
       end
       
@@ -633,6 +650,18 @@ module Glimmer
         @event_listener_proxies ||= []
       end
       
+      def suspend_event_handling
+        @event_handling_suspended = true
+      end
+      
+      def resume_event_handling
+        @event_handling_suspended = false
+      end
+      
+      def event_handling_suspended?
+        @event_handling_suspended
+      end
+      
       def can_handle_observation_request?(observation_request)
         # TODO sort this out for Opal
         observation_request = observation_request.to_s
@@ -662,7 +691,10 @@ module Glimmer
             # TODO look into the issue with using async::task.new here. maybe put it in event listener (like not being able to call preventDefault or return false successfully )
             # maybe consider pushing inside the widget classes instead where needed only or implement universal doit support correctly to bypass this issue
 #             Async::Task.new do
-              event_listener.call(event)
+            @@widget_handling_listener = self
+            # TODO also make sure to disable all widgets for suspension
+            event_listener.call(event) unless dialog_ancestor&.event_handling_suspended?
+            @widget_handling_listener = nil
 #             end
           end
           the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element

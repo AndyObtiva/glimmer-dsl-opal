@@ -11,7 +11,7 @@ module Glimmer
         include ParentExpression
 
         def interpret(parent, keyword, *args, &block)
-          parent = args.delete_at(0)
+          parent = args.delete_at(0) if !textual?(args.first)
           Glimmer::SWT::MessageBoxProxy.new(parent, args)
         end
       end

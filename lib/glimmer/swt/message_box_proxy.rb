@@ -26,7 +26,7 @@ module Glimmer
   module SWT
     class MessageBoxProxy < WidgetProxy
       STYLE = <<~CSS
-        .modal {
+        .message-box {
           position: fixed;
           z-index: 1000;
           padding-top: 100px;
@@ -39,15 +39,15 @@ module Glimmer
           background-color: rgba(0,0,0,0.4);
           text-align: center;
         }
-        .modal-content .text {
+        .message-box-content .text {
           background: rgb(80, 116, 211);
           color: white;
           padding: 5px;
         }
-        .modal-content .message {
+        .message-box-content .message {
           padding: 20px;
         }
-        .modal-content {
+        .message-box-content {
           background-color: #fefefe;
           padding-bottom: 15px;
           border: 1px solid #888;
@@ -81,13 +81,14 @@ module Glimmer
         @enabled = true
         on_widget_selected {
           hide
+          @open = false
         }
         DisplayProxy.instance.message_boxes << self
       end
       
       def text=(txt)
         @text = txt
-        dom_element.find('.modal-content .text').html(@text)
+        dom_element.find('.message-box-content .text').html(@text)
       end
     
       def html_message
@@ -96,11 +97,20 @@ module Glimmer
       
       def message=(msg)
         @message = msg
-        dom_element.find('.modal-content .message').html(html_message)
+        dom_element.find('.message-box-content .message').html(html_message)
+      end
+      
+      def open?
+        @open
       end
       
       def open
-        parent.post_initialize_child(self)
+        shell.open(async: false) unless shell.open?
+        owned_proc = Glimmer::Util::ProcTracker.new(owner: self) {
+          parent.post_initialize_child(self)
+          @open = true
+        }
+        DisplayProxy.instance.async_exec(owned_proc)
       end
       
       def hide
@@ -130,7 +140,7 @@ module Glimmer
       def dom
         @dom ||= html {
           div(id: id, class: "modal #{name}") {
-            div(class: 'modal-content') {
+            div(class: 'message-box-content') {
               header(class: 'text') {
                 "#{text}&nbsp;" # ensure title area occuppied when there is no text by adding non-breaking space (&nbsp;)
               }

@@ -47,9 +47,7 @@ module Glimmer
       def initialize(args)
         @args = args
         @children = []
-        # TODO consider the implication of emptying the body
-        Document.find('body').empty unless ENV['RUBY_ENV'] == 'test'
-        render
+        render # TODO attach to specific element
         @layout = FillLayoutProxy.new(self, [])
         @layout.margin_width = 0
         @layout.margin_height = 0
@@ -95,7 +93,7 @@ module Glimmer
       def dom
         i = 0
         body_id = id
-        body_class = ([name] + css_classes.to_a).join(' ')
+        body_class = ([name, 'hide'] + css_classes.to_a).join(' ')
         @dom ||= html {
           div(id: body_id, class: body_class) {
             # TODO consider supporting the idea of dynamic CSS building on close of shell that adds only as much CSS as needed for widgets that were mentioned
@@ -115,10 +113,34 @@ module Glimmer
         }.to_s
       end
       
-      def open
-        # TODO consider the idea of delaying rendering till the open method
-        # TODO make it start as hidden and show shell upon open
-#         DisplayProxy.instance.shells << self
+      def open(async: true)
+        work = lambda do
+          unless @open
+            DisplayProxy.instance.shells.select(&:open?).reject {|s| s == self}.map(&:hide)
+            dom_element.remove_class('hide')
+            @open = true
+          end
+        end
+        if async
+          DisplayProxy.instance.async_exec(&work)
+        else
+          work.call
+        end
+      end
+      
+      def hide
+        dom_element.add_class('hide')
+        @open = false
+      end
+      
+      def close
+        DisplayProxy.instance.shells.delete(self)
+        dom_element.remove
+        @open = false
+      end
+      
+      def open?
+        @open
       end
     end
   end

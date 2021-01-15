@@ -14,39 +14,29 @@ module Glimmer
       
       attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
     
-      def initialize(parent, args)
-        super(parent, args)
-        self.horizontal_spacing = 10
-        self.vertical_spacing = 10
-        self.margin_width = 15
-        self.margin_height = 15
-        self.num_columns = @args.first || 1
-        reapply
-      end
-
       def num_columns=(columns)
         @num_columns = columns
         # TODO do the following instead of reapply
 #         @parent.add_css_class("num-columns-#{@num_columns}")
-        reapply
+        # reinitialize # TODO reimplement without using reinitialize
       end
       
       def make_columns_equal_width=(equal_width)
         @make_columns_equal_width = equal_width
 #         @parent.add_css_class('make_columns_equal_width') if @make_columns_equal_width
-        reapply
+        # reinitialize # TODO reimplement without using reinitialize
       end
       
       def horizontal_spacing=(spacing)
         @horizontal_spacing = spacing
 #         @parent.add_css_class("horizontal-spacing-#{@horizontal_spacing}")
-        reapply
+        # reinitialize # TODO reimplement without using reinitialize
       end
 
       def vertical_spacing=(spacing)
         @vertical_spacing = spacing
 #         @parent.add_css_class("vertical-spacing-#{@vertical_spacing}")
-        reapply
+        # reinitialize # TODO reimplement without using reinitialize
       end
       
       def margin_width=(pixels)
@@ -66,8 +56,13 @@ module Glimmer
         @parent.dom_element.css('padding-bottom', effective_margin_height)
       end
             
-      def reapply
-        # TODO get rid of this method
+      def initialize(parent, args)
+        super(parent, args)
+        self.horizontal_spacing = 10
+        self.vertical_spacing = 10
+        self.margin_width = 15
+        self.margin_height = 15
+        self.num_columns = @args.first || 1
         layout_css = <<~CSS
           grid-template-columns: #{'auto ' * @num_columns.to_i};
           grid-row-gap: #{@vertical_spacing}px;

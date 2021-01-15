@@ -19,9 +19,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+require 'glimmer/swt/shell_proxy'
+
 module Glimmer
   module SWT
-    class LatestShellProxy #< ShellProxy
+    class LatestShellProxy < ShellProxy
       def initialize(parent, args, block)
         # No Op
       end
@@ -40,7 +42,9 @@ module Glimmer
       
       def open
         Document.ready? do
-          latest_shell&.open
+          DisplayProxy.instance.async_exec {
+            latest_shell&.open
+          }
         end
       end
       

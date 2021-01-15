@@ -22,6 +22,7 @@
 require 'glimmer/swt/latest_shell_proxy'
 require 'glimmer/swt/latest_message_box_proxy'
 require 'glimmer/swt/latest_dialog_proxy'
+require 'glimmer/swt/display_proxy'
 
 module Glimmer
   module DSL
@@ -35,7 +36,9 @@ module Glimmer
             end
           end
           if ['shell', 'message_box', 'dialog'].include?(keyword) && Glimmer::SWT::DisplayProxy.instance.shells.empty?
-            Document.ready?(&work)
+            Document.ready? do
+              Glimmer::SWT::DisplayProxy.instance.async_exec(&work)
+            end
             Glimmer::SWT.const_get("Latest#{keyword.camelcase(:upper)}Proxy").new
           else
             work.call

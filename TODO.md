@@ -4,15 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support for multiple consecutive message boxes feeding results to each other
-- Support for multiple dialogs opened inside a listener
-- Update Hello, Message Box! Sample include Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
-- MessageBox support for all Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
-
 ## Soon
 
-
-- Refactor message_box to use jQuery-UI dialog
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
@@ -39,6 +32,11 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Always open a second shell in a separate browser tab/window even if not a custom shell (auto-id'ing uniquely via shell title text using as hashtag)
 - Support hiding a shell and opening a new one while staying in the same page (equivalent of page changes with shell title text used to autogenerate hashtag unique URL)
 - Extract glimmer dsl engine code to glimmer gem
+
+- Support for multiple consecutive message boxes feeding results to each other
+- Update Hello, Message Box! Sample include Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
+- MessageBox support for all Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
+- Refactor message_box to use jQuery-UI dialog
 
 ## Issues
 

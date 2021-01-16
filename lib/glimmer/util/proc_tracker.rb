@@ -23,12 +23,14 @@ require 'delegate'
 
 module Glimmer
   module Util
+    # Decorator that provides tracking facilities for Ruby procs, tracking owner (string), invoked_form method name (symbol/string), and called? (boolean)
     class ProcTracker < DelegateClass(Proc)
-      attr_reader :owner
+      attr_reader :owner, :invoked_from
       
-      def initialize(proc = nil, owner: nil, &block)
+      def initialize(proc = nil, owner: nil, invoked_from: nil, &block)
         super(proc || block)
         @owner = owner
+        @invoked_from = invoked_from
       end
       
       def call(*args)
@@ -41,7 +43,7 @@ module Glimmer
       end
       
       def respond_to?(method, *args, &block)
-        %w[owner called?].include?(method.to_s) || super(method, *args, &block)
+        %w[owner invoked_from called?].include?(method.to_s) || super(method, *args, &block)
       end
     end
   end

@@ -64,17 +64,15 @@ module Glimmer
       
       def async_exec(proc_tracker = nil, &block)
         block = proc_tracker unless proc_tracker.nil?
-        can_open_modal = !modal_open?
-        return block.call if !can_open_modal && dialog_open? && block.respond_to?(:owner) && !block.owner.nil? && block.owner.is_a?(DialogProxy) && opened_dialogs.last == WidgetProxy.widget_handling_listener&.dialog_ancestor
-        return block.call if !can_open_modal && block.respond_to?(:owner) && !block.owner.nil? && block.owner.is_a?(MessageBoxProxy)
-        executer = lambda do
-          if !modal_open?
-            block.call
-          else
-            Async::Task.new(delay: 100, &executer)
-          end
+        queue = nil # general queue
+        if !proc_tracker.nil? && proc_tracker.invoked_from.to_s == 'open' && modal_open? &&
+           (
+             proc_tracker.owner.is_a?(MessageBoxProxy) ||
+             (dialog_open? && proc_tracker.owner.is_a?(DialogProxy) && opened_dialogs.last == WidgetProxy.widget_handling_listener&.dialog_ancestor)
+           )
+          queue = WidgetProxy.widget_handling_listener
         end
-        Async::Task.new(delay: 1, &executer)
+        schedule_async_exec(block, queue)
       end
       # sync_exec kept for API compatibility reasons
       alias sync_exec async_exec
@@ -106,6 +104,40 @@ module Glimmer
             }
           ]
         }
+      end
+      
+      private
+      
+      def async_exec_queues
+        @async_exec_queues ||= {}
+      end
+      
+      def async_exec_queue(widget_handling_listener = nil)
+        async_exec_queues[widget_handling_listener] ||= []
+      end
+      
+      def no_widget_handling_listener_work?
+        async_exec_queues.reject {|key, value| key.nil?}.values.reduce(:+).to_a.empty?
+      end
+      
+      def schedule_async_exec(block, queue)
+        async_exec_queue(queue).unshift(block)
+        
+        # TODO consider the need for locking to avoid race conditions (rare or impossible case)
+        if async_exec_queue(queue).size == 1
+          executer = lambda do
+            # queue could be a widget handling listener queue
+            # TODO see if there are more intricate cases of opening a dialog from a widget listener handler
+            if !message_box_open? && (!dialog_open? || queue&.dialog_ancestor == opened_dialogs.last) && ((!queue.nil? && async_exec_queues.keys.last == queue) || no_widget_handling_listener_work?)
+              block = async_exec_queue(queue).pop
+              block.call
+              Async::Task.new(delay: 1, &executer) if async_exec_queue(queue).any?
+            else
+              Async::Task.new(delay: 100, &executer)
+            end
+          end
+          Async::Task.new(delay: 1, &executer)
+        end
       end
     end
   end

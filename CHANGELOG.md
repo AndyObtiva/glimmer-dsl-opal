@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.10.2
+
+- Support multiple dialogs/message_box'es opened from a listener, handling correct ordering of display with a queue scheduler
+
 ## 0.10.1
 
 - Delaying shell rendering till `#open` method is called as per the right expectation

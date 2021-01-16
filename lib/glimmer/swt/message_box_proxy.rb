@@ -74,14 +74,13 @@ module Glimmer
         i = 0
         @parent = parent
         @parent = nil if parent.is_a?(LatestShellProxy)
-        @parent ||= DisplayProxy.instance.shells.last || ShellProxy.new([])
+        @parent ||= DisplayProxy.instance.shells.detect(&:open?) || ShellProxy.new([])
         @args = args
         @block = block
         @children = Set.new
         @enabled = true
         on_widget_selected {
           hide
-          @open = false
         }
         DisplayProxy.instance.message_boxes << self
       end
@@ -106,7 +105,7 @@ module Glimmer
       
       def open
         shell.open(async: false) unless shell.open?
-        owned_proc = Glimmer::Util::ProcTracker.new(owner: self) {
+        owned_proc = Glimmer::Util::ProcTracker.new(owner: self, invoked_from: :open) {
           parent.post_initialize_child(self)
           @open = true
         }
@@ -115,6 +114,7 @@ module Glimmer
       
       def hide
         dom_element.remove
+        @open = false
       end
       
       def content(&block)

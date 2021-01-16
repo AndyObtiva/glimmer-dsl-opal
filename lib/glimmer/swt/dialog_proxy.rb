@@ -68,9 +68,6 @@ module Glimmer
         @block = block
         @children = Set.new
         @enabled = true
-#         on_widget_selected {
-#           hide
-#         }
         DisplayProxy.instance.opened_dialogs.last&.suspend_event_handling
         DisplayProxy.instance.dialogs << self
         @parent.post_initialize_child(self)
@@ -90,7 +87,7 @@ module Glimmer
       end
       
       def open
-        owned_proc = Glimmer::Util::ProcTracker.new(owner: self) {
+        owned_proc = Glimmer::Util::ProcTracker.new(owner: self, invoked_from: :open) {
           shell.open(async: false) unless shell.open?
           unless @init
             dom_element.remove_class('hide')

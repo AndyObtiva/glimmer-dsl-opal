@@ -42,13 +42,17 @@ module Glimmer
         }
       CSS
     
-      attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center
+      attr_reader :type, :fill, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center
         
       def initialize(parent, args)
         super(parent, args)
-        @type = args.first || :horizontal
-        self.pack = true
         @parent.dom_element.add_class('row-layout')
+        self.type = args.first || :horizontal
+        self.pack = true
+      end
+      
+      def type=(value)
+        @type = value
         @parent.dom_element.add_class(horizontal? ? 'row-layout-horizontal' : 'row-layout-vertical')
       end
       
@@ -73,6 +77,11 @@ module Glimmer
         else
           @parent.dom_element.add_class('row-layout-pack-false')
         end
+      end
+      
+      def fill=(value)
+        # TODO verify this is a correct implementation and interpretation of RowLayout in SWT
+        self.pack(!value)
       end
       
       def center=(center_value)

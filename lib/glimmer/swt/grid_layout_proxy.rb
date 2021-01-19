@@ -19,6 +19,23 @@ module Glimmer
         # TODO do the following instead of reapply
 #         @parent.add_css_class("num-columns-#{@num_columns}")
         # reinitialize # TODO reimplement without using reinitialize
+        layout_css = <<~CSS
+          grid-template-columns: #{'auto ' * @num_columns.to_i};
+          grid-row-gap: #{@vertical_spacing}px;
+          grid-column-gap: #{@horizontal_spacing}px;
+        CSS
+        if @parent.css_classes.include?('grid-layout')
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
+            @parent.dom_element.css(key, value) unless key.nil?
+          end
+          if @parent.is_a?(GroupProxy)
+            @parent.dom_element.find('legend').css('grid-column-start', "span #{@num_columns.to_i}")
+          end
+        else
+          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
+            @parent.dom_element.css(key, 'initial') unless key.nil?
+          end
+        end
       end
       
       def make_columns_equal_width=(equal_width)
@@ -63,23 +80,6 @@ module Glimmer
         self.margin_width = 15
         self.margin_height = 15
         self.num_columns = @args.first || 1
-        layout_css = <<~CSS
-          grid-template-columns: #{'auto ' * @num_columns.to_i};
-          grid-row-gap: #{@vertical_spacing}px;
-          grid-column-gap: #{@horizontal_spacing}px;
-        CSS
-        if @parent.css_classes.include?('grid-layout')
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
-            @parent.dom_element.css(key, value) unless key.nil?
-          end
-          if @parent.is_a?(GroupProxy)
-            @parent.dom_element.find('legend').css('grid-column-start', "span #{@num_columns.to_i}")
-          end
-        else
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
-            @parent.dom_element.css(key, 'initial') unless key.nil?
-          end
-        end
       end
     end
   end

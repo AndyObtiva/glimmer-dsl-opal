@@ -84,7 +84,7 @@ if RUBY_ENGINE == 'opal'
   Element.alias_native :select
   Element.alias_native :dialog
   
-  Glimmer::Config.loop_max_count = 10 # TODO disable
+  Glimmer::Config.loop_max_count = 300 # TODO disable
   
   original_logger_level = Glimmer::Config.logger.level
   Glimmer::Config.logger = Glimmer::Config::OpalLogger.new(STDOUT)

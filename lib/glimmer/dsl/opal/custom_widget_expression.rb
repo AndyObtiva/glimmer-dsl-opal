@@ -51,7 +51,7 @@ module Glimmer
           custom_widget_class = UI::CustomWidget.for(keyword)
           # TODO clean code by extracting methods into CustomShell
           if !Glimmer::UI::CustomShell.requested? && custom_widget_class&.ancestors&.to_a.include?(Glimmer::UI::CustomShell)
-            if Glimmer::SWT::DisplayProxy.instance.shells.empty?
+            if Glimmer::SWT::DisplayProxy.instance.shells.empty? || Glimmer::SWT::DisplayProxy.open_custom_shells_in_current_window?
               custom_widget_class.new(parent, *args, {}, &block)
             else
               options = args.last.is_a?(Hash) ? args.pop : {}

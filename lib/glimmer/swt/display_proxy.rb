@@ -7,6 +7,9 @@ module Glimmer
         def instance
           @instance ||= new
         end
+        
+        attr_accessor :open_custom_shells_in_current_window
+        alias open_custom_shells_in_current_window? open_custom_shells_in_current_window
       end
       
       def initialize
@@ -62,6 +65,10 @@ module Glimmer
         # No rendering as body is rendered as part of ShellProxy.. this class only serves as an SWT Display utility
       end
       
+      def beep
+        # TODO (simulate beep from SWT display flashing the screen and making a noise if possible)
+      end
+      
       def async_exec(proc_tracker = nil, &block)
         block = proc_tracker unless proc_tracker.nil?
         queue = nil # general queue
@@ -87,7 +94,34 @@ module Glimmer
                   event.singleton_class.define_method(:character) do
                     which || key_code
                   end
+                  event.define_singleton_method(:keyCode) {event.which}
+                  event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:character) {event.which.chr}
+                  event.define_singleton_method(:stateMask) do
+                    state_mask = 0
+                    state_mask |= SWTProxy[:alt] if event.alt_key
+                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                    state_mask |= SWTProxy[:shift] if event.shift_key
+                    state_mask |= SWTProxy[:command] if event.meta_key
+                    state_mask
+                  end
+                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                  doit = true
+                  event.define_singleton_method(:doit=) do |value|
+                    doit = value
+                  end
+                  event.define_singleton_method(:doit) { doit }
                   event_listener.call(event)
+                  
+                    # TODO Fix doit false, it's not stopping input
+                  unless doit
+                    event.prevent
+                    event.prevent_default
+                    event.stop_propagation
+                    event.stop_immediate_propagation
+                  end
+                  
+                  doit
                 }
               }
             },
@@ -98,7 +132,34 @@ module Glimmer
                   event.singleton_class.define_method(:character) do
                     which || key_code
                   end
+                  event.define_singleton_method(:keyCode) {event.which}
+                  event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:character) {event.which.chr}
+                  event.define_singleton_method(:stateMask) do
+                    state_mask = 0
+                    state_mask |= SWTProxy[:alt] if event.alt_key
+                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                    state_mask |= SWTProxy[:shift] if event.shift_key
+                    state_mask |= SWTProxy[:command] if event.meta_key
+                    state_mask
+                  end
+                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                  doit = true
+                  event.define_singleton_method(:doit=) do |value|
+                    doit = value
+                  end
+                  event.define_singleton_method(:doit) { doit }
                   event_listener.call(event) if event.key_code != 13 && (event.key_code == 127 || event.key_code <= 31)
+                  
+                    # TODO Fix doit false, it's not stopping input
+                  unless doit
+                    event.prevent
+                    event.prevent_default
+                    event.stop_propagation
+                    event.stop_immediate_propagation
+                  end
+                  
+                  doit
                 }
               }
             }
@@ -130,7 +191,7 @@ module Glimmer
             # TODO see if there are more intricate cases of opening a dialog from a widget listener handler
             if !message_box_open? && (!dialog_open? || queue&.dialog_ancestor == opened_dialogs.last) && ((!queue.nil? && async_exec_queues.keys.last == queue) || no_widget_handling_listener_work?)
               block = async_exec_queue(queue).pop
-              block.call
+              block&.call
               Async::Task.new(delay: 1, &executer) if async_exec_queue(queue).any?
             else
               Async::Task.new(delay: 100, &executer)

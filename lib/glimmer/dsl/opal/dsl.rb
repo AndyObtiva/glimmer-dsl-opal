@@ -28,6 +28,7 @@ require 'glimmer/dsl/opal/checkbox_group_selection_data_binding_expression'
 require 'glimmer/dsl/opal/block_property_expression'
 require 'glimmer/dsl/opal/menu_expression'
 require 'glimmer/dsl/opal/dialog_expression'
+require 'glimmer/dsl/opal/shape_expression'
 
 module Glimmer
   module DSL
@@ -47,6 +48,7 @@ module Glimmer
          layout
          block_property
          property
+         shape
          widget
        ]
       )

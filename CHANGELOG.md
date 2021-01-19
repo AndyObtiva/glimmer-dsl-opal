@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.10.3
+
+- Upgrade to glimmer 1.0.10
+- Improvements to row_layout and grid_layout
+- Adding launch/shutdown class methods to Custom Shells
+
 ## 0.10.2
 
 - Support multiple dialogs/message_box'es opened from a listener, handling correct ordering of display with a queue scheduler

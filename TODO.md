@@ -6,6 +6,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
+- Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal

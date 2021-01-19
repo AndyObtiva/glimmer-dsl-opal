@@ -28,15 +28,29 @@ module Glimmer
     module CustomShell
       include Glimmer::UI::CustomWidget
       
+      module ClassMethods
+        attr_reader :custom_shell
+        
+        def launch
+          @custom_shell = send(self.name.underscore.gsub('::', '__'))
+          @custom_shell.open
+        end
+        
+        def shutdown
+          @custom_shell.close
+        end
+      end
+      
       class << self
         def included(klass)
           klass.extend(CustomWidget::ClassMethods)
+          klass.extend(CustomShell::ClassMethods)
           klass.include(Glimmer)
           Glimmer::UI::CustomWidget.add_custom_widget_namespaces_for(klass)
           keyword = klass.name.split(':').last.underscore
           LocalStorage[keyword] = $LOADED_FEATURES.last
         end
-          
+        
         def request_parameter_string
           URI.decode_www_form_component(`document.location.href`.match(/\?(.*)$/).to_a[1].to_s)
         end

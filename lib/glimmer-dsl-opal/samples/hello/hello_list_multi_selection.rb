@@ -59,7 +59,7 @@ class HelloListMultiSelection
       text 'Hello, List Multi Selection!'
       
       list(:multi) {
-        selection bind(person, :provinces)
+        selection <=> [person, :provinces]
       }
       
       button {

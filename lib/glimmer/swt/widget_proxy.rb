@@ -46,9 +46,8 @@ module Glimmer
         end
         
         def widget_class(keyword)
-          class_name_alternative = keyword.camelcase(:upper)
-          class_name_main = "#{class_name_alternative}Proxy"
-          Glimmer::SWT.const_get(class_name_main.to_sym) rescue Glimmer::SWT.const_get(class_name_alternative.to_sym)
+          class_name_main = "#{keyword.camelcase(:upper)}Proxy"
+          Glimmer::SWT.const_get(class_name_main.to_sym)
         rescue => e
           puts "Widget #{keyword} was not found!"
           nil

@@ -46,7 +46,7 @@ class HelloComputed
         
         label {text 'First &Name: '}
         text {
-          text bind(@contact, :first_name)
+          text <=> [@contact, :first_name]
           layout_data {
             horizontal_alignment :fill
             grab_excess_horizontal_space true
@@ -55,7 +55,7 @@ class HelloComputed
         
         label {text '&Last Name: '}
         text {
-          text bind(@contact, :last_name)
+          text <=> [@contact, :last_name]
           layout_data {
             horizontal_alignment :fill
             grab_excess_horizontal_space true
@@ -64,7 +64,7 @@ class HelloComputed
         
         label {text '&Year of Birth: '}
         text {
-          text bind(@contact, :year_of_birth)
+          text <=> [@contact, :year_of_birth]
           layout_data {
             horizontal_alignment :fill
             grab_excess_horizontal_space true
@@ -73,7 +73,7 @@ class HelloComputed
         
         label {text 'Name: '}
         label {
-          text bind(@contact, :name, computed_by: [:first_name, :last_name])
+          text <= [@contact, :name, computed_by: [:first_name, :last_name]]
           layout_data {
             horizontal_alignment :fill
             grab_excess_horizontal_space true
@@ -82,7 +82,7 @@ class HelloComputed
         
         label {text 'Age: '}
         label {
-          text bind(@contact, :age, on_write: :to_i, computed_by: [:year_of_birth])
+          text <= [@contact, :age, on_write: :to_i, computed_by: [:year_of_birth]]
           layout_data {
             horizontal_alignment :fill
             grab_excess_horizontal_space true

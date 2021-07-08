@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.11.0
+
+- Upgrade to glimmer 2.0.0
+- Support Shine syntax for basic widgets (no support for table, tree, shapes, custom widgets, or custom shells)
+- Update samples to use Shine syntax
+
 ## 0.10.3
 
 - Upgrade to glimmer 1.0.10

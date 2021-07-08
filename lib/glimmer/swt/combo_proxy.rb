@@ -6,6 +6,7 @@ module Glimmer
     class ComboProxy < WidgetProxy
       include Glimmer::DataBinding::ObservableElement
       attr_reader :text, :items
+      attr_accessor :selection # virtual attribute just to pass the shine data-binding test (TODO THINK OF A BETTER WAY OF HANDLING THIS)
       
       def initialize(parent, args, block)
         super(parent, args, block)

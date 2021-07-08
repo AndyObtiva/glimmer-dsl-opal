@@ -6,8 +6,9 @@ module Glimmer
       class PropertyExpression < StaticExpression
         include TopLevelExpression
 
-        def can_interpret?(parent, keyword, *args, &block)          
+        def can_interpret?(parent, keyword, *args, &block)
           parent and
+            (!args.empty?) and
             parent.respond_to?(:set_attribute) and
             parent.respond_to?(keyword, *args) and
             keyword and

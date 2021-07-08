@@ -19,45 +19,31 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
+require 'glimmer/dsl/expression'
+require 'glimmer/data_binding/model_binding'
+require 'glimmer/swt/table_proxy'
+require 'glimmer/data_binding/shine'
 
-  def initialize
-    self.country_options = ['', 'Canada', 'US', 'Mexico']
-    reset_country
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
-class HelloCombo
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    
-    shell {
-      row_layout(:vertical) {
-        pack false
-      }
-      
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection <=> [person, :country]
-      }
-      
-      button {
-        text 'Reset Selection'
-        
-        on_widget_selected do
-          person.reset_country
+module Glimmer
+  module DSL
+    module Opal
+      class ShineDataBindingExpression < Expression
+        def can_interpret?(parent, keyword, *args, &block)
+          args.size == 0 and
+            block.nil? and
+            (
+              (parent.respond_to?(:set_attribute) and parent.respond_to?(keyword)) or
+              (parent.is_a?(Glimmer::SWT::TableProxy)) # TODO support tree element
+            )
+            # TODO support canvas elements
+#             and
+#             !(parent.respond_to?(:swt_widget) && parent.swt_widget.class == org.eclipse.swt.widgets.Canvas && keyword == 'image')
         end
-      }
-    }.open
+  
+        def interpret(parent, keyword, *args, &block)
+          Glimmer::DataBinding::Shine.new(parent, keyword)
+        end
+      end
+    end
   end
 end
-
-HelloCombo.new.launch

@@ -29,6 +29,7 @@ require 'glimmer/dsl/opal/block_property_expression'
 require 'glimmer/dsl/opal/menu_expression'
 require 'glimmer/dsl/opal/dialog_expression'
 require 'glimmer/dsl/opal/shape_expression'
+require 'glimmer/dsl/opal/shine_data_binding_expression'
 
 module Glimmer
   module DSL
@@ -48,6 +49,7 @@ module Glimmer
          layout
          block_property
          property
+         shine_data_binding
          shape
          widget
        ]

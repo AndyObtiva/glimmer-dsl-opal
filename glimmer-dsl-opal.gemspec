@@ -124,6 +124,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/dsl/opal/rgba_expression.rb",
     "lib/glimmer/dsl/opal/shape_expression.rb",
     "lib/glimmer/dsl/opal/shell_expression.rb",
+    "lib/glimmer/dsl/opal/shine_data_binding_expression.rb",
     "lib/glimmer/dsl/opal/swt_expression.rb",
     "lib/glimmer/dsl/opal/sync_exec_expression.rb",
     "lib/glimmer/dsl/opal/table_column_expression.rb",

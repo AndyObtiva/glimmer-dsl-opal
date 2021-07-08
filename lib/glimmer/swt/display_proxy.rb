@@ -79,6 +79,7 @@ module Glimmer
            )
           queue = WidgetProxy.widget_handling_listener
         end
+        return block.call if !modal_open?
         schedule_async_exec(block, queue)
       end
       # sync_exec kept for API compatibility reasons

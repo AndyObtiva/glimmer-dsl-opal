@@ -17,7 +17,7 @@ module Glimmer
           # TODO
         end
         
-        def add_content(parent, &block)
+        def add_content(parent, keyword, *args, &block)
           # TODO
         end
       end

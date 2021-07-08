@@ -4,6 +4,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Fix Hello, Button!
+- Fix Hello, Custom Shell!
+
 ## Soon
 
 - Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web

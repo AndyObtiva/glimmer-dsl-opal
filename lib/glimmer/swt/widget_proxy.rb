@@ -309,7 +309,7 @@ module Glimmer
       end
       
       def content(&block)
-        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::WidgetExpression.new, &block)
+        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::WidgetExpression.new, self.class.underscored_widget_name(self), &block)
       end
       
       # Subclasses must override with their own mappings

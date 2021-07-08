@@ -47,7 +47,7 @@ module Glimmer
           Glimmer::SWT::MenuProxy.new(parent, args)
         end
         
-        def add_content(parent, &block)
+        def add_content(parent, keyword, *args, &block)
           super(parent, &block)
           parent.post_add_content
         end

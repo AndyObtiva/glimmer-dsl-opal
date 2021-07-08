@@ -80,12 +80,12 @@ module Glimmer
           end
         end
         
-        def add_content(parent, &content)
-          content.call(parent) if parent.is_a?(Glimmer::SWT::ShellProxy) || parent.is_a?(Glimmer::UI::CustomShell)
-        end
-        
+        # TODO delete if no longer needed
+#         def add_content(parent, &content)
+#           content.call(parent) if parent.is_a?(Glimmer::SWT::ShellProxy) || parent.is_a?(Glimmer::UI::CustomShell)
+#         end
   
-        def add_content(parent, &block)
+        def add_content(parent, keyword, *args, &block)
           return unless parent.is_a?(Glimmer::UI::CustomWidget)
           # TODO consider avoiding source_location
           if block.source_location == parent.content&.__getobj__.source_location

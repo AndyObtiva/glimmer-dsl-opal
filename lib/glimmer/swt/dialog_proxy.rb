@@ -138,7 +138,7 @@ module Glimmer
       
       
       def content(&block)
-        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::DialogExpression.new, &block)
+        Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::DialogExpression.new, 'dialog', &block)
       end
       
       def path

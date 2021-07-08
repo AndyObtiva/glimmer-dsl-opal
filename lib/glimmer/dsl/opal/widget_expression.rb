@@ -20,7 +20,7 @@ module Glimmer
           Glimmer::SWT::WidgetProxy.for(keyword, parent, args, block)
         end
         
-        def add_content(parent, &block)
+        def add_content(parent, keyword, *args, &block)
           if parent.rendered? || parent.skip_content_on_render_blocks?
             super(parent, &block)
             parent.post_add_content

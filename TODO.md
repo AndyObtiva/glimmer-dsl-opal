@@ -4,11 +4,13 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support Shine data-binding syntax in `table`
 - Support Shine data-binding syntax in custom widgets
 - Support Shine data-binding syntax in custom shells
 
 ## Soon
+
+- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
+- Update Hello, Table! to latest version in Glimmer DSL for SWT that utilizes an image background (and have working on the web)
 
 - Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
@@ -24,7 +26,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Document each widget separately in each hello sample
 - Support `progress_bar` using jQuery UI and Hello, Progress Bar!
-- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
 - Support the idea of a virtual hard drive pretending to be local with full permissions, but actually lives on the server
 - Support Authentication (username/password)
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into via a global Display#shell_element_path, shell_element_id or something of the like. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)
@@ -42,6 +43,8 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Update Hello, Message Box! Sample include Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
 - MessageBox support for all Yes/No, Abort/Retry/Ignore, OK, Retry/Cancel button variations
 - Refactor message_box to use jQuery-UI dialog
+
+- Move Glimmer::SWT to Glimmer::SWT::SWTProxy or something like that to avoid its conflict when expressions expand words like Selection (for a property data-binding with shine)
 
 ## Issues
 

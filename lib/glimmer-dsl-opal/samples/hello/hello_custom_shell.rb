@@ -137,7 +137,7 @@ class HelloCustomShell
           width 360
         }
         
-        items bind(@email_system, :emails), column_properties(:date, :subject, :from)
+        items <=> [@email_system, :emails, column_attributes: [:date, :subject, :from]]
         
         on_mouse_up { |event|
           email = event.table_item.get_data

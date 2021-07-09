@@ -1,5 +1,3 @@
-require 'glimmer-dsl-swt'
-
 require_relative "contact_manager/contact_manager_presenter"
 
 class ContactManager

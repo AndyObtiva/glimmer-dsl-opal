@@ -76,6 +76,9 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Consider including mobile-responsive CSS themes that auto-convert menu bar into a drop-down mobile-menu button
 - glimmer command for adding a gem automatically appending gem to assets via Opal.use_gem
 
+- Build a Ruby repl in the browser
+- Build a Glimmer GUI repl in the browser
+
 ## Technical Tasks
 
 - fire on_widget_disposed listener in WidgetProxy on calling `#dispose`

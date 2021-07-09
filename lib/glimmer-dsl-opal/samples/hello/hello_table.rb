@@ -196,7 +196,7 @@ class HelloTable
       
       combo(:read_only) {
         layout_data :center, :center, true, false
-        selection bind(BaseballGame, :playoff_type)
+        selection <=> [BaseballGame, :playoff_type]
         font height: 16
       }
       
@@ -263,7 +263,7 @@ class HelloTable
         text 'Book Selected Game'
         layout_data :center, :center, true, false
         font height: 16
-        enabled bind(BaseballGame, :selected_game)
+        enabled <=> [BaseballGame, :selected_game]
         
         on_widget_selected {
           book_selected_game

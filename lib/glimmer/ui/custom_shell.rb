@@ -29,15 +29,12 @@ module Glimmer
       include Glimmer::UI::CustomWidget
       
       module ClassMethods
+        include Glimmer
         attr_reader :custom_shell
         
         def launch
-          @custom_shell = send(self.name.underscore.gsub('::', '__'))
-          @custom_shell.open
-        end
-        
-        def shutdown
-          @custom_shell.close
+          custom_shell = send(self.name.underscore.gsub('::', '__'))
+          custom_shell.open
         end
       end
       
@@ -73,11 +70,17 @@ module Glimmer
         raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy) || body_root.is_a?(Glimmer::UI::CustomShell)
       end
 
-      # Classes may override
-      def open
-        # TODO consider the idea of delaying rendering till the open method
-        body_root.open
+      def open(async: true)
+        work = lambda do
+          body_root.open
+        end
+        if async
+          Glimmer::SWT::DisplayProxy.instance.async_exec(&work)
+        else
+          work.call
+        end
       end
+      
 
       # DO NOT OVERRIDE. JUST AN ALIAS FOR `#open`. OVERRIDE `#open` INSTEAD.
       def show

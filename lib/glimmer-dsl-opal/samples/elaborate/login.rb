@@ -1,4 +1,25 @@
-require "observer"
+# Copyright (c) 2020-2021 Andy Maleh
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+require 'glimmer-dsl-swt'
 
 class LoginPresenter
 
@@ -14,29 +35,26 @@ class LoginPresenter
 
   def status=(status)
     @status = status
-
-    notify_observers("logged_in")
-    notify_observers("logged_out")
   end
   
   def valid?
     !@user_name.to_s.strip.empty? && !@password.to_s.strip.empty?
   end
 
-  def logged_in
+  def logged_in?
     self.status == "Logged In"
   end
 
-  def logged_out
-    !self.logged_in
+  def logged_out?
+    !self.logged_in?
   end
 
-  def login
+  def login!
     return unless valid?
     self.status = "Logged In"
   end
 
-  def logout
+  def logout!
     self.user_name = ""
     self.password = ""
     self.status = "Logged Out"
@@ -45,19 +63,24 @@ class LoginPresenter
 end
 
 class Login
-  include Glimmer
+  include Glimmer::UI::CustomShell
+  
+  before_body {
+    @presenter = LoginPresenter.new
+  }
 
-  def launch
-    presenter = LoginPresenter.new
-    @shell = shell {
+  body {
+    shell {
       text "Login"
+      
       composite {
         grid_layout 2, false #two columns with differing widths
 
         label { text "Username:" } # goes in column 1
         @user_name_text = text {   # goes in column 2
-          text <=> [presenter, :user_name]
-          enabled <= [presenter, :logged_out]
+          text <=> [@presenter, :user_name]
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
           on_key_pressed { |event|
             @password_text.set_focus if event.keyCode == swt(:cr)
           }
@@ -65,40 +88,44 @@ class Login
 
         label { text "Password:" }
         @password_text = text(:password, :border) {
-          text <=> [presenter, :password]
-          enabled <= [presenter, :logged_out]
+          text <=> [@presenter, :password]
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
           on_key_pressed { |event|
-            presenter.login if event.keyCode == swt(:cr)
+            @presenter.login! if event.keyCode == swt(:cr)
           }
         }
 
         label { text "Status:" }
-        label { text <= [presenter, :status] }
+        label { text <= [@presenter, :status] }
 
         button {
           text "Login"
-          enabled <= [presenter, :logged_out]
-          on_widget_selected { presenter.login }
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
+          on_widget_selected { @presenter.login! }
           on_key_pressed { |event|
-            presenter.login if event.keyCode == swt(:cr)
+            if event.keyCode == swt(:cr)
+              @presenter.login!
+            end
           }
         }
 
         button {
           text "Logout"
-          enabled <= [presenter, :logged_in]
-          on_widget_selected { presenter.logout }
+          enabled <= [@presenter, :logged_in?, computed_by: :status]
+          
+          on_widget_selected { @presenter.logout! }
           on_key_pressed { |event|
             if event.keyCode == swt(:cr)
-              presenter.logout
+              @presenter.logout!
               @user_name_text.set_focus
             end
           }
         }
       }
     }
-    @shell.open
-  end
+  }
 end
 
-Login.new.launch
+Login.launch

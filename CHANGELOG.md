@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.12.0
+
+- Support CustomShell.launch opening in the same window if no other shell is open or DisplayProxy.open_custom_shells_in_current_window = true is set
+- Support CustomShell.launch opening a new window if a shell is already open
+
 ## 0.11.0
 
 - Upgrade to glimmer 2.0.0

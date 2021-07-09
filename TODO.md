@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support CustomShell.launch construct (from glimmer-dsl-swt)
 - Support Shine data-binding syntax in `table`
 - Support Shine data-binding syntax in custom widgets
 - Support Shine data-binding syntax in custom shells

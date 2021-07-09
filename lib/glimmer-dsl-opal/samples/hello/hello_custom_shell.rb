@@ -24,10 +24,11 @@ require 'date'
 # This class declares an `email_shell` custom shell, aka custom window (by convention)
 # Used to view an email message
 class EmailShell
+  # including Glimmer::UI::CustomShell enables declaring as an `email_shell` custom widget Glimmer GUI DSL keyword
   include Glimmer::UI::CustomShell
   
   # multiple options without default values
-  options :date, :subject, :from, :message
+  options :parent_shell, :date, :subject, :from, :message
   
   # single option with default value
   option :to, default: '"John Irwin" <john.irwin@example.com>'
@@ -38,7 +39,7 @@ class EmailShell
   
   body {
     # pass received swt_style through to shell to customize it (e.g. :dialog_trim for a blocking shell)
-    shell(swt_style) {
+    shell(parent_shell, swt_style) {
       grid_layout(2, false)
       
       text subject
@@ -73,7 +74,7 @@ class EmailShell
 
       label {
         layout_data(:fill, :fill, true, true) {
-          horizontal_span 2 #TODO implement
+          horizontal_span 2
           vertical_indent 10
         }
         
@@ -86,9 +87,8 @@ class EmailShell
 end
 
 class HelloCustomShell
-  # including Glimmer enables the Glimmer DSL syntax, including auto-discovery of the `email_shell` custom widget
   include Glimmer
-  
+
   Email = Struct.new(:date, :subject, :from, :message, keyword_init: true)
   EmailSystem = Struct.new(:emails, keyword_init: true)
   
@@ -106,7 +106,7 @@ class HelloCustomShell
   end
   
   def launch
-    shell {
+    shell { |shell_proxy|
       grid_layout
       
       text 'Hello, Custom Shell!'
@@ -141,11 +141,15 @@ class HelloCustomShell
         
         on_mouse_up { |event|
           email = event.table_item.get_data
-          Thread.new do
-            async_exec {
-              email_shell(date: email.date, subject: email.subject, from: email.from, message: email.message).open
-            }
-          end
+          
+          # open a custom email shell
+          email_shell(
+            parent_shell: shell_proxy,
+            date: email.date,
+            subject: email.subject,
+            from: email.from,
+            message: email.message
+          ).open
         }
       }
     }.open

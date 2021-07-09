@@ -4,6 +4,9 @@
 
 - Support CustomShell.launch opening in the same window if no other shell is open or DisplayProxy.open_custom_shells_in_current_window = true is set
 - Support CustomShell.launch opening a new window if a shell is already open
+- Support passing `table` data-binding column properties as `column_properties` or `column_attributes` an extra hash option to `bind` method call
+- Support Shine data-binding syntax in `table`
+- Update Hello, Custom Shell!, Hello, Table!, Contact Manager, and Login samples to use Shine data-binding syntax
 
 ## 0.11.0
 

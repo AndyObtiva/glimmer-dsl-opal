@@ -15,8 +15,8 @@ module Glimmer
         @last_populated_model_collection = nil
         @table = parent
         @model_binding = model_binding
-#         @column_properties = model_binding.binding_options[:column_attributes] || model_binding.binding_options[:column_properties] || column_properties # TODO
-        @column_properties = column_properties
+        @column_properties = model_binding.binding_options[:column_attributes] || model_binding.binding_options[:column_properties] || column_properties # TODO
+        @table.editable = false if model_binding.binding_options[:read_only]
         @table.data = @model_binding
         ##@table.on_widget_disposed do |dispose_event| # doesn't seem needed within Opal
         ##  unregister_all_observables

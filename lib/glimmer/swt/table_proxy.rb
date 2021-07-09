@@ -257,9 +257,7 @@ module Glimmer
         @table_editor.minimumWidth = 90
         @table_editor.minimumHeight = 20
         if editable?
-          on_mouse_up { |event|
-            edit_table_item(event.table_item, event.column_index)
-          }
+          add_editable_event_listener
         end
       end
       
@@ -310,6 +308,24 @@ module Glimmer
         args.include?(:editable)
       end
       alias editable editable?
+      
+      def editable=(value)
+        if value
+          args.push(:editable)
+          dom_element.addClass('editable')
+          add_editable_event_listener
+        else
+          args.delete(:editable)
+          dom_element.removeClass('editable')
+          @editable_on_mouse_up_event_listener.deregister # TODO see why table event listener deregistration is not working
+        end
+      end
+      
+      def add_editable_event_listener
+        @editable_on_mouse_up_event_listener = on_mouse_up { |event|
+          edit_table_item(event.table_item, event.column_index) if editable?
+        }
+      end
       
       def selection
         @selection.to_a

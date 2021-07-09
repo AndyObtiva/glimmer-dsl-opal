@@ -24,8 +24,11 @@ class Display
     def setAppName(app_name)
       # No Op in Opal
     end
+    alias app_name= setAppName
+    
     def setAppVersion(version)
       # No Op in Opal
     end
+    alias app_version= setAppVersion
   end
 end

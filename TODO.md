@@ -4,9 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support Shine data-binding syntax in custom widgets
-- Support Shine data-binding syntax in custom shells
-
 ## Soon
 
 - Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.

@@ -21,9 +21,35 @@
 
 class File
   class << self
+    REGEXP_DIR_FILE = /\(dir\)|\(file\)/
+  
     def read(*args, &block)
       # TODO implement via asset downloads in the future
       # No Op in Opal
     end
+    
+    # Include special processing for images that matches them against a list of available image paths from the server
+    # to convert to web paths.
+    alias expand_path_without_glimmer expand_path
+    def expand_path(path, base=nil)
+      if base
+        path = expand_path_without_glimmer(path, base)
+      end
+      path_include_dir_or_file = !!path.match(REGEXP_DIR_FILE)
+      if !path_include_dir_or_file
+        path
+      else
+        essential_path = path.split('(dir)').last.split('(file)').last
+        image_paths.detect do |image_path|
+          image_path.include?(essential_path)
+        end
+      end
+    end
+    
+    def image_paths
+      # TODO call to server with ajax hitting /glimmer/image_paths.json
+      ['/assets/glimmer/hello_table/baseball_park.png']
+    end
+    
   end
 end

@@ -19,12 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-module Glimmer
-  class Engine < ::Rails::Engine
-    isolate_namespace Glimmer
-
-    initializer "glimmer.assets.precompile" do |app|
-      app.config.assets.precompile += %w( glimmer/glimmer.css )
-    end
-  end
+Glimmer::Engine.routes.draw do
+  resources :image_paths, only: [:index]
 end

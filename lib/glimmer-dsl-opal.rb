@@ -37,6 +37,10 @@ if RUBY_ENGINE == 'opal'
     def include_package(package)
       # No Op (just a shim)
     end
+    
+    def __dir__
+      '(dir)'
+    end
   end
   
   require 'opal-parser'
@@ -81,10 +85,11 @@ if RUBY_ENGINE == 'opal'
   require 'glimmer/config/opal_logger'
   require 'glimmer-dsl-xml'
   require 'glimmer-dsl-css'
+  
   Element.alias_native :replace_with, :replaceWith
   Element.alias_native :select
   Element.alias_native :dialog
-  
+    
   Glimmer::Config.loop_max_count = 250 # TODO disable
   
   original_logger_level = Glimmer::Config.logger.level
@@ -96,7 +101,6 @@ if RUBY_ENGINE == 'opal'
     result ||= method == '<<'
     result ||= method == 'handle'
   end
-  
 else
   require_relative 'glimmer/engine'
 end

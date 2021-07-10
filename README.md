@@ -1294,7 +1294,7 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection bind(person, :gender)
+        selection <=> [person, :gender]
       }
             
       label {
@@ -1304,7 +1304,7 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection bind(person, :age_group)
+        selection <=> [person, :age_group]
       }
       
       button {
@@ -1383,12 +1383,12 @@ class HelloGroup
         
         radio {
           text 'Male'
-          selection bind(person, :male)
+          selection <=> [person, :male]
         }
         
         radio {
           text 'Female'
-          selection bind(person, :female)
+          selection <=> [person, :female]
         }
       }
       
@@ -1585,7 +1585,7 @@ class HelloCheckboxGroup
       }
       
       checkbox_group {
-        selection bind(person, :activities)
+        selection <=> [person, :activities]
       }
     
       button {

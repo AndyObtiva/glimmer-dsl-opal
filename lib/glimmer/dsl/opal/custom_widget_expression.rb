@@ -87,8 +87,8 @@ module Glimmer
   
         def add_content(parent, keyword, *args, &block)
           return unless parent.is_a?(Glimmer::UI::CustomWidget)
-          # TODO consider avoiding source_location
-          if block.source_location == parent.content&.__getobj__.source_location
+          # TODO consider avoiding source_location since it does not work in Opal
+          if block.source_location && (block.source_location == parent.content&.__getobj__&.source_location)
             parent.content.call(parent) unless parent.content.called?
           else
             super

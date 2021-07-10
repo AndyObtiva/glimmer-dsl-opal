@@ -83,6 +83,16 @@ module Glimmer
           @after_body_blocks ||= []
           @after_body_blocks << block
         end
+        
+        def keyword
+          self.name.underscore.gsub('::', '__')
+        end
+        
+        # Returns shortcut keyword to use for this custom widget (keyword minus namespace)
+        def shortcut_keyword
+          self.name.underscore.gsub('::', '__').split('__').last
+        end
+        
       end
       
       class << self
@@ -143,7 +153,6 @@ module Glimmer
         def reset_custom_widget_namespaces
           @custom_widget_namespaces = Set[Object, Glimmer::UI]
         end
-
       end
       # <- end of class methods
       
@@ -259,7 +268,7 @@ module Glimmer
       # Otherwise, if a block is passed, it adds it as content to this custom widget
       def content(&block)
         if block_given?
-          body_root.content(&block)
+          Glimmer::DSL::Engine.add_content(self, Glimmer::DSL::Opal::CustomWidgetExpression.new, self.class.keyword, &block)
         else
           @content
         end

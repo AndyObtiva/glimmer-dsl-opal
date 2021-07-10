@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.13.0
+
+- Support Shine data-binding syntax in custom widgets
+- Update Hello, Checkbox Group! and Hello, Radio Group! to utilize Shine data-binding syntax
+
 ## 0.12.0
 
 - Support CustomShell.launch opening in the same window if no other shell is open or DisplayProxy.open_custom_shells_in_current_window = true is set

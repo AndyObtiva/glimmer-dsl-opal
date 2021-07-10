@@ -1,3 +1,24 @@
+# Copyright (c) 2020-2021 Andy Maleh
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/layout_proxy'
 require 'glimmer/swt/display_proxy'
@@ -69,6 +90,28 @@ module Glimmer
 
       def text=(value)
         Document.title = value
+      end
+      
+      # favicon
+      def image
+        @image
+      end
+      
+      def image=(value)
+        @image = value
+        # TODO consider moving this code to favicon_dom_element
+        if favicon_dom_element.empty?
+          favicon_element = Element.new(:link)
+          favicon_element.attr('rel', 'icon')
+          Document.find('head').append(favicon_element)
+        else
+          favicon_element = favicon_dom_element
+        end
+        favicon_element.attr('href', image)
+      end
+      
+      def favicon_dom_element
+        Document.find('link[rel=icon]')
       end
       
       def minimum_size=(width_or_minimum_size, height = nil)

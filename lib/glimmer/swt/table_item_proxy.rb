@@ -28,6 +28,9 @@ module Glimmer
         tr.table-item td {
           padding-bottom: 0;
         }
+        tr.table-item:nth-child(odd):not(.selected) {
+          background: white;
+        }
         tr.table-item:nth-child(even):not(.selected) {
           background: rgb(243, 244, 246);
         }

@@ -24,10 +24,10 @@ class HelloCheckbox
     attr_accessor :skiing, :snowboarding, :snowmobiling, :snowshoeing
     
     def initialize
-      reset_activities
+      reset_activities!
     end
     
-    def reset_activities
+    def reset_activities!
       self.skiing = false
       self.snowboarding = true
       self.snowmobiling = false
@@ -35,11 +35,13 @@ class HelloCheckbox
     end
   end
   
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
-  def launch
-    person = Person.new
-    
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       text 'Hello, Checkbox!'
       row_layout :vertical
@@ -52,22 +54,22 @@ class HelloCheckbox
       composite {
         checkbox {
           text 'Skiing'
-          selection <=> [person, :skiing]
+          selection <=> [@person, :skiing]
         }
         
         checkbox {
           text 'Snowboarding'
-          selection <=> [person, :snowboarding]
+          selection <=> [@person, :snowboarding]
         }
         
         checkbox {
           text 'Snowmobiling'
-          selection <=> [person, :snowmobiling]
+          selection <=> [@person, :snowmobiling]
         }
         
         checkbox {
           text 'Snowshoeing'
-          selection <=> [person, :snowshoeing]
+          selection <=> [@person, :snowshoeing]
         }
       }
       
@@ -75,11 +77,11 @@ class HelloCheckbox
         text 'Reset Activities'
         
         on_widget_selected do
-          person.reset_activities
+          @person.reset_activities!
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloCheckbox.new.launch
+HelloCheckbox.launch

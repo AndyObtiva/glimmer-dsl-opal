@@ -3,7 +3,7 @@
 ## 0.13.0
 
 - Support Shine data-binding syntax in custom widgets
-- Update Hello, Checkbox Group! and Hello, Radio Group! to utilize Shine data-binding syntax
+- Update Hello, Checkbox!, Hello, Checkbox Group!, Hello, Radio! and Hello, Radio Group! to utilize Shine data-binding syntax from latest glimmer-dsl-swt
 
 ## 0.12.0
 

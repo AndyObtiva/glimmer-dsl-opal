@@ -19,12 +19,15 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# This sample demonstrates the use of a `radio_group` in Glimmer, which provides terser syntax
+# than HelloRadio for representing multiple radio buttons by relying on data-binding to
+# automatically spawn the `radio` widgets based on available options on the model.
 class HelloRadioGroup
   class Person
     attr_accessor :gender, :age_group
     
     def initialize
-      reset
+      reset!
     end
     
     def gender_options
@@ -35,17 +38,19 @@ class HelloRadioGroup
       ['Child', 'Teen', 'Adult', 'Senior']
     end
     
-    def reset
+    def reset!
       self.gender = nil
       self.age_group = 'Adult'
     end
   end
 
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
-  def launch
-    person = Person.new
-    
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       text 'Hello, Radio Group!'
       row_layout :vertical
@@ -57,7 +62,7 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection <=> [person, :gender]
+        selection <=> [@person, :gender]
       }
             
       label {
@@ -67,18 +72,18 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection <=> [person, :age_group]
+        selection <=> [@person, :age_group]
       }
       
       button {
         text 'Reset'
         
         on_widget_selected do
-          person.reset
+          @person.reset!
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloRadioGroup.new.launch
+HelloRadioGroup.launch

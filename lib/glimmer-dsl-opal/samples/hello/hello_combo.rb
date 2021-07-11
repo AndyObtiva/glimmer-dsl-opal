@@ -19,45 +19,47 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class Person
-  attr_accessor :country, :country_options
-
-  def initialize
-    self.country_options = ['', 'Canada', 'US', 'Mexico']
-    reset_country
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
 class HelloCombo
-  include Glimmer
+  class Person
+    attr_accessor :country, :country_options
   
-  def launch
-    person = Person.new
-    
+    def initialize
+      self.country_options = ['', 'Canada', 'US', 'Mexico']
+      reset_country!
+    end
+  
+    def reset_country!
+      self.country = 'Canada'
+    end
+  end
+
+  include Glimmer::UI::CustomShell
+  
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       row_layout(:vertical) {
-        pack false
+        fill true
       }
       
       text 'Hello, Combo!'
       
       combo(:read_only) {
-        selection <=> [person, :country]
+        selection <=> [@person, :country] # also binds to country_options by convention
       }
       
       button {
         text 'Reset Selection'
         
         on_widget_selected do
-          person.reset_country
+          @person.reset_country!
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloCombo.new.launch
+HelloCombo.launch

@@ -184,6 +184,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Login](#login)
       - [Tic Tac Toe](#tic-tac-toe)
       - [Contact Manager](#contact-manager)
+      - [Weather](#weather)
     - [External Samples](#external-samples)
       - [Glimmer Calculator](#glimmer-calculator)
   - [Glimmer Supporting Libraries](#glimmer-supporting-libraries)
@@ -440,48 +441,50 @@ require 'glimmer-dsl-opal/samples/hello/hello_combo'
 Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
-class Person
-  attr_accessor :country, :country_options
-
-  def initialize
-    self.country_options = ['', 'Canada', 'US', 'Mexico']
-    reset_country
-  end
-
-  def reset_country
-    self.country = 'Canada'
-  end
-end
-
 class HelloCombo
-  include Glimmer
+  class Person
+    attr_accessor :country, :country_options
   
-  def launch
-    person = Person.new
-    
+    def initialize
+      self.country_options = ['', 'Canada', 'US', 'Mexico']
+      reset_country!
+    end
+  
+    def reset_country!
+      self.country = 'Canada'
+    end
+  end
+
+  include Glimmer::UI::CustomShell
+  
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       row_layout(:vertical) {
-        pack false
+        fill true
       }
       
       text 'Hello, Combo!'
       
       combo(:read_only) {
-        selection <=> [person, :country]
+        selection <=> [@person, :country] # also binds to country_options by convention
       }
       
       button {
         text 'Reset Selection'
         
         on_widget_selected do
-          person.reset_country
+          @person.reset_country!
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloCombo.new.launch
+HelloCombo.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
@@ -533,17 +536,17 @@ class HelloComputed
     end
   end
 
-  include Glimmer
+  include Glimmer::UI::CustomShell
 
-  def initialize
+  before_body {
     @contact = Contact.new(
       first_name: 'Barry',
       last_name: 'McKibbin',
       year_of_birth: 1985
     )
-  end
+  }
 
-  def launch
+  body {
     shell {
       text 'Hello, Computed!'
       
@@ -600,11 +603,11 @@ class HelloComputed
           }
         }
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloComputed.new.launch
+HelloComputed.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
@@ -632,44 +635,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/hello/hello_list_single_selection'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class Person
-  attr_accessor :country, :country_options
-
-  def initialize
-    self.country_options=["", "Canada", "US", "Mexico"]
-    self.country = "Canada"
-  end
-
-  def reset_country
-    self.country = "Canada"
-  end
-end
-
-class HelloListSingleSelection
-  include Glimmer
-  def launch
-    person = Person.new
-    shell {
-      composite {
-        list {
-          selection bind(person, :country)
-        }
-        button {
-          text "Reset"
-          on_widget_selected do
-            person.reset_country
-          end
-        }
-      }
-    }.open
-  end
-end
-
-HelloListSingleSelection.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello List Single Selection](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-list-single-selection.png)
@@ -695,63 +660,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/hello/hello_list_multi_selection'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloListMultiSelection
-  class Person
-    attr_accessor :provinces, :provinces_options
-  
-    def initialize
-      self.provinces_options = [
-        '',
-        'Alberta',
-        'British Columbia',
-        'Manitoba',
-        'New Brunswick',
-        'Newfoundland and Labrador',
-        'Northwest Territories',
-        'Nova Scotia',
-        'Nunavut',
-        'Ontario',
-        'Prince Edward Island',
-        'Quebec',
-        'Saskatchewan',
-        'Yukon'
-      ]
-      reset_provinces
-    end
-  
-    def reset_provinces
-      self.provinces = ['Quebec', 'Manitoba', 'Alberta']
-    end
-  end
-  
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    
-    shell {
-      grid_layout
-      
-      text 'Hello, List Multi Selection!'
-      
-      list(:multi) {
-        selection bind(person, :provinces)
-      }
-      
-      button {
-        text 'Reset Selections To Default Values'
-        
-        on_widget_selected { person.reset_provinces }
-      }
-    }.open
-  end
-end
-
-HelloListMultiSelection.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello List Multi Selection](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-list-multi-selection.png)
@@ -777,18 +685,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/hello/hello_browser'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-include Glimmer
-
-shell {
-  minimum_size 1024, 860
-  browser {
-    url 'http://brightonresort.com/about'
-  }
-}.open
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello Browser](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-browser.png)
@@ -893,7 +789,7 @@ class GreetingLabel
   after_body {
     return if colors.nil?
     
-    Thread.new {
+    Thread.new { # imported from Glimmer DSL for SWT. In Opal, avoid Threads and sleep to avoid blocking GUI.
       colors.cycle { |color|
         async_exec {
           self.color = color
@@ -908,7 +804,7 @@ class GreetingLabel
     label(swt_style) {
       text "#{greeting}, #{name}!"
       font @font
-      foreground bind(self, :color)
+      foreground <=> [self, :color]
     }
   }
   
@@ -1130,103 +1026,14 @@ You should see "Hello, Custom Widget!"
 
 #### Hello, Radio!
 
+This is the low level way of using `radio`
+
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'glimmer-dsl-opal/samples/hello/hello_radio'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloRadio
-  class Person
-    attr_accessor :male, :female, :child, :teen, :adult, :senior
-    
-    def initialize
-      reset
-    end
-    
-    def reset
-      self.male = nil
-      self.female = nil
-      self.child = nil
-      self.teen = nil
-      self.adult = true
-      self.senior = nil
-    end
-  end
-  
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    
-    shell {
-      text 'Hello, Radio!'
-      row_layout :vertical
-      
-      label {
-        text 'Gender:'
-        font style: :bold
-      }
-      
-      composite {
-        row_layout
-        
-        radio {
-          text 'Male'
-          selection bind(person, :male)
-        }
-        
-        radio {
-          text 'Female'
-          selection bind(person, :female)
-        }
-      }
-      
-      label {
-        text 'Age Group:'
-        font style: :bold
-      }
-      
-      composite {
-        row_layout
-        
-        radio {
-          text 'Child'
-          selection bind(person, :child)
-        }
-        
-        radio {
-          text 'Teen'
-          selection bind(person, :teen)
-        }
-        
-        radio {
-          text 'Adult'
-          selection bind(person, :adult)
-        }
-        
-        radio {
-          text 'Senior'
-          selection bind(person, :senior)
-        }
-      }
-      
-      button {
-        text 'Reset'
-        
-        on_widget_selected do
-          person.reset
-        end
-      }
-    }.open
-  end
-end
-
-HelloRadio.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello Radio](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-radio.png)
@@ -1246,6 +1053,8 @@ You should see "Hello, Radio!"
 
 #### Hello, Radio Group!
 
+`radio_group` is a level higher than `radio` in abstraction. It generates a group of radio widgets based on available options in model `attribute_options` methods.
+
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
@@ -1260,7 +1069,7 @@ class HelloRadioGroup
     attr_accessor :gender, :age_group
     
     def initialize
-      reset
+      reset!
     end
     
     def gender_options
@@ -1271,17 +1080,19 @@ class HelloRadioGroup
       ['Child', 'Teen', 'Adult', 'Senior']
     end
     
-    def reset
+    def reset!
       self.gender = nil
       self.age_group = 'Adult'
     end
   end
 
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
-  def launch
-    person = Person.new
-    
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       text 'Hello, Radio Group!'
       row_layout :vertical
@@ -1293,7 +1104,7 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection <=> [person, :gender]
+        selection <=> [@person, :gender]
       }
             
       label {
@@ -1303,21 +1114,21 @@ class HelloRadioGroup
       
       radio_group {
         row_layout :horizontal
-        selection <=> [person, :age_group]
+        selection <=> [@person, :age_group]
       }
       
       button {
         text 'Reset'
         
         on_widget_selected do
-          person.reset
+          @person.reset!
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloRadioGroup.new.launch
+HelloRadioGroup.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
@@ -1338,99 +1149,14 @@ You should see "Hello, Radio Group!"
 
 #### Hello, Group!
 
+Not to be confused with `radio_group` or `checkbox_group`, `group` simply groups arbitrary widgets together and adds a title header above them.
+
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'glimmer-dsl-opal/samples/hello/hello_group'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloGroup
-  class Person
-    attr_accessor :male, :female, :child, :teen, :adult, :senior
-    
-    def initialize
-      reset
-    end
-    
-    def reset
-      self.male = nil
-      self.female = nil
-      self.child = nil
-      self.teen = nil
-      self.adult = true
-      self.senior = nil
-    end
-  end
-  
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    
-    shell {
-      text 'Hello, Group!'
-      row_layout :vertical
-      
-      group {
-        row_layout
-        
-        text 'Gender'
-        font style: :bold
-        
-        radio {
-          text 'Male'
-          selection <=> [person, :male]
-        }
-        
-        radio {
-          text 'Female'
-          selection <=> [person, :female]
-        }
-      }
-      
-      group {
-        row_layout
-        
-        text 'Age Group'
-        font style: :bold
-        
-        radio {
-          text 'Child'
-          selection bind(person, :child)
-        }
-        
-        radio {
-          text 'Teen'
-          selection bind(person, :teen)
-        }
-        
-        radio {
-          text 'Adult'
-          selection bind(person, :adult)
-        }
-        
-        radio {
-          text 'Senior'
-          selection bind(person, :senior)
-        }
-      }
-      
-      button {
-        text 'Reset'
-        
-        on_widget_selected do
-          person.reset
-        end
-      }
-    }.open
-  end
-end
-
-HelloGroup.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello Group](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-group.png)
@@ -1450,80 +1176,14 @@ You should see "Hello, Group!"
 
 #### Hello, Checkbox!
 
+This is the low level way of using `checkbox`
+
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'glimmer-dsl-opal/samples/hello/hello_checkbox'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloCheckbox
-  class Person
-    attr_accessor :skiing, :snowboarding, :snowmobiling, :snowshoeing
-    
-    def initialize
-      reset_activities
-    end
-    
-    def reset_activities
-      self.skiing = false
-      self.snowboarding = true
-      self.snowmobiling = false
-      self.snowshoeing = false
-    end
-  end
-  
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    
-    shell {
-      text 'Hello, Checkbox!'
-      row_layout :vertical
-      
-      label {
-        text 'Check all snow activities you are interested in:'
-        font style: :bold
-      }
-      
-      composite {
-        checkbox {
-          text 'Skiing'
-          selection bind(person, :skiing)
-        }
-        
-        checkbox {
-          text 'Snowboarding'
-          selection bind(person, :snowboarding)
-        }
-        
-        checkbox {
-          text 'Snowmobiling'
-          selection bind(person, :snowmobiling)
-        }
-        
-        checkbox {
-          text 'Snowshoeing'
-          selection bind(person, :snowshoeing)
-        }
-      }
-      
-      button {
-        text 'Reset Activities'
-        
-        on_widget_selected do
-          person.reset_activities
-        end
-      }
-    }.open
-  end
-end
-
-HelloCheckbox.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Hello Checkbox](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-checkbox.png)
@@ -1542,6 +1202,8 @@ You should see "Hello, Checkbox!"
 ![Glimmer DSL for Opal Hello Checkbox](images/glimmer-dsl-opal-hello-checkbox.png)
 
 #### Hello, Checkbox Group!
+
+`checkbox_group` is a level higher than `checkbox` in abstraction. It generates a group of checkbox widgets based on available options in model `attribute_options` methods.
 
 Add the following require statement to `app/assets/javascripts/application.rb`
 
@@ -1569,11 +1231,13 @@ class HelloCheckboxGroup
     end
   end
   
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
-  def launch
-    person = Person.new
-    
+  before_body {
+    @person = Person.new
+  }
+  
+  body {
     shell {
       text 'Hello, Checkbox Group!'
       row_layout :vertical
@@ -1584,21 +1248,21 @@ class HelloCheckboxGroup
       }
       
       checkbox_group {
-        selection <=> [person, :activities]
+        selection <=> [@person, :activities]
       }
     
       button {
         text 'Reset Activities'
         
         on_widget_selected do
-          person.reset_activities
+          @person.reset_activities
         end
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloCheckboxGroup.new.launch
+HelloCheckboxGroup.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
@@ -1623,53 +1287,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'glimmer-dsl-opal/samples/hello/hello_date_time'
-```
-
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloDateTime
-  class Person
-    attr_accessor :date_of_birth
-  end
-  
-  include Glimmer
-  
-  def launch
-    person = Person.new
-    person.date_of_birth = DateTime.new(2013, 7, 12, 18, 37, 23)
-    
-    shell {
-      row_layout :vertical
-      
-      text 'Hello, Date Time!'
-      minimum_size 180, 180
-      
-      label {
-        text 'Date of Birth'
-        font height: 16, style: :bold
-      }
-      
-      date { # alias for date_time(:date)
-        date_time bind(person, :date_of_birth)
-      }
-      
-      date_drop_down { # alias for date_time(:date, :drop_down)
-        date_time bind(person, :date_of_birth)
-      }
-      
-      time { # alias for date_time(:time)
-        date_time bind(person, :date_of_birth)
-      }
-      
-      calendar { # alias for date_time(:calendar)
-        date_time bind(person, :date_of_birth)
-      }
-    }.open
-  end
-end
-
-HelloDateTime.new.launch
 ```
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
@@ -1697,263 +1314,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
 require 'glimmer-dsl-opal/samples/hello/hello_table'
-```
-
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class HelloTable
-  class BaseballGame
-    class << self
-      attr_accessor :selected_game
-      
-      def all_playoff_games
-        @all_playoff_games ||= {
-          'NLDS' => [
-            new(Time.new(2037, 10, 6, 12, 0),  'Chicago Cubs', 'Milwaukee Brewers', 'Free Bobblehead'),
-            new(Time.new(2037, 10, 7, 12, 0),  'Chicago Cubs', 'Milwaukee Brewers'),
-            new(Time.new(2037, 10, 8, 12, 0),  'Milwaukee Brewers', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 9, 12, 0),  'Milwaukee Brewers', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 10, 12, 0), 'Milwaukee Brewers', 'Chicago Cubs', 'Free Umbrella'),
-            new(Time.new(2037, 10, 6, 18, 0),  'Cincinnati Reds', 'St Louis Cardinals', 'Free Bobblehead'),
-            new(Time.new(2037, 10, 7, 18, 0),  'Cincinnati Reds', 'St Louis Cardinals'),
-            new(Time.new(2037, 10, 8, 18, 0),  'St Louis Cardinals', 'Cincinnati Reds'),
-            new(Time.new(2037, 10, 9, 18, 0),  'St Louis Cardinals', 'Cincinnati Reds'),
-            new(Time.new(2037, 10, 10, 18, 0), 'St Louis Cardinals', 'Cincinnati Reds', 'Free Umbrella'),
-          ],
-          'ALDS' => [
-            new(Time.new(2037, 10, 6, 12, 0),  'New York Yankees', 'Boston Red Sox', 'Free Bobblehead'),
-            new(Time.new(2037, 10, 7, 12, 0),  'New York Yankees', 'Boston Red Sox'),
-            new(Time.new(2037, 10, 8, 12, 0),  'Boston Red Sox', 'New York Yankees'),
-            new(Time.new(2037, 10, 9, 12, 0),  'Boston Red Sox', 'New York Yankees'),
-            new(Time.new(2037, 10, 10, 12, 0), 'Boston Red Sox', 'New York Yankees', 'Free Umbrella'),
-            new(Time.new(2037, 10, 6, 18, 0),  'Houston Astros', 'Cleveland Indians', 'Free Bobblehead'),
-            new(Time.new(2037, 10, 7, 18, 0),  'Houston Astros', 'Cleveland Indians'),
-            new(Time.new(2037, 10, 8, 18, 0),  'Cleveland Indians', 'Houston Astros'),
-            new(Time.new(2037, 10, 9, 18, 0),  'Cleveland Indians', 'Houston Astros'),
-            new(Time.new(2037, 10, 10, 18, 0), 'Cleveland Indians', 'Houston Astros', 'Free Umbrella'),
-          ],
-          'NLCS' => [
-            new(Time.new(2037, 10, 12, 12, 0), 'Chicago Cubs', 'Cincinnati Reds', 'Free Towel'),
-            new(Time.new(2037, 10, 13, 12, 0), 'Chicago Cubs', 'Cincinnati Reds'),
-            new(Time.new(2037, 10, 14, 12, 0), 'Cincinnati Reds', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 15, 18, 0), 'Cincinnati Reds', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 16, 18, 0), 'Cincinnati Reds', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 17, 18, 0), 'Chicago Cubs', 'Cincinnati Reds'),
-            new(Time.new(2037, 10, 18, 12, 0), 'Chicago Cubs', 'Cincinnati Reds', 'Free Poncho'),
-          ],
-          'ALCS' => [
-            new(Time.new(2037, 10, 12, 12, 0), 'Houston Astros', 'Boston Red Sox', 'Free Towel'),
-            new(Time.new(2037, 10, 13, 12, 0), 'Houston Astros', 'Boston Red Sox'),
-            new(Time.new(2037, 10, 14, 12, 0), 'Boston Red Sox', 'Houston Astros'),
-            new(Time.new(2037, 10, 15, 18, 0), 'Boston Red Sox', 'Houston Astros'),
-            new(Time.new(2037, 10, 16, 18, 0), 'Boston Red Sox', 'Houston Astros'),
-            new(Time.new(2037, 10, 17, 18, 0), 'Houston Astros', 'Boston Red Sox'),
-            new(Time.new(2037, 10, 18, 12, 0), 'Houston Astros', 'Boston Red Sox', 'Free Poncho'),
-          ],
-          'World Series' => [
-            new(Time.new(2037, 10, 20, 18, 0), 'Chicago Cubs', 'Boston Red Sox', 'Free Baseball Cap'),
-            new(Time.new(2037, 10, 21, 18, 0), 'Chicago Cubs', 'Boston Red Sox'),
-            new(Time.new(2037, 10, 22, 18, 0), 'Boston Red Sox', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 23, 18, 0), 'Boston Red Sox', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 24, 18, 0), 'Boston Red Sox', 'Chicago Cubs'),
-            new(Time.new(2037, 10, 25, 18, 0), 'Chicago Cubs', 'Boston Red Sox'),
-            new(Time.new(2037, 10, 26, 18, 0), 'Chicago Cubs', 'Boston Red Sox', 'Free World Series Polo'),
-          ]
-        }
-      end
-    
-      def playoff_type
-        @playoff_type ||= 'World Series'
-      end
-      
-      def playoff_type=(new_playoff_type)
-        @playoff_type = new_playoff_type
-        self.schedule=(all_playoff_games[@playoff_type])
-      end
-      
-      def playoff_type_options
-        all_playoff_games.keys
-      end
-      
-      def schedule
-        @schedule ||= all_playoff_games[playoff_type]
-      end
-      
-      def schedule=(new_schedule)
-        @schedule = new_schedule
-      end
-    end
-    
-    include Glimmer
-    include Glimmer::DataBinding::ObservableModel
-    
-    TEAM_BALLPARKS = {
-      'Boston Red Sox'     => 'Fenway Park',
-      'Chicago Cubs'       => 'Wrigley Field',
-      'Cincinnati Reds'    => 'Great American Ball Park',
-      'Cleveland Indians'  => 'Progressive Field',
-      'Houston Astros'     => 'Minute Maid Park',
-      'Milwaukee Brewers'  => 'Miller Park',
-      'New York Yankees'   => 'Yankee Stadium',
-      'St Louis Cardinals' => 'Busch Stadium',
-    }
-    
-    attr_accessor :date_time, :home_team, :away_team, :ballpark, :promotion
-    
-    def initialize(date_time, home_team, away_team, promotion = 'N/A')
-      self.date_time = date_time
-      self.home_team = home_team
-      self.away_team = away_team
-      self.promotion = promotion
-      observe(self, :date_time) do |new_value|
-        notify_observers(:game_date)
-        notify_observers(:game_time)
-      end
-    end
-    
-    def home_team=(home_team_value)
-      if home_team_value != away_team
-        @home_team = home_team_value
-        self.ballpark = TEAM_BALLPARKS[@home_team]
-      end
-    end
-    
-    def away_team=(away_team_value)
-      if away_team_value != home_team
-        @away_team = away_team_value
-      end
-    end
-    
-    def date
-      Date.new(date_time.year, date_time.month, date_time.day)
-    end
-    
-    def time
-      Time.new(0, 1, 1, date_time.hour, date_time.min, date_time.sec, '+00:00')
-    end
-    
-    def game_date
-      date_time.strftime("%m/%d/%Y")
-    end
-        
-    def game_time
-      date_time.strftime("%I:%M %p")
-    end
-        
-    def home_team_options
-      TEAM_BALLPARKS.keys
-    end
-    
-    def away_team_options
-      TEAM_BALLPARKS.keys
-    end
-    
-    def ballpark_options
-      [TEAM_BALLPARKS[@home_team], TEAM_BALLPARKS[@away_team]]
-    end
-    
-    def to_s
-      "#{home_team} vs #{away_team} at #{ballpark} on #{game_date} #{game_time}"
-    end
-    
-    def book!
-      "Thank you for booking #{to_s}"
-    end
-  end
-
-  include Glimmer
-    
-  def launch
-    shell {
-      grid_layout
-      
-      text 'Hello, Table!'
-      
-      label {
-        layout_data :center, :center, true, false
-        
-        text 'Baseball Playoff Schedule'
-        font height: 30, style: :bold
-      }
-      
-      combo(:read_only) {
-        layout_data :center, :center, true, false
-        selection bind(BaseballGame, :playoff_type)
-        font height: 16
-      }
-      
-      table(:editable) { |table_proxy|
-        layout_data :fill, :fill, true, true
-      
-        table_column {
-          text 'Game Date'
-          width 150
-          sort_property :date # ensure sorting by real date value (not `game_date` string specified in items below)
-          editor :date_drop_down, property: :date_time
-        }
-        table_column {
-          text 'Game Time'
-          width 150
-          sort_property :time # ensure sorting by real time value (not `game_time` string specified in items below)
-          editor :time, property: :date_time
-        }
-        table_column {
-          text 'Ballpark'
-          width 180
-          editor :none
-        }
-        table_column {
-          text 'Home Team'
-          width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
-        }
-        table_column {
-          text 'Away Team'
-          width 150
-          editor :combo, :read_only # read_only is simply an SWT style passed to combo widget
-        }
-        table_column {
-          text 'Promotion'
-          width 150
-          # default text editor is used here
-        }
-        
-        # Data-bind table items (rows) to a model collection property, specifying column properties ordering per nested model
-        items bind(BaseballGame, :schedule), column_properties(:game_date, :game_time, :ballpark, :home_team, :away_team, :promotion)
-        
-        # Data-bind table selection
-        selection bind(BaseballGame, :selected_game)
-        
-        # Default initial sort property
-        sort_property :date
-        
-        # Sort by these additional properties after handling sort by the column the user clicked
-        additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
-      }
-      
-      button {
-        text 'Book Selected Game'
-        layout_data :center, :center, true, false
-        font height: 16
-        enabled bind(BaseballGame, :selected_game)
-        
-        on_widget_selected {
-          book_selected_game
-        }
-      }
-    }.open
-  end
-  
-  def book_selected_game
-    message_box {
-      text 'Baseball Game Booked!'
-      message BaseballGame.selected_game.book!
-    }.open
-  end
-end
-
-HelloTable.new.launch
 ```
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
@@ -2050,30 +1410,30 @@ Or add the Glimmer code directly if you prefer to play around with it:
 
 ```ruby
 class HelloButton
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
   attr_accessor :count
   
-  def initialize
+  before_body {
     @count = 0
-  end
+  }
   
-  def launch
+  body {
     shell {
       text 'Hello, Button!'
       
       button {
-        text bind(self, :count) {|value| "Click To Increment: #{value}  "}
+        text <= [self, :count, on_read: ->(value) { "Click To Increment: #{value}  " }]
         
         on_widget_selected {
           self.count += 1
         }
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloButton.new.launch
+HelloButton.launch
 ```
 
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
@@ -2693,19 +2053,24 @@ class LoginPresenter
 end
 
 class Login
-  include Glimmer
+  include Glimmer::UI::CustomShell
+  
+  before_body {
+    @presenter = LoginPresenter.new
+  }
 
-  def launch
-    presenter = LoginPresenter.new
-    @shell = shell {
+  body {
+    shell {
       text "Login"
+      
       composite {
         grid_layout 2, false #two columns with differing widths
 
         label { text "Username:" } # goes in column 1
         @user_name_text = text {   # goes in column 2
-          text bind(presenter, :user_name)
-          enabled bind(presenter, :logged_out)
+          text <=> [@presenter, :user_name]
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
           on_key_pressed { |event|
             @password_text.set_focus if event.keyCode == swt(:cr)
           }
@@ -2713,43 +2078,47 @@ class Login
 
         label { text "Password:" }
         @password_text = text(:password, :border) {
-          text bind(presenter, :password)
-          enabled bind(presenter, :logged_out)
+          text <=> [@presenter, :password]
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
           on_key_pressed { |event|
-            presenter.login if event.keyCode == swt(:cr)
+            @presenter.login! if event.keyCode == swt(:cr)
           }
         }
 
         label { text "Status:" }
-        label { text bind(presenter, :status) }
+        label { text <= [@presenter, :status] }
 
         button {
           text "Login"
-          enabled bind(presenter, :logged_out)
-          on_widget_selected { presenter.login }
+          enabled <= [@presenter, :logged_out?, computed_by: :status]
+          
+          on_widget_selected { @presenter.login! }
           on_key_pressed { |event|
-            presenter.login if event.keyCode == swt(:cr)
+            if event.keyCode == swt(:cr)
+              @presenter.login!
+            end
           }
         }
 
         button {
           text "Logout"
-          enabled bind(presenter, :logged_in)
-          on_widget_selected { presenter.logout }
+          enabled <= [@presenter, :logged_in?, computed_by: :status]
+          
+          on_widget_selected { @presenter.logout! }
           on_key_pressed { |event|
             if event.keyCode == swt(:cr)
-              presenter.logout
+              @presenter.logout!
               @user_name_text.set_focus
             end
           }
         }
       }
     }
-    @shell.open
-  end
+  }
 end
 
-Login.new.launch
+Login.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
@@ -2780,214 +2149,7 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
 ```ruby
-class TicTacToe
-  class Cell
-    EMPTY = ""
-    attr_accessor :sign, :empty
-  
-    def initialize
-      reset
-    end
-  
-    def mark(sign)
-      self.sign = sign
-    end
-  
-    def reset
-      self.sign = EMPTY
-    end
-  
-    def sign=(sign_symbol)
-      @sign = sign_symbol
-      self.empty = sign == EMPTY
-    end
-  
-    def marked
-      !empty
-    end
-  end
-end
-
-class TicTacToe
-  class Board
-    DRAW = :draw
-    IN_PROGRESS = :in_progress
-    WIN = :win
-    attr :winning_sign
-    attr_accessor :game_status
-  
-    def initialize
-      @sign_state_machine = {nil => "X", "X" => "O", "O" => "X"}
-      build_grid
-      @winning_sign = Cell::EMPTY
-      @game_status = IN_PROGRESS
-    end
-  
-    #row and column numbers are 1-based
-    def mark(row, column)
-      self[row, column].mark(current_sign)
-      game_over? #updates winning sign
-    end
-  
-    def current_sign
-      @current_sign = @sign_state_machine[@current_sign]
-    end
-  
-    def [](row, column)
-      @grid[row-1][column-1]
-    end
-  
-    def game_over?
-       win? or draw?
-    end
-  
-    def win?
-      win = (row_win? or column_win? or diagonal_win?)
-      self.game_status=WIN if win
-      win
-    end
-  
-    def reset
-      (1..3).each do |row|
-        (1..3).each do |column|
-          self[row, column].reset
-        end
-      end
-      @winning_sign = Cell::EMPTY
-      @current_sign = nil
-      self.game_status=IN_PROGRESS
-    end
-  
-    private
-  
-    def build_grid
-      @grid = []
-      3.times do |row_index| #0-based
-        @grid << []
-        3.times { @grid[row_index] << Cell.new }
-      end
-    end
-  
-    def row_win?
-      (1..3).each do |row|
-        if row_has_same_sign(row)
-          @winning_sign = self[row, 1].sign
-          return true
-        end
-      end
-      false
-    end
-  
-    def column_win?
-      (1..3).each do |column|
-        if column_has_same_sign(column)
-          @winning_sign = self[1, column].sign
-          return true
-        end
-      end
-      false
-    end
-  
-    #needs refactoring if we ever decide to make the board size dynamic
-    def diagonal_win?
-      if (self[1, 1].sign == self[2, 2].sign) and (self[2, 2].sign == self[3, 3].sign) and self[1, 1].marked
-        @winning_sign = self[1, 1].sign
-        return true
-      end
-      if (self[3, 1].sign == self[2, 2].sign) and (self[2, 2].sign == self[1, 3].sign) and self[3, 1].marked
-        @winning_sign = self[3, 1].sign
-        return true
-      end
-      false
-    end
-  
-    def draw?
-      @board_full = true
-      3.times do |x|
-        3.times do |y|
-          @board_full = false if self[x, y].empty
-        end
-      end
-      self.game_status = DRAW if @board_full
-      @board_full
-    end
-  
-    def row_has_same_sign(number)
-      row_sign = self[number, 1].sign
-      [2, 3].each do |column|
-        return false unless row_sign == (self[number, column].sign)
-      end
-      true if self[number, 1].marked
-    end
-  
-    def column_has_same_sign(number)
-      column_sign = self[1, number].sign
-      [2, 3].each do |row|
-        return false unless column_sign == (self[row, number].sign)
-      end
-      true if self[1, number].marked
-    end
-  
-  end
-end
-
-class TicTacToe
-  include Glimmer
-
-  def initialize
-    @tic_tac_toe_board = Board.new
-    @shell = shell {
-      text "Tic-Tac-Toe"
-      minimum_size 150, 178
-      composite {
-        grid_layout 3, true
-        (1..3).each { |row|
-          (1..3).each { |column|
-            button {
-              layout_data :fill, :fill, true, true
-              text        bind(@tic_tac_toe_board[row, column], :sign)
-              enabled     bind(@tic_tac_toe_board[row, column], :empty)
-              font        style: :bold, height: 20
-              on_widget_selected {
-                @tic_tac_toe_board.mark(row, column)
-              }
-            }
-          }
-        }
-      }
-    }
-    observe(@tic_tac_toe_board, :game_status) { |game_status|
-      display_win_message if game_status == Board::WIN
-      display_draw_message if game_status == Board::DRAW
-    }
-  end
-
-  def display_win_message
-    display_game_over_message("Player #{@tic_tac_toe_board.winning_sign} has won!")
-  end
-
-  def display_draw_message
-    display_game_over_message("Draw!")
-  end
-
-  def display_game_over_message(message_text)
-    message_box(@shell) {
-      text 'Game Over'
-      message message_text
-    }.open
-    @tic_tac_toe_board.reset
-  end
-
-  def open
-    @shell.open
-  end
-end
-
-TicTacToe.new.open
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
@@ -3017,321 +2179,6 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/elaborate/contact_manager'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-class ContactManager
-  class Contact
-    attr_accessor :first_name, :last_name, :email
-  
-    def initialize(attribute_map)
-      @first_name = attribute_map[:first_name]
-      @last_name = attribute_map[:last_name]
-      @email = attribute_map[:email]
-    end
-  end
-end
-
-class ContactManager
-  class ContactRepository
-    NAMES_FIRST = %w[
-      Liam
-      Noah
-      William
-      James
-      Oliver
-      Benjamin
-      Elijah
-      Lucas
-      Mason
-      Logan
-      Alexander
-      Ethan
-      Jacob
-      Michael
-      Daniel
-      Henry
-      Jackson
-      Sebastian
-      Aiden
-      Matthew
-      Samuel
-      David
-      Joseph
-      Carter
-      Owen
-      Wyatt
-      John
-      Jack
-      Luke
-      Jayden
-      Dylan
-      Grayson
-      Levi
-      Isaac
-      Gabriel
-      Julian
-      Mateo
-      Anthony
-      Jaxon
-      Lincoln
-      Joshua
-      Christopher
-      Andrew
-      Theodore
-      Caleb
-      Ryan
-      Asher
-      Nathan
-      Thomas
-      Leo
-      Isaiah
-      Charles
-      Josiah
-      Hudson
-      Christian
-      Hunter
-      Connor
-      Eli
-      Ezra
-      Aaron
-      Landon
-      Adrian
-      Jonathan
-      Nolan
-      Jeremiah
-      Easton
-      Elias
-      Colton
-      Cameron
-      Carson
-      Robert
-      Angel
-      Maverick
-      Nicholas
-      Dominic
-      Jaxson
-      Greyson
-      Adam
-      Ian
-      Austin
-      Santiago
-      Jordan
-      Cooper
-      Brayden
-      Roman
-      Evan
-      Ezekiel
-      Xaviar
-      Jose
-      Jace
-      Jameson
-      Leonardo
-      Axel
-      Everett
-      Kayden
-      Miles
-      Sawyer
-      Jason
-      Emma
-      Olivia
-    ]
-    NAMES_LAST = %w[
-      Smith
-      Johnson
-      Williams
-      Brown
-      Jones
-      Miller
-      Davis
-      Wilson
-      Anderson
-      Taylor
-    ]
-    def initialize(contacts = nil)
-      @contacts = contacts || 100.times.map do |n|
-        random_first_name_index = (rand*NAMES_FIRST.size).to_i
-        random_last_name_index = (rand*NAMES_LAST.size).to_i
-        first_name = NAMES_FIRST[random_first_name_index]
-        last_name = NAMES_LAST[random_last_name_index]
-        email = "#{first_name}@#{last_name}.com".downcase
-        Contact.new(
-          first_name: first_name,
-          last_name: last_name,
-          email: email
-        )
-      end
-    end
-  
-    def find(attribute_filter_map)
-      @contacts.find_all do |contact|
-        match = true
-        attribute_filter_map.keys.each do |attribute_name|
-          contact_value = contact.send(attribute_name).downcase
-          filter_value = attribute_filter_map[attribute_name].downcase
-          match = false unless contact_value.match(filter_value)
-        end
-        match
-      end
-    end
-  end
-end
-
-class ContactManager
-  class ContactManagerPresenter
-    attr_accessor :results
-    @@contact_attributes = [:first_name, :last_name, :email]
-    @@contact_attributes.each {|attribute_name| attr_accessor attribute_name}
-  
-    def initialize(contact_repository = nil)
-      @contact_repository = contact_repository || ContactRepository.new
-      @results = []
-    end
-  
-    def list
-      self.results = @contact_repository.find({})
-    end
-  
-    def find
-      filter_map = {}
-      @@contact_attributes.each do |attribute_name|
-        filter_map[attribute_name] = self.send(attribute_name) if self.send(attribute_name)
-      end
-      self.results = @contact_repository.find(filter_map)
-      @sort_attribute_name = nil
-      @sort_direction_ascending = nil
-    end
-  
-    def toggle_sort(attribute_name)
-      @sort_attribute_name = attribute_name
-      @sort_direction_ascending = !@sort_direction_ascending
-      sorted_results = self.results.sort_by {|contact| contact.send(attribute_name).downcase}
-      sorted_results = sorted_results.reverse unless @sort_direction_ascending
-      self.results = sorted_results
-    end
-  end
-end
-
-class ContactManager
-  include Glimmer
-
-  def initialize
-    @contact_manager_presenter = ContactManagerPresenter.new
-    @contact_manager_presenter.list
-  end
-
-  def launch
-    shell {
-      text "Contact Manager"
-      composite {
-        group {
-          grid_layout(2, false) {
-            margin_width 0
-            margin_height 0
-          }
-          layout_data :fill, :center, true, false
-          text 'Lookup Contacts'
-          font height: 24
-          
-          label {
-            layout_data :right, :center, false, false
-            text "First &Name: "
-            font height: 16
-          }
-          text {
-            layout_data :fill, :center, true, false
-            text bind(@contact_manager_presenter, :first_name)
-            on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
-            }
-          }
-          
-          label {
-            layout_data :right, :center, false, false
-            text "&Last Name: "
-            font height: 16
-          }
-          text {
-            layout_data :fill, :center, true, false
-            text bind(@contact_manager_presenter, :last_name)
-            on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
-            }
-          }
-          
-          label {
-            layout_data :right, :center, false, false
-            text "&Email: "
-            font height: 16
-          }
-          text {
-            layout_data :fill, :center, true, false
-            text bind(@contact_manager_presenter, :email)
-            on_key_pressed {|key_event|
-              @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
-            }
-          }
-          
-          composite {
-            row_layout {
-              margin_width 0
-              margin_height 0
-            }
-            layout_data(:right, :center, false, false) {
-              horizontal_span 2
-            }
-            
-            button {
-              text "&Find"
-              on_widget_selected { @contact_manager_presenter.find }
-              on_key_pressed {|key_event|
-                @contact_manager_presenter.find if key_event.keyCode == swt(:cr)
-              }
-            }
-            
-            button {
-              text "&List All"
-              on_widget_selected { @contact_manager_presenter.list }
-              on_key_pressed {|key_event|
-                @contact_manager_presenter.list if key_event.keyCode == swt(:cr)
-              }
-            }
-          }
-        }
-
-        table(:multi) { |table_proxy|
-          layout_data {
-            horizontal_alignment :fill
-            vertical_alignment :fill
-            grab_excess_horizontal_space true
-            grab_excess_vertical_space true
-            height_hint 200
-          }
-          table_column {
-            text "First Name"
-            width 80
-          }
-          table_column {
-            text "Last Name"
-            width 80
-          }
-          table_column {
-            text "Email"
-            width 200
-          }
-          items bind(@contact_manager_presenter, :results),
-          column_properties(:first_name, :last_name, :email)
-          on_mouse_up { |event|
-            table_proxy.edit_table_item(event.table_item, event.column_index)
-          }
-        }
-      }
-    }.open
-  end
-end
-
-ContactManager.new.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 Glimmer DSL for SWT Contact Manager
@@ -3393,154 +2240,13 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/elaborate/weather'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
-
-```ruby
-require 'net/http'
-require 'json'
-require 'facets/string/titlecase'
-
-class Weather
-  include Glimmer::UI::CustomShell
-  
-  DEFAULT_FONT_HEIGHT = 30
-  DEFAULT_FOREGROUND = :white
-  DEFAULT_BACKGROUND = rgb(135, 176, 235)
-  
-  attr_accessor :city, :temp, :temp_min, :temp_max, :feels_like, :humidity
-  
-  before_body {
-    @weather_mutex = Mutex.new
-    self.city = 'Montreal, QC, CA'
-    fetch_weather!
-  }
-  
-  body {
-    shell(:no_resize) {
-      grid_layout
-            
-      text 'Glimmer Weather'
-      minimum_size 400, 300
-      background DEFAULT_BACKGROUND
-      
-      text {
-        layout_data(:center, :center, true, true)
-        
-        text <=> [self, :city]
-        
-        on_key_pressed {|event|
-          if event.keyCode == swt(:cr) # carriage return
-            Thread.new do
-              fetch_weather!
-            end
-          end
-        }
-      }
-            
-      tab_folder {
-        layout_data(:center, :center, true, true)
-        
-        ['℃', '℉'].each do |temp_unit|
-          tab_item {
-            grid_layout 2, false
-            
-            text temp_unit
-            background DEFAULT_BACKGROUND
-            
-            rectangle(0, 0, [:default, -2], [:default, -2], 15, 15) {
-              foreground DEFAULT_FOREGROUND
-            }
-      
-            %w[temp temp_min temp_max feels_like].each do |field_name|
-              temp_field(field_name, temp_unit)
-            end
-            
-            humidity_field
-          }
-        end
-      }
-    }
-  }
-  
-  def temp_field(field_name, temp_unit)
-    name_label(field_name)
-    label {
-      layout_data(:fill, :center, true, false)
-      text <= [self, field_name, on_read: ->(t) { "#{kelvin_to_temp_unit(t, temp_unit).to_f.round}°" }]
-      font height: DEFAULT_FONT_HEIGHT
-      foreground DEFAULT_FOREGROUND
-    }
-  end
-  
-  def humidity_field
-    name_label('humidity')
-    label {
-      layout_data(:fill, :center, true, false)
-      text <= [self, 'humidity', on_read: ->(h) { "#{h.to_f.round}%" }]
-      font height: DEFAULT_FONT_HEIGHT
-      foreground DEFAULT_FOREGROUND
-    }
-  end
-  
-  def name_label(field_name)
-    label {
-      layout_data :fill, :center, false, false
-      text field_name.titlecase
-      font height: DEFAULT_FONT_HEIGHT
-      foreground DEFAULT_FOREGROUND
-    }
-  end
-  
-  def fetch_weather!
-    pd 'fetch weather!'
-    @weather_mutex.synchronize do
-      self.weather_data = JSON.parse(Net::HTTP.get('api.openweathermap.org', "/data/2.5/weather?q=#{city}&appid=1d16d70a9aec3570b5cbd27e6b421330"))
-    end
-  rescue => e
-    Glimmer::Config.logger.error "Unable to fetch weather due to error: #{e.full_message}"
-  end
-  
-  def weather_data=(data)
-    @weather_data = data
-    main_data = data['main']
-    # temps come back in Kelvin
-    self.temp = main_data['temp']
-    self.temp_min = main_data['temp_min']
-    self.temp_max = main_data['temp_max']
-    self.feels_like = main_data['feels_like']
-    self.humidity = main_data['humidity']
-  end
-  
-  def kelvin_to_temp_unit(kelvin, temp_unit)
-    temp_unit == '℃' ? kelvin_to_celsius(kelvin) : kelvin_to_fahrenheit(kelvin)
-  end
-  
-  def kelvin_to_celsius(kelvin)
-    return nil if kelvin.nil?
-    kelvin - 273.15
-  end
-  
-  def celsius_to_fahrenheit(celsius)
-    return nil if celsius.nil?
-    (celsius * 9 / 5 ) + 32
-  end
-  
-  def kelvin_to_fahrenheit(kelvin)
-    return nil if kelvin.nil?
-    celsius_to_fahrenheit(kelvin_to_celsius(kelvin))
-  end
-  
-end
-
-Weather.launch
-```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
 ![Weather Montreal C](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-weather-montreal-celsius.png)
 
 ![Weather Montreal F](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-weather-montreal-fahrenheit.png)
 
-![Weather Atlanta F](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-weather-atlanta-fahrenheit.png)
+![Weather Atlanta F](https://github.com/AMaleh            /glimmer-dsl-swt/raw/master/images/glimmer-weather-atlanta-fahrenheit.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 

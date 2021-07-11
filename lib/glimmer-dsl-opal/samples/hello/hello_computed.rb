@@ -19,20 +19,38 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require_relative 'hello_computed/contact'
-
 class HelloComputed
-  include Glimmer
+  class Contact
+    attr_accessor :first_name, :last_name, :year_of_birth
+  
+    def initialize(attribute_map)
+      @first_name = attribute_map[:first_name]
+      @last_name = attribute_map[:last_name]
+      @year_of_birth = attribute_map[:year_of_birth]
+    end
+  
+    def name
+      "#{last_name}, #{first_name}"
+    end
+  
+    def age
+      Time.now.year - year_of_birth.to_i
+    rescue
+      0
+    end
+  end
 
-  def initialize
+  include Glimmer::UI::CustomShell
+
+  before_body {
     @contact = Contact.new(
       first_name: 'Barry',
       last_name: 'McKibbin',
       year_of_birth: 1985
     )
-  end
+  }
 
-  def launch
+  body {
     shell {
       text 'Hello, Computed!'
       
@@ -89,8 +107,8 @@ class HelloComputed
           }
         }
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloComputed.new.launch
+HelloComputed.launch

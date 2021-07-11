@@ -115,7 +115,6 @@ class Weather
   end
   
   def fetch_weather!
-    pd 'fetch weather!'
     @weather_mutex.synchronize do
       self.weather_data = JSON.parse(Net::HTTP.get('api.openweathermap.org', "/data/2.5/weather?q=#{city}&appid=1d16d70a9aec3570b5cbd27e6b421330"))
     end

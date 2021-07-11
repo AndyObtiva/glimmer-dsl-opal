@@ -3,7 +3,8 @@
 ## 0.14.0
 
 - Initial Net::HTTP support for get and post_form
-- Weather elaborate sample (minus multi-threaded refetches)
+- Added "Weather" elaborate sample (minus multi-threaded refetches)
+- Updated Hello, Button!, Hello, Combo!, and Hello, Computed! from Glimmer DSL for SWT
 
 ## 0.13.0
 

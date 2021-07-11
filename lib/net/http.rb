@@ -19,8 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Missing Net module class methods TODO implement
-
 require_relative '../uri'
 
 module Net
@@ -30,17 +28,18 @@ module Net
   class HTTP
     class << self
       def post_form(uri, params)
-#         response_body = nil
-#         result = ::HTTP.post(uri, payload: params) do |response|
-#            response_body = response.body
-#         end
-#         response_body # this is reached before above block due to async (fix with promises, async, await, etc...)
+        uri = "#{`window.location.protocol`}//#{File.join(uri)}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
+        result = nil
+        ::HTTP.post(uri, {async: false, dataType: 'text', data: params}) do |response|
+          result = response.body if response.ok?
+        end
+        result
       end
       
-      def get(uri, params)
-        uri = "#{`window.location.protocol`}//#{File.join(uri, params)}" unless uri.start_with?('http:') || uri.start_with?('https:')
+      def get(uri, path_and_params)
+        uri = "#{`window.location.protocol`}//#{File.join(uri, path_and_params)}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
         result = nil
-        ::HTTP.get("#{uri}", {async: false, dataType: 'text'}) do |response|
+        ::HTTP.get(uri, {async: false, dataType: 'text'}) do |response|
           result = response.body if response.ok?
         end
         result

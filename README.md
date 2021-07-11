@@ -2234,6 +2234,8 @@ Glimmer DSL for Opal Contact Manager Edit Done
 
 #### Weather
 
+Code: [lib/glimmer-dsl-opal/samples/elaborate/weather](lib/glimmer-dsl-opal/samples/elaborate/weather.rb)
+
 Add the following require statement to `app/assets/javascripts/application.rb`
 
 ```ruby
@@ -2246,7 +2248,7 @@ Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObt
 
 ![Weather Montreal F](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-weather-montreal-fahrenheit.png)
 
-![Weather Atlanta F](https://github.com/AMaleh            /glimmer-dsl-swt/raw/master/images/glimmer-weather-atlanta-fahrenheit.png)
+![Weather Atlanta F](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-weather-atlanta-fahrenheit.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 

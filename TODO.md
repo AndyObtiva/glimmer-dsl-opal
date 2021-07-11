@@ -47,6 +47,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 - Fix issue with enter key triggering button behind a message_box (like in Hello, Message Box!)
 - Focus on next enabled widget when disabling a widget
+- Resolve issue with custom shell detecting dialogs and blocking (it seems to work only with shell) (Flip Tic Tac Toe to a custom shell and you encounter the problem)
 
 ## Features
 

@@ -56,6 +56,7 @@ if RUBY_ENGINE == 'opal'
 #   require 'glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css'
   require 'opal-jquery'
   require 'opal/jquery/local_storage'
+  require 'promise'
  
   require 'facets/hash/symbolize_keys'
   require 'glimmer-dsl-opal/ext/class'

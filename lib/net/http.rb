@@ -30,11 +30,20 @@ module Net
   class HTTP
     class << self
       def post_form(uri, params)
-        response_body = nil
-        result = ::HTTP.post(uri, payload: params) do |response|
-           response_body = response.body
+#         response_body = nil
+#         result = ::HTTP.post(uri, payload: params) do |response|
+#            response_body = response.body
+#         end
+#         response_body # this is reached before above block due to async (fix with promises, async, await, etc...)
+      end
+      
+      def get(uri, params)
+        uri = "#{`window.location.protocol`}//#{File.join(uri, params)}" unless uri.start_with?('http:') || uri.start_with?('https:')
+        result = nil
+        ::HTTP.get("#{uri}", {async: false, dataType: 'text'}) do |response|
+          result = response.body if response.ok?
         end
-        response_body
+        result
       end
     end
   end

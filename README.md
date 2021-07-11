@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.13.0 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.14.0 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,7 +8,7 @@
 
 Use in one of two ways:
 - **Direct:** build the GUI of web apps with the same friendly desktop GUI Ruby syntax as [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt), thus requiring a lot less code than web technologies that is in pure Ruby and avoiding opaque web concepts like 'render' and 'reactive'. No HTML/JS/CSS skills are even required. Web designers may be involved with CSS styling only if needed.
-- **Adapter:** auto-webify [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)) via [Opal](https://opalrb.com/) on [Rails](https://rubyonrails.org/) without changing a line of code. Just insert them as a single require statement in a Rails app, and BOOM! They're running on the web! Apps may then optionally be custom-styled for the web by web designers with standard CSS if needed.
+- **Adapter:** auto-webify [Glimmer](https://github.com/AndyObtiva/glimmer) desktop apps (i.e. apps built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt)) via [Opal](https://opalrb.com/) on [Rails](https://rubyonrails.org/) without changing a line of GUI code. Just insert them as a single require statement in a Rails app, and BOOM! They're running on the web! Apps may then optionally be custom-styled for the web by web designers with standard CSS if needed.
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web (including Shine syntax using `<=>` and `<=` for bidirectional [two-way] and unidirectional [one-way] data-binding respectively).
 
@@ -141,7 +141,7 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.13.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
+**Alpha Version** 0.14.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
 
 Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)
@@ -151,7 +151,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 
 ## Table of Contents
 
-- [Glimmer DSL for Opal 0.13.0 (Pure Ruby Web GUI)](#-glimmer-dsl-for-opal-0130-pure-ruby-web-gui)
+- [Glimmer DSL for Opal 0.14.0 (Pure Ruby Web GUI)](#-glimmer-dsl-for-opal-0140-pure-ruby-web-gui)
   - [Principles](#principles)
   - [Background](#background)
   - [Pre-requisites](#pre-requisites)
@@ -252,7 +252,7 @@ Add the following to `Gemfile`:
 gem 'opal-rails', '~> 1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.13.0'
+gem 'glimmer-dsl-opal', '~> 0.14.0'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
 gem 'glimmer-dsl-css', '~> 1.2.0', require: false
 

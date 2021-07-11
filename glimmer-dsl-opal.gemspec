@@ -58,7 +58,6 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_checkbox_group.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_combo.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_computed.rb",
-    "lib/glimmer-dsl-opal/samples/hello/hello_computed/contact.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_shell.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_custom_widget.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_date_time.rb",

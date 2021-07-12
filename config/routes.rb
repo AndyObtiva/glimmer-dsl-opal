@@ -19,32 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require_relative '../uri'
-
-module Net
-  # TODO Implement HTTP with jQuery for use in Glimmer DSL for Opal
-  # TODO Re-Implement in Fetch in the future
-  # Note: ignore Protocol superclass for now
-  class HTTP
-    class << self
-      def post_form(uri, params)
-        uri = "#{`window.location.protocol`}//#{File.join(uri)}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
-        result = nil
-        ::HTTP.post(uri, {async: false, dataType: 'text', data: params}) do |response|
-          result = response.body if response.ok?
-        end
-        result
-      end
-      
-      def get(uri, path_and_params)
-        uri = File.join(uri, path_and_params)
-        uri = "#{`window.location.protocol`}//#{uri}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
-        result = nil
-        ::HTTP.get(uri, {async: false, dataType: 'text'}) do |response|
-          result = response.body if response.ok?
-        end
-        result
-      end
-    end
-  end
+Glimmer::Engine.routes.draw do
+  resources :image_paths, only: [:index]
 end

@@ -179,25 +179,33 @@ class HelloTable
     end
   end
 
-  include Glimmer
-    
-  def launch
+  include Glimmer::UI::CustomShell
+  
+  before_body {
+    Display.app_name = 'Hello, Table!'
+  }
+  
+  body {
     shell {
       grid_layout
       
       text 'Hello, Table!'
+      background_image File.expand_path('hello_table/baseball_park.png', __dir__)
+      image File.expand_path('hello_table/baseball_park.png', __dir__)
       
       label {
         layout_data :center, :center, true, false
         
-        text 'Baseball Playoff Schedule'
-        font height: 30, style: :bold
+        text 'BASEBALL PLAYOFF SCHEDULE'
+        background :transparent if OS.windows?
+        foreground rgb(94, 107, 103)
+        font name: 'Optima', height: 38, style: :bold
       }
       
       combo(:read_only) {
         layout_data :center, :center, true, false
         selection <=> [BaseballGame, :playoff_type]
-        font height: 16
+        font height: 14
       }
       
       table(:editable) { |table_proxy|
@@ -248,29 +256,29 @@ class HelloTable
         # Sort by these additional properties after handling sort by the column the user clicked
         additional_sort_properties :date, :time, :home_team, :away_team, :ballpark, :promotion
         
-#         menu {
-#           menu_item {
-#             text 'Book'
-#
-#             on_widget_selected {
-#               book_selected_game
-#             }
-#           }
-#         }
+        menu {
+          menu_item {
+            text 'Book'
+            
+            on_widget_selected {
+              book_selected_game
+            }
+          }
+        }
       }
       
       button {
         text 'Book Selected Game'
         layout_data :center, :center, true, false
-        font height: 16
-        enabled <=> [BaseballGame, :selected_game]
+        font height: 14
+        enabled <= [BaseballGame, :selected_game]
         
         on_widget_selected {
           book_selected_game
         }
       }
-    }.open
-  end
+    }
+  }
   
   def book_selected_game
     message_box {
@@ -280,4 +288,4 @@ class HelloTable
   end
 end
 
-HelloTable.new.launch
+HelloTable.launch

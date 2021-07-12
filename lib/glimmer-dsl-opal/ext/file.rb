@@ -19,11 +19,42 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+require 'net/http'
+
 class File
   class << self
+    REGEXP_DIR_FILE = /\(dir\)|\(file\)/
+    
+    attr_accessor :image_paths
+    
     def read(*args, &block)
       # TODO implement via asset downloads in the future
       # No Op in Opal
     end
+    
+    # Include special processing for images that matches them against a list of available image paths from the server
+    # to convert to web paths.
+    alias expand_path_without_glimmer expand_path
+    def expand_path(path, base=nil)
+      get_image_paths unless image_paths
+      if base
+        path = expand_path_without_glimmer(path, base)
+      end
+      path_include_dir_or_file = !!path.match(REGEXP_DIR_FILE)
+      if !path_include_dir_or_file
+        path
+      else
+        essential_path = path.split('(dir)').last.split('(file)').last
+        image_paths.detect do |image_path|
+          image_path.include?(essential_path)
+        end
+      end
+    end
+    
+    def get_image_paths
+      image_paths_json = Net::HTTP.get(`window.location.origin`, '/glimmer/image_paths.json')
+      self.image_paths = JSON.parse(image_paths_json)
+    end
+    
   end
 end

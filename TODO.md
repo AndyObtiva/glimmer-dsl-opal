@@ -6,8 +6,14 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
-- Support exposing images (and any File.read(paths)) directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
+- Whitelist images exposed online for download
+
+- Support exposing images to use as a composite background_image or shell image attribute as per those details:
+  - glimmer-dsl-opal Rails engine server: Derive image paths from available assets by providing a controller action and route for it (glimmer_dsl_opal_image_paths)
+  - Opal client: Patch File.expand_path on available server-side image paths via ajax (cached after first hit), comparing the ending of paths as like matching ./(file)/hello/hello.png vs /assets/images/hello/hello.png
 - Update Hello, Table! to latest version in Glimmer DSL for SWT that utilizes an image background (and have working on the web)
+- Update README to remove code for all samples except Hello, World!, Hello, Computed!, and Hello Custom Widget!
+- Support setting favicon (by setting `image` property inside `shell`)
 
 - Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
@@ -42,6 +48,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 - Refactor message_box to use jQuery-UI dialog
 
 - Move Glimmer::SWT to Glimmer::SWT::SWTProxy or something like that to avoid its conflict when expressions expand words like Selection (for a property data-binding with shine)
+- Any File.read(paths) calls directly as downloadables (and linking to them in widgets that way). The 'images' directory could be pre-exposed as assets.
 
 ## Issues
 

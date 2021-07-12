@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.15.0
+## 0.15.1
 
 - Auto-expose images of gems that depend on glimmer-dsl-opal as downloadable asset links providing `/glimmer/image_paths` server call to obtain them
 - Update Hello, Table! to work with image background

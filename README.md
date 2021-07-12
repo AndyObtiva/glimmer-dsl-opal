@@ -14,6 +14,8 @@ Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com
 
 #### Hello, Table! Sample
 
+Code: [lib/glimmer-dsl-opal/samples/hello/hello_table.rb](lib/glimmer-dsl-opal/samples/hello/hello_table.rb)
+
 Glimmer GUI code from [glimmer-dsl-opal/samples/hello/hello_table.rb](lib/glimmer-dsl-opal/samples/hello/hello_table.rb):
 
 ```ruby

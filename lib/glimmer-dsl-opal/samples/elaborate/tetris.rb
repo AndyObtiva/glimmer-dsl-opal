@@ -1,4 +1,4 @@
-# Copyright (c) 2020-2021 Andy Maleh
+# Copyright (c) 2020-2022 Andy Maleh
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -143,7 +143,7 @@ class Tetris
   def show_about_dialog
     message_box {
       text 'Glimmer Tetris'
-      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\nAlternatively:\nUse arrow keys for movement\nand right/left alt/shift keys for rotation\n\nCopyright (c) 2007-2021 Andy Maleh"
+      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\nAlternatively:\nUse arrow keys for movement\nand right/left alt/shift keys for rotation\n\nCopyright (c) 2007-2022 Andy Maleh"
     }.open
   end
 end

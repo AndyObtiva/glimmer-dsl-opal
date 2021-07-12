@@ -145,17 +145,17 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project (only about 76% complete). If you want it developed faster, then [open an issue report](https://github.com/AndyObtiva/glimmer-dsl-opal/issues/new). I have completed some GitHub project features much faster before due to [issue reports](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) and [pull requests](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls). Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.28.3 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)).
+**Alpha Version** 0.29.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt)).
 
-**[Glimmer](https://rubygems.org/gems/glimmer) DSL Comparison Table:**
+**[Glimmer](https://github.com/AndyObtiva/glimmer) DSL Comparison Table:**
 DSL | Platforms | Native? | Vector Graphics? | Pros | Cons | Prereqs
 ----|-----------|---------|------------------|------|------|--------
-[Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)](https://github.com/AndyObtiva/glimmer-dsl-swt) | Mac / Windows / Linux | Yes | Yes (Canvas Shape DSL) | Very Mature / Scaffolding / Native Executable Packaging / Custom Widgets | Slow JRuby Startup Time / Heavy Memory Footprint | Java / JRuby 
-[Glimmer DSL for Opal (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)](https://github.com/AndyObtiva/glimmer-dsl-opal) | All Web Browsers | No | Yes (Canvas Shape DSL) | Simpler than All JavaScript Technologies / Auto-Webify Desktop Apps | Setup Process / Only Rails 5 Support for Now | Rails
-[Glimmer DSL for LibUI (Prerequisite-Free Ruby Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-libui) | Mac / Windows / Linux | Yes | Yes (Area API) | Fast Startup Time / Light Memory Footprint | LibUI is an Incomplete Mid-Alpha Only | None Other Than MRI Ruby
+[Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)](https://github.com/AndyObtiva/glimmer-dsl-swt) | Mac / Windows / Linux | Yes | Yes (Canvas Shape DSL) | Very Mature / Scaffolding / Native Executable Packaging / Custom Widgets | Slow JRuby Startup Time / Heavy Memory Footprint | Java / JRuby
+[Glimmer DSL for Opal (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)](https://github.com/AndyObtiva/glimmer-dsl-opal) | All Web Browsers | No | Yes (Canvas Shape DSL) | Simpler than All JavaScript Technologies / Auto-Webify Desktop Apps | Setup Process / Incomplete Alpha | Rails
+[Glimmer DSL for LibUI (Prerequisite-Free Ruby Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-libui) | Mac / Windows / Linux | Yes | Yes (Area API) | Very Simple Setup / Fast Startup Time / Light Memory Footprint | LibUI is an Incomplete Mid-Alpha Only | None Other Than MRI Ruby
 [Glimmer DSL for Tk (MRI Ruby Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-tk) | Mac / Windows / Linux | Some Native-Themed Widgets (Not Truly Native) | Yes (Canvas) | Fast Startup Time / Light Memory Footprint | Widgets Do Not Look Truly Native, Espcially on Linux | ActiveTcl / MRI Ruby
-[Glimmer DSL for GTK (Ruby-GNOME Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-gtk) | Mac / Windows / Linux | Only on Linux | Yes (Cairo) | Complete Access to GNOME Features on Linux (Forte) | Not Native on Mac and Windows | None Other Than MRI Ruby on Linux / Brew Packages on Mac / MSYS & MING Toolchains on Windows / MRI Ruby
-[Glimmer DSL for FX (FOX Toolkit Ruby Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-fx) | Mac (requires XQuartz) / Windows / Linux | No | Yes (Canvas) | No Prerequisites on Windows (Forte Since Binaries Are Included Out of The Box) | Widgets Do Not Look Native / Mac Usage Obtrusively Starts XQuartz | None Other Than MRI Ruby on Windows / XQuarts on Mac / MRI Ruby
+[Glimmer DSL for GTK (Ruby-GNOME Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-gtk) | Mac / Windows / Linux | Only on Linux | Yes (Cairo) | Complete Access to GNOME Features on Linux | Not Native on Mac and Windows | None Other Than MRI Ruby on Linux / Brew Packages on Mac / MSYS & MING Toolchains on Windows / MRI Ruby
+[Glimmer DSL for FX (FOX Toolkit Ruby Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-fx) | Mac (requires XQuartz) / Windows / Linux | No | Yes (Canvas) | No Prerequisites on Windows | Widgets Do Not Look Native / Mac Usage Obtrusively Starts XQuartz | None Other Than MRI Ruby on Windows / XQuarts on Mac / MRI Ruby
 [Glimmer DSL for JFX (JRuby JavaFX Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-jfx) | Mac / Windows / Linux | No | Yes (javafx.scene.shape and javafx.scene.canvas) | Rich in Custom Widgets | Slow JRuby Startup Time / Heavy Memory Footprint / Widgets Do Not Look Native | Java / JRuby / JavaFX SDK
 [Glimmer DSL for Swing (JRuby Swing Desktop Development GUI Library)](https://github.com/AndyObtiva/glimmer-dsl-swing) | Mac / Windows / Linux | No | Yes (Java2D) | Very Mature | Slow JRuby Startup Time / Heavy Memory Footprint / Widgets Do Not Look Native | Java / JRuby
 [Glimmer DSL for XML (& HTML)](https://github.com/AndyObtiva/glimmer-dsl-xml) | All Web Browsers | No | Yes (SVG) | Programmable / Lighter-weight Than Actual XML | XML Elements Are Sometimes Not Well-Named (Many Types of Input) | None
@@ -258,112 +258,6 @@ Alternatively, web developers may directly use [Glimmer DSL for Opal](https://ru
 (NOTE: Keep in mind this is a very early experimental and incomplete **alpha**. If you run into issues, try to go back to a [previous revision](https://rubygems.org/gems/glimmer-dsl-opal/versions). Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
 
 The [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem is a [Rails Engine](https://guides.rubyonrails.org/engines.html) gem that includes assets.
-
-### Rails 5
-
-Please follow the following steps to setup.
-
-Install a Rails 5 gem:
-
-```
-gem install rails -v5.2.6
-```
-
-Start a new Rails 5 app:
-
-```
-rails new glimmer_app_server
-```
-
-Add the following to `Gemfile`:
-
-```
-gem 'opal', '1.0.5'
-gem 'opal-rails', '1.1.2'
-gem 'opal-async', '~> 1.4.0'
-gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.28.3'
-gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
-gem 'glimmer-dsl-css', '~> 1.2.0', require: false
-```
-
-Follow [opal-rails](https://github.com/opal/opal-rails) instructions, basically the configuration of: `config/initializers/assets.rb`
-
-Edit `config/initializers/assets.rb` and add the following at the bottom:
-```
-Opal.use_gem 'glimmer-dsl-opal'
-```
-
-Run:
-
-```
-rails g scaffold welcome
-```
-
-Run:
-
-```
-rails db:migrate
-```
-
-Add the following to `config/routes.rb` inside the `Rails.application.routes.draw` block:
-
-```ruby
-mount Glimmer::Engine => "/glimmer" # add on top
-root to: 'welcomes#index'
-```
-
-Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
-
-```erb
-<%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
-```
-
-Clear the file `app/views/welcomes/index.html.erb` completely from all content.
-
-Delete `app/assets/javascripts/application.js`
-
-Create an empty `app/assets/javascripts/application.rb`, and add Glimmer GUI DSL code or a require statement for one of the [samples](#samples) below.
-
-```ruby
-require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
-
-# Add more require-statements or Glimmer GUI DSL code
-```
-
-Example to confirm setup is working:
-
-```ruby
-require 'glimmer-dsl-opal'
-
-include Glimmer
-
-shell {
-  fill_layout
-  text 'Example to confirm setup is working'
-  
-  label {
-    text "Welcome to Glimmer DSL for Opal!"
-    foreground :red
-    font height: 24
-  }
-}.open
-```
-
-Start the Rails server:
-```
-rails s
-```
-
-Visit `http://localhost:3000`
-
-You should see:
-
-![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
-
-If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-app.herokuapp.com/
-
-Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
 
 ### Rails 7
 
@@ -472,6 +366,112 @@ You should see:
 ![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
 
 If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-app.herokuapp.com/
+
+Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
+
+### Rails 5
+
+Please follow the following steps to setup.
+
+Install a Rails 5 gem:
+
+```
+gem install rails -v5.2.6
+```
+
+Start a new Rails 5 app:
+
+```
+rails new glimmer_app_server
+```
+
+Add the following to `Gemfile`:
+
+```
+gem 'opal', '1.0.5'
+gem 'opal-rails', '1.1.2'
+gem 'opal-async', '~> 1.4.0'
+gem 'opal-jquery', '~> 0.4.4'
+gem 'glimmer-dsl-opal', '~> 0.29.0'
+gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
+gem 'glimmer-dsl-css', '~> 1.2.0', require: false
+```
+
+Follow [opal-rails](https://github.com/opal/opal-rails) instructions, basically the configuration of: `config/initializers/assets.rb`
+
+Edit `config/initializers/assets.rb` and add the following at the bottom:
+```
+Opal.use_gem 'glimmer-dsl-opal'
+```
+
+Run:
+
+```
+rails g scaffold welcome
+```
+
+Run:
+
+```
+rails db:migrate
+```
+
+Add the following to `config/routes.rb` inside the `Rails.application.routes.draw` block:
+
+```ruby
+mount Glimmer::Engine => "/glimmer" # add on top
+root to: 'welcomes#index'
+```
+
+Edit `app/views/layouts/application.html.erb` and add the following below other `stylesheet_link_tag` declarations:
+
+```erb
+<%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
+```
+
+Clear the file `app/views/welcomes/index.html.erb` completely from all content.
+
+Delete `app/assets/javascripts/application.js`
+
+Create an empty `app/assets/javascripts/application.rb`, and add Glimmer GUI DSL code or a require statement for one of the [samples](#samples) below.
+
+```ruby
+require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
+
+# Add more require-statements or Glimmer GUI DSL code
+```
+
+Example to confirm setup is working:
+
+```ruby
+require 'glimmer-dsl-opal'
+
+include Glimmer
+
+shell {
+  fill_layout
+  text 'Example to confirm setup is working'
+  
+  label {
+    text "Welcome to Glimmer DSL for Opal!"
+    foreground :red
+    font height: 24
+  }
+}.open
+```
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see:
+
+![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
+
+If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails7-app) project (in case I forgot to include some setup steps by mistake).
 
 Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
 
@@ -3015,7 +3015,7 @@ These features have been suggested. You might see them in a future version of Gl
 
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2020-2021 - Andy Maleh.
+Copyright (c) 2020-2022 - Andy Maleh.
 See [LICENSE.txt](LICENSE.txt) for further details.
 
 --

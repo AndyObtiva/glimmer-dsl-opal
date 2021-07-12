@@ -10,7 +10,6 @@
 - Upgrade to Glimmer DSL for XML 1.3.1
 - Upgrade to Glimmer DSL for CSS 1.2.1
 
-
 ## 0.28.3
 
 - Support Canvas Shape DSL data-binding

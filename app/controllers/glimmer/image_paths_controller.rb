@@ -37,7 +37,6 @@ module Glimmer
         end
       end
       download_gem_image_paths = download_gem_image_paths.map {|p| "/assets/#{p}"}
-            
       # TODO apply a security white list
       render json: download_gem_image_paths
     end

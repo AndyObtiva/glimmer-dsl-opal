@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2022-02-12"
+  s.date = "2022-02-13"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "README.md",
     "VERSION",
     "app/assets/images/glimmer/images/calendar.gif",
-    "app/assets/images/glimmer/images/ui-icons_222222_256x240.png",
     "app/assets/images/glimmer/images/ui-icons_444444_256x240.png",
     "app/assets/images/glimmer/images/ui-icons_555555_256x240.png",
     "app/assets/images/glimmer/images/ui-icons_777620_256x240.png",
@@ -120,12 +119,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/jquery.ui.timepicker.js",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/AUTHORS.txt",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/LICENSE.txt",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_444444_256x240.png",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_555555_256x240.png",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_777620_256x240.png",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_777777_256x240.png",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_cc0000_256x240.png",
-    "lib/glimmer-dsl-opal/vendor/jquery-ui/images/ui-icons_ffffff_256x240.png",
+    "lib/glimmer-dsl-opal/vendor/jquery-ui/index.html",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min.css",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.min.js",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.structure.min.css",

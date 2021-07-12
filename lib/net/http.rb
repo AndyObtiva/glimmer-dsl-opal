@@ -37,7 +37,8 @@ module Net
       end
       
       def get(uri, path_and_params)
-        uri = "#{`window.location.protocol`}//#{File.join(uri, path_and_params)}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
+        uri = File.join(uri, path_and_params)
+        uri = "#{`window.location.protocol`}//#{uri}" unless uri.start_with?('http:') || uri.start_with?('https:') # TODO refactor repetitive code
         result = nil
         ::HTTP.get(uri, {async: false, dataType: 'text'}) do |response|
           result = response.body if response.ok?

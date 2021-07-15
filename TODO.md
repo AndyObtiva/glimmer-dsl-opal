@@ -14,6 +14,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Update Hello, Table! to latest version in Glimmer DSL for SWT that utilizes an image background (and have working on the web)
 - Update README to remove code for all samples except Hello, World!, Hello, Computed!, and Hello Custom Widget!
 - Support setting favicon (by setting `image` property inside `shell`)
+- rake task to clear copied assets from rails server app
 
 - Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee

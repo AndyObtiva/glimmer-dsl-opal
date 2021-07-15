@@ -102,5 +102,6 @@ if RUBY_ENGINE == 'opal'
     result ||= method == 'handle'
   end
 else
+  require_relative 'glimmer/config'
   require_relative 'glimmer/engine'
 end

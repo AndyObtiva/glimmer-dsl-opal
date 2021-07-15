@@ -37,22 +37,16 @@ class File
     alias expand_path_without_glimmer expand_path
     def expand_path(path, base=nil)
       get_image_paths unless image_paths
-      if base
-        path = expand_path_without_glimmer(path, base)
-      end
+      path = expand_path_without_glimmer(path, base) if base
       path_include_dir_or_file = !!path.match(REGEXP_DIR_FILE)
-      if !path_include_dir_or_file
-        path
-      else
-        essential_path = path.split('(dir)').last.split('(file)').last
-        image_paths.detect do |image_path|
-          image_path.include?(essential_path)
-        end
+      essential_path = path.split('(dir)').last.split('(file)').last.split('../').last.split('./').last
+      image_paths.detect do |image_path|
+        image_path.include?(essential_path)
       end
     end
     
     def get_image_paths
-      image_paths_json = Net::HTTP.get(`window.location.origin`, '/glimmer/image_paths.json')
+      image_paths_json = Net::HTTP.get(`window.location.origin`, "/glimmer/image_paths.json")
       self.image_paths = JSON.parse(image_paths_json)
     end
     

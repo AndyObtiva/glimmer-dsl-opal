@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.16.0
+
+- Support label widget background_image attribute
+- Have File.expand_path support expanding paths even if they did not base off of __dir__ or __FILE__
+- Custom specification of gems having image paths via server-side configuration in Glimmer::Config.gems_having_image_paths
+
 ## 0.15.1
 
 - Auto-expose images of gems that depend on glimmer-dsl-opal as downloadable asset links providing `/glimmer/image_paths` server call to obtain them

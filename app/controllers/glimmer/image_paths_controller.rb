@@ -3,8 +3,13 @@ require 'fileutils'
 module Glimmer
   class ImagePathsController < ApplicationController
     def index
+      # TODO apply caching in the future to avoid recopying files on every request
       Gem.loaded_specs.map(&:last).select {|s| s.name == 'glimmer-dsl-opal' || s.dependencies.detect {|dep| dep.name == 'glimmer-dsl-opal'} }
-      full_gem_specs = Gem.loaded_specs.map(&:last).select {|s| s.name == 'glimmer-dsl-opal' || s.dependencies.detect {|dep| dep.name == 'glimmer-dsl-swt'} }
+      full_gem_specs = Gem.loaded_specs.map(&:last).select do |s|
+        s.name == 'glimmer-dsl-opal' ||
+          Glimmer::Config.gems_having_image_paths.to_a.include?(s.name) || # consider turning into a Glimmer::Config server-side option
+          s.dependencies.detect {|dep| dep.name == 'glimmer-dsl-swt'}
+      end
       full_gem_paths = full_gem_specs.map {|gem_spec| gem_spec.full_gem_path}
       full_gem_names = full_gem_paths.map {|path| File.basename(path)}
       full_gem_image_path_collections = full_gem_paths.map do |gem_path|
@@ -32,7 +37,7 @@ module Glimmer
         end
       end
       download_gem_image_paths = download_gem_image_paths.map {|p| "/assets/#{p}"}
-      
+            
       # TODO apply a security white list
       render json: download_gem_image_paths
     end

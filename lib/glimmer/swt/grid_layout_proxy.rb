@@ -16,44 +16,27 @@ module Glimmer
     
       def num_columns=(columns)
         @num_columns = columns
-        # TODO do the following instead of reapply
-#         @parent.add_css_class("num-columns-#{@num_columns}")
-        # reinitialize # TODO reimplement without using reinitialize
-        layout_css = <<~CSS
-          grid-template-columns: #{'auto ' * @num_columns.to_i};
-          grid-row-gap: #{@vertical_spacing}px;
-          grid-column-gap: #{@horizontal_spacing}px;
-        CSS
-        if @parent.css_classes.include?('grid-layout')
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
-            @parent.dom_element.css(key, value) unless key.nil?
-          end
-          if @parent.is_a?(GroupProxy)
-            @parent.dom_element.find('legend').css('grid-column-start', "span #{@num_columns.to_i}")
-          end
-        else
-          layout_css.split(";").map(&:strip).map {|l| l.split(':').map(&:strip)}.each do |key, value|
-            @parent.dom_element.css(key, 'initial') unless key.nil?
-          end
-        end
+        @parent.dom_element.css('grid-template-columns', 'auto ' * @num_columns.to_i)
+        @parent.dom_element.find('legend').css('grid-column-start', "span #{@num_columns.to_i}") if @parent.is_a?(GroupProxy)
       end
       
       def make_columns_equal_width=(equal_width)
         @make_columns_equal_width = equal_width
-        @parent.dom_element.css('grid-template-columns', "#{100.0/@num_columns.to_f}% " * @num_columns.to_i) if @make_columns_equal_width
-        # reinitialize # TODO reimplement without using reinitialize
+        if @make_columns_equal_width
+          @parent.dom_element.css('grid-template-columns', "#{100.0/@num_columns.to_f}% " * @num_columns.to_i)
+        else
+          @parent.dom_element.css('grid-template-columns', 'auto ' * @num_columns.to_i)
+        end
       end
       
       def horizontal_spacing=(spacing)
         @horizontal_spacing = spacing
-#         @parent.add_css_class("horizontal-spacing-#{@horizontal_spacing}")
-        # reinitialize # TODO reimplement without using reinitialize
+        @parent.dom_element.css('grid-column-gap', "#{@horizontal_spacing}px")
       end
 
       def vertical_spacing=(spacing)
         @vertical_spacing = spacing
-#         @parent.add_css_class("vertical-spacing-#{@vertical_spacing}")
-        # reinitialize # TODO reimplement without using reinitialize
+        @parent.dom_element.css('grid-row-gap', "#{@vertical_spacing}px")
       end
       
       def margin_width=(pixels)

@@ -2,7 +2,7 @@
 
 ## 0.16.1
 
-- Support GridLayout#make_columns_equal_width attribute
+- Support GridLayout make_columns_equal_width, horizontal_spacing, and vertical_spacing attributes
 - Hello, Composite! sample
 
 ## 0.16.0

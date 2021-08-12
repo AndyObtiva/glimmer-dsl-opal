@@ -203,7 +203,7 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 2.0.0"])
+    s.add_runtime_dependency(%q<glimmer>.freeze, ["~> 2.0.1"])
     s.add_runtime_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.2.0"])
     s.add_runtime_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.2.0"])
     s.add_runtime_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])
@@ -218,7 +218,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<opal-rails>.freeze, ["~> 1.1.2"])
     s.add_development_dependency(%q<opal-jquery>.freeze, ["~> 0.4.4"])
   else
-    s.add_dependency(%q<glimmer>.freeze, ["~> 2.0.0"])
+    s.add_dependency(%q<glimmer>.freeze, ["~> 2.0.1"])
     s.add_dependency(%q<glimmer-dsl-xml>.freeze, ["~> 1.2.0"])
     s.add_dependency(%q<glimmer-dsl-css>.freeze, ["~> 1.2.0"])
     s.add_dependency(%q<opal-async>.freeze, ["~> 1.2.0"])

@@ -92,7 +92,7 @@ module Glimmer
       def grab_excess_horizontal_space=(grab_excess_horizontal_space)
         @grab_excess_horizontal_space = grab_excess_horizontal_space
         @parent.dom_element.css('justify-self', @horizontal_alignment) if @grab_excess_horizontal_space && @horizontal_alignment != 'fill' && width_hint.nil?
-        @parent.parent.dom_element.css('justify-content', "normal") if @grab_excess_horizontal_space
+        @parent.parent.dom_element.css('justify-content', 'stretch') if @grab_excess_horizontal_space
 #         reapply
       end
 

@@ -163,6 +163,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
     - [Hello Samples](#hello-samples)
       - [Hello, World!](#hello-world)
       - [Hello, Combo!](#hello-combo)
+      - [Hello, Composite!](#hello-composite)
       - [Hello, Computed!](#hello-computed)
       - [Hello, List Single Selection!](#hello-list-single-selection)
       - [Hello, List Multi Selection!](#hello-list-multi-selection)
@@ -223,7 +224,8 @@ Alternatively, web developers may directly use [Glimmer DSL for Opal](https://ru
 ## Pre-requisites
 
 - Rails 5: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
-- Opal 1: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
+- Opal 1.0.4: [https://github.com/opal/opal](https://github.com/opal/opal)
+- Opal-Rails 1.1.2: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
 - jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
 - jQuery-UI 1.12: [https://code.jquery.com/](https://jqueryui.com/) (jQuery-UI 1.12.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
 - jQuery-UI Timepicker 0.3: [https://code.jquery.com/](https://fgelinas.com/code/timepicker/) (jQuery-UI Timepicker 0.3.3 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
@@ -251,7 +253,8 @@ rails new glimmer_app_server
 Add the following to `Gemfile`:
 
 ```
-gem 'opal-rails', '~> 1.1.2'
+gem 'opal', '1.0.4'
+gem 'opal-rails', '1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
 gem 'glimmer-dsl-opal', '~> 0.16.0'
@@ -490,7 +493,7 @@ HelloCombo.launch
 ```
 Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
 
-![Glimmer DSL for SWT Hello Combo](https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-hello-combo.png)
+![Glimmer DSL for SWT Hello Combo](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/images/glimmer-hello-combo.png)
 
 Glimmer app on the web (using `glimmer-dsl-opal` gem):
 
@@ -504,6 +507,31 @@ Visit `http://localhost:3000`
 You should see "Hello, Combo!"
 
 ![Glimmer DSL for Opal Hello Combo](images/glimmer-dsl-opal-hello-combo.png)
+
+#### Hello, Composite!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_composite'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Composite](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/images/glimmer-hello-composite.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Composite!"
+
+![Glimmer DSL for Opal Hello Composite](images/glimmer-dsl-opal-hello-composite.png)
 
 #### Hello, Computed!
 

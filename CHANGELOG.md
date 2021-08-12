@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.16.1
+
+- Support GridLayout#make_columns_equal_width attribute
+- Hello, Composite! sample
+
 ## 0.16.0
 
 - Support label widget background_image attribute

@@ -40,7 +40,7 @@ module Glimmer
       
       def make_columns_equal_width=(equal_width)
         @make_columns_equal_width = equal_width
-#         @parent.add_css_class('make_columns_equal_width') if @make_columns_equal_width
+        @parent.dom_element.css('grid-template-columns', "#{100.0/@num_columns.to_f}% " * @num_columns.to_i) if @make_columns_equal_width
         # reinitialize # TODO reimplement without using reinitialize
       end
       
@@ -79,7 +79,8 @@ module Glimmer
         self.vertical_spacing = 10
         self.margin_width = 15
         self.margin_height = 15
-        self.num_columns = @args.first || 1
+        self.num_columns = @args[0] || 1
+        self.make_columns_equal_width = @args[1] || false
       end
     end
   end

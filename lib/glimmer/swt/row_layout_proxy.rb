@@ -50,7 +50,7 @@ module Glimmer
         }
       CSS
     
-      attr_reader :type, :fill, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center, :wrap, :justify
+      attr_reader :type, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center, :wrap, :justify
         
       def initialize(parent, args)
         super(parent, args)
@@ -88,9 +88,13 @@ module Glimmer
         end
       end
       
+      def fill
+        !pack
+      end
+      
       def fill=(value)
         # TODO verify this is a correct implementation and interpretation of RowLayout in SWT
-        self.pack(!value)
+        self.pack = !value
       end
       
       def center=(center_value)

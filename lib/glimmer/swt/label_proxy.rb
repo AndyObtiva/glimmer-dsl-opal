@@ -33,11 +33,11 @@ module Glimmer
 
       def text=(value)
         @text = value
-        dom_element.text(@text) # TODO deal with issue of handling lines and escaping at the same time
+        dom_element.html(html_text) # TODO deal with issue of handling lines and escaping at the same time
       end
       
       def html_text
-        text&.gsub("\n", '<br />')
+        text && CGI.escapeHTML(text).gsub("\n", '<br />')
       end
       
 #       def background_image=(*image_options)

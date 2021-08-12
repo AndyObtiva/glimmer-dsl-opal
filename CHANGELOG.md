@@ -5,6 +5,8 @@
 - Support GridLayout margin_top, margin_right, margin_bottom, and margin_left attributes
 - Support RowLayout wrap and justify attributes
 - Hello, Layout! sample
+- HTML Escape label text content
+- Fix issue with RowLayout fill not working
 
 ## 0.16.1
 

@@ -12,7 +12,7 @@ module Glimmer
         }
       CSS
       
-      attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height
+      attr_reader :num_columns, :make_columns_equal_width, :horizontal_spacing, :vertical_spacing, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left
     
       def num_columns=(columns)
         @num_columns = columns
@@ -55,6 +55,38 @@ module Glimmer
         @parent.dom_element.css('padding-top', effective_margin_height)
         @parent.dom_element.css('padding-bottom', effective_margin_height)
       end
+      
+      def margin_top=(pixels)
+        @margin_top = pixels
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        effective_margin_top = @margin_top
+        effective_margin_top += 9 if @parent.is_a?(GroupProxy)
+        @parent.dom_element.css('padding-top', effective_margin_top)
+      end
+      
+      def margin_right=(pixels)
+        @margin_right = pixels
+        effective_margin_right = @margin_right
+        effective_margin_right += 6 if @parent.is_a?(GroupProxy)
+        @parent.dom_element.css('padding-right', effective_margin_right)
+      end
+      
+      def margin_bottom=(pixels)
+        @margin_bottom = pixels
+        # Using padding for width since margin-right isn't getting respected with width 100%
+        effective_margin_bottom = @margin_bottom
+        effective_margin_bottom += 9 if @parent.is_a?(GroupProxy)
+        @parent.dom_element.css('padding-bottom', effective_margin_bottom)
+      end
+      
+      def margin_left=(pixels)
+        @margin_left = pixels
+        effective_margin_left = @margin_left
+        effective_margin_left += 6 if @parent.is_a?(GroupProxy)
+        @parent.dom_element.css('padding-left', effective_margin_left)
+      end
+            
+      
             
       def initialize(parent, args)
         super(parent, args)

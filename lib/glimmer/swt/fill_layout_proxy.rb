@@ -28,13 +28,11 @@ module Glimmer
     
       def initialize(parent, args)
         super(parent, args)
-        @type = @args.first || :horizontal
+        self.type = @args.first || :horizontal
         self.margin_width = 15
         self.margin_height = 15
         @parent.css_classes << 'fill-layout'
-        @parent.css_classes << (horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
         @parent.dom_element.add_class('fill-layout')
-        @parent.dom_element.add_class(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
       end
       
       def horizontal?
@@ -43,6 +41,14 @@ module Glimmer
 
       def vertical?
         @type == :vertical
+      end
+      
+      def type=(value)
+        @parent.dom_element.remove_class(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
+        @parent.css_classes.delete(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
+        @type = value
+        @parent.dom_element.add_class(horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical')
+        @parent.css_classes << horizontal? ? 'fill-layout-horizontal' : 'fill-layout-vertical'
       end
 
       def margin_width=(pixels)

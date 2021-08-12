@@ -33,7 +33,7 @@ module Glimmer
 
       def text=(value)
         @text = value
-        dom_element.html(html_text)
+        dom_element.text(@text) # TODO deal with issue of handling lines and escaping at the same time
       end
       
       def html_text

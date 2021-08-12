@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.16.2
+
+- Support GridLayout margin_top, margin_right, margin_bottom, and margin_left attributes
+- Support RowLayout wrap and justify attributes
+- Hello, Layout! sample
+
 ## 0.16.1
 
 - Support GridLayout make_columns_equal_width, horizontal_spacing, and vertical_spacing attributes

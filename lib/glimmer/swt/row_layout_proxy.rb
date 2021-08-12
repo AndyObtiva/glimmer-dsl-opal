@@ -24,6 +24,14 @@ module Glimmer
           margin-left: auto;
           margin-right: auto;
         }
+        
+        .row-layout-wrap {
+          flex-wrap: wrap;
+        }
+                
+        .row-layout-justify {
+          justify-content: space-around;
+        }
                 
         .row-layout-horizontal {
           flex-direction: row;
@@ -42,13 +50,14 @@ module Glimmer
         }
       CSS
     
-      attr_reader :type, :fill, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center
+      attr_reader :type, :fill, :margin_width, :margin_height, :margin_top, :margin_right, :margin_bottom, :margin_left, :spacing, :pack, :center, :wrap, :justify
         
       def initialize(parent, args)
         super(parent, args)
         @parent.dom_element.add_class('row-layout')
         self.type = args.first || :horizontal
         self.pack = true
+        self.wrap = true
       end
       
       def type=(value)
@@ -91,6 +100,24 @@ module Glimmer
           parent.dom_element.add_class("row-layout-center")
         else
           parent.dom_element.remove_class("row-layout-center")
+        end
+      end
+      
+      def wrap=(wrap_value)
+        @wrap = wrap_value
+        if @wrap
+          parent.dom_element.add_class("row-layout-wrap")
+        else
+          parent.dom_element.remove_class("row-layout-wrap")
+        end
+      end
+      
+      def justify=(justify_value)
+        @justify = justify_value
+        if @justify
+          parent.dom_element.add_class("row-layout-justify")
+        else
+          parent.dom_element.remove_class("row-layout-justify")
         end
       end
       

@@ -218,6 +218,21 @@ module Glimmer
         end
       end
       
+      def visible=(value)
+        @visible = value
+        if @visible
+          parent.menu_requested = true
+          parent.dom_element.css('position', 'relative')
+          render
+          dom_element.css('position', 'absolute')
+          dom_element.css('left', parent.menu_x - parent.parent.get_layout&.margin_width.to_i) # TODO - parent.get_layout&.margin_left.to_i)
+          dom_element.css('top', parent.menu_y - parent.parent.get_layout&.margin_height.to_i - 5) # TODO - parent.get_layout&.margin_top.to_i)
+          parent.menu_requested = false
+        else
+          close
+        end
+      end
+      
       def render(custom_parent_dom_element: nil, brand_new: false)
         # TODO attach to top nav bar if parent is shell
         # TODO attach listener to parent to display on right click
@@ -236,6 +251,7 @@ module Glimmer
       def close
         dom_element.remove
         Element['body'].off('click', &@close_event_handler)
+        @visible = false
       end
       
       def root_menu?

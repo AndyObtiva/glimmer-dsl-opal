@@ -31,8 +31,8 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered, :menu_requested
-      attr_accessor :menu
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered
+      attr_accessor :menu, :menu_requested, :menu_x, :menu_y
       alias isDisposed disposed?
       alias is_disposed disposed?
       alias rendered? rendered
@@ -133,17 +133,15 @@ module Glimmer
       # Executes at the closing of a parent widget curly braces after all children/properties have been added/set
       def post_add_content
         if !menu.nil? && !is_a?(MenuProxy) && !is_a?(MenuItemProxy)
-          on_mouse_down { |mouse_event|
+          on_mouse_move do |mouse_event|
+            self.menu_x = mouse_event.x
+            self.menu_y = mouse_event.y
+          end
+          on_mouse_down do |mouse_event|
             if mouse_event.button == 3 # right-click
-              @menu_requested = true
-              dom_element.css('position', 'relative')
-              menu&.render
-              menu.dom_element.css('position', 'absolute')
-              menu.dom_element.css('left', mouse_event.x - parent.get_layout&.margin_width.to_i) # TODO - parent.get_layout&.margin_left.to_i)
-              menu.dom_element.css('top', mouse_event.y - parent.get_layout&.margin_height.to_i - 5) # TODO - parent.get_layout&.margin_top.to_i)
-              @menu_requested = false
+              menu.visible = true
             end
-          }
+          end
         end
       end
       
@@ -348,6 +346,30 @@ module Glimmer
 #             end
           }
         }
+        mouse_move_event_handler = -> (event_listener) {
+          -> (event) {
+            # TODO generalize this solution to all widgets that support key presses
+            # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:button, &event.method(:which))
+            event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
+            event.define_singleton_method(:x, &event.method(:page_x))
+            event.define_singleton_method(:y, &event.method(:page_y))
+            doit = true
+            event.define_singleton_method(:doit=) do |value|
+              doit = value
+            end
+            event.define_singleton_method(:doit) { doit }
+            
+            event_listener.call(event)
+            
+            # TODO Imlement doit properly for all different kinds of events
+#             unless doit
+#               event.prevent
+#               event.stop
+#               event.stop_immediate
+#             end
+          }
+        }
         context_menu_handler = -> (event_listener) {
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
@@ -366,7 +388,6 @@ module Glimmer
               event.prevent
               event_listener.call(event)
             end
-            
             # TODO Imlement doit properly for all different kinds of events
 #             unless doit
 #               event.prevent
@@ -382,6 +403,12 @@ module Glimmer
           'on_focus_lost' => {
             event: 'blur',
           },
+          'on_mouse_move' => [
+            {
+              event: 'mousemove',
+              event_handler: mouse_move_event_handler,
+            },
+          ],
           'on_mouse_up' => [
             {
               event: 'mouseup',

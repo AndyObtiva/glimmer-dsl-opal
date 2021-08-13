@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.17.0
+
+- Support `menu` `visible` attribute to enable programmatic display of menu
+
 ## 0.16.2
 
 - Support `grid_layout` `margin_top`, `margin_right`, `margin_bottom`, and `margin_left` attributes

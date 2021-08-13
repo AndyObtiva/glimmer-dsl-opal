@@ -321,6 +321,7 @@ shell {
 The following keywords from [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) have fully functional partial support in Opal:
 
 Widgets:
+- `arrow`: featured in [Hello, Arrow!](#hello-arrow)
 - `button`: featured in [Hello, Checkbox!](#hello-checkbox) / [Hello, Button!](#hello-button) / [Hello, Table!](#hello-table) / [Hello, Radio Group!](#hello-radio-group) / [Hello, Radio!](#hello-radio) / [Hello, Message Box!](#hello-message-box) / [Hello, List Single Selection!](#hello-list-single-selection) / [Hello, List Multi Selection!](#hello-list-multi-selection) / [Hello, Group!](#hello-group) / [Hello, Combo!](#hello-combo) / [Hello, Checkbox Group!](#hello-checkbox-group) / [Contact Manager](#contact-manager) / [Tic Tac Toe](#tic-tac-toe) / [Login](#login)
 - `browser`: featured in [Hello, Browser!](#hello-browser)
 - `calendar`: featured in [Hello, Date Time!](#hello-date-time)
@@ -758,6 +759,39 @@ Visit `http://localhost:3000`
 You should see "Hello, List Multi Selection!"
 
 ![Glimmer DSL for Opal Hello List Multi Selection](images/glimmer-dsl-opal-hello-list-multi-selection.png)
+
+#### Hello, Arrow!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_arrow'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Arrow](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-arrow.png)
+
+![Glimmer DSL for SWT Hello Arrow](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-arrow-menu.png)
+
+![Glimmer DSL for SWT Hello Arrow](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-arrow-item-selected.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Arrow!"
+
+![Glimmer DSL for Opal Hello Arrow](images/glimmer-dsl-opal-hello-arrow.png)
+
+![Glimmer DSL for Opal Hello Arrow](images/glimmer-dsl-opal-hello-arrow-menu.png)
+
+![Glimmer DSL for Opal Hello Arrow](images/glimmer-dsl-opal-hello-arrow-item-selected.png)
 
 #### Hello, Browser!
 

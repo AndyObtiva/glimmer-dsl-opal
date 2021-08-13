@@ -3,6 +3,8 @@
 ## 0.17.0
 
 - Support `menu` `visible` attribute to enable programmatic display of menu
+- Support `arrow` widget
+- Hello, Arrow! sample
 
 ## 0.16.2
 

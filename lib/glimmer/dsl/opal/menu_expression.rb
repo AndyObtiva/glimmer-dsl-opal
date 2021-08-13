@@ -37,6 +37,9 @@ module Glimmer
             if parent.is_a?(Glimmer::SWT::WidgetProxy)
               return true
             else
+              puts 'parent'
+              puts parent.class
+              puts parent
               raise Glimmer::Error, "menu may only be nested under a widget (like shell or another menu)!"
             end
           end

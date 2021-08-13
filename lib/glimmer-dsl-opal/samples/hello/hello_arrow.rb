@@ -34,7 +34,7 @@ shell {
   }
   
   arrow { # can be customized by passing `:arrow` SWT style + `:left`, `:right`, `:up`, or `:down` (default)
-    menu {
+    @menu = menu {
       menu_item {
         text 'Item &1'
         
@@ -58,10 +58,6 @@ shell {
     }
     
     on_widget_selected do |event|
-      puts 'event'
-      puts event
-      puts 'event.widget'
-      puts event.widget
       event.widget.menu.visible = true
     end
   }

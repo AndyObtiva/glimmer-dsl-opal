@@ -225,8 +225,8 @@ module Glimmer
           parent.dom_element.css('position', 'relative')
           render
           dom_element.css('position', 'absolute')
-          dom_element.css('left', parent.menu_x - parent.parent.get_layout&.margin_width.to_i) # TODO - parent.get_layout&.margin_left.to_i)
-          dom_element.css('top', parent.menu_y - parent.parent.get_layout&.margin_height.to_i - 5) # TODO - parent.get_layout&.margin_top.to_i)
+          dom_element.css('left', parent.menu_x - parent.dom_element.offset.left)
+          dom_element.css('top', parent.menu_y - parent.dom_element.offset.top)
           parent.menu_requested = false
         else
           close
@@ -241,7 +241,7 @@ module Glimmer
           if root_menu? && !bar?
             `$(#{path}).menu();`
             @close_event_handler = lambda do |event|
-              close if event.target.parents('.ui-menu').empty?
+              close if event.target != parent.dom_element && event.target.parents('.ui-menu').empty?
             end
             Element['body'].on('click', &@close_event_handler)
           end

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.18.0
+
+- Implement `c_combo`
+- Hello, C Combo! sample
+
 ## 0.17.0
 
 - Support `menu` `visible` attribute to enable programmatic display of menu

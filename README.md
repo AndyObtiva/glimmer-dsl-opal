@@ -1,4 +1,4 @@
-# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.16.0 (Pure Ruby Web GUI)
+# [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=85 />](https://github.com/AndyObtiva/glimmer) Glimmer DSL for Opal 0.16.2 (Pure Ruby Web GUI)
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -143,7 +143,7 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.16.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
+**Alpha Version** 0.16.2 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
 
 Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)
@@ -153,7 +153,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 
 ## Table of Contents
 
-- [Glimmer DSL for Opal 0.16.0 (Pure Ruby Web GUI)](#-glimmer-dsl-for-opal-0160-pure-ruby-web-gui)
+- [Glimmer DSL for Opal 0.16.2 (Pure Ruby Web GUI)](#-glimmer-dsl-for-opal-0162-pure-ruby-web-gui)
   - [Principles](#principles)
   - [Background](#background)
   - [Pre-requisites](#pre-requisites)
@@ -257,7 +257,7 @@ gem 'opal', '1.0.4'
 gem 'opal-rails', '1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.16.0'
+gem 'glimmer-dsl-opal', '~> 0.16.2'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
 gem 'glimmer-dsl-css', '~> 1.2.0', require: false
 
@@ -655,6 +655,58 @@ Visit `http://localhost:3000`
 You should see "Hello, Computed!"
 
 ![Glimmer DSL for Opal Hello Computed](images/glimmer-dsl-opal-hello-computed.png)
+
+#### Hello, Layout!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_layout'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab1.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab2.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab3.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab4.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab5.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab6.png)
+
+![Glimmer DSL for SWT Hello Layout](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-layout-tab7.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Layout!"
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab1.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab2.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab3.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab4.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab4-shrunk.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab5.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab6.png)
+
+![Glimmer DSL for Opal Hello Layout](images/glimmer-dsl-opal-hello-layout-tab7.png)
 
 #### Hello, List Single Selection!
 

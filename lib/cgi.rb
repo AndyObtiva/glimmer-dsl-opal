@@ -1,12 +1,14 @@
 class CGI
   class << self
-    def escapeHTML(text)
-      text.
+    def escapeHTML(string)
+      string.
         gsub('&', '&amp;').
         gsub('<', '&lt;').
         gsub('>', '&gt;').
-        gsub("'", '&#39;').
+        gsub("'", '&apos;').
         gsub('"', '&quot;')
     end
+    alias escape_html escapeHTML
+    
   end
 end

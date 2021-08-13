@@ -2,15 +2,16 @@
 
 ## 0.16.2
 
-- Support GridLayout margin_top, margin_right, margin_bottom, and margin_left attributes
-- Support RowLayout wrap and justify attributes
+- Support `grid_layout` `margin_top`, `margin_right`, `margin_bottom`, and `margin_left` attributes
+- Support `row_layout` `wrap` and `justify` attributes
 - Hello, Layout! sample
+- Partial CGI implementation to have `escapeHTML` (alias: `escape_html`) method
 - HTML Escape label text content
-- Fix issue with RowLayout fill not working
+- Fix issue with `row_layout` `fill` attribute not working
 
 ## 0.16.1
 
-- Support GridLayout make_columns_equal_width, horizontal_spacing, and vertical_spacing attributes
+- Support `grid_layout` `make_columns_equal_width`, `horizontal_spacing`, and `vertical_spacing` attributes
 - Hello, Composite! sample
 
 ## 0.16.0

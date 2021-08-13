@@ -37,7 +37,7 @@ module Glimmer
       end
       
       def html_text
-        text && CGI.escapeHTML(text).gsub("\n", '<br />')
+        text && CGI.escape_html(text).gsub("\n", '<br />')
       end
       
 #       def background_image=(*image_options)

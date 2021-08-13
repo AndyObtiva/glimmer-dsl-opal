@@ -133,6 +133,7 @@ module Glimmer
       # Executes at the closing of a parent widget curly braces after all children/properties have been added/set
       def post_add_content
         if !menu.nil? && !is_a?(MenuProxy) && !is_a?(MenuItemProxy)
+          # TODO consider in the future retaining listener registrations to deregister on unsetting of the menu
           on_mouse_move do |mouse_event|
             self.menu_x = mouse_event.x
             self.menu_y = mouse_event.y
@@ -319,10 +320,12 @@ module Glimmer
       end
       
       def default_observation_request_to_event_mapping
+        myself = self
         mouse_event_handler = -> (event_listener) {
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
             # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
             event.define_singleton_method(:x, &event.method(:page_x))
@@ -350,6 +353,7 @@ module Glimmer
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
             # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
             event.define_singleton_method(:x, &event.method(:page_x))
@@ -374,6 +378,7 @@ module Glimmer
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
             # TODO support event.location once DOM3 is supported by opal-jquery
+            event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
             event.define_singleton_method(:x, &event.method(:page_x))
@@ -455,6 +460,7 @@ module Glimmer
               -> (event) {
                 # TODO generalize this solution to all widgets that support key presses
                 # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:widget) {myself}
                 event.define_singleton_method(:keyCode) {event.which}
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
@@ -491,6 +497,7 @@ module Glimmer
               -> (event) {
                 # TODO generalize this solution to all widgets that support key presses
                 # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:widget) {myself}
                 event.define_singleton_method(:keyCode) {event.which}
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
@@ -527,6 +534,7 @@ module Glimmer
               -> (event) {
                 # TODO generalize this solution to all widgets that support key presses
                 # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:widget) {myself}
                 event.define_singleton_method(:keyCode) {event.which}
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
@@ -563,6 +571,7 @@ module Glimmer
               -> (event) {
                 # TODO generalize this solution to all widgets that support key presses
                 # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:widget) {myself}
                 event.define_singleton_method(:keyCode) {event.which}
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
@@ -951,6 +960,7 @@ end
 require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/browser_proxy'
 require 'glimmer/swt/button_proxy'
+require 'glimmer/swt/arrow_proxy'
 require 'glimmer/swt/combo_proxy'
 require 'glimmer/swt/checkbox_proxy'
 require 'glimmer/swt/composite_proxy'

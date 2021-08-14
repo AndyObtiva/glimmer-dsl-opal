@@ -76,6 +76,10 @@ module Glimmer
         DisplayProxy.instance.shells << self
       end
       
+      def post_add_content
+        `$( document ).tooltip()`
+      end
+      
       def element
         'div'
       end

@@ -4,7 +4,7 @@ module Glimmer
   module SWT
     class TabItemProxy < CompositeProxy
       include Glimmer
-      attr_reader :text, :content_visible
+      attr_reader :text, :content_visible, :tool_tip_text
       
       def initialize(parent, args, block)
         super(parent, args, block)
@@ -31,6 +31,11 @@ module Glimmer
       def text=(value)
         @text = value
         tab_dom_element.html(@text)
+      end
+      
+      def tool_tip_text=(value)
+        @tool_tip_text = value
+        tab_dom_element.attr('title', @tool_tip_text) if !@tool_tip_text.to_s.empty?
       end
     
       def selector
@@ -64,7 +69,7 @@ module Glimmer
       # This contains the clickable tab area with tab names
       def tab_dom
         @tab_dom ||= html {
-          button(id: tab_id, class: "tab") {
+          a(href: '#', id: tab_id, class: "tab") {
             @text
           }
         }.to_s

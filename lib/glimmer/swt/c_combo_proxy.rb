@@ -25,10 +25,25 @@ require 'glimmer/swt/combo_proxy'
 module Glimmer
   module SWT
     class CComboProxy < ComboProxy
-      def render(custom_parent_dom_element: nil, brand_new: false)
-        super(custom_parent_dom_element: custom_parent_dom_element, brand_new: brand_new)
-        puts 'select menu applying...'
+      def post_add_content
         `$(#{path}).selectmenu()`
+        c_combo_dom_element.css('width', 'initial')
+      end
+      
+      def font=(value)
+        @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
+        c_combo_dom_element.css('font-family', @font.name) unless @font.nil?
+        c_combo_dom_element.css('font-style', 'italic') if @font&.style == :italic
+        c_combo_dom_element.css('font-weight', 'bold') if @font&.style == :bold
+        c_combo_dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
+      end
+      
+      def c_combo_path
+        "##{id}-button"
+      end
+      
+      def c_combo_dom_element
+        Document.find(c_combo_path)
       end
     end
   end

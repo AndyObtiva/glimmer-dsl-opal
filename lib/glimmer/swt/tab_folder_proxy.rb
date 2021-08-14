@@ -93,7 +93,7 @@ module Glimmer
         tab_folder_id = id
         tab_folder_id_style = css
         @dom ||= html {
-          div(id: tab_folder_id, style: tab_folder_id_style, class: 'tab-folder') {
+          div(id: tab_folder_id, style: tab_folder_id_style, class: name) {
             div(id: tabs_id, class: 'tabs')
           }
         }.to_s

@@ -4,7 +4,7 @@ module Glimmer
   module SWT
     class TabItemProxy < CompositeProxy
       include Glimmer
-      attr_reader :text, :content_visible, :tool_tip_text
+      attr_reader :text, :content_visible, :tool_tip_text, :image
       
       def initialize(parent, args, block)
         super(parent, args, block)
@@ -30,7 +30,15 @@ module Glimmer
     
       def text=(value)
         @text = value
-        tab_dom_element.html(@text)
+        tab_dom_element.find('span').html(@text)
+      end
+      
+      def image=(value)
+        @image = value
+        if @image.is_a?(String)
+          tab_dom_element.find('img').attr('src', @image)
+          tab_dom_element.find('img').css('padding-right', '5px')
+        end
       end
       
       def tool_tip_text=(value)
@@ -70,7 +78,8 @@ module Glimmer
       def tab_dom
         @tab_dom ||= html {
           a(href: '#', id: tab_id, class: "tab") {
-            @text
+            img {}
+            span { @text }
           }
         }.to_s
       end

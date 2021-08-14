@@ -43,6 +43,10 @@ module Glimmer
         .tabs .tab:hover {
           color: black
         }
+        .tabs .tab > * {
+          display: inline-block;
+          vertical-align: middle;
+        }
         .tabs {
           overflow: hidden;
           border: 1px solid #ccc;

@@ -165,6 +165,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Combo!](#hello-combo)
       - [Hello, Composite!](#hello-composite)
       - [Hello, Computed!](#hello-computed)
+      - [Hello, Layout!](#hello-layout)
       - [Hello, List Single Selection!](#hello-list-single-selection)
       - [Hello, List Multi Selection!](#hello-list-multi-selection)
       - [Hello, Browser!](#hello-browser)
@@ -174,11 +175,13 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Radio!](#hello-radio)
       - [Hello, Radio Group!](#hello-radio-group)
       - [Hello, Group!](#hello-group)
+      - [Hello, C Combo!](#hello-c-combo)
       - [Hello, Checkbox!](#hello-checkbox)
       - [Hello, Checkbox Group!](#hello-checkbox-group)
       - [Hello, Date Time!](#hello-date-time)
       - [Hello, Table!](#hello-table)
       - [Hello, Button!](#hello-button)
+      - [Hello, Arrow!](#hello-arrow)
       - [Hello, Message Box!](#hello-message-box)
       - [Hello, Pop Up Context Menu!](#hello-pop-up-context-menu)
       - [Hello, Menu Bar!](#hello-menu-bar)
@@ -1289,6 +1292,37 @@ Visit `http://localhost:3000`
 You should see "Hello, Group!"
 
 ![Glimmer DSL for Opal Hello Group](images/glimmer-dsl-opal-hello-group.png)
+
+#### Hello, C Combo!
+
+This is the low level way of using `c_combo`
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_c_combo'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello C Combo](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-c-combo.png)
+
+![Glimmer DSL for SWT Hello C Combo Expanded](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-c-combo-expanded.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, C Combo!"
+
+![Glimmer DSL for Opal Hello C Combo](images/glimmer-dsl-opal-hello-c-combo.png)
+
+![Glimmer DSL for Opal Hello C Combo Expanded](images/glimmer-dsl-opal-hello-c-combo-expanded.png)
 
 #### Hello, Checkbox!
 

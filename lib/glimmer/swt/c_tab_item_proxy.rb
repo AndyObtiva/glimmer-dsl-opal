@@ -24,11 +24,13 @@ require 'glimmer/swt/tab_item_proxy'
 module Glimmer
   module SWT
     class CTabItemProxy < TabItemProxy
-      attr_reader :selection_foreground
+      attr_reader :selection_foreground, :closeable
       
       def initialize(parent, args, block)
+        @closeable = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }
         super(parent, args, block)
-        # TODO do something with :close style if set
+        # TODO attach listener if :close style is set
+#         close_dom_element.on('click', method(:dispose))
       end
       
       def foreground=(value)
@@ -68,6 +70,16 @@ module Glimmer
           tab_dom_element.css('color', @old_foreground)
           @old_foreground = nil
         end
+      end
+      
+      def tab_dom
+        @tab_dom ||= html {
+          a(href: '#', id: tab_id, class: "tab") {
+            img {}
+            span { @text }
+            span(class: 'ui-icon ui-icon-close', role: 'presentation') { 'Remove Tab' } if @closeable
+          }
+        }.to_s
       end
       
     end

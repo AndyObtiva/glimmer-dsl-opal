@@ -37,6 +37,15 @@ module Glimmer
         tab_dom_element.css('color', foreground.to_css) unless foreground.nil?
       end
       
+      def selection_foreground=(value)
+        value = ColorProxy.new(value) if value.is_a?(String)
+        @selection_foreground = value
+        if @selection_foreground && tab_dom_element.has_class?('selected')
+          @old_foreground = tab_dom_element.css('color')
+          tab_dom_element.css('color', @selection_foreground.to_css)
+        end
+      end
+      
       def font=(value)
         @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
         tab_dom_element.css('font-family', @font.name) unless @font.nil?
@@ -44,6 +53,23 @@ module Glimmer
         tab_dom_element.css('font-weight', 'bold') if @font&.style == :bold || @font&.style&.to_a&.include?(:bold)
         tab_dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
+      
+      def show
+        super
+        if @selection_foreground
+          @old_foreground = tab_dom_element.css('color')
+          tab_dom_element.css('color', @selection_foreground.to_css)
+        end
+      end
+      
+      def hide
+        super
+        if @old_foreground
+          tab_dom_element.css('color', @old_foreground)
+          @old_foreground = nil
+        end
+      end
+      
     end
   end
 end

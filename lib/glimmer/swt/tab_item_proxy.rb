@@ -66,6 +66,11 @@ module Glimmer
         @tool_tip_text = value
         tab_dom_element.attr('title', @tool_tip_text) if !@tool_tip_text.to_s.empty?
       end
+      
+      def dispose
+        tab_dom_element.remove
+        super
+      end
     
       def selector
         super + '-tab'

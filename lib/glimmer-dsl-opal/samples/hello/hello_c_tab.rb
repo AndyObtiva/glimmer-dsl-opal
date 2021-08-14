@@ -31,7 +31,7 @@ class HelloCTab
       text 'Hello, C Tab!'
       minimum_size 200, 200
       
-      c_tab_folder { # accepts styles: :close, :top, :bottom, :flat, :border, :single, :multi
+      c_tab_folder {
         layout_data {
           width 1024
           height 200
@@ -40,7 +40,7 @@ class HelloCTab
           text 'English'
           tool_tip_text 'English Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/usa.png', __dir__)
           
@@ -54,7 +54,7 @@ class HelloCTab
           text 'French'
           tool_tip_text 'French Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/france.png', __dir__)
           
@@ -68,7 +68,7 @@ class HelloCTab
           text 'Spanish'
           tool_tip_text 'Spanish Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/mexico.png', __dir__)
           
@@ -82,7 +82,7 @@ class HelloCTab
           text 'German'
           tool_tip_text 'German Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/germany.png', __dir__)
 
@@ -96,7 +96,7 @@ class HelloCTab
           text 'Italian'
           tool_tip_text 'Italian Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/italy.png', __dir__)
 
@@ -110,7 +110,7 @@ class HelloCTab
           text 'Dutch'
           tool_tip_text 'Dutch Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/netherlands.png', __dir__)
 
@@ -124,7 +124,7 @@ class HelloCTab
           text 'Danish'
           tool_tip_text 'Danish Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/denmark.png', __dir__)
 
@@ -138,7 +138,7 @@ class HelloCTab
           text 'Finnish'
           tool_tip_text 'Finnish Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/finland.png', __dir__)
 
@@ -152,7 +152,7 @@ class HelloCTab
           text 'Norwegian'
           tool_tip_text 'Norwegian Greeting'
           foreground :blue
-          selection_foreground :dark_blue
+#           selection_foreground :dark_blue
           font name: 'Times New Roman', height: 30, style: [:bold, :italic]
           image File.expand_path('images/norway.png', __dir__)
 

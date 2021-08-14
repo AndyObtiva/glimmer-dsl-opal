@@ -1,5 +1,5 @@
 # Copyright (c) 2020-2021 Andy Maleh
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
 # "Software"), to deal in the Software without restriction, including
@@ -7,10 +7,10 @@
 # distribute, sublicense, and/or sell copies of the Software, and to
 # permit persons to whom the Software is furnished to do so, subject to
 # the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -20,15 +20,16 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class HelloTab
-  include Glimmer
+  include Glimmer::UI::CustomShell
   
-  def launch
+  body {
     shell {
       text 'Hello, Tab!'
       
       tab_folder {
         tab_item {
           text 'English'
+          tool_tip_text 'English Greeting'
           
           label {
             text 'Hello, World!'
@@ -37,14 +38,15 @@ class HelloTab
         
         tab_item {
           text 'French'
+          tool_tip_text 'French Greeting'
           
           label {
             text 'Bonjour, Univers!'
           }
         }
       }
-    }.open
-  end
+    }
+  }
 end
 
-HelloTab.new.launch
+HelloTab.launch

@@ -26,8 +26,8 @@ module Glimmer
     class TabFolderProxy < WidgetProxy
       STYLE = <<~CSS
         .tabs .tab.selected {
-          background: rgb(80, 116, 211);
-          color: white;
+          background: white;
+          color: black;
         }
         .tabs .tab {
           background-color: inherit;
@@ -38,6 +38,10 @@ module Glimmer
           padding: 14px 16px;
           transition: 0.3s;
           font-size: 17px;
+          text-decoration: none;
+        }
+        .tabs .tab:hover {
+          color: black
         }
         .tabs {
           overflow: hidden;

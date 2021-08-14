@@ -2,6 +2,8 @@
 
 ## 0.19.0
 
+- Change `tab_item` default background/foreground color to better match Glimmer DSL for SWT
+- Support `tab_item` `tool_tip_text` attribute
 - Implement `c_tab_folder` & `c_tab_item`
 - Hello, C Tab! sample
 

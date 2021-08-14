@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.19.0
+
+- Implement `c_tab_folder` & `c_tab_item`
+- Hello, C Tab! sample
+
 ## 0.18.0
 
 - Implement `c_combo`
@@ -27,7 +32,7 @@
 
 ## 0.16.0
 
-- Support label widget background_image attribute
+- Support `label` widget `background_image` attribute
 - Have File.expand_path support expanding paths even if they did not base off of __dir__ or __FILE__
 - Custom specification of gems having image paths via server-side configuration in Glimmer::Config.gems_having_image_paths
 

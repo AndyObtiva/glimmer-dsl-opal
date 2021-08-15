@@ -237,8 +237,8 @@ module Glimmer
       def font=(value)
         @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
         dom_element.css('font-family', @font.name) unless @font.nil?
-        dom_element.css('font-style', 'italic') if @font&.style == :italic
-        dom_element.css('font-weight', 'bold') if @font&.style == :bold
+        dom_element.css('font-style', 'italic') if @font&.style == :italic || @font&.style&.to_a&.include?(:italic)
+        dom_element.css('font-weight', 'bold') if @font&.style == :bold || @font&.style&.to_a&.include?(:bold)
         dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
       

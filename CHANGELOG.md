@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.19.1
+
+- Fix widget `font` property support for both `:bold` and `:italic` styles at the same time
+
 ## 0.19.0
 
 - Change `tab_item` default background/foreground color to better match Glimmer DSL for SWT

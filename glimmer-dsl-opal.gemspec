@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2021-08-14"
+  s.date = "2021-08-15"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -84,6 +84,15 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_table.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_table/baseball_park.png",
     "lib/glimmer-dsl-opal/samples/hello/hello_world.rb",
+    "lib/glimmer-dsl-opal/samples/hello/images/denmark.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/finland.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/france.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/germany.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/italy.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/mexico.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/netherlands.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/norway.png",
+    "lib/glimmer-dsl-opal/samples/hello/images/usa.png",
     "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/GPL-LICENSE.txt",
     "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/MIT-LICENSE.txt",
     "lib/glimmer-dsl-opal/vendor/jquery-ui-timepicker/jquery.ui.timepicker.css",
@@ -150,6 +159,8 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/browser_proxy.rb",
     "lib/glimmer/swt/button_proxy.rb",
     "lib/glimmer/swt/c_combo_proxy.rb",
+    "lib/glimmer/swt/c_tab_folder_proxy.rb",
+    "lib/glimmer/swt/c_tab_item_proxy.rb",
     "lib/glimmer/swt/checkbox_proxy.rb",
     "lib/glimmer/swt/color_proxy.rb",
     "lib/glimmer/swt/combo_proxy.rb",

@@ -176,6 +176,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Radio Group!](#hello-radio-group)
       - [Hello, Group!](#hello-group)
       - [Hello, C Combo!](#hello-c-combo)
+      - [Hello, C Tab!](#hello-c-tab)
       - [Hello, Checkbox!](#hello-checkbox)
       - [Hello, Checkbox Group!](#hello-checkbox-group)
       - [Hello, Date Time!](#hello-date-time)
@@ -348,6 +349,8 @@ Widgets:
 - `shell`: featured in [Hello, Checkbox!](#hello-checkbox) / [Hello, Button!](#hello-button) / [Hello, Table!](#hello-table) / [Hello, Tab!](#hello-tab) / [Hello, Radio Group!](#hello-radio-group) / [Hello, Radio!](#hello-radio) / [Hello, List Single Selection!](#hello-list-single-selection) / [Hello, List Multi Selection!](#hello-list-multi-selection) / [Hello, Group!](#hello-group) / [Hello, Date Time!](#hello-date-time) / [Hello, Custom Shell!](#hello-custom-shell) / [Hello, Computed!](#hello-computed) / [Hello, Combo!](#hello-combo) / [Hello, Checkbox Group!](#hello-checkbox-group) / [Contact Manager](#contact-manager) / [Tic Tac Toe](#tic-tac-toe) / [Login](#login)
 - `tab_folder`: featured in [Hello, Tab!](#hello-tab)
 - `tab_item`: featured in [Hello, Tab!](#hello-tab)
+- `c_tab_folder`: featured in [Hello, C Tab!](#hello-c-tab)
+- `c_tab_item`: featured in [Hello, C Tab!](#hello-c-tab)
 - `table`: featured in [Hello, Custom Shell!](#hello-custom-shell) / [Hello, Table!](#hello-table) / [Contact Manager](#contact-manager)
 - `table_column`: featured in [Hello, Table!](#hello-table) / [Hello, Custom Shell!](#hello-custom-shell) / [Contact Manager](#contact-manager)
 - `text`: featured in [Hello, Computed!](#hello-computed) / [Login](#login) / [Contact Manager](#contact-manager)
@@ -1323,6 +1326,37 @@ You should see "Hello, C Combo!"
 ![Glimmer DSL for Opal Hello C Combo](images/glimmer-dsl-opal-hello-c-combo.png)
 
 ![Glimmer DSL for Opal Hello C Combo Expanded](images/glimmer-dsl-opal-hello-c-combo-expanded.png)
+
+#### Hello, C Tab!
+
+This is the low level way of using `c_tab_folder`/`c_tab_item`
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_c_tab'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello C Tab](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-c-tab.png)
+
+![Glimmer DSL for SWT Hello C Tab Other Tab](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-c-tab-other-tab.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, C Tab!"
+
+![Glimmer DSL for Opal Hello C Tab](images/glimmer-dsl-opal-hello-c-tab.png)
+
+![Glimmer DSL for Opal Hello C Tab Other Tab](images/glimmer-dsl-opal-hello-c-tab-other-tab.png)
 
 #### Hello, Checkbox!
 

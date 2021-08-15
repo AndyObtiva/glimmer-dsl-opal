@@ -112,6 +112,7 @@ module Glimmer
         @parent = parent
         @args = args
         @block = block
+        # TODO consider changing children to an array (why is it a Set if order matters?)
         @children = Set.new # TODO consider moving to composite
         @enabled = true
         @data = {}

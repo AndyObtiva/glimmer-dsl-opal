@@ -30,7 +30,7 @@ module Glimmer
         @closeable = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }
         super(parent, args, block)
         # TODO attach listener if :close style is set
-#         close_dom_element.on('click', method(:dispose))
+        close_dom_element.on('click') { dispose }
       end
       
       def foreground=(value)
@@ -70,6 +70,14 @@ module Glimmer
           tab_dom_element.css('color', @old_foreground)
           @old_foreground = nil
         end
+      end
+      
+      def close_path
+        "#{tab_path} span.ui-icon-close"
+      end
+      
+      def close_dom_element
+        Document.find(close_path)
       end
       
       def tab_dom

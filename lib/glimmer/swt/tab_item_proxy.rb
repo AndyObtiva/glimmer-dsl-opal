@@ -68,8 +68,14 @@ module Glimmer
       end
       
       def dispose
+        previous_child = parent.children.to_a[[parent.children.to_a.index(self) - 1, 0].max]
         tab_dom_element.remove
         super
+        if @content_visible
+          @content_visible = false
+          parent.hide_all_tab_content
+          previous_child&.show
+        end
       end
     
       def selector

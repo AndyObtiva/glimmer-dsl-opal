@@ -54,13 +54,6 @@ module Glimmer
         }
       CSS
       
-      attr_reader :tabs
-      
-      def initialize(parent, args, block)
-        super(parent, args, block)
-        @tabs = []
-      end
-      
       def post_initialize_child(child)
         unless @children.include?(child)
           @children << child

@@ -25,6 +25,19 @@ require 'glimmer/swt/tab_folder_proxy'
 module Glimmer
   module SWT
     class CTabFolderProxy < TabFolderProxy
+      attr_reader :closeable_children
+        
+      def initialize(parent, args, block)
+        @closeable_children = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }
+        super(parent, args, block)
+      end
+          
+      def post_initialize_child(child)
+        child.closeable = true if @closeable_children
+        super(child)
+      end
     end
+    
   end
+  
 end

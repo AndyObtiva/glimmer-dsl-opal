@@ -26,10 +26,27 @@ module Glimmer
   module SWT
     class CTabFolderProxy < TabFolderProxy
       OWN_STYLE = <<~CSS
-        .extra-tabs {
+        .extra-tabs-toggle {
           float: right;
+          position: relative;
+          top: 20px;
         }
-        
+        .extra-tabs-toggle > span, .extra-tabs-toggle > sub {
+          cursor: pointer;
+        }
+        .extra-tabs {
+          position: absolute;
+          left: -130px;
+        }
+        .extra-tabs a.tab {
+          display: block;
+          float: none;
+          width: 130%;
+        }
+        .extra-tabs a.tab * {
+          display: inline-block;
+        }
+                
       CSS
       STYLE = OWN_STYLE + TabFolderProxy::STYLE
     
@@ -47,23 +64,33 @@ module Glimmer
       
       def post_add_content
         Element.find(`window`).on('resize') do |event|
-          puts tabs_dom_element
-          puts Element["##{extra_tabs_id}"]
-          puts tabs_dom_element.children
-          puts tabs_dom_element.children.map { |child| Element[child].outerWidth }
-          puts tabs_dom_element.children.map { |child| Element[child].outerWidth }.reduce(:+)
-          puts tabs_dom_element.outerWidth
-          while tabs_dom_element.children.map { |child| Element[child].outerWidth }.reduce(:+).to_i > tabs_dom_element.outerWidth.to_i
-            Element["##{extra_tabs_id}"].append tabs_dom_element.children.last.detach
-            puts tabs_dom_element.children.map { |child| Element[child].outerWidth }.reduce(:+)
-            puts tabs_dom_element.outerWidth
-          end
+          resize_tabs
         end
-        # TODO also perform the above once here
+        Element['.extra-tabs-toggle > span'].on('click') do |event|
+          Element['.extra-tabs'].toggle_class('hide')
+        end
+      end
+      
+      def render(custom_parent_dom_element: nil, brand_new: false)
+        super(custom_parent_dom_element: custom_parent_dom_element, brand_new: brand_new)
+        
+      end
+      
+      def resize_tabs
+        Element["##{extra_tabs_id}"].find('a.tab').to_a.reverse.each do |child|
+          tabs_dom_element.append child.detach
+        end
+        while children_width > c_tab_folder_width
+          Element["##{extra_tabs_id}"].append tabs_dom_element.find('a.tab').last.detach
+        end
       end
       
       def extra_tabs_id
         id + '-extra-tabs'
+      end
+      
+      def extra_tabs_toggle_id
+        id + '-extra-tabs-toggle'
       end
       
       def dom
@@ -71,14 +98,26 @@ module Glimmer
         tab_folder_id_style = css
         @dom ||= html {
           div(id: tab_folder_id, style: tab_folder_id_style, class: name) {
-            div(id: extra_tabs_id, class: 'extra-tabs') {
+            div(id: extra_tabs_toggle_id, class: 'extra-tabs-toggle') {
               span {'»'}
               sub {'3'}
+              div(id: extra_tabs_id, class: 'extra-tabs hide') {
+              }
             }
             div(id: tabs_id, class: 'tabs') {
             }
           }
         }.to_s
+      end
+      
+      private
+      
+      def c_tab_folder_width
+        tabs_dom_element.outerWidth(true).to_i
+      end
+      
+      def children_width
+        tabs_dom_element.children.map { |child| Element[child].outerWidth(true) }.reduce(:+).to_i
       end
       
     end

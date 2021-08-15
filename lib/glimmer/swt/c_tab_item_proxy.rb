@@ -24,7 +24,8 @@ require 'glimmer/swt/tab_item_proxy'
 module Glimmer
   module SWT
     class CTabItemProxy < TabItemProxy
-      attr_reader :selection_foreground, :closeable
+      attr_reader :selection_foreground
+      attr_accessor :closeable
       
       def initialize(parent, args, block)
         @closeable = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }

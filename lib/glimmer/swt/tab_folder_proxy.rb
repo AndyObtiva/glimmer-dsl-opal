@@ -57,6 +57,7 @@ module Glimmer
       def post_initialize_child(child)
         unless @children.include?(child)
           @children << child
+          child.closeable = true if @closeable_children
           tabs_dom_element.append(child.tab_dom)
           child.render
         end

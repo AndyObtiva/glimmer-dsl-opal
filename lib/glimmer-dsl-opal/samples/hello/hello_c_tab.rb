@@ -31,7 +31,7 @@ class HelloCTab
       text 'Hello, C Tab!'
       minimum_size 200, 200
       
-      c_tab_folder { # accepts styles: :close
+      c_tab_folder { # optionally accepts `:close` style argument to make all tabs closeable instead of putting it on each tab
         layout_data {
           width 1024
           height 200

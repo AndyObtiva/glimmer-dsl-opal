@@ -3,7 +3,7 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class SpinnerProxy < WidgetProxy
-      attr_reader :selection
+      attr_reader :selection, :minimum, :maximum
     
       def initialize(parent, args, block)
         super(parent, args, block)
@@ -21,6 +21,16 @@ module Glimmer
       
       def text
         self.selection.to_s
+      end
+      
+      def minimum=(value)
+        @minimum = value
+        dom_element.spinner('option', 'min', @minimum)
+      end
+      
+      def maximum=(value)
+        @maximum = value
+        dom_element.spinner('option', 'max', @maximum)
       end
       
       def element

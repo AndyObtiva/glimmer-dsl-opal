@@ -237,8 +237,8 @@ module Glimmer
       def font=(value)
         @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
         dom_element.css('font-family', @font.name) unless @font.nil?
-        dom_element.css('font-style', 'italic') if @font&.style == :italic || @font&.style&.to_a&.include?(:italic)
-        dom_element.css('font-weight', 'bold') if @font&.style == :bold || @font&.style&.to_a&.include?(:bold)
+        dom_element.css('font-style', 'italic') if @font&.style == :italic || [@font&.style].flatten.compact.include?(:italic)
+        dom_element.css('font-weight', 'bold') if @font&.style == :bold || [@font&.style].flatten.compact.include?(:bold)
         dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
       
@@ -984,6 +984,7 @@ require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
 require 'glimmer/swt/radio_proxy'
 require 'glimmer/swt/scrolled_composite_proxy'
+require 'glimmer/swt/spinner_proxy'
 require 'glimmer/swt/styled_text_proxy'
 
 require 'glimmer/dsl/opal/widget_expression'

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.20.0
+
+- Support `spinner` widget
+- Hello, Spinner! sample
+
 ## 0.19.1
 
 - Fix widget `font` property support for both `:bold` and `:italic` styles at the same time

@@ -851,6 +851,13 @@ module Glimmer
 #               }
 #             end,
 #           },
+          SpinnerProxy => {
+            :selection => lambda do |observer|
+              on_widget_selected { |selection_event|
+                observer.call(selection)
+              }
+            end
+          },
           TextProxy => {
             :text => lambda do |observer|
               on_modify_text { |modify_event|

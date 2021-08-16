@@ -3,15 +3,23 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class SpinnerProxy < WidgetProxy
-      attr_reader :text
-      
+      attr_reader :selection
+    
       def post_add_content
         dom_element.spinner
       end
 
+      def selection=(value)
+        @selection = value
+        dom_element.value = value
+      end
+      
       def text=(value)
-        @text = value
-        Document.find(path).value = value
+        self.selection = value.to_f
+      end
+      
+      def text
+        self.selection.to_s
       end
       
       def element
@@ -20,6 +28,18 @@ module Glimmer
       
       def observation_request_to_event_mapping
         {
+          'on_widget_selected' => {
+            event: 'change',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                puts 'change'
+                self.selection = event.target.value
+                puts 'self.selection'
+                puts self.selection
+                event_listener.call(event)
+              }
+            }
+          },
           'on_modify_text' => {
             event: 'keyup',
             event_handler: -> (event_listener) {

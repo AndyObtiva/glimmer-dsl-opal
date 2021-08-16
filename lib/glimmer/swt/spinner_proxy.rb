@@ -3,10 +3,11 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class SpinnerProxy < WidgetProxy
-      attr_reader :selection, :minimum, :maximum
+      attr_reader :selection, :minimum, :maximum, :increment, :page_increment
     
       def initialize(parent, args, block)
         super(parent, args, block)
+        @increment = 1
         dom_element.spinner
       end
 
@@ -31,6 +32,16 @@ module Glimmer
       def maximum=(value)
         @maximum = value
         dom_element.spinner('option', 'max', @maximum)
+      end
+      
+      def increment=(value)
+        @increment = value
+        dom_element.spinner('option', 'step', @increment)
+      end
+      
+      def page_increment=(value)
+        @page_increment = value
+        dom_element.spinner('option', 'page', @page_increment / @increment)
       end
       
       def element

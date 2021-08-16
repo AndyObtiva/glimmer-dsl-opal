@@ -28,18 +28,24 @@ module Glimmer
       
       def observation_request_to_event_mapping
         {
-          'on_widget_selected' => {
+          'on_widget_selected' => [{
             event: 'change',
             event_handler: -> (event_listener) {
               -> (event) {
-                puts 'change'
                 self.selection = event.target.value
-                puts 'self.selection'
-                puts self.selection
                 event_listener.call(event)
               }
             }
           },
+          {
+            event: 'spin',
+            event_handler: -> (event_listener) {
+              -> (event) {
+                self.selection = event.target.value
+                event_listener.call(event)
+              }
+            }
+          }],
           'on_modify_text' => {
             event: 'keyup',
             event_handler: -> (event_listener) {

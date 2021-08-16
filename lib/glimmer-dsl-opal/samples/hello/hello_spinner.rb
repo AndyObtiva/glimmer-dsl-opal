@@ -57,7 +57,7 @@ class HelloSpinner
         }
         
         spinner {
-#           digits 2 # digits after the decimal point
+          digits 2 # digits after the decimal point
           minimum 100 # minimum value (including digits after the decimal point)
           maximum 15000 # maximum value (including digits after the decimal point)
           increment 500 # increment on up and down (including digits after the decimal point)

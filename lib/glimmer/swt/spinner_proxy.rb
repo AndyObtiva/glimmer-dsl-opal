@@ -3,17 +3,26 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class SpinnerProxy < WidgetProxy
-      attr_reader :selection, :minimum, :maximum, :increment, :page_increment
+      attr_reader :minimum, :maximum, :increment, :page_increment, :digits
     
       def initialize(parent, args, block)
         super(parent, args, block)
         @increment = 1
+        @digits = 0
         dom_element.spinner
       end
 
       def selection=(value)
-        @selection = value
-        dom_element.value = value
+        if @selection.nil?
+          @selection = value.to_f / divider
+        else
+          @selection = value.to_f
+        end
+        dom_element.value = @selection
+      end
+      
+      def selection
+        @selection && @selection * divider
       end
       
       def text=(value)
@@ -25,23 +34,36 @@ module Glimmer
       end
       
       def minimum=(value)
-        @minimum = value
+        @minimum = value.to_f / divider
         dom_element.spinner('option', 'min', @minimum)
       end
       
       def maximum=(value)
-        @maximum = value
+        @maximum = value.to_f / divider
         dom_element.spinner('option', 'max', @maximum)
       end
       
       def increment=(value)
-        @increment = value
+        @increment = value.to_f / divider
+        puts '@increment'
+        puts @increment
         dom_element.spinner('option', 'step', @increment)
       end
       
       def page_increment=(value)
-        @page_increment = value
-        dom_element.spinner('option', 'page', @page_increment / @increment)
+        @page_increment = value.to_f / (@increment * divider)
+        puts '@page_increment'
+        puts @page_increment
+        dom_element.spinner('option', 'page', @page_increment)
+      end
+      
+      def divider
+        ('1' + '0'*@digits.to_i).to_f
+      end
+      
+      def digits=(value)
+        @digits = value
+        dom_element.spinner('option', 'numberFormat', "n") if @digits.to_i > 0
       end
       
       def element

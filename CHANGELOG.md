@@ -2,7 +2,7 @@
 
 ## 0.20.0
 
-- Support `spinner` widget
+- Support `spinner` widget (leaving out automatic insertion of decimal point when digits are specified)
 - Hello, Spinner! sample
 
 ## 0.19.1

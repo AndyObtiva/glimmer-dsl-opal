@@ -799,6 +799,31 @@ You should see "Hello, Arrow!"
 
 ![Glimmer DSL for Opal Hello Arrow](images/glimmer-dsl-opal-hello-arrow-item-selected.png)
 
+#### Hello, Spinner!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_spinner'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Spinner](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-spinner.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Spinner!"
+
+![Glimmer DSL for Opal Hello Spinner](images/glimmer-dsl-opal-hello-spinner.png)
+
 #### Hello, Browser!
 
 Add the following require statement to `app/assets/javascripts/application.rb`

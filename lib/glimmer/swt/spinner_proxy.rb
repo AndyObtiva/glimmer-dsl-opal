@@ -13,12 +13,19 @@ module Glimmer
       end
 
       def selection=(value)
+        old_value = @selection.to_f
         if @selection.nil?
           @selection = value.to_f / divider
         else
           @selection = value.to_f
         end
-        dom_element.value = @selection
+        # TODO do not apply digits if last change was done by keyboard not spinner
+#         if @digits.to_i > 0
+#           new_value = "%0.#{@digits.to_i}f" % @selection
+#           dom_element.value = new_value if value.to_f != old_value.to_f
+#         else
+          dom_element.value = @selection if value.to_f != old_value.to_f
+#         end
       end
       
       def selection
@@ -45,15 +52,11 @@ module Glimmer
       
       def increment=(value)
         @increment = value.to_f / divider
-        puts '@increment'
-        puts @increment
         dom_element.spinner('option', 'step', @increment)
       end
       
       def page_increment=(value)
         @page_increment = value.to_f / (@increment * divider)
-        puts '@page_increment'
-        puts @page_increment
         dom_element.spinner('option', 'page', @page_increment)
       end
       

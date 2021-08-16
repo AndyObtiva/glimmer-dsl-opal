@@ -5,7 +5,8 @@ module Glimmer
     class SpinnerProxy < WidgetProxy
       attr_reader :selection
     
-      def post_add_content
+      def initialize(parent, args, block)
+        super(parent, args, block)
         dom_element.spinner
       end
 
@@ -28,31 +29,33 @@ module Glimmer
       
       def observation_request_to_event_mapping
         {
-          'on_widget_selected' => [{
-            event: 'change',
-            event_handler: -> (event_listener) {
-              -> (event) {
-                self.selection = event.target.value
-                event_listener.call(event)
+          'on_widget_selected' => [
+            {
+              event: 'change',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  self.selection = event.target.value
+                  event_listener.call(event)
+                }
               }
-            }
-          },
-          {
-            event: 'spin',
-            event_handler: -> (event_listener) {
-              -> (event) {
-                self.selection = event.target.value
-                event_listener.call(event)
+            },
+            {
+              event: 'spinstop',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  self.selection = event.target.value
+                  event_listener.call(event)
+                }
               }
-            }
-          }],
+            },
+          ],
           'on_modify_text' => {
             event: 'keyup',
             event_handler: -> (event_listener) {
               -> (event) {
                 # TODO consider unifying this event handler with on_key_pressed by relying on its result instead of hooking another keyup event
                 if @last_key_pressed_event.nil? || @last_key_pressed_event.doit
-                  @text = event.target.value
+                  self.text = event.target.value
                   event_listener.call(event)
                 else
                   # TODO Fix doit false, it's not stopping input
@@ -69,7 +72,7 @@ module Glimmer
             event_handler: -> (event_listener) {
               -> (event) {
                 @last_key_pressed_event = event
-                @text = event.target.value
+                self.text = event.target.value
                 # TODO generalize this solution to all widgets that support key presses
                 # TODO support event.location once DOM3 is supported by opal-jquery
                 event.define_singleton_method(:keyCode) {event.which}

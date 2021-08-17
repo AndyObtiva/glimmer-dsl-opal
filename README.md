@@ -143,7 +143,7 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.22.2 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
+**Alpha Version** 0.23.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
 
 Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)
@@ -166,6 +166,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Composite!](#hello-composite)
       - [Hello, Computed!](#hello-computed)
       - [Hello, Cursor!](#hello-cursor)
+      - [Hello, Label!](#hello-label)
       - [Hello, Layout!](#hello-layout)
       - [Hello, List Single Selection!](#hello-list-single-selection)
       - [Hello, List Multi Selection!](#hello-list-multi-selection)
@@ -263,7 +264,7 @@ gem 'opal', '1.0.4'
 gem 'opal-rails', '1.1.2'
 gem 'opal-async', '~> 1.2.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.22.2'
+gem 'glimmer-dsl-opal', '~> 0.23.0'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
 gem 'glimmer-dsl-css', '~> 1.2.0', require: false
 
@@ -690,6 +691,56 @@ Visit `http://localhost:3000`
 You should see "Hello, Cursor!"
 
 ![Glimmer DSL for Opal Hello Cursor](images/glimmer-dsl-opal-hello-cursor.gif)
+
+#### Hello, Label!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_label'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-left-aligned.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-center-aligned.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-right-aligned.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-images.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-background_images.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-horizontal-separator.png)
+
+![Glimmer DSL for SWT Hello Label](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-label-vertical-separator.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Label!"
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-left-aligned.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-center-aligned.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-right-aligned.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-images.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-background_images.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-horizontal-separator.png)
+
+![Glimmer DSL for Opal Hello Label](images/glimmer-dsl-opal-hello-label-vertical-separator.png)
 
 #### Hello, Layout!
 

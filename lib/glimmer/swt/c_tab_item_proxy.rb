@@ -28,7 +28,7 @@ module Glimmer
       attr_accessor :closeable
       
       def initialize(parent, args, block)
-        @closeable = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }
+        @closeable = args.detect { |arg| SWTProxy[arg] == SWTProxy[:close] }
         super(parent, args, block)
         # TODO attach listener if :close style is set
         close_dom_element.on('click') { dispose }

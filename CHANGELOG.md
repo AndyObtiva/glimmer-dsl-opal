@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.22.2
+## 0.23.0
 
 - Hello, Label! sample
 - Support `label` `:separator` SWT style along with `:horizontal` or `:vertical`

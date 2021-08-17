@@ -25,11 +25,20 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class LabelProxy < WidgetProxy
-      attr_reader :text, :background_image, :image
+      attr_reader :text, :background_image, :image, :separator, :vertical
+      alias separator? separator
+      alias vertical? vertical
       
       def initialize(parent, args, block)
+        @separator = args.detect { |arg| SWTProxy[arg] == SWTProxy[:separator] }
+        @vertical = args.detect { |arg| SWTProxy[arg] == SWTProxy[:vertical] }
         super(parent, args, block)
       end
+      
+      def horizontal
+        !vertical
+      end
+      alias horizontal? horizontal
 
       def text=(value)
         @text = value
@@ -75,8 +84,11 @@ module Glimmer
       def dom
         label_id = id
         label_class = name
+        label_style = "text-align: #{alignment}; "
+        label_style += "border-top: 1px solid rgb(207, 207, 207); " if separator? && horizontal?
+        label_style += "border-right: 1px solid rgb(207, 207, 207); height: 100%; " if separator? && vertical?
         @dom ||= html {
-          label(id: label_id, class: label_class, style: "text-align: #{alignment};") {
+          label(id: label_id, class: label_class, style: label_style) {
             html_text
           }
         }.to_s

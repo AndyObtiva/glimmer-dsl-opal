@@ -799,6 +799,56 @@ You should see "Hello, Arrow!"
 
 ![Glimmer DSL for Opal Hello Arrow](images/glimmer-dsl-opal-hello-arrow-item-selected.png)
 
+#### Hello, Scale!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_scale'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Scale](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-scale.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Scale!"
+
+![Glimmer DSL for Opal Hello Scale](images/glimmer-dsl-opal-hello-scale.png)
+
+#### Hello, Slider!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_slider'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Slider](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-slider.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Slider!"
+
+![Glimmer DSL for Opal Hello Slider](images/glimmer-dsl-opal-hello-slider.png)
+
 #### Hello, Spinner!
 
 Add the following require statement to `app/assets/javascripts/application.rb`

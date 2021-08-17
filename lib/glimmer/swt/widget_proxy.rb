@@ -858,6 +858,13 @@ module Glimmer
               }
             end
           },
+          SliderProxy => {
+            :selection => lambda do |observer|
+              on_widget_selected { |selection_event|
+                observer.call(selection)
+              }
+            end
+          },
           SpinnerProxy => {
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|
@@ -992,6 +999,7 @@ require 'glimmer/swt/text_proxy'
 require 'glimmer/swt/radio_proxy'
 require 'glimmer/swt/scale_proxy'
 require 'glimmer/swt/scrolled_composite_proxy'
+require 'glimmer/swt/slider_proxy'
 require 'glimmer/swt/spinner_proxy'
 require 'glimmer/swt/styled_text_proxy'
 

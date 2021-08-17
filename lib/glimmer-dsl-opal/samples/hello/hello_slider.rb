@@ -19,7 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class HelloScale
+class HelloSlider
   include Glimmer::UI::CustomShell
   
   attr_accessor :value
@@ -35,15 +35,16 @@ class HelloScale
         center true
       }
       
-      text 'Hello, Scale!'
+      text 'Hello, Slider!'
       
       label(:center) {
         text <= [self, :value]
       }
       
-      scale { # optionally takes :vertical or :horizontal (default) SWT style
+      slider { # optionally takes :vertical or :horizontal (default) SWT style
         minimum 0
-        maximum 100
+        maximum 110 # leave room for 10 extra (slider stops at 100)
+        page_increment 10 # page increment occurs when clicking area between slider and beginning or end
         selection <=> [self, :value]
       }
         
@@ -52,4 +53,4 @@ class HelloScale
   }
 end
 
-HelloScale.launch
+HelloSlider.launch

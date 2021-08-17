@@ -4,6 +4,8 @@
 
 - Support `scale` widget
 - Hello, Scale!
+- Support `slider` widget
+- Hello, Slider!
 
 ## 0.20.1
 

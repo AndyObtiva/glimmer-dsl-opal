@@ -23,12 +23,13 @@ require 'glimmer/swt/widget_proxy'
 
 module Glimmer
   module SWT
-    class ScaleProxy < WidgetProxy
-      attr_reader :selection, :minimum, :maximum, :increment
+    class SliderProxy < WidgetProxy
+      attr_reader :selection, :minimum, :maximum, :page_increment
     
       def initialize(parent, args, block)
         super(parent, args, block)
         dom_element.slider
+        self.page_increment = 10 # default page increment
       end
 
       def selection=(value)
@@ -44,13 +45,14 @@ module Glimmer
       end
       
       def maximum=(value)
-        @maximum = value.to_f
+        # being compatible with slider quirk in Glimmer DSL for SWT (does not reach max yet max - 10)
+        @maximum = value.to_f - 10
         dom_element.slider('option', 'max', @maximum)
       end
       
-      def increment=(value)
-        @increment = value.to_f
-        dom_element.slider('option', 'step', @increment)
+      def page_increment=(value)
+        @page_increment = value.to_f
+        dom_element.slider('option', 'step', @page_increment)
       end
       
       def element
@@ -83,11 +85,11 @@ module Glimmer
       end
       
       def dom
-        scale_selection = @selection
-        scale_id = id
-        scale_style = css
-        scale_class = name
-        options = {type: 'text', id: scale_id, style: scale_style, class: scale_class, value: scale_selection}
+        slider_selection = @selection
+        slider_id = id
+        slider_style = css
+        slider_class = name
+        options = {type: 'text', id: slider_id, style: slider_style, class: slider_class, value: slider_selection}
         options = options.merge('disabled': 'disabled') unless @enabled
         @dom ||= html {
           div(options)

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.22.1
+
+- User Profile elaborate sample
+
 ## 0.22.0
 
 - Support widget `cursor` attribute

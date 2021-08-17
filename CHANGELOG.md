@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.21.0
+
+- Support `scale` widget
+- Hello, Scale!
+
 ## 0.20.1
 
 - Support `spinner` automatic insertion of decimal point when `digits` attribute is specified

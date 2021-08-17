@@ -851,6 +851,13 @@ module Glimmer
 #               }
 #             end,
 #           },
+          ScaleProxy => {
+            :selection => lambda do |observer|
+              on_widget_selected { |selection_event|
+                observer.call(selection)
+              }
+            end
+          },
           SpinnerProxy => {
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|
@@ -951,13 +958,6 @@ module Glimmer
 #               }
 #             end
 #           },
-#           Java::OrgEclipseSwtWidgets::Spinner => {
-#             :selection => lambda do |observer|
-#               on_widget_selected { |selection_event|
-#                 observer.call(getSelection)
-#               }
-#             end
-#           },
         }
       end
       
@@ -990,6 +990,7 @@ require 'glimmer/swt/table_item_proxy'
 require 'glimmer/swt/table_proxy'
 require 'glimmer/swt/text_proxy'
 require 'glimmer/swt/radio_proxy'
+require 'glimmer/swt/scale_proxy'
 require 'glimmer/swt/scrolled_composite_proxy'
 require 'glimmer/swt/spinner_proxy'
 require 'glimmer/swt/styled_text_proxy'

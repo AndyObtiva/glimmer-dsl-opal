@@ -37,6 +37,9 @@ module Glimmer
           height: 100%;
           margin: 0;
         }
+        * {
+          cursor: inherit;
+        }
         .shell {
           height: 100%;
           margin: 0;

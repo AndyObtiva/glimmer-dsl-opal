@@ -47,7 +47,7 @@ module Glimmer
         cross: 'crosshair',
         sizese: 'se-resize',
         ibeam: 'text',
-        arrow: 'pointer',
+        arrow: 'default',
         sizesw: 'sw-resize',
         uparrow: 'alias',
         hand: 'grab',
@@ -267,7 +267,7 @@ module Glimmer
         dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
       
-      def cursor(value)
+      def cursor=(value)
         @cursor = value
         dom_element.css('cursor', css_cursor)
       end

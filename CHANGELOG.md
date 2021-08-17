@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.22.0
+
+- Support widget `cursor` attribute
+- Hello, Cursor! sample
+
 ## 0.21.0
 
 - Support `scale` widget

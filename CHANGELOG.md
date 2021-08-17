@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.20.1
+
+- Support `spinner` automatic insertion of decimal point when `digits` attribute is specified
+
 ## 0.20.0
 
 - Support `spinner` widget (leaving out automatic insertion of decimal point when digits are specified)

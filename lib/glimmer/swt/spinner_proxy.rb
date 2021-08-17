@@ -12,21 +12,23 @@ module Glimmer
         dom_element.spinner
       end
 
-      def selection=(value)
+      def selection=(value, format_digits: true)
         old_value = @selection.to_f
         if @selection.nil?
           @selection = value.to_f / divider
         else
           @selection = value.to_f
         end
-        # TODO do not apply digits if last change was done by keyboard not spinner
-#         if @digits.to_i > 0
-#           new_value = "%0.#{@digits.to_i}f" % @selection
-#           dom_element.value = new_value if value.to_f != old_value.to_f
-#         else
-          dom_element.value = @selection if value.to_f != old_value.to_f
-#         end
+        if value.to_i != old_value.to_i
+          if format_digits && @digits.to_i > 0
+            new_value = "%0.#{@digits.to_i}f" % @selection
+            dom_element.value = new_value
+          else
+            dom_element.value = @selection if @selection != 0
+          end
+        end
       end
+      alias set_selection selection=
       
       def selection
         @selection && @selection * divider
@@ -86,10 +88,27 @@ module Glimmer
               }
             },
             {
+              event: 'keyup',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  @keyup = true # ensures spinstop event does not set selection if caused by key up entry
+                }
+              }
+            },
+            {
+              event: 'spin',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  @keyup = false
+                }
+              }
+            },
+            {
               event: 'spinstop',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  self.selection = event.target.value
+                  self.set_selection(event.target.value, format_digits: !@keyup)
+                  @keyup = false
                   event_listener.call(event)
                 }
               }

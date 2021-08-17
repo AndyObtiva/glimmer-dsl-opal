@@ -33,35 +33,22 @@ module Glimmer
 
       def text=(value)
         @text = value
-        dom_element.html(html_text) # TODO deal with issue of handling lines and escaping at the same time
+        dom_element.html(html_text) unless @image
       end
       
       def html_text
         text && CGI.escape_html(text).gsub("\n", '<br />')
       end
       
-#       def background_image=(*image_options)
-        # TODO consider if there is a difference between background_image and image in label and to have one reuse the other
-        # TODO finish implementation
-#         @background_image = Glimmer::SWT::ImageProxy.create(*image_options)
-#         dom_element.css('background-image', @background_image.image_data.dom_element.src)
-#       end
-      
-      def image=(*image_options)
-        # TODO finish implementation
-#         @image = Glimmer::SWT::ImageProxy.create(*image_options)
-#         dom_element.css('background-image', @image.image_data.dom_element.src)
-      end
-      
-      # background image
-      def background_image
-        @background_image
+      def image=(value)
+        @image = value
+        dom_element.html("<img src='#{@image}' />")
       end
       
       # background image is stretched by default
       def background_image=(value)
         @background_image = value
-        dom_element.css('background-image', "url(#{background_image})")
+        dom_element.css('background-image', "url(#{@background_image})")
         dom_element.css('background-repeat', 'no-repeat')
         dom_element.css('background-size', 'cover')
       end

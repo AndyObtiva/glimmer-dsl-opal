@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.22.2
+
+- Hello, Label! sample
+- Support `label` `:separator` SWT style along with `:horizontal` or `:vertical`
+- Support `label` `image` attribute
+
 ## 0.22.1
 
 - User Profile elaborate sample

@@ -190,8 +190,9 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Dialog!](#hello-dialog)
     - [Elaborate Samples](#elaborate-samples)
       - [Login](#login)
-      - [Tic Tac Toe](#tic-tac-toe)
       - [Contact Manager](#contact-manager)
+      - [Tic Tac Toe](#tic-tac-toe)
+      - [User Profile](#user-profile)
       - [Weather](#weather)
     - [External Samples](#external-samples)
       - [Glimmer Calculator](#glimmer-calculator)
@@ -2427,36 +2428,6 @@ You should see "Login" dialog
 ![Glimmer DSL for Opal Login Filled In](images/glimmer-dsl-opal-login-filled-in.png)
 ![Glimmer DSL for Opal Login Logged In](images/glimmer-dsl-opal-login-logged-in.png)
 
-#### Tic Tac Toe
-
-Add the following require statement to `app/assets/javascripts/application.rb`
-
-```ruby
-require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
-```
-
-```ruby
-Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
-
-![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
-![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
-![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
-
-Glimmer app on the web (using `glimmer-dsl-opal` gem):
-
-Start the Rails server:
-```
-rails s
-```
-
-Visit `http://localhost:3000`
-
-You should see "Tic Tac Toe"
-
-![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
-![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
-![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
-
 #### Contact Manager
 
 Add the following require statement to `app/assets/javascripts/application.rb`
@@ -2496,7 +2467,7 @@ rails s
 
 Visit `http://localhost:3000`
 
-You should see "Tic Tac Toe"
+You should see "Contact Manager"
 
 Glimmer DSL for Opal Contact Manager
 
@@ -2517,6 +2488,62 @@ Glimmer DSL for Opal Contact Manager Edit In Progress
 Glimmer DSL for Opal Contact Manager Edit Done
 
 ![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
+
+#### Tic Tac Toe
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/elaborate/tic_tac_toe'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Tic Tac Toe](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe.png)
+![Glimmer DSL for SWT Tic Tac Toe In Progress](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-in-progress.png)
+![Glimmer DSL for SWT Tic Tac Toe Game Over](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tic-tac-toe-game-over.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Tic Tac Toe"
+
+![Glimmer DSL for Opal Tic Tac Toe](images/glimmer-dsl-opal-tic-tac-toe.png)
+![Glimmer DSL for Opal Tic Tac Toe In Progress](images/glimmer-dsl-opal-tic-tac-toe-in-progress.png)
+![Glimmer DSL for Opal Tic Tac Toe Game Over](images/glimmer-dsl-opal-tic-tac-toe-game-over.png)
+
+#### User Profile
+
+Code: [lib/glimmer-dsl-opal/samples/elaborate/user_profile](lib/glimmer-dsl-opal/samples/elaborate/user_profile.rb)
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/elaborate/user_profile'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![User Profile](https://github.com/AMaleh/glimmer-dsl-swt/raw/master/images/glimmer-user-profile.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "User Profile"
+
+![Opal User Profile](/images/glimmer-dsl-opal-user-profile.png)
 
 #### Weather
 

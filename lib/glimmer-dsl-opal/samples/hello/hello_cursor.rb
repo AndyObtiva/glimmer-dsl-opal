@@ -19,39 +19,40 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/swt'
-require 'glimmer/swt/style_constantizable'
-
-module Glimmer
-  module SWT
-    # Proxy for org.eclipse.swt.SWT
-    #
-    # Follows the Proxy Design Pattern
-    class SWTProxy
-      include StyleConstantizable
-
-      class << self
-        def constant_source_class
-          SWT
-        end
-
-        def constant_value_none
-          SWT::NONE
-        end
-        
-        def extra_styles
-          EXTRA_STYLES
-        end
-        
-        def cursor_options
-          [:wait, :sizenwse, :appstarting, :no, :sizenesw, :sizeall, :help, :sizee, :sizewe, :sizen, :sizes, :sizew, :cross, :sizese, :ibeam, :arrow, :sizesw, :uparrow, :hand, :sizenw, :sizene, :sizens]
-        end
-      end
-      
-      EXTRA_STYLES = {
-        NO_RESIZE: self[:shell_trim, :resize!, :max!],
-        NO_SORT: -7,
-      }
-    end
+class HelloCursor
+  include Glimmer::UI::CustomShell
+  
+  attr_accessor :selected_cursor
+  
+  # This method matches the name of the :selected_cursor property by convention
+  def selected_cursor_options
+    Glimmer::SWT::SWTProxy.cursor_options
   end
+  
+  after_body do
+    observe(self, :selected_cursor) {
+      body_root.cursor = selected_cursor
+    }
+  end
+  
+  body {
+    shell {
+      grid_layout
+      
+      text 'Hello, Cursor!'
+      cursor :wait
+      
+      label {
+        text 'Please select a cursor style and see it change the mouse cursor (varies per platform):'
+        font style: :bold
+        cursor :no
+      }
+      radio_group {
+        grid_layout 5, true
+        selection <=> [self, :selected_cursor]
+      }
+    }
+  }
 end
+
+HelloCursor.launch

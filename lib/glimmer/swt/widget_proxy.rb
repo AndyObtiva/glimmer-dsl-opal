@@ -31,7 +31,32 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
-      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered
+      SWT_CURSOR_TO_CSS_CURSOR_MAP = {
+        wait: 'wait',
+        sizenwse: 'nwse-resize',
+        appstarting: 'progress',
+        no: 'no-drop',
+        sizenesw: 'nesw-resize',
+        sizeall: 'all-scroll',
+        help: 'help',
+        sizee: 'e-resize',
+        sizewe: 'ew-resize',
+        sizen: 'n-resize',
+        sizes: 's-resize',
+        sizew: 'w-resize',
+        cross: 'crosshair',
+        sizese: 'se-resize',
+        ibeam: 'text',
+        arrow: 'pointer',
+        sizesw: 'sw-resize',
+        uparrow: 'alias',
+        hand: 'grab',
+        sizenw: 'nw-resize',
+        sizene: 'ne-resize',
+        sizens: 'ns-resize',
+      }
+      
+      attr_reader :parent, :args, :path, :children, :enabled, :foreground, :background, :font, :focus, :disposed?, :rendered, :cursor
       attr_accessor :menu, :menu_requested, :menu_x, :menu_y
       alias isDisposed disposed?
       alias is_disposed disposed?
@@ -240,6 +265,11 @@ module Glimmer
         dom_element.css('font-style', 'italic') if @font&.style == :italic || [@font&.style].flatten.compact.include?(:italic)
         dom_element.css('font-weight', 'bold') if @font&.style == :bold || [@font&.style].flatten.compact.include?(:bold)
         dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
+      end
+      
+      def cursor(value)
+        @cursor = value
+        dom_element.css('cursor', css_cursor)
       end
       
       def focus=(value)
@@ -966,6 +996,12 @@ module Glimmer
 #             end
 #           },
         }
+      end
+      
+      private
+      
+      def css_cursor
+        SWT_CURSOR_TO_CSS_CURSOR_MAP[@cursor]
       end
       
     end

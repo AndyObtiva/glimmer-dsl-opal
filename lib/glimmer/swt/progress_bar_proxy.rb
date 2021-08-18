@@ -26,7 +26,8 @@ module Glimmer
     class ProgressBarProxy < WidgetProxy
       STYLE = <<~CSS
         .ui-progressbar.vertical {
-          transform: rotate(-90deg);
+          /* Not Supported */
+          /* transform: rotate(-90deg); */
         }
       CSS
       
@@ -40,6 +41,7 @@ module Glimmer
         @indeterminate = args.detect { |arg| SWTProxy[arg] == SWTProxy[:indeterminate] }
         super(parent, args, block)
         dom_element.progressbar
+        self.minimum = 0
         self.selection = false if indeterminate?
       end
       
@@ -48,14 +50,22 @@ module Glimmer
       end
       alias horizontal? horizontal
       
-      def maximum=(value)
-        @maximum = value
-        dom_element.progressbar('option', 'max', @maximum)
+      def minimum=(value)
+        @minimum = value
+        # re-update maximum and selection since they depend on minimum
+        self.maximum = @maximum if @maximum
+        self.selection = @selection if @selection
       end
       
-      def selection=(value)
-        @selection = value
-        dom_element.progressbar('option', 'value', @selection)
+      def maximum=(value)
+        @maximum = value
+        dom_element.progressbar('option', 'max', @maximum - @minimum)
+      end
+      
+      def selection=(selection_value)
+        @selection = selection_value
+        value = @selection ? (@selection - @minimum) : @selection
+        dom_element.progressbar('option', 'value', value)
       end
 
       def element

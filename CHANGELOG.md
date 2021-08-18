@@ -2,8 +2,8 @@
 
 ## 0.25.0
 
-- Support `progress_bar` widget
-- Hello, Progress Bar! sample
+- Support `progress_bar` widget without `:vertical` SWT style support
+- Hello, Progress Bar! sample without `:vertical` SWT style
 
 ## 0.24.0
 

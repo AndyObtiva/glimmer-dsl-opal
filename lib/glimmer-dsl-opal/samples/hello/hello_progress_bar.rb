@@ -90,14 +90,15 @@ class HelloProgressBar
         selection <= [@progress_model, :selection]
       }
       
-      progress_bar(:vertical) {
-        layout_data(:fill, :center, true, false) {
-          horizontal_span 4
-        }
-        minimum <= [@progress_model, :minimum]
-        maximum <= [@progress_model, :maximum]
-        selection <= [@progress_model, :selection]
-      }
+      # :vertical SWT style is unsupported for now
+#       progress_bar(:vertical) {
+#         layout_data(:fill, :center, true, false) {
+#           horizontal_span 4
+#         }
+#         minimum <= [@progress_model, :minimum]
+#         maximum <= [@progress_model, :maximum]
+#         selection <= [@progress_model, :selection]
+#       }
       
       button {
         layout_data(:fill, :center, true, false) {

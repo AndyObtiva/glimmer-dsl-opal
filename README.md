@@ -187,6 +187,8 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Arrow!](#hello-arrow)
       - [Hello, Message Box!](#hello-message-box)
       - [Hello, Pop Up Context Menu!](#hello-pop-up-context-menu)
+      - [Hello, Print!](#hello-print)
+      - [Hello, Progress Bar!](#hello-progress-bar)
       - [Hello, Menu Bar!](#hello-menu-bar)
       - [Hello, Dialog!](#hello-dialog)
     - [Elaborate Samples](#elaborate-samples)
@@ -1832,6 +1834,52 @@ You should see "Hello, Message Box!"
 
 ![Glimmer DSL for Opal Hello Message Box](images/glimmer-dsl-opal-hello-message-box.png)
 ![Glimmer DSL for Opal Hello Message Box Dialog](images/glimmer-dsl-opal-hello-message-box-dialog.png)
+
+#### Hello, Print!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_print'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Print](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-print.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Print!"
+
+#### Hello, Progress Bar!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_progress_bar'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Progress Bar](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-progress-bar.gif)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Progress Bar!"
 
 #### Hello, Pop Up Context Menu!
 

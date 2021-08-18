@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.25.0
+
+- Support `progress_bar` widget
+- Hello, Progress Bar! sample
+
 ## 0.24.0
 
 - `widget#print` method

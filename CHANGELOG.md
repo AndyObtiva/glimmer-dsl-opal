@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.25.1
+
+- Support `progress_bar` `:vertical` SWT style
+- Add `progress_bar` `:vertical` SWT style to Hello, Progress Bar!
+
 ## 0.25.0
 
 - Support `progress_bar` widget without `:vertical` SWT style support

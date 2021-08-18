@@ -26,8 +26,11 @@ module Glimmer
     class ProgressBarProxy < WidgetProxy
       STYLE = <<~CSS
         .ui-progressbar.vertical {
-          /* Not Supported */
-          /* transform: rotate(-90deg); */
+          transform: rotate(-180deg);
+          height: 140px;
+          width: 28px;
+          margin-left: auto;
+          margin-right: auto;
         }
       CSS
       
@@ -40,7 +43,8 @@ module Glimmer
         @vertical = args.detect { |arg| SWTProxy[arg] == SWTProxy[:vertical] }
         @indeterminate = args.detect { |arg| SWTProxy[arg] == SWTProxy[:indeterminate] }
         super(parent, args, block)
-        dom_element.progressbar
+        # initialize manually if vertical
+        dom_element.progressbar if horizontal?
         self.minimum = 0
         self.selection = false if indeterminate?
       end
@@ -59,26 +63,41 @@ module Glimmer
       
       def maximum=(value)
         @maximum = value
-        dom_element.progressbar('option', 'max', @maximum - @minimum)
+        if horizontal?
+          dom_element.progressbar('option', 'max', @maximum - @minimum)
+        end
       end
       
       def selection=(selection_value)
         @selection = selection_value
-        value = @selection ? (@selection - @minimum) : @selection
-        dom_element.progressbar('option', 'value', value)
+        if horizontal?
+          value = @selection ? (@selection - @minimum) : @selection
+          dom_element.progressbar('option', 'value', value)
+        else
+          value = ((@selection - @minimum) / (@maximum - @minimum)) * 100
+          selection_dom_element.css('height', "#{value}%")
+        end
       end
 
       def element
         'div'
       end
       
+      def selection_dom_element
+        dom_element.find('.ui-progressbar-value')
+      end
+      
       def dom
         progress_bar_id = id
         progress_bar_class = name
-        progress_bar_class += ' vertical' if vertical?
+        progress_bar_class += ' vertical ui-progressbar ui-corner-all ui-widget ui-widget-content' if vertical?
         progress_bar_class += ' indeterminate' if indeterminate?
         @dom ||= html {
-          div(id: progress_bar_id, class: progress_bar_class)
+          div(id: progress_bar_id, class: progress_bar_class) {
+            if vertical?
+              div(class: 'ui-progressbar-value ui-corner-left ui-widget-header', style: 'height: 0%;')
+            end
+          }
         }.to_s
       end
     end

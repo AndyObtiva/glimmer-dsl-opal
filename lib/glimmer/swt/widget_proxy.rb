@@ -241,6 +241,11 @@ module Glimmer
       def dialog_ancestor
         parents.detect {|p| p.is_a?(DialogProxy)}
       end
+      
+      def print
+        `window.print()`
+        true
+      end
 
       def enabled=(value)
         @enabled = value

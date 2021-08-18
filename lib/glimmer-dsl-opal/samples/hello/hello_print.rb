@@ -19,47 +19,40 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class HelloCombo
-  class Person
-    attr_accessor :country, :country_options
-  
-    def initialize
-      self.country_options = ['', 'Canada', 'US', 'Mexico']
-      reset_country!
-    end
-  
-    def reset_country!
-      self.country = 'Canada'
-    end
-  end
-
+class HelloPrint
   include Glimmer::UI::CustomShell
-  
-  before_body do
-    @person = Person.new
-  end
   
   body {
     shell {
-      row_layout(:vertical) {
-        fill true
-      }
-      
-      text 'Hello, Combo!'
-      
-      combo(:read_only) {
-        selection <=> [@person, :country] # also binds to country_options by convention
-      }
-      
-      button {
-        text 'Reset Selection'
+      text 'Hello, Print!'
+      @composite = composite {
+        row_layout(:vertical) {
+          fill true
+          center true
+        }
         
-        on_widget_selected do
-          @person.reset_country!
-        end
+        label(:center) {
+          text "Whatever you see inside the app composite\nwill get printed when clicking the Print button."
+          font height: 16
+        }
+         
+        button {
+          text 'Print'
+          
+          on_widget_selected do
+            # Unlike the SWT version, Opal's print always prints the entire window no matter what widget
+            # the print method is invoked from
+            unless @composite.print
+              message_box {
+                text 'Unable To Print'
+                message 'Sorry! Printing is not supported on this platform!'
+              }.open
+            end
+          end
+        }
       }
     }
   }
 end
 
-HelloCombo.launch
+HelloPrint.launch

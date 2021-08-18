@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.24.0
+
+- `widget#print` method
+- Hello, Print! sample
+
 ## 0.23.0
 
 - Hello, Label! sample

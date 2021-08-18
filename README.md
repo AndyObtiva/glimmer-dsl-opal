@@ -1881,6 +1881,8 @@ Visit `http://localhost:3000`
 
 You should see "Hello, Progress Bar!"
 
+![Glimmer DSL for Opal Hello Progress Bar](https://github.com/AndyObtiva/glimmer-dsl-opal/raw/master/images/glimmer-dsl-opal-hello-progress-bar.gif)
+
 #### Hello, Pop Up Context Menu!
 
 Add the following require statement to `app/assets/javascripts/application.rb`

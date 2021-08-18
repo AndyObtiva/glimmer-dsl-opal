@@ -262,7 +262,7 @@ Add the following to `Gemfile`:
 ```
 gem 'opal', '1.0.4'
 gem 'opal-rails', '1.1.2'
-gem 'opal-async', '~> 1.2.0'
+gem 'opal-async', '~> 1.3.0'
 gem 'opal-jquery', '~> 0.4.4'
 gem 'glimmer-dsl-opal', '~> 0.24.0'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false

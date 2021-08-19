@@ -886,24 +886,6 @@ module Glimmer
 #               }
 #             end,
 #           },
-          ComboProxy => {
-            :selection => lambda do |observer|
-              on_widget_selected do |selection_event|
-                puts 'selection'
-                puts selection
-                observer.call(selection)
-              end
-            end
-          },
-          CComboProxy => {
-            :selection => lambda do |observer|
-              on_widget_selected do |selection_event|
-                puts 'selection'
-                puts selection
-                observer.call(selection)
-              end
-            end
-          },
           ScaleProxy => {
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|

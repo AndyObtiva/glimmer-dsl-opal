@@ -19,7 +19,7 @@ module Glimmer
       
       def text=(value)
         @text = value
-        dom_element.value = value
+        dom_element.val(value)
       end
       
       def selection

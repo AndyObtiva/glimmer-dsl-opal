@@ -26,7 +26,7 @@ module Glimmer
   module SWT
     class CComboProxy < ComboProxy
       def post_add_content
-        `$(#{path}).selectmenu()`
+        dom_element.selectmenu
         c_combo_dom_element.css('width', 'initial')
       end
       
@@ -38,6 +38,11 @@ module Glimmer
         c_combo_dom_element.css('font-size', "#{@font.height}px") unless @font.nil?
       end
       
+      def text=(value)
+        super(value)
+        c_combo_text_element.text(value)
+      end
+      
       def c_combo_path
         "##{id}-button"
       end
@@ -46,27 +51,22 @@ module Glimmer
         Document.find(c_combo_path)
       end
       
+      def c_combo_text_path
+        c_combo_path + ' .ui-selectmenu-text'
+      end
+      
+      def c_combo_text_element
+        Document.find(c_combo_text_path)
+      end
+      
       def observation_request_to_event_mapping
         super.merge(
           'on_widget_selected' => [
             {
-              event: 'change',
+              event: 'selectmenuchange',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  puts 'change event.target.value'
-                  puts event.target.value
-                  self.selection = event.target.value
-                  event_listener.call(event)
-                }
-              }
-            },
-            {
-              event: 'selectmenuselect',
-              event_handler: -> (event_listener) {
-                -> (event) {
-                  puts 'selectmenuselect event.target.value'
-                  puts event.target.value
-                  self.selection = event.target.value
+                  self.text = event.target.value
                   event_listener.call(event)
                 }
               }

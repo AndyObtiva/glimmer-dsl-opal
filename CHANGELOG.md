@@ -2,8 +2,9 @@
 
 ## 0.25.3
 
-- Fix login sample by removing unnecessary require statement
-- Fix Hello, C Combo!
+- Fix `c_combo`'s data-binding of selection receiving model changes
+- Fix Hello, C Combo!'s reset button
+- Fix Login sample by removing unnecessary require statement at the top
 
 ## 0.25.2
 

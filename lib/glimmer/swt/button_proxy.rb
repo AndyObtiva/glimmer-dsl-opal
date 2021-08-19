@@ -47,6 +47,11 @@ module Glimmer
         dom_element.html(@text)
       end
       
+      def font=(value)
+        super(value)
+        dom_element.css('height', @font.height + 10) if @font&.height
+      end
+      
       def element
         'button'
       end

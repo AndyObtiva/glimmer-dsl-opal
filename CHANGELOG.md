@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.25.2
+
+- Fix sizing of buttons with font height specified to fit text
+
 ## 0.25.1
 
 - Support `progress_bar` `:vertical` SWT style

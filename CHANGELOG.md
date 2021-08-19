@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.26.0
+
+- Support `sash_form` widget
+- Hello, Sash Form! sample
+
 ## 0.25.3
 
 - Fix `c_combo`'s data-binding of selection receiving model changes

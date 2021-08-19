@@ -7,7 +7,7 @@ module Glimmer
 
       def text=(value)
         @text = value
-        Document.find(path).value = value
+        dom_element.value = value
       end
       
       def element

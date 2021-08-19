@@ -1,0 +1,46 @@
+.sashSplitter {
+  background-color: DarkGray;
+  margin: 0;
+  padding: 0;
+  cursor: move;
+}
+
+.sashSplitterh {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+.sashSplitterv {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+.sashContent1h {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.sashContent2h {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sashContent1v {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+}
+
+.sashContent2v {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

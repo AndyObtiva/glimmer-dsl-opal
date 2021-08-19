@@ -54,7 +54,7 @@ shell {
     }
 #     sash_width <=> [@presenter, :sash_width]
 #     orientation <=> [@presenter, :orientation_style]
-#     weights 1, 2
+    weights 1, 2
     
     @green_label = label {
       text 'Hello, (resize >>)'

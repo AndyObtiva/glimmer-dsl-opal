@@ -6,17 +6,17 @@ require 'glimmer/swt/combo_proxy'
 module Glimmer
   module DSL
     module Opal
-      class ComboSelectionDataBindingExpression < Expression  
+      class ComboSelectionDataBindingExpression < Expression
         def can_interpret?(parent, keyword, *args, &block)
           keyword == 'selection' and
             block.nil? and
-            parent.is_a?(Glimmer::SWT::ComboProxy) and
+            (parent.is_a?(Glimmer::SWT::ComboProxy) || parent.is_a?(Glimmer::SWT::CComboProxy)) and
             args.size == 1 and
             args[0].is_a?(DataBinding::ModelBinding) and
             args[0].evaluate_options_property.is_a?(Array)
         end
   
-        def interpret(parent, keyword, *args, &block)          
+        def interpret(parent, keyword, *args, &block)
           model_binding = args[0]
   
           #TODO make this options observer dependent and all similar observers in element specific data binding handlers

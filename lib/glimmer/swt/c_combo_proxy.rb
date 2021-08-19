@@ -45,6 +45,35 @@ module Glimmer
       def c_combo_dom_element
         Document.find(c_combo_path)
       end
+      
+      def observation_request_to_event_mapping
+        super.merge(
+          'on_widget_selected' => [
+            {
+              event: 'change',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  puts 'change event.target.value'
+                  puts event.target.value
+                  self.selection = event.target.value
+                  event_listener.call(event)
+                }
+              }
+            },
+            {
+              event: 'selectmenuselect',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  puts 'selectmenuselect event.target.value'
+                  puts event.target.value
+                  self.selection = event.target.value
+                  event_listener.call(event)
+                }
+              }
+            },
+          ],
+        )
+      end
     end
   end
   

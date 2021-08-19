@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.25.3
+
+- Fix login sample by removing unnecessary require statement
+- Fix Hello, C Combo!
+
 ## 0.25.2
 
 - Fix sizing of buttons with font height specified to fit text

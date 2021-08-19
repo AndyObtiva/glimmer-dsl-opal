@@ -19,8 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer-dsl-swt'
-
 class LoginPresenter
 
   attr_accessor :user_name
@@ -64,10 +62,10 @@ end
 
 class Login
   include Glimmer::UI::CustomShell
-  
-  before_body {
+
+  before_body do
     @presenter = LoginPresenter.new
-  }
+  end
 
   body {
     shell {

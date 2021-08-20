@@ -4,6 +4,11 @@ require 'glimmer/swt/color_proxy'
 module Glimmer
   module SWT
     class SashFormProxy < CompositeProxy
+      STYLE = <<~CSS
+        .sash-form {
+          position: relative;
+        }
+      CSS
       attr_reader :orientation, :sash_width, :weights, :maximized_control, :background
       
       def initialize(parent, args, block)
@@ -11,6 +16,7 @@ module Glimmer
         @orientation = vertical ? 'vertical' : 'horizontal'
         @sash_width = 5
         @background = ColorProxy.new(230, 230, 230).to_css
+        @ratio = 0.5
         super(parent, args, block)
       end
       
@@ -19,10 +25,14 @@ module Glimmer
         @child1 = dom_element.children.eq(0)
         @child2 = dom_element.children.eq(1)
         unless @child1.empty? || @child2.empty?
-          dom_element.sash(content1: "##{@child1.attr('id')}", content2: "##{@child2.attr('id')}", splitterColor: @background, splitterWidth: @sash_width)
-          dom_element.sash('orientation', @orientation)
-          # TODO default weights/ratio initialization
-          dom_element.sash('ratio', @ratio)
+          dom_element.sash(content1: "##{@child1.attr('id')}", content2: "##{@child2.attr('id')}", splitterColor: @background, orientation: @orientation, ratio: @ratio, width1: dom_element.outerWidth * @ratio, width2: dom_element.outerWidth * (1.0/@ratio))
+#           dom_element.sash('splitterWidth', @sash_width) # does not work TODO support in the future by amending javascript
+#           dom_element.sash('splitterColor', @background) # does not work TODO support in the future by amending javascript
+          if orientation == 'vertical'
+            sash_splitter_dom_element.css('height', @sash_width)
+          else
+            sash_splitter_dom_element.css('width', @sash_width)
+          end
           dom_element.on('sashDragged') do |event|
             self.sash_width = @sash_width # reset sash width
           end
@@ -51,7 +61,7 @@ module Glimmer
       # sets weights (in ratio to each other), assuming 2
       def weights=(*weights_array)
         @weights = weights_array
-        @ratio = @weights.first / @weights.last
+        @ratio = @weights.first.to_f / (@weights.first + @weights.last).to_f
         dom_element.sash('ratio', @ratio) if @initialized
       end
       
@@ -71,7 +81,7 @@ module Glimmer
       
       def background=(value)
         @background = value.is_a?(ColorProxy) ? value.to_css : value
-        dom_element.sash('splitterColor', @background) if @initialized
+#         dom_element.sash('splitterColor', @background) if @initialized # does not work TODO support in the future by amending javascript
       end
       
       def element

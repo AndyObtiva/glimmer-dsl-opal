@@ -27,6 +27,9 @@ module Glimmer
           end
           # TODO default weights/ratio initialization
           dom_element.sash('ratio', @ratio)
+          dom_element.on('sashDragged') do |event|
+            self.sash_width = @sash_width # reset sash width
+          end
           @initialized = true
         end
       end
@@ -35,7 +38,7 @@ module Glimmer
         vertical = SWTProxy[:vertical] == SWTProxy[value]
         @orientation = vertical ? 'vertical' : 'horizontal'
         dom_element.sash('orientation', @orientation) if @initialized
-        self.sash_width = @sash_width # re-initialize
+        self.sash_width = @sash_width # re-initialize depending on new orientation
       end
       
       def sash_width=(value)

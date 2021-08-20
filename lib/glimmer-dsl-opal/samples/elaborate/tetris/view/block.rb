@@ -19,7 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require_relative 'bevel'
+# require_relative 'bevel'
 
 class Tetris
   module View
@@ -30,9 +30,10 @@ class Tetris
   
       body {
         canvas { |canvas_proxy|
-          bevel(size: block_size) {
-            base_color <= [game_playfield[row][column], :color]
-          }
+          background <= [game_playfield[row][column], :color]
+#           bevel(size: block_size) {
+#             base_color <= [game_playfield[row][column], :color]
+#           }
         }
       }
     end

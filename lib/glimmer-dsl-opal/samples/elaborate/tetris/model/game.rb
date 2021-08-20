@@ -51,7 +51,7 @@ class Tetris
         @show_high_scores = false
         @beeping = true
         @up_arrow_action = :rotate_left
-        load_high_scores!
+#         load_high_scores!
       end
       
       def configure_beeper(&beeper)
@@ -119,9 +119,16 @@ class Tetris
       end
       
       def down!(instant: false)
+        puts 'game_in_progress?'
+        puts game_in_progress?
         return unless game_in_progress?
+        puts 'current tetromino down'
         current_tetromino.down!(instant: instant)
+        puts 'done current tetromino down'
+        puts 'current_tetromino.row <= 0 && current_tetromino.stopped?'
+        puts current_tetromino.row <= 0 && current_tetromino.stopped?
         game_over! if current_tetromino.row <= 0 && current_tetromino.stopped?
+        puts 'done down!'
       end
       
       def right!
@@ -274,8 +281,14 @@ class Tetris
             
       def playfield_remaining_heights(tetromino = nil)
         @playfield_width.times.map do |playfield_column|
+          puts 'playfield_column'
+          puts playfield_column
+          puts 'getting bottom_most_block'
           bottom_most_block = tetromino.bottom_most_block_for_column(playfield_column)
+          puts bottom_most_block
           (playfield.each_with_index.detect do |row, playfield_row|
+            puts 'row'
+            puts row
             !row[playfield_column].clear? &&
             (
               tetromino.nil? ||

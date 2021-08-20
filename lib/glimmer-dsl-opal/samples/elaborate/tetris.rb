@@ -19,8 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer-dsl-swt'
-
 require_relative 'tetris/model/game'
 
 require_relative 'tetris/view/playfield'
@@ -48,7 +46,7 @@ class Tetris
     @game = Model::Game.new(playfield_width, playfield_height)
         
     @game.configure_beeper do
-      display.beep
+#       display.beep
     end
     
     Display.app_name = 'Glimmer Tetris'
@@ -57,7 +55,9 @@ class Tetris
       on_swt_keydown { |key_event|
         case key_event.keyCode
         when swt(:arrow_down), 's'.bytes.first
-          game.down! if OS.mac?
+          puts 'down!'
+          game.down! #if OS.mac?
+          puts 'done down!'
         when swt(:arrow_up)
           case game.up_arrow_action
           when :instant_down
@@ -68,9 +68,13 @@ class Tetris
             game.rotate!(:left)
           end
         when swt(:arrow_left), 'a'.bytes.first
+          puts 'left!'
           game.left!
+          puts 'done left!'
         when swt(:arrow_right), 'd'.bytes.first
+          puts 'right!'
           game.right!
+          puts 'done right!'
         when swt(:shift), swt(:alt)
           if key_event.keyLocation == swt(:right) # right shift key
             game.rotate!(:right)
@@ -81,27 +85,28 @@ class Tetris
       }
 
       # invoke game.down! on keyup with Windows/Linux since they seem to group-render similar events, preventing intermediate renders (causing invisiblity while holding keys)
-      if !OS.mac?
+#       if !OS.mac?
         on_swt_keyup { |key_event|
           case key_event.keyCode
           when swt(:arrow_down), 's'.bytes.first
             game.down!
           end
         }
-      end
+#       end
       
       # if running in app mode, set the Mac app about dialog (ignored in platforms)
-      on_about {
-        show_about_dialog
-      }
-      
-      on_quit {
-        exit(0)
-      }
+#       on_about {
+#         show_about_dialog
+#       }
+#
+#       on_quit {
+#         exit(0)
+#       }
     }
   end
   
   after_body do
+    puts 'after_body'
     observe(@game, :game_over) do |game_over|
       if game_over
         show_high_score_dialog
@@ -116,7 +121,9 @@ class Tetris
         @high_score_dialog.close unless @high_score_dialog.nil? || @high_score_dialog.disposed? || !@high_score_dialog.visible?
       end
     end
+    puts 'start!ing game'
     @game.start!
+    puts 'done start!ing game'
   end
   
   body {
@@ -131,7 +138,7 @@ class Tetris
       
       text 'Glimmer Tetris'
       minimum_size 475, 500
-      image tetris_icon
+#       image tetris_icon
 
       tetris_menu_bar(game: game)
 
@@ -143,39 +150,54 @@ class Tetris
     }
   }
   
-  def tetris_icon
-    icon_block_size = 64
-    icon_bevel_size = icon_block_size.to_f / 25.to_f
-    icon_bevel_pixel_size = 0.16*icon_block_size.to_f
-    icon_size = 8
-    icon_pixel_size = icon_block_size * icon_size
-    image(icon_pixel_size, icon_pixel_size) {
-      icon_size.times { |row|
-        icon_size.times { |column|
-          colored = row >= 1 && column.between?(1, 6)
-          color = colored ? color(([:white] + Model::Tetromino::LETTER_COLORS.values).sample) : color(:white)
-          x = column * icon_block_size
-          y = row * icon_block_size
-          bevel(x: x, y: y, base_color: color, size: icon_block_size)
-        }
-      }
-    }
-  end
+#   def tetris_icon
+#     icon_block_size = 64
+#     icon_bevel_size = icon_block_size.to_f / 25.to_f
+#     icon_bevel_pixel_size = 0.16*icon_block_size.to_f
+#     icon_size = 8
+#     icon_pixel_size = icon_block_size * icon_size
+#     image(icon_pixel_size, icon_pixel_size) {
+#       icon_size.times { |row|
+#         icon_size.times { |column|
+#           colored = row >= 1 && column.between?(1, 6)
+#           color = colored ? color(([:white] + Model::Tetromino::LETTER_COLORS.values).sample) : color(:white)
+#           x = column * icon_block_size
+#           y = row * icon_block_size
+#           bevel(x: x, y: y, base_color: color, size: icon_block_size)
+#         }
+#       }
+#     }
+#   end
 
   def start_moving_tetrominos_down
+    puts 'creating thread'
     Thread.new do
-      @mutex.synchronize do
-        loop do
-          time = Time.now
-          sleep @game.delay
+      puts 'entered thread'
+#       @mutex.synchronize do
+#         loop do
+        puts 'entering cycle'
+        [1].cycle do |n|
+          puts 'entered cycle'
+#           time = Time.now
+          puts '@game.level'
+          puts @game.level
+          puts '@game.delay'
+          puts @game.delay
+          puts 'sleeping'
+          sleep @game.delay.to_f
+          puts 'slept'
           break if @game.game_over? || body_root.disposed?
           # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
-          sync_exec {
+#           sync_exec {
+          puts 'going down'
             @game.down! unless @game.paused?
-          }
+          puts 'done going down'
+#           }
         end
-      end
+        puts 'done with cycle'
+#       end
     end
+    puts 'done creating thread'
   end
   
   def show_high_score_dialog

@@ -52,7 +52,7 @@ shell {
     layout_data(:fill, :fill, true, true) {
       height_hint 200
     }
-#     sash_width <=> [@presenter, :sash_width]
+    sash_width <=> [@presenter, :sash_width]
     orientation <=> [@presenter, :orientation_style]
     weights 1, 2
     

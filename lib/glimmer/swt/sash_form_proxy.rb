@@ -1,15 +1,16 @@
 require 'glimmer/swt/composite_proxy'
+require 'glimmer/swt/color_proxy'
 
 module Glimmer
   module SWT
     class SashFormProxy < CompositeProxy
-      attr_reader :orientation, :sash_width, :weights, :maximized_control
-      # TODO background attribute
+      attr_reader :orientation, :sash_width, :weights, :maximized_control, :background
       
       def initialize(parent, args, block)
         vertical = args.detect { |arg| SWTProxy[:vertical] == SWTProxy[arg] }
         @orientation = vertical ? 'vertical' : 'horizontal'
         @sash_width = 5
+        @background = ColorProxy.new(230, 230, 230).to_css
         super(parent, args, block)
       end
       
@@ -18,13 +19,8 @@ module Glimmer
         @child1 = dom_element.children.eq(0)
         @child2 = dom_element.children.eq(1)
         unless @child1.empty? || @child2.empty?
-          dom_element.sash(content1: "##{@child1.attr('id')}", content2: "##{@child2.attr('id')}")
+          dom_element.sash(content1: "##{@child1.attr('id')}", content2: "##{@child2.attr('id')}", splitterColor: @background, splitterWidth: @sash_width)
           dom_element.sash('orientation', @orientation)
-          if orientation == 'vertical'
-            sash_splitter_dom_element.css('height', @sash_width)
-          else
-            sash_splitter_dom_element.css('width', @sash_width)
-          end
           # TODO default weights/ratio initialization
           dom_element.sash('ratio', @ratio)
           dom_element.on('sashDragged') do |event|
@@ -71,6 +67,11 @@ module Glimmer
           dom_element.sash('visible1', false)
           dom_element.sash('visible2', true)
         end
+      end
+      
+      def background=(value)
+        @background = value.is_a?(ColorProxy) ? value.to_css : value
+        dom_element.sash('splitterColor', @background) if @initialized
       end
       
       def element

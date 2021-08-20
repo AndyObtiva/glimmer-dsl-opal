@@ -53,7 +53,7 @@ shell {
       height_hint 200
     }
 #     sash_width <=> [@presenter, :sash_width]
-#     orientation <=> [@presenter, :orientation_style]
+    orientation <=> [@presenter, :orientation_style]
     weights 1, 2
     
     @green_label = label {
@@ -74,7 +74,7 @@ shell {
   composite {
     layout_data(:fill, :fill, true, true)
     grid_layout 2, true
-    
+
     label {
       layout_data(:right, :center, true, false)
       text 'Sash Width:'
@@ -87,7 +87,7 @@ shell {
       selection <=> [@presenter, :sash_width]
       font height: 16
     }
-    
+
     label {
       layout_data(:right, :center, true, false)
       text 'Orientation:'
@@ -100,13 +100,13 @@ shell {
       selection <=> [@presenter, :orientation]
       font height: 16
     }
-    
+
     button {
       layout_data(:fill, :center, true, false)
       text 'Maximize Green Label'
       foreground :dark_green
       font height: 16
-      
+
       on_widget_selected do
         @sash_form.maximized_control = @green_label.swt_widget
       end
@@ -116,19 +116,19 @@ shell {
       text 'Maximize Red Label'
       foreground :red
       font height: 16
-      
+
       on_widget_selected do
         @sash_form.maximized_control = @red_label.swt_widget
       end
     }
-    
+
     button {
       layout_data(:fill, :center, true, false) {
         horizontal_span 2
       }
       text 'Maximize None'
       font height: 16
-      
+
       on_widget_selected do
         @sash_form.maximized_control = nil
       end

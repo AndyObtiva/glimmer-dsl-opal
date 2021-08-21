@@ -52,7 +52,8 @@ class Tetris
     Display.app_name = 'Glimmer Tetris'
 
     display {
-      on_swt_keydown { |key_event|
+      on_swt_keydown do |key_event|
+        puts key_event.keyCode
         case key_event.keyCode
         when swt(:arrow_down), 's'.bytes.first
           puts 'down!'
@@ -82,16 +83,16 @@ class Tetris
             game.rotate!(:left)
           end
         end
-      }
+      end
 
       # invoke game.down! on keyup with Windows/Linux since they seem to group-render similar events, preventing intermediate renders (causing invisiblity while holding keys)
 #       if !OS.mac?
-        on_swt_keyup { |key_event|
+        on_swt_keyup do |key_event|
           case key_event.keyCode
           when swt(:arrow_down), 's'.bytes.first
             game.down!
           end
-        }
+        end
 #       end
       
       # if running in app mode, set the Mac app about dialog (ignored in platforms)
@@ -137,7 +138,7 @@ class Tetris
       }
       
       text 'Glimmer Tetris'
-      minimum_size 475, 500
+#       minimum_size 475, 500
 #       image tetris_icon
 
       tetris_menu_bar(game: game)
@@ -172,15 +173,18 @@ class Tetris
   def start_moving_tetrominos_down
     Thread.new do
 #       @mutex.synchronize do
-        async_loop do
-          time = Time.now
-          sleep @game.delay
-          break if @game.game_over? || body_root.disposed?
+#         async_loop do
+#           time = Time.now
+        work = lambda do
+#           sleep @game.delay
+#           break if @game.game_over? || body_root.disposed?
           # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
           sync_exec {
-            @game.down! unless @game.paused?
+            @game.down! # unless @game.paused?
           }
+          Async::Task.new(delay: @game.delay * 1000.0, &work)
         end
+        Async::Task.new(delay: @game.delay * 1000.0, &work)
 #       end
     end
   end

@@ -97,6 +97,7 @@ module Glimmer
                   end
                   event.define_singleton_method(:keyCode) {event.which}
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  # TODO support alt/ctrl/shift/command & arrow keys in keyCode
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0
@@ -135,6 +136,7 @@ module Glimmer
                   end
                   event.define_singleton_method(:keyCode) {event.which}
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  # TODO support alt/ctrl/shift/command & arrow keys in keyCode
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0

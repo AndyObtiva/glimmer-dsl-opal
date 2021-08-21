@@ -31,8 +31,10 @@ require_relative 'past_game'
 class Tetris
   module Model
     class Game
-      PLAYFIELD_WIDTH = 10
-      PLAYFIELD_HEIGHT = 20
+#       PLAYFIELD_WIDTH = 10
+#       PLAYFIELD_HEIGHT = 20
+      PLAYFIELD_WIDTH = 6
+      PLAYFIELD_HEIGHT = 8
       PREVIEW_PLAYFIELD_WIDTH = 4
       PREVIEW_PLAYFIELD_HEIGHT = 2
       SCORE_MULTIPLIER = {1 => 40, 2 => 100, 3 => 300, 4 => 1200}

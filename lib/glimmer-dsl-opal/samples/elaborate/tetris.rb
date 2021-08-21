@@ -172,15 +172,14 @@ class Tetris
   def start_moving_tetrominos_down
     Thread.new do
 #       @mutex.synchronize do
-#         loop do
-        [1].cycle do |n|
-#           time = Time.now
+        async_loop do
+          time = Time.now
           sleep @game.delay
           break if @game.game_over? || body_root.disposed?
           # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
-#           sync_exec {
+          sync_exec {
             @game.down! unless @game.paused?
-#           }
+          }
         end
 #       end
     end

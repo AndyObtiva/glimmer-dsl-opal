@@ -170,34 +170,20 @@ class Tetris
 #   end
 
   def start_moving_tetrominos_down
-    puts 'creating thread'
     Thread.new do
-      puts 'entered thread'
 #       @mutex.synchronize do
 #         loop do
-        puts 'entering cycle'
         [1].cycle do |n|
-          puts 'entered cycle'
 #           time = Time.now
-          puts '@game.level'
-          puts @game.level
-          puts '@game.delay'
-          puts @game.delay
-          puts 'sleeping'
-          sleep @game.delay.to_f
-          puts 'slept'
+          sleep @game.delay
           break if @game.game_over? || body_root.disposed?
           # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
 #           sync_exec {
-          puts 'going down'
             @game.down! unless @game.paused?
-          puts 'done going down'
 #           }
         end
-        puts 'done with cycle'
 #       end
     end
-    puts 'done creating thread'
   end
   
   def show_high_score_dialog

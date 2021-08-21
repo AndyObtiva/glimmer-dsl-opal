@@ -45,12 +45,8 @@ class Tetris
       def initialize(game)
         @game = game
         @letter = LETTER_COLORS.keys.sample
-        puts '@letter'
-        puts @letter
         @orientation = :north
         @blocks = default_blocks
-        puts '@blocks'
-        puts @blocks
         @preview = true
         new_row = 0
         new_column = (Model::Game::PREVIEW_PLAYFIELD_WIDTH - width)/2
@@ -93,67 +89,29 @@ class Tetris
       end
       
       def stopped?
-        puts 1
         return true if @stopped || @preview
-        puts 2
         playfield_remaining_heights = game.playfield_remaining_heights(self)
-        puts 3
         result = bottom_most_blocks.any? do |bottom_most_block|
           playfield_column = @column + bottom_most_block[:column_index]
           playfield_remaining_heights[playfield_column] &&
             @row + bottom_most_block[:row_index] >= playfield_remaining_heights[playfield_column] - 1
         end
-        puts 4
         if result && !game.hypothetical?
           @stopped = result
           game.consider_eliminating_lines
           @game.consider_adding_tetromino
         end
-        puts 5
         result
       end
       
       # Returns bottom-most blocks of a tetromino, which could be from multiple rows depending on shape (e.g. T)
       def bottom_most_blocks
         width.times.map do |column_index|
-          puts '@letter'
-          puts @letter
-          puts '@blocks'
-          puts @blocks
-#           puts '@blocks.reverse'
-#           puts @blocks.reverse
-#           puts '@blocks.reverse.each_with_index'
-#           puts @blocks.reverse.each_with_index
-#           puts '@blocks.reverse.each_with_index.collect {|e, i| [e, @blocks.size - 1 - i]}'
-#           puts @blocks.reverse.each_with_index.collect {|e, i| [e, @blocks.size - 1 - i]}
-          puts '@blocks.each_with_index.to_a'
-          puts @blocks.each_with_index.to_a
-          puts '@blocks.each_with_index.to_a.reverse'
-          puts @blocks.each_with_index.to_a.reverse
           row_blocks_with_row_index = @blocks.each_with_index.to_a.reverse.detect do |row_blocks, row_index|
-#           row_blocks_with_row_index = @blocks.reverse.each_with_index.map {|e, i| [e, @blocks.size - 1 - i]}.select do |row_blocks, row_index|
-            puts 'row_blocks'
-            puts row_blocks
-            puts !row_blocks[column_index].clear?
             !row_blocks[column_index].clear?
-#           end.first
           end
-          puts 'row_blocks_with_row_index'
-          puts row_blocks_with_row_index
-          puts 'row_blocks_with_row_index[0]'
-          puts row_blocks_with_row_index[0]
           bottom_most_block = row_blocks_with_row_index[0][column_index]
-          puts 'bottom_most_block'
-          puts bottom_most_block
           bottom_most_block_row = row_blocks_with_row_index[1]
-          puts 'bottom_most_block_row'
-          puts bottom_most_block_row
-          puts({
-            block: bottom_most_block,
-            row_index: bottom_most_block_row,
-            column_index: column_index
-          })
-
           {
             block: bottom_most_block,
             row_index: bottom_most_block_row,
@@ -163,10 +121,7 @@ class Tetris
       end
       
       def bottom_most_block_for_column(column)
-        puts 'bottom_most_blocks'
-        puts bottom_most_blocks
-#         bottom_most_blocks.detect {|bottom_most_block| puts 'bottom_most_block'; puts bottom_most_block; (@column + bottom_most_block[:column_index]) == column}
-        bottom_most_blocks.select {|bottom_most_block| puts 'bottom_most_block'; puts bottom_most_block; (@column + bottom_most_block[:column_index]) == column}.first
+        bottom_most_blocks.detect {|bottom_most_block| (@column + bottom_most_block[:column_index]) == column}
       end
       
       def right_blocked?
@@ -180,10 +135,9 @@ class Tetris
       # Returns right-most blocks of a tetromino, which could be from multiple columns depending on shape (e.g. T)
       def right_most_blocks
         @blocks.each_with_index.map do |row_blocks, row_index|
-#           column_block_with_column_index = row_blocks.each_with_index.to_a.reverse.detect do |column_block, column_index|
-          column_block_with_column_index = row_blocks.reverse.each_with_index.map {|e, i| [e, row_blocks.size - 1 - i]}.select do |column_block, column_index|
+          column_block_with_column_index = row_blocks.each_with_index.to_a.reverse.detect do |column_block, column_index|
             !column_block.clear?
-          end.first
+          end
           if column_block_with_column_index
             right_most_block = column_block_with_column_index[0]
             {
@@ -206,10 +160,9 @@ class Tetris
       # Returns right-most blocks of a tetromino, which could be from multiple columns depending on shape (e.g. T)
       def left_most_blocks
         @blocks.each_with_index.map do |row_blocks, row_index|
-#           column_block_with_column_index = row_blocks.each_with_index.to_a.detect do |column_block, column_index|
-          column_block_with_column_index = row_blocks.each_with_index.select do |column_block, column_index|
+          column_block_with_column_index = row_blocks.each_with_index.to_a.detect do |column_block, column_index|
             !column_block.clear?
-          end.first
+          end
           if column_block_with_column_index
             left_most_block = column_block_with_column_index[0]
             {
@@ -230,28 +183,15 @@ class Tetris
       end
       
       def down!(instant: false)
-        puts 'preview?'
-        puts preview?
-        puts 'launching' if preview?
         launch! if preview?
-        puts 'done launching' if preview?
-        puts 'stopped?'
-        puts stopped?
         unless stopped?
           block_count = 1
-          puts 'instant'
-          puts instant
           if instant
-            puts 'remaining_height_and_bottom_touching_block'
-            puts remaining_height_and_bottom_touching_block
             remaining_height, bottom_touching_block = remaining_height_and_bottom_touching_block
             block_count = remaining_height - @row
           end
           new_row = @row + block_count
-          puts new_row
-          puts 'update playfield'
           update_playfield(new_row, @column)
-          puts 'done update playfield'
         end
       end
       

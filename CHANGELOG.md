@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.25.4
+
+- Upgrade to opal-async 1.4.0 
+- Update Hello, Custom Widget! to utilize `Array#async_cycle` instead of `Array#cycle`
+
 ## 0.25.3
 
 - Fix `c_combo`'s data-binding of selection receiving model changes

@@ -12,6 +12,8 @@ Use in one of two ways:
 
 Glimmer DSL for Opal successfully reuses the entire [Glimmer](https://github.com/AndyObtiva/glimmer) core DSL engine in [Opal Ruby](https://opalrb.com/) inside a web browser, and as such inherits the full range of Glimmer desktop [data-binding](https://github.com/AndyObtiva/glimmer#data-binding) capabilities for the web (including Shine syntax using `<=>` and `<=` for bidirectional [two-way] and unidirectional [one-way] data-binding respectively).
 
+(note that auto-webification of desktop apps that involve multiple threads might involve extra changes to the code to utilize web async calls due to the async nature of transpiled JavaScript code)
+
 #### Hello, Table! Sample
 
 Code: [lib/glimmer-dsl-opal/samples/hello/hello_table.rb](lib/glimmer-dsl-opal/samples/hello/hello_table.rb)
@@ -1035,7 +1037,7 @@ Add the following require statement to `app/assets/javascripts/application.rb`
 require 'glimmer-dsl-opal/samples/hello/hello_custom_widget'
 ```
 
-Or add the Glimmer code directly if you prefer to play around with it:
+Or add the Glimmer code directly if you prefer to play around with it (note that the Opal version needs `Array#async_cycle` from the opal-async gem instead of `Array#cycle` due to the async nature of JavaScript):
 
 ```ruby
 # This class declares a `greeting_label` custom widget (by convention)
@@ -1060,7 +1062,7 @@ class GreetingLabel
     return if colors.nil?
     
     Thread.new { # imported from Glimmer DSL for SWT. In Opal, avoid Threads and sleep to avoid blocking GUI.
-      colors.cycle { |color|
+      colors.async_cycle { |color|
         async_exec {
           self.color = color
         }

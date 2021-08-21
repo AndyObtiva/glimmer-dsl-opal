@@ -41,7 +41,7 @@ class GreetingLabel
     return if colors.nil?
     
     Thread.new {
-      colors.cycle { |color|
+      colors.async_cycle { |color|
         async_exec {
           self.color = color
         }

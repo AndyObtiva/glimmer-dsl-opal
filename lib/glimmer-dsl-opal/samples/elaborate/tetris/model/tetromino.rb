@@ -30,12 +30,12 @@ class Tetris
       
       LETTER_COLORS = {
         I: :cyan,
-#         J: :blue,
-#         L: :dark_yellow,
+        J: :blue,
+        L: :dark_yellow,
         O: :yellow,
-#         S: :green,
-#         T: :magenta,
-#         Z: :red,
+        S: :green,
+        T: :magenta,
+        Z: :red,
       }
       
       attr_reader :game, :letter, :preview
@@ -49,7 +49,7 @@ class Tetris
         @blocks = default_blocks
         @preview = true
         new_row = 0
-        new_column = (Model::Game::PREVIEW_PLAYFIELD_WIDTH - width)/2
+        new_column = ((Model::Game::PREVIEW_PLAYFIELD_WIDTH - width)/2).to_i
         update_playfield(new_row, new_column)
       end
       
@@ -61,7 +61,7 @@ class Tetris
         remove_from_playfield
         @preview = false
         new_row = 1 - height
-        new_column = (game.playfield_width - width)/2
+        new_column = ((game.playfield_width - width)/2).to_i
         update_playfield(new_row, new_column)
         game.tetrominoes << self
       end
@@ -89,10 +89,6 @@ class Tetris
       end
       
       def stopped?
-#         puts '@preview'
-#         puts @preview
-#         puts '@stopped'
-#         puts @stopped
         return true if @stopped || @preview
         playfield_remaining_heights = game.playfield_remaining_heights(self)
         result = bottom_most_blocks.any? do |bottom_most_block|
@@ -100,15 +96,11 @@ class Tetris
           playfield_remaining_heights[playfield_column] &&
             @row + bottom_most_block[:row_index] >= playfield_remaining_heights[playfield_column] - 1
         end
-#         puts 'result'
-#         puts result
         if result && !game.hypothetical?
           @stopped = result
           game.consider_eliminating_lines
           @game.consider_adding_tetromino
         end
-#         puts '@stopped'
-#         puts @stopped
         result
       end
       

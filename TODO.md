@@ -8,6 +8,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Whitelist images exposed online for download
 - Support ShellProxy and DialogProxy on_swt_show, on_shell_closed and on_swt_close listeners
+- Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
 - Support exposing images to use as a composite background_image or shell image attribute as per those details:
   - glimmer-dsl-opal Rails engine server: Derive image paths from available assets by providing a controller action and route for it (glimmer_dsl_opal_image_paths)
   - Opal client: Patch File.expand_path on available server-side image paths via ajax (cached after first hit), comparing the ending of paths as like matching ./(file)/hello/hello.png vs /assets/images/hello/hello.png

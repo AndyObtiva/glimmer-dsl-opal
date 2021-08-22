@@ -40,10 +40,9 @@ class Tetris
       SCORE_MULTIPLIER = {1 => 40, 2 => 100, 3 => 300, 4 => 1200}
       
       attr_reader :playfield_width, :playfield_height
-      attr_accessor :game_over, :paused, :preview_tetromino, :lines, :score, :level, :high_scores, :beeping, :added_high_score, :show_high_scores, :up_arrow_action
+      attr_accessor :game_over, :paused, :preview_tetromino, :lines, :score, :level, :high_scores, :added_high_score, :show_high_scores, :up_arrow_action
       alias game_over? game_over
       alias paused? paused
-      alias beeping? beeping
       alias added_high_score? added_high_score
       
       def initialize(playfield_width = PLAYFIELD_WIDTH, playfield_height = PLAYFIELD_HEIGHT)
@@ -51,13 +50,8 @@ class Tetris
         @playfield_height = playfield_height
         @high_scores = []
         @show_high_scores = false
-        @beeping = true
         @up_arrow_action = :rotate_left
 #         load_high_scores!
-      end
-      
-      def configure_beeper(&beeper)
-        @beeper = beeper
       end
       
       def game_in_progress?
@@ -81,7 +75,6 @@ class Tetris
       
       def game_over!
         add_high_score!
-        beep
         self.game_over = true
       end
       
@@ -203,10 +196,6 @@ class Tetris
         [1.1 - (level.to_i * 0.1), 0.001].max
       end
       
-      def beep
-        @beeper&.call if beeping
-      end
-      
       def instant_down_on_up=(value)
         self.up_arrow_action = :instant_down if value
       end
@@ -267,7 +256,6 @@ class Tetris
           end
         end
         if eliminated_lines > 0
-          beep
           self.lines += eliminated_lines
           level_up!
           calculate_score!(eliminated_lines)

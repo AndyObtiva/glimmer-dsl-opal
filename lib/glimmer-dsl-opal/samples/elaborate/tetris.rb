@@ -42,71 +42,25 @@ class Tetris
   attr_reader :game
   
   before_body do
-    @mutex = Mutex.new
     @game = Model::Game.new(playfield_width, playfield_height)
         
-    @game.configure_beeper do
-#       display.beep
-    end
-    
     Display.app_name = 'Glimmer Tetris'
 
     display {
       on_swt_keydown do |key_event|
-        puts key_event.keyCode
         case key_event.keyCode
-        when swt(:arrow_down), 's'.bytes.first
-          puts 'down!'
-          game.down! #if OS.mac?
-          puts 'done down!'
-        when swt(:arrow_up)
-          case game.up_arrow_action
-          when :instant_down
-            game.down!(instant: true)
-          when :rotate_right
-            game.rotate!(:right)
-          when :rotate_left
-            game.rotate!(:left)
-          end
-        when swt(:arrow_left), 'a'.bytes.first
-          puts 'left!'
+        when 's'.bytes.first
+          game.down!
+        when 'a'.bytes.first
           game.left!
-          puts 'done left!'
-        when swt(:arrow_right), 'd'.bytes.first
-          puts 'right!'
+        when 'd'.bytes.first
           game.right!
-          puts 'done right!'
         when 'q'.bytes.first
           game.rotate!(:left)
         when 'e'.bytes.first
           game.rotate!(:right)
-        when swt(:shift), swt(:alt)
-          if key_event.keyLocation == swt(:right) # right shift key
-            game.rotate!(:right)
-          elsif key_event.keyLocation == swt(:left) # left shift key
-            game.rotate!(:left)
-          end
         end
       end
-
-      # invoke game.down! on keyup with Windows/Linux since they seem to group-render similar events, preventing intermediate renders (causing invisiblity while holding keys)
-#       if !OS.mac?
-        on_swt_keyup do |key_event|
-          case key_event.keyCode
-          when swt(:arrow_down), 's'.bytes.first
-            game.down!
-          end
-        end
-#       end
-      
-      # if running in app mode, set the Mac app about dialog (ignored in platforms)
-#       on_about {
-#         show_about_dialog
-#       }
-#
-#       on_quit {
-#         exit(0)
-#       }
     }
   end
   
@@ -172,21 +126,12 @@ class Tetris
 #   end
 
   def start_moving_tetrominos_down
-    Thread.new do
-#       @mutex.synchronize do
-#         async_loop do
-#           time = Time.now
-        work = lambda do
-#           sleep @game.delay
-#           break if @game.game_over? || body_root.disposed?
-          # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
-#           sync_exec {
-          @game.down! # unless @game.paused?
-#           }
-          Async::Task.new(delay: @game.delay * 1000.0, &work) unless @game.game_over? || body_root.disposed?
-        end
-        Async::Task.new(delay: @game.delay * 1000.0, &work)
-#       end
+    Async::Task.new do
+      work = lambda do
+        @game.down! # unless @game.paused?
+        Async::Task.new(delay: @game.delay * 1000.0, &work) unless @game.game_over? || body_root.disposed?
+      end
+      Async::Task.new(delay: @game.delay * 1000.0, &work)
     end
   end
   
@@ -194,7 +139,6 @@ class Tetris
     return if @high_score_dialog&.visible?
     @high_score_dialog = high_score_dialog(parent_shell: body_root, game: @game) #if @high_score_dialog.nil? || @high_score_dialog.disposed?
     @high_score_dialog.show
-#     @high_score_dialog.show(async: false) # TODO delete
   end
   
   def show_about_dialog

@@ -45,8 +45,6 @@ class Tetris
             menu_item(:check) {
               text '&Pause'
               accelerator COMMAND_KEY, :p
-#               enabled <= [game, :game_over, on_read: ->(value) { value && !game.show_high_scores }]
-#               enabled <= [game, :show_high_scores, on_read: ->(value) { value && !game.game_over }]
               enabled <= [game, :game_over, on_read: ->(value) { !value && !game.show_high_scores }]
               enabled <= [game, :show_high_scores, on_read: ->(value) { !value && !game.game_over }]
               selection <=> [game, :paused]
@@ -93,11 +91,6 @@ class Tetris
           
           menu {
             text '&Options'
-            menu_item(:check) {
-              text '&Beeping'
-              accelerator COMMAND_KEY, :b
-              selection <=> [game, :beeping]
-            }
             menu {
               text 'Up Arrow'
               menu_item(:radio) {

@@ -4,11 +4,18 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Support ShellProxy and DialogProxy on_swt_show, on_shell_closed and on_swt_close listeners
+
 ## Soon
 
-- Whitelist images exposed online for download
-- Support ShellProxy and DialogProxy on_swt_show, on_shell_closed and on_swt_close listeners
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
+- Support arrow key and alt/shift/ctrl/command keyCode values in key pressed/up/down events
+- Support key_event.key_location to distinguish between left and right alt/shift/command/ctrl buttons
+
+- Support mutation operations on File instances on server (or consider a database abstraction alternative)
+- Support building image objects on the spot with Canvas Shape DSL (consider SVG as the format)
+- Consider implementing Tetris favicon with Canvas Shape DSL
+- Whitelist images exposed online for download
 - Support exposing images to use as a composite background_image or shell image attribute as per those details:
   - glimmer-dsl-opal Rails engine server: Derive image paths from available assets by providing a controller action and route for it (glimmer_dsl_opal_image_paths)
   - Opal client: Patch File.expand_path on available server-side image paths via ajax (cached after first hit), comparing the ending of paths as like matching ./(file)/hello/hello.png vs /assets/images/hello/hello.png

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.26.0
+
+- Tetris elaborate sample
+- Support `menu_item` `selection` attribute data-binding for `:check` and `:radio` SWT styles
+
 ## 0.25.4
 
 - Upgrade to opal-async 1.4.0 

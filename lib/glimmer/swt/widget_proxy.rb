@@ -890,11 +890,11 @@ module Glimmer
             :selection => lambda do |observer|
               on_widget_selected { |selection_event|
                 # TODO look into validity of this and perhaps move toggle logic to MenuItemProxy
-                if check?
+#                 if check?
                   observer.call(!selection)
-                elsif radio?
-                  observer.call(true) # TODO test this case
-                end
+#                 elsif radio?
+#                   observer.call(true) # TODO test this case
+#                 end
               }
             end
           },

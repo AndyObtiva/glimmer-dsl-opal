@@ -111,7 +111,6 @@ class Tetris
   end
   
   after_body do
-    puts 'after_body'
     observe(@game, :game_over) do |game_over|
       if game_over
         show_high_score_dialog
@@ -126,9 +125,7 @@ class Tetris
         @high_score_dialog.close unless @high_score_dialog.nil? || @high_score_dialog.disposed? || !@high_score_dialog.visible?
       end
     end
-    puts 'start!ing game'
     @game.start!
-    puts 'done start!ing game'
   end
   
   body {
@@ -186,7 +183,7 @@ class Tetris
           sync_exec {
             @game.down! # unless @game.paused?
           }
-          Async::Task.new(delay: @game.delay * 1000.0, &work)
+          Async::Task.new(delay: @game.delay * 1000.0, &work) unless @game.game_over? || body_root.disposed?
         end
         Async::Task.new(delay: @game.delay * 1000.0, &work)
 #       end
@@ -195,11 +192,7 @@ class Tetris
   
   def show_high_score_dialog
     return if @high_score_dialog&.visible?
-    puts 'body_root'
-    puts body_root
-    @high_score_dialog = high_score_dialog(parent_shell: body_root, game: @game) if @high_score_dialog.nil? || @high_score_dialog.disposed?
-    puts 'showing high score dialog'
-    puts @high_score_dialog
+    @high_score_dialog = high_score_dialog(parent_shell: body_root, game: @game) #if @high_score_dialog.nil? || @high_score_dialog.disposed?
     @high_score_dialog.show
 #     @high_score_dialog.show(async: false) # TODO delete
   end

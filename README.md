@@ -235,7 +235,7 @@ Alternatively, web developers may directly use [Glimmer DSL for Opal](https://ru
 ## Pre-requisites
 
 - Rails 5.2: [https://github.com/rails/rails/tree/5-2-stable](https://github.com/rails/rails/tree/5-2-stable)
-- Opal 1.0.4: [https://github.com/opal/opal](https://github.com/opal/opal)
+- Opal 1.0.5: [https://github.com/opal/opal](https://github.com/opal/opal)
 - Opal-Rails 1.1.2: [https://github.com/opal/opal-rails](https://github.com/opal/opal-rails)
 - jQuery 3: [https://code.jquery.com/](https://code.jquery.com/) (jQuery 3.5.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
 - jQuery-UI 1.12: [https://code.jquery.com/](https://jqueryui.com/) (jQuery-UI 1.12.1 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
@@ -252,7 +252,7 @@ Please follow the following steps to setup.
 Install a Rails 5 gem:
 
 ```
-gem install rails -v5.2.4.4
+gem install rails -v5.2.6
 ```
 
 Start a new Rails 5 app:
@@ -264,7 +264,7 @@ rails new glimmer_app_server
 Add the following to `Gemfile`:
 
 ```
-gem 'opal', '1.0.4'
+gem 'opal', '1.0.5'
 gem 'opal-rails', '1.1.2'
 gem 'opal-async', '~> 1.4.0'
 gem 'opal-jquery', '~> 0.4.4'

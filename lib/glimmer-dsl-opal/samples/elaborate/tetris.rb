@@ -180,9 +180,9 @@ class Tetris
 #           sleep @game.delay
 #           break if @game.game_over? || body_root.disposed?
           # ensure entire game tetromino down movement happens as one GUI update event with sync_exec (to avoid flicker/stutter)
-          sync_exec {
-            @game.down! # unless @game.paused?
-          }
+#           sync_exec {
+          @game.down! # unless @game.paused?
+#           }
           Async::Task.new(delay: @game.delay * 1000.0, &work) unless @game.game_over? || body_root.disposed?
         end
         Async::Task.new(delay: @game.delay * 1000.0, &work)

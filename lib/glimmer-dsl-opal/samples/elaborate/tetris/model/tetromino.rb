@@ -58,7 +58,6 @@ class Tetris
       end
       
       def launch!
-        puts 'launch!'
         remove_from_playfield
         @preview = false
         new_row = 1 - height
@@ -90,10 +89,10 @@ class Tetris
       end
       
       def stopped?
-        puts '@preview'
-        puts @preview
-        puts '@stopped'
-        puts @stopped
+#         puts '@preview'
+#         puts @preview
+#         puts '@stopped'
+#         puts @stopped
         return true if @stopped || @preview
         playfield_remaining_heights = game.playfield_remaining_heights(self)
         result = bottom_most_blocks.any? do |bottom_most_block|
@@ -101,15 +100,15 @@ class Tetris
           playfield_remaining_heights[playfield_column] &&
             @row + bottom_most_block[:row_index] >= playfield_remaining_heights[playfield_column] - 1
         end
-        puts 'result'
-        puts result
+#         puts 'result'
+#         puts result
         if result && !game.hypothetical?
           @stopped = result
           game.consider_eliminating_lines
           @game.consider_adding_tetromino
         end
-        puts '@stopped'
-        puts @stopped
+#         puts '@stopped'
+#         puts @stopped
         result
       end
       

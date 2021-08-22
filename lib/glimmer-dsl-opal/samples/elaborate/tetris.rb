@@ -76,6 +76,10 @@ class Tetris
           puts 'right!'
           game.right!
           puts 'done right!'
+        when 'q'.bytes.first
+          game.rotate!(:left)
+        when 'e'.bytes.first
+          game.rotate!(:right)
         when swt(:shift), swt(:alt)
           if key_event.keyLocation == swt(:right) # right shift key
             game.rotate!(:right)
@@ -110,7 +114,7 @@ class Tetris
     puts 'after_body'
     observe(@game, :game_over) do |game_over|
       if game_over
-        show_high_score_dialog
+#         show_high_score_dialog
       else
         start_moving_tetrominos_down
       end

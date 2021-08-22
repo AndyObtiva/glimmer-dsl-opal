@@ -64,6 +64,7 @@ if RUBY_ENGINE == 'opal'
   require 'promise'
  
   require 'facets/hash/symbolize_keys'
+  require 'facets/string/underscore'
   require 'glimmer-dsl-opal/ext/class'
   require 'glimmer-dsl-opal/ext/file'
   require 'glimmer'

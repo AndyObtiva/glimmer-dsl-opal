@@ -19,12 +19,13 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/swt/widget_proxy'
 require 'glimmer/swt/display_proxy'
+require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/shell_proxy'
 
 module Glimmer
   module SWT
-    class DialogProxy < CompositeProxy
+    class DialogProxy < ShellProxy
       STYLE = <<~CSS
         .ui-dialog .ui-dialog-content {
           background: rgb(235, 235, 235);
@@ -86,10 +87,15 @@ module Glimmer
         @open
       end
       
-      def open
+      def open(async: true)
         owned_proc = Glimmer::Util::ProcTracker.new(owner: self, invoked_from: :open) {
+          puts 'shell'
+          puts shell
+          puts 'shell.open?'
+          puts shell.open?
           shell.open(async: false) unless shell.open?
           unless @init
+            puts 'init dialog'
             dom_element.remove_class('hide')
             dom_element.dialog('auto_open' => false)
             @init = true
@@ -110,11 +116,16 @@ module Glimmer
               end
             end
           else
+            puts 'opening dom dialog'
             dom_element.dialog('open')
           end
           @open = true
         }
-        DisplayProxy.instance.async_exec(owned_proc)
+        if async
+          DisplayProxy.instance.async_exec(owned_proc)
+        else
+          owned_proc.call
+        end
       end
       
       def hide

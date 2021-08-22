@@ -177,6 +177,7 @@ module Glimmer
           work.call
         end
       end
+      alias show open
       
       def hide
         dom_element.add_class('hide')
@@ -191,6 +192,19 @@ module Glimmer
       
       def open?
         @open
+      end
+      
+      def visible
+        @open
+      end
+      alias visible? visible
+      
+      def visible=(value)
+        if value
+          show(async: false)
+        else
+          hide
+        end
       end
     end
   end

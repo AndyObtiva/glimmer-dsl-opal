@@ -114,7 +114,7 @@ class Tetris
     puts 'after_body'
     observe(@game, :game_over) do |game_over|
       if game_over
-#         show_high_score_dialog
+        show_high_score_dialog
       else
         start_moving_tetrominos_down
       end
@@ -195,8 +195,13 @@ class Tetris
   
   def show_high_score_dialog
     return if @high_score_dialog&.visible?
+    puts 'body_root'
+    puts body_root
     @high_score_dialog = high_score_dialog(parent_shell: body_root, game: @game) if @high_score_dialog.nil? || @high_score_dialog.disposed?
+    puts 'showing high score dialog'
+    puts @high_score_dialog
     @high_score_dialog.show
+#     @high_score_dialog.show(async: false) # TODO delete
   end
   
   def show_about_dialog

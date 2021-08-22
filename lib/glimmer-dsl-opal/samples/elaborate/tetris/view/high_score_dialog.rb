@@ -88,7 +88,7 @@ class Tetris
             game.paused = true
             if game.game_over? && game.added_high_score?
               game.added_high_score = false
-              game.save_high_scores!
+#               game.save_high_scores!
               @high_score_table.edit_table_item(
                 @high_score_table.items.first, # row item
                 0, # column

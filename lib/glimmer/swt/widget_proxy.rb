@@ -140,7 +140,6 @@ module Glimmer
         # TODO consider changing children to an array (why is it a Set if order matters?)
         @children = Set.new # TODO consider moving to composite
         @enabled = true
-        @data = {}
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self).to_s.to_sym]&.call(self)
         @parent.post_initialize_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
       end
@@ -172,17 +171,21 @@ module Glimmer
         end
       end
       
-      def set_data(key=nil, value)
-        @data[key] = value
+      def set_data(key = nil, value)
+        swt_data[key] = value
       end
       alias setData set_data
       alias data= set_data
       
-      def get_data(key=nil)
-        @data[key]
+      def get_data(key = nil)
+        swt_data[key]
       end
       alias getData get_data
       alias data get_data
+      
+      def swt_data
+        @swt_data ||= {}
+      end
       
       def css_classes
         dom_element.attr('class').to_s.split

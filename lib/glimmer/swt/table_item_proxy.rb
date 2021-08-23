@@ -59,26 +59,6 @@ module Glimmer
         @text_array ||= []
       end
 
-      def get_data(key = nil)
-        if key.nil?
-          @data
-        else
-          data_hash[key]
-        end
-      end
-      
-      def set_data(key = nil, data_value)
-        if key.nil?
-          @data = data_value
-        else
-          data_hash[key] = data_value
-        end
-      end
-      
-      def data_hash
-        @data_hash ||= {}
-      end
-      
       def parent_path
         parent.items_path
       end

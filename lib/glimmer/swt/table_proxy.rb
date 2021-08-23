@@ -61,6 +61,10 @@ module Glimmer
                   on_focus_lost {
                     table_proxy.finish_edit!
                   }
+                  on_modify_text do |event|
+                    # No Op, just record @text changes on key up
+                    # TODO find a better solution than this in the future
+                  end
                   on_key_pressed { |key_event|
                     if key_event.keyCode == swt(:cr)
                       table_proxy.finish_edit!

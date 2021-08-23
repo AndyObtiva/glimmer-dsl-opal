@@ -174,13 +174,21 @@ module Glimmer
       end
       
       def set_data(key = nil, value)
-        swt_data[key] = value
+        if key.nil?
+          @data = value
+        else
+          swt_data[key] = value
+        end
       end
       alias setData set_data
       alias data= set_data
       
       def get_data(key = nil)
-        swt_data[key]
+        if key.nil?
+          @data
+        else
+          swt_data[key]
+        end
       end
       alias getData get_data
       alias data get_data

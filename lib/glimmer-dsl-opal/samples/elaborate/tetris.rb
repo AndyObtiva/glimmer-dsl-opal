@@ -158,7 +158,7 @@ class Tetris
   def show_about_dialog
     message_box {
       text 'Glimmer Tetris'
-      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nCopyright (c) 2007-2021 Andy Maleh"
+      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\n\n for Left, Down, Right, Up\n\nCopyright (c) 2007-2021 Andy Maleh"
     }.open
   end
 end

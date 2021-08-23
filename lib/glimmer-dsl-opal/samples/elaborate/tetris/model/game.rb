@@ -84,24 +84,6 @@ class Tetris
         high_scores.prepend(PastGame.new("Player #{high_scores.count + 1}", score, lines, level))
       end
       
-      def save_high_scores!
-        high_score_file_content = @high_scores.map {|past_game| past_game.to_a.join("\t") }.join("\n")
-        FileUtils.mkdir_p(tetris_dir)
-        File.write(tetris_high_score_file, high_score_file_content)
-      rescue => e
-        # Fail safely by keeping high scores in memory if unable to access disk
-        Glimmer::Config.logger.error {"Failed to save high scores in: #{tetris_high_score_file}\n#{e.full_message}"}
-      end
-      
-      def load_high_scores!
-        if File.exist?(tetris_high_score_file)
-          self.high_scores = File.read(tetris_high_score_file).split("\n").map {|line| PastGame.new(*line.split("\t")) }
-        end
-      rescue => e
-        # Fail safely by keeping high scores in memory if unable to access disk
-        Glimmer::Config.logger.error {"Failed to load high scores from: #{tetris_high_score_file}\n#{e.full_message}"}
-      end
-      
       def tetris_dir
         @tetris_dir ||= File.join(File.expand_path('~'), '.glimmer-tetris')
       end

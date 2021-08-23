@@ -92,7 +92,7 @@ class Tetris
           menu {
             text '&Options'
             menu {
-              text 'Up Arrow'
+              text 'Up Action'
               menu_item(:radio) {
                 text '&Instant Down'
                 accelerator COMMAND_KEY, :shift, :i

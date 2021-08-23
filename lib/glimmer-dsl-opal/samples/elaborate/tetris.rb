@@ -49,6 +49,15 @@ class Tetris
     display {
       on_swt_keydown do |key_event|
         case key_event.keyCode
+        when 'w'.bytes.first
+          case game.up_arrow_action
+          when :instant_down
+            game.down!(instant: true)
+          when :rotate_right
+            game.rotate!(:right)
+          when :rotate_left
+            game.rotate!(:left)
+          end
         when 's'.bytes.first
           game.down!
         when 'a'.bytes.first

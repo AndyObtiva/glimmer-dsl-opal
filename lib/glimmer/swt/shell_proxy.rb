@@ -79,7 +79,7 @@ module Glimmer
         self.minimum_size = Point.new(WIDTH_MIN, HEIGHT_MIN)
         DisplayProxy.instance.shells << self
       end
-      
+              
       def post_add_content
         `$( document ).tooltip()`
       end
@@ -129,6 +129,16 @@ module Glimmer
         dom_element.css('min-height', "#{@minimum_size.y}px")
       end
       
+      def handle_observation_request(keyword, original_event_listener)
+        case keyword
+        when 'on_swt_show', 'on_swt_close', 'on_shell_closed'
+          keyword = 'on_swt_close' if keyword == 'on_shell_closed'
+          listeners_for(keyword.sub(/^on_/, '')) << original_event_listener.to_proc
+        else
+          super(keyword, original_event_listener)
+        end
+      end
+      
       def style_dom_css
         <<~CSS
           .hide {
@@ -170,6 +180,7 @@ module Glimmer
             DisplayProxy.instance.shells.select(&:open?).reject {|s| s == self}.map(&:hide)
             dom_element.remove_class('hide')
             @open = true
+            listeners_for('swt_show').each {|listener| listener.call(Event.new(widget: self))}
           end
         end
         if async
@@ -189,6 +200,7 @@ module Glimmer
         DisplayProxy.instance.shells.delete(self)
         dom_element.remove
         @open = false
+        listeners_for('swt_close').each {|listener| listener.call(Event.new(widget: self))}
       end
       
       def open?

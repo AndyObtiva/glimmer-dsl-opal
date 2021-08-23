@@ -31,6 +31,8 @@ module Glimmer
       include Glimmer
       include PropertyOwner
       
+      Event = Struct.new(:widget, keyword_init: true)
+      
       SWT_CURSOR_TO_CSS_CURSOR_MAP = {
         wait: 'wait',
         sizenwse: 'nwse-resize',
@@ -195,9 +197,9 @@ module Glimmer
         remove_all_listeners
         Document.find(path).remove
         parent&.post_dispose_child(self)
-        # TODO fire on_widget_disposed listener
 #         children.each(:dispose) # TODO enable this safely
         @disposed = true
+        listeners_for('widget_disposed').each {|listener| listener.call(Event.new(widget: self))}
       end
       
       def remove_all_listeners
@@ -736,6 +738,14 @@ module Glimmer
         @event_handling_suspended
       end
       
+      def listeners
+        @listeners ||= {}
+      end
+      
+      def listeners_for(listener_event)
+        listeners[listener_event.to_s] ||= []
+      end
+      
       def can_handle_observation_request?(observation_request)
         # TODO sort this out for Opal
         observation_request = observation_request.to_s
@@ -750,6 +760,15 @@ module Glimmer
       end
       
       def handle_observation_request(keyword, original_event_listener)
+        case keyword
+        when 'on_widget_disposed'
+          listeners_for(keyword.sub(/^on_/, '')) << original_event_listener.to_proc
+        else
+          handle_javascript_observation_request(keyword, original_event_listener)
+        end
+      end
+      
+      def handle_javascript_observation_request(keyword, original_event_listener)
         return unless effective_observation_request_to_event_mapping.keys.include?(keyword)
         event = nil
         delegate = nil

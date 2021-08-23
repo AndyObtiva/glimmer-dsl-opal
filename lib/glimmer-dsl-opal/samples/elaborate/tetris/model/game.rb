@@ -31,8 +31,6 @@ require_relative 'past_game'
 class Tetris
   module Model
     class Game
-#       PLAYFIELD_WIDTH = 10
-#       PLAYFIELD_HEIGHT = 20
       PLAYFIELD_WIDTH = 10
       PLAYFIELD_HEIGHT = 20
       PREVIEW_PLAYFIELD_WIDTH = 4
@@ -51,7 +49,6 @@ class Tetris
         @high_scores = []
         @show_high_scores = false
         @up_arrow_action = :rotate_left
-#         load_high_scores!
       end
       
       def game_in_progress?

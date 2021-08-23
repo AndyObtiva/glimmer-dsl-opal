@@ -58,7 +58,6 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/model/game.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/model/past_game.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/model/tetromino.rb",
-    "lib/glimmer-dsl-opal/samples/elaborate/tetris/view/bevel.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/view/block.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/view/high_score_dialog.rb",
     "lib/glimmer-dsl-opal/samples/elaborate/tetris/view/playfield.rb",

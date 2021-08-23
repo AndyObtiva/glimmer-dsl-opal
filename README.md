@@ -196,6 +196,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
     - [Elaborate Samples](#elaborate-samples)
       - [Login](#login)
       - [Contact Manager](#contact-manager)
+      - [Tetris](#tetris)
       - [Tic Tac Toe](#tic-tac-toe)
       - [User Profile](#user-profile)
       - [Weather](#weather)
@@ -2583,6 +2584,40 @@ Glimmer DSL for Opal Contact Manager Edit In Progress
 Glimmer DSL for Opal Contact Manager Edit Done
 
 ![Glimmer DSL for Opal Contact Manager Edit Done](images/glimmer-dsl-opal-contact-manager-edit-done.png)
+
+#### Tetris
+
+This is a minimal initial version of the [Tetris seen in Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_SAMPLES.md#glimmer-tetris).
+
+Note that while the Glimmer GUI DSL code is mostly the same, some of the behavioral code around threads is changed
+into async Opal code via the [opal-async](https://github.com/AndyObtiva/opal-async) gem due to the async nature of transpiled JavaScript.
+
+Still, this sample has done the remarkable feat of reusing all of the Tetris model/view logic from Glimmer DSL for SWT mostly unchanged.
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/elaborate/tetris'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Tetris](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-tetris.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Tetris" (a minimal version of the one in Glimmer DSL for SWT)
+
+![Glimmer DSL for Opal Tetris](images/glimmer-dsl-opal-tetris.png)
+
+![Glimmer DSL for Opal Tetris Video](images/glimmer-dsl-opal-tetris.gif)
 
 #### Tic Tac Toe
 

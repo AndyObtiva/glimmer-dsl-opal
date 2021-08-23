@@ -2,7 +2,7 @@
 
 ## 0.26.0
 
-- Tetris elaborate sample
+- Tetris elaborate sample (minimal initial version of the one in Glimmer DSL for SWT)
 - Support `menu_item` `selection` attribute data-binding for `:check` and `:radio` SWT styles
 - Set 'custom_shell' data for custom shell on its body_root
 - Provide parent_proxy on custom widgets as an alternative to parent for compatibility with Glimmer DSL for SWT
@@ -10,7 +10,7 @@
 
 ## 0.25.4
 
-- Upgrade to opal-async 1.4.0 
+- Upgrade to opal-async 1.4.0
 - Update Hello, Custom Widget! to utilize `Array#async_cycle` instead of `Array#cycle`
 
 ## 0.25.3

@@ -30,7 +30,7 @@ require_relative 'tetris/view/tetris_menu_bar'
 class Tetris
   include Glimmer::UI::CustomShell
   
-  BLOCK_SIZE = 25
+  BLOCK_SIZE = 7
   FONT_NAME = 'Menlo'
   FONT_TITLE_HEIGHT = 32
   FONT_TITLE_STYLE = :bold
@@ -95,10 +95,15 @@ class Tetris
       text 'Glimmer Tetris'
 #       minimum_size 475, 500
 #       image tetris_icon
+      background rgb(236, 236, 236)
 
       tetris_menu_bar(game: game)
 
-      playfield(game_playfield: game.playfield, playfield_width: playfield_width, playfield_height: playfield_height, block_size: BLOCK_SIZE)
+      playfield(game_playfield: game.playfield, playfield_width: playfield_width, playfield_height: playfield_height, block_size: BLOCK_SIZE) {
+        layout_data {
+          width_hint 370
+        }
+      }
 
       score_lane(game: game, block_size: BLOCK_SIZE) {
         layout_data(:fill, :fill, true, true)

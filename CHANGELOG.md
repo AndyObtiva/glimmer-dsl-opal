@@ -4,6 +4,9 @@
 
 - Tetris elaborate sample
 - Support `menu_item` `selection` attribute data-binding for `:check` and `:radio` SWT styles
+- Set 'custom_shell' data for custom shell on its body_root
+- Provide parent_proxy on custom widgets as an alternative to parent for compatibility with Glimmer DSL for SWT
+- Have custom widgets derive their parent from body root if not passed in explicitly
 
 ## 0.25.4
 

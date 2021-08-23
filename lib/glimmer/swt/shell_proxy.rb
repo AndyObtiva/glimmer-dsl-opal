@@ -69,12 +69,14 @@ module Glimmer
       HEIGHT_MIN = 0
       
       def initialize(args)
+        # TODO set parent
         @args = args
         @children = []
         render # TODO attach to specific element
         @layout = FillLayoutProxy.new(self, [])
         @layout.margin_width = 0
         @layout.margin_height = 0
+        @data = {}
         self.minimum_size = Point.new(WIDTH_MIN, HEIGHT_MIN)
         DisplayProxy.instance.shells << self
       end

@@ -67,6 +67,8 @@ module Glimmer
       
       def initialize(parent, args, options, &content)
         super(parent, args, options, &content)
+        body_root.set_data('custom_shell', self)
+        body_root.set_data('custom_window', self)
         raise Error, 'Invalid custom shell body root! Must be a shell or another custom shell.' unless body_root.is_a?(Glimmer::SWT::ShellProxy) || body_root.is_a?(Glimmer::UI::CustomShell)
       end
 

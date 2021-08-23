@@ -158,6 +158,7 @@ module Glimmer
       
 
       attr_reader :body_root, :parent, :options, :swt_style
+      alias parent_proxy parent
 
       def initialize(parent, args, options, &content)
         @parent = parent
@@ -177,6 +178,7 @@ module Glimmer
         body_block = self.class.instance_variable_get("@body_block")
         raise Glimmer::Error, 'Invalid custom widget for having no body! Please define body block!' if body_block.nil?
         @body_root = instance_exec(&body_block)
+        @parent ||= @body_root.parent
         raise Glimmer::Error, 'Invalid custom widget for having an empty body! Please fill body block!' if @body_root.nil?
         execute_hooks('after_body')
       end

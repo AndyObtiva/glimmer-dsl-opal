@@ -25,7 +25,11 @@ require_relative 'tetris/view/playfield'
 require_relative 'tetris/view/score_lane'
 require_relative 'tetris/view/high_score_dialog'
 require_relative 'tetris/view/tetris_menu_bar'
-
+class Event
+  def location
+    `#@native.location`
+  end
+end
 class Tetris
   include Glimmer::UI::CustomShell
   
@@ -66,6 +70,8 @@ class Tetris
         when 'q'.bytes.first
           game.rotate!(:left)
         when 'e'.bytes.first
+          game.rotate!(:right)
+        when swt(:shift), swt(:alt)
           game.rotate!(:right)
         end
       end

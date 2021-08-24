@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.26.1
+
+- Support display on_swt_keydown event keyCode/key_code values for arrow keys and alt/shift/ctrl
+- Use arrow keys for movement in Tetris
+- Use alt/shift keys for rotate right in Tetris
+
 ## 0.26.0
 
 - Tetris elaborate sample (minimal initial version of the one in Glimmer DSL for SWT)

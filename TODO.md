@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support arrow key and alt/shift/ctrl/command keyCode values in key pressed/up/down events
 - Support key_event.key_location to distinguish between left and right alt/shift/command/ctrl buttons
 
 ## Soon

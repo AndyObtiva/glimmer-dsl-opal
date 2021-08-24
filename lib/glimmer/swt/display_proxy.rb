@@ -5,6 +5,9 @@ module Glimmer
   module SWT
     class DisplayProxy < WidgetProxy
       JS_KEY_CODE_TO_SWT_KEY_CODE_MAP = {
+        16 => SWTProxy[:shift],
+        17 => SWTProxy[:ctrl],
+        18 => SWTProxy[:alt],
         37 => SWTProxy[:arrow_left],
         38 => SWTProxy[:arrow_up],
         39 => SWTProxy[:arrow_right],

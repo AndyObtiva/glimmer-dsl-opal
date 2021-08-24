@@ -39,10 +39,6 @@ class Tetris
           row_layout {
             type :vertical
             center true
-#             fill true
-#             margin_width 0
-#             margin_right block_size
-#             margin_height block_size
           }
           label(:center) {
             text 'Next'

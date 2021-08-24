@@ -26,7 +26,6 @@ require_relative 'tetris/view/score_lane'
 require_relative 'tetris/view/high_score_dialog'
 require_relative 'tetris/view/tetris_menu_bar'
 
-# Tetris App View Custom Shell (represents `tetris` keyword)
 class Tetris
   include Glimmer::UI::CustomShell
   
@@ -121,7 +120,7 @@ class Tetris
   def start_moving_tetrominos_down
     Async::Task.new do
       work = lambda do
-        @game.down! # unless @game.paused?
+        @game.down!
         Async::Task.new(delay: @game.delay * 1000.0, &work) unless @game.game_over? || body_root.disposed?
       end
       Async::Task.new(delay: @game.delay * 1000.0, &work)

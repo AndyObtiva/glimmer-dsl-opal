@@ -12,6 +12,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
 - Support mutation operations on File instances on server (or consider a database abstraction alternative)
 - Support building image objects on the spot with Canvas Shape DSL (consider SVG as the format)
+- Support DisplayProxy#beep for compatibility with Glimmer DSL for SWT
 - Consider implementing Tetris favicon with Canvas Shape DSL
 - Whitelist images exposed online for download
 - Support exposing images to use as a composite background_image or shell image attribute as per those details:

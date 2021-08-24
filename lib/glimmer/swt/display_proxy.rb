@@ -1,8 +1,16 @@
 require 'glimmer/swt/widget_proxy'
+require 'glimmer/swt/swt_proxy'
 
 module Glimmer
   module SWT
     class DisplayProxy < WidgetProxy
+      JS_KEY_CODE_TO_SWT_KEY_CODE_MAP = {
+        37 => SWTProxy[:arrow_left],
+        38 => SWTProxy[:arrow_up],
+        39 => SWTProxy[:arrow_right],
+        40 => SWTProxy[:arrow_down],
+      }
+    
       class << self
         def instance
           @instance ||= new
@@ -95,9 +103,10 @@ module Glimmer
                   event.singleton_class.define_method(:character) do
                     which || key_code
                   end
-                  event.define_singleton_method(:keyCode) {event.which}
+                  event.define_singleton_method(:keyCode) {
+                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                  }
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
-                  # TODO support alt/ctrl/shift/command & arrow keys in keyCode
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0
@@ -134,9 +143,10 @@ module Glimmer
                   event.singleton_class.define_method(:character) do
                     which || key_code
                   end
-                  event.define_singleton_method(:keyCode) {event.which}
+                  event.define_singleton_method(:keyCode) {
+                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                  }
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
-                  # TODO support alt/ctrl/shift/command & arrow keys in keyCode
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0
@@ -152,7 +162,7 @@ module Glimmer
                     doit = value
                   end
                   event.define_singleton_method(:doit) { doit }
-                  event_listener.call(event) if event.key_code != 13 && (event.key_code == 127 || event.key_code <= 31)
+                  event_listener.call(event) if event.which != 13 && (event.which == 127 || event.which <= 40)
                   
                     # TODO Fix doit false, it's not stopping input
                   unless doit

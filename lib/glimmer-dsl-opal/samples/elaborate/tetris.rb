@@ -102,8 +102,6 @@ class Tetris
       }
       
       text 'Glimmer Tetris'
-#       minimum_size 475, 500
-#       image tetris_icon
       background rgb(236, 236, 236)
 
       tetris_menu_bar(game: game)
@@ -119,25 +117,6 @@ class Tetris
       }
     }
   }
-  
-#   def tetris_icon
-#     icon_block_size = 64
-#     icon_bevel_size = icon_block_size.to_f / 25.to_f
-#     icon_bevel_pixel_size = 0.16*icon_block_size.to_f
-#     icon_size = 8
-#     icon_pixel_size = icon_block_size * icon_size
-#     image(icon_pixel_size, icon_pixel_size) {
-#       icon_size.times { |row|
-#         icon_size.times { |column|
-#           colored = row >= 1 && column.between?(1, 6)
-#           color = colored ? color(([:white] + Model::Tetromino::LETTER_COLORS.values).sample) : color(:white)
-#           x = column * icon_block_size
-#           y = row * icon_block_size
-#           bevel(x: x, y: y, base_color: color, size: icon_block_size)
-#         }
-#       }
-#     }
-#   end
 
   def start_moving_tetrominos_down
     Async::Task.new do

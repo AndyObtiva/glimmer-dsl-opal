@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.26.2
+
+- Support key_event.key_location to distinguish between left and right alt/shift/command/ctrl buttons
+- Use right/left alt/shift keys in Tetris for rotate right and rotate left
+
 ## 0.26.1
 
 - Support display on_swt_keydown event keyCode/key_code values for arrow keys and alt/shift/ctrl

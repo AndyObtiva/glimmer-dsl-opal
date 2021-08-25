@@ -800,7 +800,11 @@ module Glimmer
           end
           the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
           unless the_listener_dom_element.empty?
-            the_listener_dom_element.on(event, &async_event_listener)
+            if is_a?(DisplayProxy) && event == 'keydown'
+              `document.addEventListener('keydown', #{async_event_listener})`
+            else
+              the_listener_dom_element.on(event, &async_event_listener)
+            end
             # TODO ensure uniqueness of insertion (perhaps adding equals/hash method to event listener proxy)
             
             event_listener_proxies << EventListenerProxy.new(element_proxy: self, selector: selector, dom_element: the_listener_dom_element, event: event, listener: async_event_listener, original_event_listener: original_event_listener)

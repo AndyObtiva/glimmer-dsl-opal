@@ -13,6 +13,12 @@ module Glimmer
         39 => SWTProxy[:arrow_right],
         40 => SWTProxy[:arrow_down],
       }
+      
+      JS_LOCATION_TO_SWT_KEY_LOCATION_MAP = {
+        1 => SWTProxy[:left],
+        2 => SWTProxy[:right],
+      }
+      
     
       class << self
         def instance
@@ -143,7 +149,14 @@ module Glimmer
               event: 'keydown',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  event.singleton_class.define_method(:character) do
+                  original_event = event
+                  event = ::Event.new(event)
+                  event.define_singleton_method(:keyLocation) do
+                    key_location = `#{original_event}.location`
+                    JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[key_location]
+                  end
+                  event.define_singleton_method(:key_location, &event.method(:keyLocation))
+                  event.define_singleton_method(:character) do
                     which || key_code
                   end
                   event.define_singleton_method(:keyCode) {
@@ -174,7 +187,6 @@ module Glimmer
                     event.stop_propagation
                     event.stop_immediate_propagation
                   end
-                  
                   doit
                 }
               }

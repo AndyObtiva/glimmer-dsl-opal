@@ -72,8 +72,13 @@ class Tetris
         when 'e'.bytes.first
           game.rotate!(:right)
         when swt(:shift), swt(:alt)
-          game.rotate!(:right)
+          if key_event.keyLocation == swt(:right) # right key
+            game.rotate!(:right)
+          elsif key_event.keyLocation == swt(:left) # left key
+            game.rotate!(:left)
+          end
         end
+        
       end
     }
   end
@@ -142,7 +147,7 @@ class Tetris
   def show_about_dialog
     message_box {
       text 'Glimmer Tetris'
-      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\n\n for Left, Down, Right, Up\n\nCopyright (c) 2007-2021 Andy Maleh"
+      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nUse arrow keys for movement\nand right/left alt/shift keys for rotation\nAlternatively:\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\n\n for Left, Down, Right, Up\n\nCopyright (c) 2007-2021 Andy Maleh"
     }.open
   end
 end

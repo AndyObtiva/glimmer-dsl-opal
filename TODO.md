@@ -4,8 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support key_event.key_location to distinguish between left and right alt/shift/command/ctrl buttons
-
 ## Soon
 
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)

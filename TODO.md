@@ -6,10 +6,14 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
+- Support Canvas Shape DSL
+- Support Custom Shapes
+- Implement bevel look in Tetris sample blocks (just like in Glimmer DSL for SWT)
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
 - Support mutation operations on File instances on server (or consider a database abstraction alternative)
 - Support building image objects on the spot with Canvas Shape DSL (consider SVG as the format)
 - Support DisplayProxy#beep for compatibility with Glimmer DSL for SWT
+- Support key_event.key_location in all key capturing widgets, not just display
 - Consider implementing Tetris favicon with Canvas Shape DSL
 - Whitelist images exposed online for download
 - Support exposing images to use as a composite background_image or shell image attribute as per those details:
@@ -20,7 +24,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support setting favicon (by setting `image` property inside `shell`)
 - rake task to clear copied assets from rails server app
 
-- Translate Tetris sample from Glimmer DSL for SWT to Glimmer DSL for Opal for the web
 - Update Glimmer DSL for Opal setup instructions to generate Welcome controller instead of resource and --skip-coffee
 - Check if hello world can add libraries that are later used in opal despite passing false to Opal.use_gem
 - Implement part of net/http with jQuery Ajax for use in Glimmer apps since it is not implemented by Opal
@@ -33,7 +36,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Nav Bar web-only sample (using a `menu_bar` as a navbar, styled with CSS)
 
 - Document each widget separately in each hello sample
-- Support `progress_bar` using jQuery UI and Hello, Progress Bar!
 - Support the idea of a virtual hard drive pretending to be local with full permissions, but actually lives on the server
 - Support Authentication (username/password)
 - Support the idea of embedding a Glimmer DSL for Opal app inside a greater HTML document instead of directly under body by specifying the element under which it plugs into via a global Display#shell_element_path, shell_element_id or something of the like. Also. perhaps support configuring that element on a custom-shell by custom-shell basis (like some of them do replace the whole page filling the screen)

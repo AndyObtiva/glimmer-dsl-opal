@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.27.0
+
+- Hello, Text!
+- Support unbordered `text` widget if SWT style `:none` was passed
+
 ## 0.26.3
 
 - Support key_event.key_location in all key capturing widgets, not just display

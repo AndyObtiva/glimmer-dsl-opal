@@ -3,7 +3,13 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TextProxy < WidgetProxy
-      attr_reader :text
+      attr_reader :text, :border
+      
+      def initialize(parent, args, block)
+        args << :border if args.empty?
+        @border = true if args.include?(:border) || args.include?(SWTProxy[:border])
+        super(parent, args, block)
+      end
 
       def text=(value)
         @text = value
@@ -41,9 +47,10 @@ module Glimmer
       def dom
         text_text = @text
         text_id = id
-        text_style = css
+        text_style = 'min-width: 27px; '
+        text_style += 'border: none; ' if !@border
         text_class = name
-        options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text, style: 'min-width: 27px;'}
+        options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text}
         options = options.merge('disabled': 'disabled') unless @enabled
         options = options.merge(type: 'password') if has_style?(:password)
         @dom ||= html {

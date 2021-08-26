@@ -34,26 +34,75 @@ module Glimmer
       end
       
       def observation_request_to_event_mapping
+        myself = self
         {
-          'on_modify_text' => {
-            event: 'keyup',
-            event_handler: -> (event_listener) {
-              -> (event) {
-                # TODO consider unifying this event handler with on_key_pressed by relying on its result instead of hooking another keyup event
-                # TODO add all attributes for on_modify_text modify event
-                if @last_key_pressed_event.nil? || @last_key_pressed_event.doit
-                  @text = event.target.value
+          'on_verify_text' => [
+            {
+              event: 'beforeinput',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  puts 'event'
+                  puts event
+                  puts "event.methods.sort - Object.methods"
+                  puts event.methods.sort - Object.methods
+                  `window.event1 = #{event.to_n}.originalEvent`
+                  `console.log(#{event.to_n}.originalEvent.getTargetRanges())`
+                  # TODO consider unifying this event handler with on_key_pressed by relying on its result instead of hooking another keyup event
+                  # TODO add all attributes for on_modify_text modify event
+                  event.define_singleton_method(:widget) {myself}
+                  event.define_singleton_method(:text) {`#{event.to_n}.originalEvent.data`}
+                  event.define_singleton_method(:start) {event.target.value.size}
+                  event.define_singleton_method(:end) {event.target.value.size}
+                  doit = true
+                  event.define_singleton_method(:doit=) do |value|
+                    puts 'setting doit to value'
+                    puts value
+                    doit = value
+                  end
+                  event.define_singleton_method(:doit) { doit }
+                  puts 'event_listener'
+                  puts event_listener
                   event_listener.call(event)
-                else
-                  # TODO Fix doit false, it's not stopping input
-                  event.prevent
-                  event.prevent_default
-                  event.stop_propagation
-                  event.stop_immediate_propagation
-                end
+                  
+                  puts 'event.doit'
+                  puts event.doit
+                  puts 'doit'
+                  puts doit
+  
+                  if !doit
+                    `#{event.to_n}.originalEvent.returnValue = false`
+                  end
+                  
+                  doit
+                }
+              }
+            },
+            {
+              event: 'input',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  event.define_singleton_method(:widget) {myself}
+                  @text = event.target.value
+                  puts '@text'
+                  puts @text
+                }
               }
             }
-          },
+          ],
+          'on_modify_text' => [
+            {
+              event: 'input',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  event.define_singleton_method(:widget) {myself}
+                  @text = event.target.value
+                  event_listener.call(event)
+                  puts '@text'
+                  puts @text
+                }
+              }
+            }
+          ],
         }
       end
       
@@ -69,6 +118,7 @@ module Glimmer
         options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text}
         options = options.merge('disabled': 'disabled') unless @enabled
         options = options.merge('readonly': 'readonly') if @read_only
+        options = options.merge('contenteditable': 'true')
         options = options.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
           send(element, options)

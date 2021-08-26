@@ -616,6 +616,7 @@ module Glimmer
                     JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
                   }
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:widget) {myself}
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0
@@ -658,6 +659,7 @@ module Glimmer
                     JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
                   }
                   event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:widget) {myself}
                   event.define_singleton_method(:character) {event.which.chr}
                   event.define_singleton_method(:stateMask) do
                     state_mask = 0

@@ -44,61 +44,61 @@ class HelloText
       text 'Hello, Text!'
       minimum_size 350, 100
       
-      label {
-        text 'text'
-      }
-      text { # includes :border style by default
-        layout_data :fill, :center, true, false
-        text <=> [self, :default]
-      }
-      
-      label {
-        text 'text(:none)'
-      }
-      text(:none) { # no border
-        layout_data :fill, :center, true, false
-        text <=> [self, :no_border]
-      }
-      
-      label {
-        text 'text(:center, :border)'
-      }
-      text(:center, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :center]
-      }
-      
-      label {
-        text 'text(:left, :border)'
-      }
-      text(:left, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :left]
-      }
-      
-      label {
-        text 'text(:right, :border)'
-      }
-      text(:right, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :right]
-      }
-      
-      label {
-        text 'text(:password, :border)'
-      }
-      text(:password, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :password]
-      }
-      
-      label {
-        text 'text(:read_only, :border)'
-      }
-      text(:read_only, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :read_only]
-      }
+#       label {
+#         text 'text'
+#       }
+#       text { # includes :border style by default
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :default]
+#       }
+#
+#       label {
+#         text 'text(:none)'
+#       }
+#       text(:none) { # no border
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :no_border]
+#       }
+#
+#       label {
+#         text 'text(:center, :border)'
+#       }
+#       text(:center, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :center]
+#       }
+#
+#       label {
+#         text 'text(:left, :border)'
+#       }
+#       text(:left, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :left]
+#       }
+#
+#       label {
+#         text 'text(:right, :border)'
+#       }
+#       text(:right, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :right]
+#       }
+#
+#       label {
+#         text 'text(:password, :border)'
+#       }
+#       text(:password, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :password]
+#       }
+#
+#       label {
+#         text 'text(:read_only, :border)'
+#       }
+#       text(:read_only, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :read_only]
+#       }
       
       label {
         text 'text with event handlers'
@@ -110,7 +110,10 @@ class HelloText
         # this event kicks in just after the user typed and before modifying the text attribute value
         on_verify_text do |verify_event|
           new_text = verify_event.widget.text.clone
-          new_text[verify_event.start...verify_event.end] = verify_event.text
+#           new_text[verify_event.start...verify_event.end] = verify_event.text
+          new_text = new_text.to_s + verify_event.text.to_s
+          puts 'new_text'
+          puts new_text
           verify_event.doit = telephone?(new_text)
         end
         
@@ -120,23 +123,23 @@ class HelloText
         end
       }
       
-      label {
-        text 'text(:wrap, :border)'
-      }
-      text(:wrap, :border) {
-        layout_data(:fill, :center, true, false) {
-          width_hint 100
-        }
-        text <=> [self, :wrap]
-      }
-      
-      label {
-        text 'text(:multi, :border)'
-      }
-      text(:multi, :border) {
-        layout_data :fill, :center, true, false
-        text <=> [self, :multi]
-      }
+#       label {
+#         text 'text(:wrap, :border)'
+#       }
+#       text(:wrap, :border) {
+#         layout_data(:fill, :center, true, false) {
+#           width_hint 100
+#         }
+#         text <=> [self, :wrap]
+#       }
+#
+#       label {
+#         text 'text(:multi, :border)'
+#       }
+#       text(:multi, :border) {
+#         layout_data :fill, :center, true, false
+#         text <=> [self, :multi]
+#       }
     }
   }
   

@@ -28,7 +28,7 @@ module Glimmer
       attr_reader :closeable_children
         
       def initialize(parent, args, block)
-        @closeable_children = args.detect { |arg| SWTProxy[:close] == SWTProxy[arg] }
+        @closeable_children = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:close] }
         super(parent, args, block)
       end
           

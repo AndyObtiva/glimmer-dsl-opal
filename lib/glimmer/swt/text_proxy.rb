@@ -3,14 +3,21 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TextProxy < WidgetProxy
-      attr_reader :text, :border, :left, :center, :right
+      attr_reader :text, :border, :left, :center, :right, :read_only
+      alias border? border
+      alias left? left
+      alias center? center
+      alias right? right
+      alias read_only? read_only
       
       def initialize(parent, args, block)
         args << :border if args.empty?
-        @border = true if args.include?(:border) || args.include?(SWTProxy[:border])
-        @left = true if args.include?(:left) || args.include?(SWTProxy[:left])
-        @center = true if args.include?(:center) || args.include?(SWTProxy[:center])
-        @right = true if args.include?(:right) || args.include?(SWTProxy[:right])
+        @border = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:border] }
+        @left = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:left] }
+        @center = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:center] }
+        @right = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:right] }
+        @read_only = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:read_only] }
+        @enabled = !@read_only
         super(parent, args, block)
       end
 

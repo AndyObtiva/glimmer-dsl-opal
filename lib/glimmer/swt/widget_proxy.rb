@@ -158,7 +158,7 @@ module Glimmer
         @block = block
         # TODO consider changing children to an array (why is it a Set if order matters?)
         @children = Set.new # TODO consider moving to composite
-        @enabled = true
+        @enabled = true if @enabled.nil?
         DEFAULT_INITIALIZERS[self.class.underscored_widget_name(self).to_s.to_sym]&.call(self)
         @parent.post_initialize_child(self) # TODO rename to post_initialize_child to be closer to glimmer-dsl-swt terminology
       end

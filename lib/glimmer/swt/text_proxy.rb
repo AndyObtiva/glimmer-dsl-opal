@@ -3,12 +3,14 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class TextProxy < WidgetProxy
-      attr_reader :text, :border, :left, :center, :right, :read_only
+      attr_reader :text, :border, :left, :center, :right, :read_only, :wrap, :multi
       alias border? border
       alias left? left
       alias center? center
       alias right? right
       alias read_only? read_only
+      alias wrap? wrap
+      alias multi? multi
       
       def initialize(parent, args, block)
         args << :border if args.empty?
@@ -17,7 +19,8 @@ module Glimmer
         @center = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:center] }
         @right = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:right] }
         @read_only = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:read_only] }
-        @enabled = !@read_only
+        @wrap = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:wrap] }
+        @multi = !!args.detect { |arg| SWTProxy[arg] == SWTProxy[:multi] }
         super(parent, args, block)
       end
 
@@ -27,7 +30,7 @@ module Glimmer
       end
       
       def element
-        'input'
+        @wrap || @multi ? 'textarea' : 'input'
       end
       
       def observation_request_to_event_mapping
@@ -65,9 +68,10 @@ module Glimmer
         text_class = name
         options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text}
         options = options.merge('disabled': 'disabled') unless @enabled
+        options = options.merge('readonly': 'readonly') if @read_only
         options = options.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
-          input(options)
+          send(element, options)
         }.to_s
       end
     end

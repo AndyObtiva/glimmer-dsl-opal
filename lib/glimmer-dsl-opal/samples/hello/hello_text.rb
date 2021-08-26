@@ -34,7 +34,7 @@ class HelloText
     self.telephone = '555-555-5555'
     self.read_only = 'Telephone area code is 555'
     self.wrap = 'wraps if text content is too long like this example'
-    self.multi = "multi-line enables hitting enter,\nbut does not wrap by default"
+    self.multi = "multi-line enables hitting enter,\nbut works like wrap on the web"
   end
   
   body {

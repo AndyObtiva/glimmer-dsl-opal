@@ -4,6 +4,7 @@
 
 - Hello, Text!
 - Support unbordered `text` widget if SWT style `:none` was passed
+- Support `:center`, `:left`, `:right` SWT styles for `text` widget
 
 ## 0.26.3
 

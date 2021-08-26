@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.26.3
+
+- Support key_event.key_location in all key capturing widgets, not just display
+
 ## 0.26.2
 
 - Support key_event.key_location to distinguish between left and right alt/shift/command/ctrl buttons

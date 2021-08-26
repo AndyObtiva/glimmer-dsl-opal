@@ -32,7 +32,24 @@ module Glimmer
       include PropertyOwner
       
       Event = Struct.new(:widget, keyword_init: true)
+    
+      JS_KEY_CODE_TO_SWT_KEY_CODE_MAP = {
+        16 => SWTProxy[:shift],
+        17 => SWTProxy[:ctrl],
+        18 => SWTProxy[:alt],
+        37 => SWTProxy[:arrow_left],
+        38 => SWTProxy[:arrow_up],
+        39 => SWTProxy[:arrow_right],
+        40 => SWTProxy[:arrow_down],
+      }
       
+      JS_LOCATION_TO_SWT_KEY_LOCATION_MAP = {
+        0 => SWTProxy[:none],
+        1 => SWTProxy[:left],
+        2 => SWTProxy[:right],
+        3 => SWTProxy[:keypad],
+      }
+            
       SWT_CURSOR_TO_CSS_CURSOR_MAP = {
         wait: 'wait',
         sizenwse: 'nwse-resize',
@@ -373,7 +390,6 @@ module Glimmer
         mouse_event_handler = -> (event_listener) {
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
-            # TODO support event.location once DOM3 is supported by opal-jquery
             event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
@@ -401,7 +417,6 @@ module Glimmer
         mouse_move_event_handler = -> (event_listener) {
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
-            # TODO support event.location once DOM3 is supported by opal-jquery
             event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
@@ -426,7 +441,6 @@ module Glimmer
         context_menu_handler = -> (event_listener) {
           -> (event) {
             # TODO generalize this solution to all widgets that support key presses
-            # TODO support event.location once DOM3 is supported by opal-jquery
             event.define_singleton_method(:widget) {myself}
             event.define_singleton_method(:button, &event.method(:which))
             event.define_singleton_method(:count) {1} # TODO support double-click count of 2 in the future by using ondblclick
@@ -507,10 +521,15 @@ module Glimmer
             event: 'keypress',
             event_handler: -> (event_listener) {
               -> (event) {
-                # TODO generalize this solution to all widgets that support key presses
-                # TODO support event.location once DOM3 is supported by opal-jquery
                 event.define_singleton_method(:widget) {myself}
-                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:keyLocation) do
+                  location = `#{event.to_n}.originalEvent.location`
+                  JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[location] || location
+                end
+                event.define_singleton_method(:key_location, &event.method(:keyLocation))
+                event.define_singleton_method(:keyCode) {
+                  JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                }
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
                 event.define_singleton_method(:stateMask) do
@@ -541,13 +560,18 @@ module Glimmer
               }
             }          },
           'on_key_released' => {
-            event: 'keydown',
+            event: 'keyup',
             event_handler: -> (event_listener) {
               -> (event) {
-                # TODO generalize this solution to all widgets that support key presses
-                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyLocation) do
+                  location = `#{event.to_n}.originalEvent.location`
+                  JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[location] || location
+                end
+                event.define_singleton_method(:key_location, &event.method(:keyLocation))
                 event.define_singleton_method(:widget) {myself}
-                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:keyCode) {
+                  JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                }
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
                 event.define_singleton_method(:stateMask) do
@@ -576,52 +600,106 @@ module Glimmer
                 
                 doit
               }
-            }          },
-          'on_swt_keydown' => {
-            event: 'keypress',
-            event_handler: -> (event_listener) {
-              -> (event) {
-                # TODO generalize this solution to all widgets that support key presses
-                # TODO support event.location once DOM3 is supported by opal-jquery
-                event.define_singleton_method(:widget) {myself}
-                event.define_singleton_method(:keyCode) {event.which}
-                event.define_singleton_method(:key_code, &event.method(:keyCode))
-                event.define_singleton_method(:character) {event.which.chr}
-                event.define_singleton_method(:stateMask) do
-                  state_mask = 0
-                  state_mask |= SWTProxy[:alt] if event.alt_key
-                  state_mask |= SWTProxy[:ctrl] if event.ctrl_key
-                  state_mask |= SWTProxy[:shift] if event.shift_key
-                  state_mask |= SWTProxy[:command] if event.meta_key
-                  state_mask
-                end
-                event.define_singleton_method(:state_mask, &event.method(:stateMask))
-                doit = true
-                event.define_singleton_method(:doit=) do |value|
-                  doit = value
-                end
-                event.define_singleton_method(:doit) { doit }
-                event_listener.call(event)
-                
-                  # TODO Fix doit false, it's not stopping input
-                unless doit
-                  event.prevent
-                  event.prevent_default
-                  event.stop_propagation
-                  event.stop_immediate_propagation
-                end
-                
-                doit
+            }
+          },
+          'on_swt_keydown' => [
+            {
+              event: 'keypress',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  event.define_singleton_method(:keyLocation) do
+                    location = `#{event.to_n}.originalEvent.location`
+                    JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[location] || location
+                  end
+                  event.define_singleton_method(:key_location, &event.method(:keyLocation))
+                  event.define_singleton_method(:keyCode) {
+                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                  }
+                  event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:character) {event.which.chr}
+                  event.define_singleton_method(:stateMask) do
+                    state_mask = 0
+                    state_mask |= SWTProxy[:alt] if event.alt_key
+                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                    state_mask |= SWTProxy[:shift] if event.shift_key
+                    state_mask |= SWTProxy[:command] if event.meta_key
+                    state_mask
+                  end
+                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                  doit = true
+                  event.define_singleton_method(:doit=) do |value|
+                    doit = value
+                  end
+                  event.define_singleton_method(:doit) { doit }
+                  event_listener.call(event)
+                  
+                    # TODO Fix doit false, it's not stopping input
+                  unless doit
+                    event.prevent
+                    event.prevent_default
+                    event.stop_propagation
+                    event.stop_immediate_propagation
+                  end
+                  
+                  doit
+                }
               }
-            }          },
+            },
+            {
+              event: 'keydown',
+              event_handler: -> (event_listener) {
+                -> (event) {
+                  event.define_singleton_method(:keyLocation) do
+                    location = `#{event.to_n}.originalEvent.location`
+                    JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[location] || location
+                  end
+                  event.define_singleton_method(:key_location, &event.method(:keyLocation))
+                  event.define_singleton_method(:keyCode) {
+                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                  }
+                  event.define_singleton_method(:key_code, &event.method(:keyCode))
+                  event.define_singleton_method(:character) {event.which.chr}
+                  event.define_singleton_method(:stateMask) do
+                    state_mask = 0
+                    state_mask |= SWTProxy[:alt] if event.alt_key
+                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
+                    state_mask |= SWTProxy[:shift] if event.shift_key
+                    state_mask |= SWTProxy[:command] if event.meta_key
+                    state_mask
+                  end
+                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
+                  doit = true
+                  event.define_singleton_method(:doit=) do |value|
+                    doit = value
+                  end
+                  event.define_singleton_method(:doit) { doit }
+                  event_listener.call(event) if event.which != 13 && (event.which == 127 || event.which <= 40)
+                  
+                    # TODO Fix doit false, it's not stopping input
+                  unless doit
+                    event.prevent
+                    event.prevent_default
+                    event.stop_propagation
+                    event.stop_immediate_propagation
+                  end
+                  doit
+                }
+              }
+            }
+          ],
           'on_swt_keyup' => {
-            event: 'keydown',
+            event: 'keyup',
             event_handler: -> (event_listener) {
               -> (event) {
-                # TODO generalize this solution to all widgets that support key presses
-                # TODO support event.location once DOM3 is supported by opal-jquery
+                event.define_singleton_method(:keyLocation) do
+                  location = `#{event.to_n}.originalEvent.location`
+                  JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[location] || location
+                end
+                event.define_singleton_method(:key_location, &event.method(:keyLocation))
                 event.define_singleton_method(:widget) {myself}
-                event.define_singleton_method(:keyCode) {event.which}
+                event.define_singleton_method(:keyCode) {
+                  JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
+                }
                 event.define_singleton_method(:key_code, &event.method(:keyCode))
                 event.define_singleton_method(:character) {event.which.chr}
                 event.define_singleton_method(:stateMask) do
@@ -800,11 +878,7 @@ module Glimmer
           end
           the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
           unless the_listener_dom_element.empty?
-            if is_a?(DisplayProxy) && event == 'keydown'
-              `document.addEventListener('keydown', #{async_event_listener})`
-            else
-              the_listener_dom_element.on(event, &async_event_listener)
-            end
+            the_listener_dom_element.on(event, &async_event_listener)
             # TODO ensure uniqueness of insertion (perhaps adding equals/hash method to event listener proxy)
             
             event_listener_proxies << EventListenerProxy.new(element_proxy: self, selector: selector, dom_element: the_listener_dom_element, event: event, listener: async_event_listener, original_event_listener: original_event_listener)

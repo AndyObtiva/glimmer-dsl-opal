@@ -4,22 +4,6 @@ require 'glimmer/swt/swt_proxy'
 module Glimmer
   module SWT
     class DisplayProxy < WidgetProxy
-      JS_KEY_CODE_TO_SWT_KEY_CODE_MAP = {
-        16 => SWTProxy[:shift],
-        17 => SWTProxy[:ctrl],
-        18 => SWTProxy[:alt],
-        37 => SWTProxy[:arrow_left],
-        38 => SWTProxy[:arrow_up],
-        39 => SWTProxy[:arrow_right],
-        40 => SWTProxy[:arrow_down],
-      }
-      
-      JS_LOCATION_TO_SWT_KEY_LOCATION_MAP = {
-        1 => SWTProxy[:left],
-        2 => SWTProxy[:right],
-      }
-      
-    
       class << self
         def instance
           @instance ||= new
@@ -101,99 +85,6 @@ module Glimmer
       end
       # sync_exec kept for API compatibility reasons
       alias sync_exec async_exec
-      
-      def observation_request_to_event_mapping
-        {
-          'on_swt_keydown' => [
-            {
-              event: 'keypress',
-              event_handler: -> (event_listener) {
-                -> (event) {
-                  event.singleton_class.define_method(:character) do
-                    which || key_code
-                  end
-                  event.define_singleton_method(:keyCode) {
-                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
-                  }
-                  event.define_singleton_method(:key_code, &event.method(:keyCode))
-                  event.define_singleton_method(:character) {event.which.chr}
-                  event.define_singleton_method(:stateMask) do
-                    state_mask = 0
-                    state_mask |= SWTProxy[:alt] if event.alt_key
-                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
-                    state_mask |= SWTProxy[:shift] if event.shift_key
-                    state_mask |= SWTProxy[:command] if event.meta_key
-                    state_mask
-                  end
-                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
-                  doit = true
-                  event.define_singleton_method(:doit=) do |value|
-                    doit = value
-                  end
-                  event.define_singleton_method(:doit) { doit }
-                  event_listener.call(event)
-                  
-                    # TODO Fix doit false, it's not stopping input
-                  unless doit
-                    event.prevent
-                    event.prevent_default
-                    event.stop_propagation
-                    event.stop_immediate_propagation
-                  end
-                  
-                  doit
-                }
-              }
-            },
-            {
-              event: 'keydown',
-              event_handler: -> (event_listener) {
-                -> (event) {
-                  original_event = event
-                  event = ::Event.new(event)
-                  event.define_singleton_method(:keyLocation) do
-                    key_location = `#{original_event}.location`
-                    JS_LOCATION_TO_SWT_KEY_LOCATION_MAP[key_location]
-                  end
-                  event.define_singleton_method(:key_location, &event.method(:keyLocation))
-                  event.define_singleton_method(:character) do
-                    which || key_code
-                  end
-                  event.define_singleton_method(:keyCode) {
-                    JS_KEY_CODE_TO_SWT_KEY_CODE_MAP[event.which] || event.which
-                  }
-                  event.define_singleton_method(:key_code, &event.method(:keyCode))
-                  event.define_singleton_method(:character) {event.which.chr}
-                  event.define_singleton_method(:stateMask) do
-                    state_mask = 0
-                    state_mask |= SWTProxy[:alt] if event.alt_key
-                    state_mask |= SWTProxy[:ctrl] if event.ctrl_key
-                    state_mask |= SWTProxy[:shift] if event.shift_key
-                    state_mask |= SWTProxy[:command] if event.meta_key
-                    state_mask
-                  end
-                  event.define_singleton_method(:state_mask, &event.method(:stateMask))
-                  doit = true
-                  event.define_singleton_method(:doit=) do |value|
-                    doit = value
-                  end
-                  event.define_singleton_method(:doit) { doit }
-                  event_listener.call(event) if event.which != 13 && (event.which == 127 || event.which <= 40)
-                  
-                    # TODO Fix doit false, it's not stopping input
-                  unless doit
-                    event.prevent
-                    event.prevent_default
-                    event.stop_propagation
-                    event.stop_immediate_propagation
-                  end
-                  doit
-                }
-              }
-            }
-          ]
-        }
-      end
       
       private
       

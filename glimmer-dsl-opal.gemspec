@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2021-08-26"
+  s.date = "2021-08-27"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -101,6 +101,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/samples/hello/hello_tab.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_table.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_table/baseball_park.png",
+    "lib/glimmer-dsl-opal/samples/hello/hello_text.rb",
     "lib/glimmer-dsl-opal/samples/hello/hello_world.rb",
     "lib/glimmer-dsl-opal/samples/hello/images/denmark.png",
     "lib/glimmer-dsl-opal/samples/hello/images/finland.png",

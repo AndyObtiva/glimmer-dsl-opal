@@ -185,6 +185,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Checkbox Group!](#hello-checkbox-group)
       - [Hello, Date Time!](#hello-date-time)
       - [Hello, Table!](#hello-table)
+      - [Hello, Text!](#hello-text)
       - [Hello, Button!](#hello-button)
       - [Hello, Arrow!](#hello-arrow)
       - [Hello, Message Box!](#hello-message-box)
@@ -1732,6 +1733,31 @@ Hello, Table! Playoff Type Changed
 Hello, Table! Game Booked
 
 ![Glimmer DSL for Opal Hello Table](images/glimmer-dsl-opal-hello-table-game-booked.png)
+
+#### Hello, Text!
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_text'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Text](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-text.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Text!"
+
+![Glimmer DSL for Opal Hello Text](images/glimmer-dsl-opal-hello-text.png)
 
 #### Hello, Button!
 

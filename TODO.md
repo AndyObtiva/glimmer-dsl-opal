@@ -4,8 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support `text` widget on_verify_text doit feature
-
 ## Soon
 
 - Support Canvas Shape DSL

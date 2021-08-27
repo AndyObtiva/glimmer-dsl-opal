@@ -6,6 +6,7 @@
 - Support unbordered `text` widget if SWT style `:none` was passed
 - Support `:center`, `:left`, `:right` SWT styles for `text` widget
 - Support `:read_only` SWT style for `text` widget
+- Support `text` widget `on_verify_text` `event.doit = false` cancellation feature
 
 ## 0.26.3
 

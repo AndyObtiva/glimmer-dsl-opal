@@ -41,34 +41,25 @@ module Glimmer
               event: 'beforeinput',
               event_handler: -> (event_listener) {
                 -> (event) {
-                  puts 'event'
-                  puts event
-                  puts "event.methods.sort - Object.methods"
-                  puts event.methods.sort - Object.methods
-                  `window.event1 = #{event.to_n}.originalEvent`
-                  `console.log(#{event.to_n}.originalEvent.getTargetRanges())`
-                  # TODO consider unifying this event handler with on_key_pressed by relying on its result instead of hooking another keyup event
-                  # TODO add all attributes for on_modify_text modify event
                   event.define_singleton_method(:widget) {myself}
-                  event.define_singleton_method(:text) {`#{event.to_n}.originalEvent.data`}
-                  event.define_singleton_method(:start) {event.target.value.size}
-                  event.define_singleton_method(:end) {event.target.value.size}
+                  event.define_singleton_method(:text) {`#{event.to_n}.originalEvent.data` || ''}
+                  selection_start = `#{event.target}[0].selectionStart`
+                  selection_end = `#{event.target}[0].selectionEnd`
+                  if `#{event.to_n}.originalEvent.inputType` == 'deleteContentBackward' && selection_start == selection_end
+                    selection_start -= 1
+                    selection_start = 0 if selection_start < 0
+                  end
+                  event.define_singleton_method(:start) do
+                    selection_start
+                  end
+                  event.define_singleton_method(:end) {selection_end}
                   doit = true
                   event.define_singleton_method(:doit=) do |value|
-                    puts 'setting doit to value'
-                    puts value
                     doit = value
                   end
                   event.define_singleton_method(:doit) { doit }
-                  puts 'event_listener'
-                  puts event_listener
                   event_listener.call(event)
                   
-                  puts 'event.doit'
-                  puts event.doit
-                  puts 'doit'
-                  puts doit
-  
                   if !doit
                     `#{event.to_n}.originalEvent.returnValue = false`
                   end
@@ -83,8 +74,6 @@ module Glimmer
                 -> (event) {
                   event.define_singleton_method(:widget) {myself}
                   @text = event.target.value
-                  puts '@text'
-                  puts @text
                 }
               }
             }
@@ -94,11 +83,10 @@ module Glimmer
               event: 'input',
               event_handler: -> (event_listener) {
                 -> (event) {
+                  # TODO add all attributes for on_modify_text modify event
                   event.define_singleton_method(:widget) {myself}
                   @text = event.target.value
                   event_listener.call(event)
-                  puts '@text'
-                  puts @text
                 }
               }
             }

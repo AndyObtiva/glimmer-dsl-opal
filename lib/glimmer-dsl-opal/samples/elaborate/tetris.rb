@@ -1,4 +1,4 @@
-# Copyright (c) 2007-2021 Andy Maleh
+# Copyright (c) 2020-2021 Andy Maleh
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -25,11 +25,7 @@ require_relative 'tetris/view/playfield'
 require_relative 'tetris/view/score_lane'
 require_relative 'tetris/view/high_score_dialog'
 require_relative 'tetris/view/tetris_menu_bar'
-class Event
-  def location
-    `#@native.location`
-  end
-end
+
 class Tetris
   include Glimmer::UI::CustomShell
   

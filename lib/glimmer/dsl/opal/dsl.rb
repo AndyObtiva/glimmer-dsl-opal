@@ -30,6 +30,7 @@ require 'glimmer/dsl/opal/menu_expression'
 require 'glimmer/dsl/opal/dialog_expression'
 require 'glimmer/dsl/opal/shape_expression'
 require 'glimmer/dsl/opal/shine_data_binding_expression'
+require 'glimmer/dsl/opal/canvas_expression'
 
 module Glimmer
   module DSL

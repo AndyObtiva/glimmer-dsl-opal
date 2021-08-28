@@ -22,6 +22,7 @@
 require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 require 'glimmer/swt/swt_proxy'
+require 'glimmer/swt/custom/drawable'
 
 # TODO implement menu (which delays building it till render using add_content_on_render)
 
@@ -30,7 +31,8 @@ module Glimmer
     class WidgetProxy
       include Glimmer
       include PropertyOwner
-      
+      include Custom::Drawable
+            
       Event = Struct.new(:widget, keyword_init: true)
     
       JS_KEY_CODE_TO_SWT_KEY_CODE_MAP = {

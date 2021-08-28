@@ -27,7 +27,7 @@ require 'glimmer/swt/custom/drawable'
 
 module Glimmer
   module DSL
-    module SWT
+    module Opal
       class ShapeExpression < Expression
         include ParentExpression
         
@@ -41,7 +41,7 @@ module Glimmer
         end
         
         def add_content(parent, keyword, *args, &block)
-          super
+          super(parent, keyword, *args, &block)
           parent.post_add_content
         end
       

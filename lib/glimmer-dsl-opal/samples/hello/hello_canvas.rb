@@ -19,36 +19,24 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/dsl/expression'
-require 'glimmer/dsl/parent_expression'
-require 'glimmer/swt/swt_proxy'
-require 'glimmer/swt/custom/shape'
-require 'glimmer/swt/custom/drawable'
-
-module Glimmer
-  module DSL
-    module SWT
-      class ShapeExpression < Expression
-        include ParentExpression
-        
-        def can_interpret?(parent, keyword, *args, &block)
-          (parent.is_a?(Glimmer::SWT::Custom::Drawable) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
-            Glimmer::SWT::Custom::Shape.valid?(parent, keyword, *args, &block)
-        end
-        
-        def interpret(parent, keyword, *args, &block)
-          Glimmer::SWT::Custom::Shape.create(parent, keyword, *args, &block)
-        end
-        
-        def add_content(parent, keyword, *args, &block)
-          super
-          parent.post_add_content
-        end
-      
-      end
-      
-    end
-    
-  end
+class HelloCanvas
+  include Glimmer::UI::CustomShell
   
+  body {
+    shell {
+      text 'Hello, Canvas!'
+      minimum_size 320, 400
+    
+      @canvas = canvas {
+        background :yellow
+        
+        rectangle(0, 0, 220, 400) {
+          background rgb(255, 0, 0)
+        }
+      }
+    }
+  }
 end
+
+HelloCanvas.launch
+        

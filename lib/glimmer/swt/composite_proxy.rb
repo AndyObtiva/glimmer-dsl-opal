@@ -78,8 +78,6 @@ module Glimmer
             
     end
     
-    CanvasProxy = CompositeProxy # TODO implement fully eventually
-    
   end
   
 end

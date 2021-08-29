@@ -33,11 +33,11 @@ module Glimmer
         
         def can_interpret?(parent, keyword, *args, &block)
           (parent.is_a?(Glimmer::SWT::Custom::Drawable) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
-            Glimmer::SWT::Custom::Shape.valid?(parent, keyword, *args, &block)
+            Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block)
         end
         
         def interpret(parent, keyword, *args, &block)
-          Glimmer::SWT::Custom::Shape.create(parent, keyword, *args, &block)
+          Glimmer::SWT::Custom::Shape.create(parent, keyword, args, &block)
         end
         
         def add_content(parent, keyword, *args, &block)

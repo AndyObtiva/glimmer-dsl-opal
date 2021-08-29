@@ -32,63 +32,17 @@ module Glimmer
       # That is because Shape is drawn on a parent as graphics and doesn't have an SWT widget for itself
       class Shape
         class Rectangle < Shape
-          def parameter_names
-            @parameter_names || rectangle_parameter_names
+                
+          def element
+            'rect'
           end
           
-          def possible_parameter_names
-            # TODO refactor and improve this method through meta-programming (and share across other shapes)
-            (rectangle_round_parameter_names + rectangle_gradient_parameter_names + rectangle_parameter_names + rectangle_rectangle_parameter_names).uniq
-          end
-          
-          def rectangle_round_parameter_names
-            [:x, :y, :width, :height, :arc_width, :arc_height]
-          end
-          
-          def rectangle_gradient_parameter_names
-            [:x, :y, :width, :height, :vertical]
-          end
-          
-          def rectangle_parameter_names
-            [:x, :y, :width, :height]
-          end
-          
-          def rectangle_rectangle_parameter_names
-            # this receives a Rectangle object
-            [:rectangle]
-          end
-          
-          def set_parameter_attribute(attribute_name, *args)
-            return super if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
-            if rectangle_parameter_names.map(&:to_s).include?(attribute_name.to_s)
-              @parameter_names = rectangle_parameter_names
-            elsif rectangle_round_parameter_names.map(&:to_s).include?(attribute_name.to_s)
-              @parameter_names = rectangle_round_parameter_names
-            elsif rectangle_gradient_parameter_names.map(&:to_s).include?(attribute_name.to_s)
-              @parameter_names = rectangle_gradient_parameter_names
-            elsif rectangle_rectangle_parameter_names.map(&:to_s).include?(attribute_name.to_s)
-              @parameter_names = rectangle_rectangle_parameter_names
-            end
-            super
-          end
-          
-          def point_xy_array
-            [[x, y], [x + calculated_width, y], [x + calculated_width, y + calculated_height], [x, y + calculated_height]]
-          end
-          
-          def absolute_point_xy_array
-            [[absolute_x, absolute_y], [absolute_x + calculated_width, absolute_y], [absolute_x + calculated_width, absolute_y + calculated_height], [absolute_x, absolute_y + calculated_height]]
-          end
-          
-          # checks if drawn or filled rectangle includes the point denoted by x and y (if drawn, it only returns true if point lies on the edge)
-          def include?(x, y)
-            if filled?
-              contain?(x, y)
-            else
-              x, y = inverse_transform_point(x, y)
-              comparison_lines = absolute_point_xy_array.zip(absolute_point_xy_array.rotate(1))
-              comparison_lines.any? {|line| Line.include?(line.first.first, line.first.last, line.last.first, line.last.last, x, y)}
-            end
+          def dom
+            shape_id = id
+            shape_class = name
+            @dom ||= html {
+              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3])
+            }.to_s
           end
           
         end

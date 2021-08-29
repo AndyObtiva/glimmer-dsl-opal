@@ -19,30 +19,34 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class HelloCanvas
-  include Glimmer::UI::CustomShell
-  
-  body {
-    shell {
-      text 'Hello, Canvas!'
-      minimum_size 320, 400
-    
-      @canvas = canvas {
-        background :yellow
-        
-        rectangle(0, 0, 220, 400) {
-          background rgb(255, 0, 0)
-        }
-        rectangle(50, 20, 300, 150, 30, 50) {
-          background :magenta
-        }
-        polygon(250, 210, 260, 170, 270, 210, 290, 230) {
-          background :dark_yellow
-        }
-      }
-    }
-  }
-end
+require 'glimmer/swt/custom/shape'
+require 'glimmer/swt/swt_proxy'
+require 'glimmer/swt/display_proxy'
+require 'glimmer/swt/color_proxy'
+# require 'glimmer/swt/transform_proxsy'
 
-HelloCanvas.launch
-        
+module Glimmer
+  module SWT
+    module Custom
+      # Represents a shape (graphics) to be drawn on a control/widget/canvas/display
+      # That is because Shape is drawn on a parent as graphics and doesn't have an SWT widget for itself
+      class Shape
+        class Polygon < Shape
+                
+          def element
+            'polygon'
+          end
+          
+          def dom
+            shape_id = id
+            shape_class = name
+            @dom ||= xml {
+              polygon(id: shape_id, class: shape_class, points: @args.map(&:to_s).join(' '))
+            }.to_s
+          end
+          
+        end
+      end
+    end
+  end
+end

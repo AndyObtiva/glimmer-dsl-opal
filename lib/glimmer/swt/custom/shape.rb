@@ -36,7 +36,7 @@ module Glimmer
       class Shape < WidgetProxy
         include PropertyOwner
         
-        SHAPES = %[rectangle]
+        SHAPES = %[rectangle polygon]
         
         class << self
           def create(parent, keyword, args, &property_block)
@@ -91,3 +91,4 @@ module Glimmer
 end
 
 require 'glimmer/swt/custom/shape/rectangle'
+require 'glimmer/swt/custom/shape/polygon'

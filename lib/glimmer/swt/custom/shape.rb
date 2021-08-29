@@ -19,12 +19,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/swt/properties'
+require 'glimmer/swt/property_owner'
 require 'glimmer/swt/swt_proxy'
 require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/color_proxy'
 require 'glimmer/swt/font_proxy'
-require 'glimmer/swt/transform_proxy'
+# require 'glimmer/swt/transform_proxy'
+require 'glimmer/swt/point'
+require 'glimmer/swt/rectangle'
 
 module Glimmer
   module SWT
@@ -32,7 +34,7 @@ module Glimmer
       # Represents a shape (graphics) to be drawn on a control/widget/canvas/display
       # That is because Shape is drawn on a parent as graphics and doesn't have an SWT widget for itself
       class Shape < WidgetProxy
-        include Properties
+        include PropertyOwner
         
         SHAPES = %[rectangle]
         
@@ -137,6 +139,54 @@ module Glimmer
         
         def round?
           @options[:round]
+        end
+        
+        # The bounding box top-left x, y, width, height in absolute positioning
+        def bounds
+          bounds_dependencies = [absolute_x, absolute_y, calculated_width, calculated_height]
+          if bounds_dependencies != @bounds_dependencies
+            # avoid repeating calculations
+            absolute_x, absolute_y, calculated_width, calculated_height = @bounds_dependencies = bounds_dependencies
+            @bounds = Glimmer::SWT::Rectangle.new(absolute_x, absolute_y, calculated_width, calculated_height)
+          end
+          @bounds
+        end
+        
+        # The bounding box top-left x and y
+        def location
+          org.eclipse.swt.graphics.Point.new(bounds.x, bounds.y)
+        end
+        
+        # The bounding box width and height (as a Point object with x being width and y being height)
+        def size
+          size_dependencies = [calculated_width, calculated_height]
+          if size_dependencies != @size_dependencies
+            # avoid repeating calculations
+            calculated_width, calculated_height = @size_dependencies = size_dependencies
+            @size = Glimmer::SWT::Point.new(calculated_width, calculated_height)
+          end
+          @size
+        end
+        
+        def extent
+          @extent || size
+        end
+        
+        # Returns if shape contains a point
+        # Subclasses (like polygon) may override to indicate if a point x,y coordinates falls inside the shape
+        # some shapes may choose to provide a fuzz factor to make usage of this method for mouse clicking more user friendly
+        def contain?(x, y)
+          x, y = inverse_transform_point(x, y)
+          # assume a rectangular filled shape by default (works for several shapes like image, text, and focus)
+          x.between?(self.absolute_x, self.absolute_x + calculated_width.to_f) && y.between?(self.absolute_y, self.absolute_y + calculated_height.to_f)
+        end
+        
+        # Returns if shape includes a point. When the shape is filled, this is the same as contain. When the shape is drawn, it only returns true if the point lies on the edge (boundary/border)
+        # Subclasses (like polygon) may override to indicate if a point x,y coordinates falls on the edge of a drawn shape or inside a filled shape
+        # some shapes may choose to provide a fuzz factor to make usage of this method for mouse clicking more user friendly
+        def include?(x, y)
+          # assume a rectangular shape by default
+          contain?(x, y)
         end
         
         def content(&block)
@@ -783,4 +833,4 @@ module Glimmer
   
 end
 
-Dir[File.expand_path(File.join(__dir__, 'shape', '**', '*.rb'))].each {|shape_file| require(shape_file)}
+require 'glimmer/swt/custom/shape/rectangle'

@@ -36,6 +36,12 @@ class HelloCanvas
         rectangle(50, 20, 300, 150, 30, 50) {
           background :magenta
         }
+        rectangle(50, 20, 300, 150, 30, 50) {
+          foreground :yellow
+        }
+        rectangle(205, 50, 86, 97) {
+          foreground :yellow
+        }
         polygon(250, 210, 260, 170, 270, 210, 290, 230) {
           background :dark_yellow
         }

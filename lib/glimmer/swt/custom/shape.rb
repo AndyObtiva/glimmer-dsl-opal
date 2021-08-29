@@ -65,6 +65,13 @@ module Glimmer
           dom_element.css('fill', background.to_css) unless background.nil?
         end
         
+        def foreground=(value)
+          value = ColorProxy.new(value) if value.is_a?(String)
+          @foreground = value
+          dom_element.css('stroke', foreground.to_css) unless foreground.nil?
+          dom_element.css('fill', 'transparent') if background.nil?
+        end
+        
         def attach(the_parent_dom_element)
           the_parent_dom_element.html("#{the_parent_dom_element.html()}\n#{@dom}")
         end

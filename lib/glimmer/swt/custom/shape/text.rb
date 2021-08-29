@@ -29,17 +29,25 @@ module Glimmer
   module SWT
     module Custom
       class Shape
-        class Rectangle < Shape
-                
+        class Text < Shape
+        
+          # TODO override background= fill of rectangle containing text
+          def foreground=(value)
+            super(value)
+            self.background = value
+          end
+
           def element
-            'rect'
+            'text'
           end
           
           def dom
             shape_id = id
             shape_class = name
             @dom ||= xml {
-              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3], rx: @args[4], ry: @args[5])
+              tag(:_name => "text", id: shape_id, class: shape_class, x: @args[1], y: @args[2]) {
+                @args[0]
+              }
             }.to_s
           end
           

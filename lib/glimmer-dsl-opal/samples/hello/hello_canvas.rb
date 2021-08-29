@@ -42,6 +42,13 @@ class HelloCanvas
         rectangle(205, 50, 86, 97) {
           foreground :yellow
         }
+        rectangle(67, 75, 128, 38) {
+          background :yellow
+        }
+        text('Picasso', 67, 103) {
+          foreground :dark_magenta
+          font name: 'Courier', height: 30
+        }
         polygon(250, 210, 260, 170, 270, 210, 290, 230) {
           background :dark_yellow
         }

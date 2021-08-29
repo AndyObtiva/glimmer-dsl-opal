@@ -28,8 +28,6 @@ require 'glimmer/swt/color_proxy'
 module Glimmer
   module SWT
     module Custom
-      # Represents a shape (graphics) to be drawn on a control/widget/canvas/display
-      # That is because Shape is drawn on a parent as graphics and doesn't have an SWT widget for itself
       class Shape
         class Polygon < Shape
                 

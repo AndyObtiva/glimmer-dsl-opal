@@ -65,6 +65,10 @@ module Glimmer
           dom_element.css('fill', background.to_css) unless background.nil?
         end
         
+        def attach(the_parent_dom_element)
+          the_parent_dom_element.html("#{the_parent_dom_element.html()}\n#{@dom}")
+        end
+        
         def element
           'g'
         end

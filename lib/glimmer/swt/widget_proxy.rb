@@ -333,7 +333,8 @@ module Glimmer
         brand_new = @dom.nil? || old_element.empty? || brand_new
         build_dom(layout: !custom_parent_dom_element) # TODO handle custom parent layout by passing parent instead of parent dom element
         if brand_new
-          the_parent_dom_element.append(@dom) # TODO make a method attach to allow subclasses to override if needed
+          # TODO make a method attach to allow subclasses to override if needed
+          attach(the_parent_dom_element)
         else
           old_element.replace_with(@dom)
         end
@@ -349,6 +350,10 @@ module Glimmer
         content_on_render_blocks.each { |content_block| content(&content_block) } unless skip_content_on_render_blocks?
       end
       alias redraw render
+        
+      def attach(the_parent_dom_element)
+        the_parent_dom_element.append(@dom)
+      end
       
       def content_on_render_blocks
         @content_on_render_blocks ||= []
@@ -369,7 +374,7 @@ module Glimmer
       def build_dom(layout: true)
         # TODO consider passing parent element instead and having table item include a table cell widget only for opal
         @dom = nil
-        @dom = dom
+        @dom = dom # TODO unify how to build dom for most widgets based on element, id, and name (class)
         @dom = @parent.get_layout.dom(@dom) if @parent.respond_to?(:layout) && @parent.get_layout
         @dom
       end

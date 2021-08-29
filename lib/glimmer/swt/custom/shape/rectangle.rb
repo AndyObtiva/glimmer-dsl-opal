@@ -38,10 +38,10 @@ module Glimmer
           end
           
           def dom
-            shape_id = id
-            shape_class = name
-            @dom ||= html {
-              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3])
+            rectangle_id = id
+            rectangle_class = name
+            @dom ||= xml {
+              rect(id: rectangle_id, class: rectangle_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3])
             }.to_s
           end
           

@@ -33,6 +33,9 @@ class HelloCanvas
         rectangle(0, 0, 220, 400) {
           background rgb(255, 0, 0)
         }
+        rectangle(50, 20, 300, 150, 30, 50) {
+          background :magenta
+        }
       }
     }
   }

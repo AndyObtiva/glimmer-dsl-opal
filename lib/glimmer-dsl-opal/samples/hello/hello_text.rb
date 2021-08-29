@@ -97,7 +97,7 @@ class HelloText
       }
       text(:read_only, :border) {
         layout_data :fill, :center, true, false
-        text <=> [self, :read_only]
+        text <= [self, :read_only]
       }
       
       label {

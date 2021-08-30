@@ -51,6 +51,9 @@ class HelloCanvas
         rectangle(50, 200, 30, 70) {
           background :magenta
         }
+        oval(110, 310, 100, 100) {
+          background :yellow
+        }
         text('Picasso', 67, 103) {
           foreground :dark_magenta
           font name: 'Courier', height: 30

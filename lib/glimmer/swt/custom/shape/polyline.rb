@@ -29,30 +29,17 @@ module Glimmer
   module SWT
     module Custom
       class Shape
-        class Text < Shape
-        
-          def background=(value)
-            # TODO override background= to fill a rectangle containing text, matching its size
-            # For now, disable background when foreground is not set
-            super(value) unless foreground.nil?
-          end
-        
-          def foreground=(value)
-            super(value)
-            self.background = value
-          end
-
+        class Polyline < Shape
+                
           def element
-            'text'
+            'polyline'
           end
           
           def dom
             shape_id = id
             shape_class = name
             @dom ||= xml {
-              tag(:_name => 'text', id: shape_id, class: shape_class, x: @args[1], y: @args[2]) {
-                @args[0]
-              }
+              polyline(id: shape_id, class: shape_class, points: @args.map(&:to_s).join(' '))
             }.to_s
           end
           

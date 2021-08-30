@@ -36,8 +36,6 @@ module Glimmer
       class Shape < WidgetProxy
         include PropertyOwner
         
-        SHAPES = %[rectangle polygon text]
-        
         class << self
           def create(parent, keyword, args, &property_block)
             potential_shape_class_name = keyword.to_s.camelcase(:upper).to_sym
@@ -54,7 +52,10 @@ module Glimmer
           end
           
           def keywords
-            SHAPES
+            constants.select do |constant|
+              constant_value = const_get(constant)
+              constant_value.respond_to?(:ancestors) && constant_value.ancestors.include?(Glimmer::SWT::Custom::Shape)
+            end.map {|constant| constant.to_s.underscore}
           end
           
         end
@@ -98,5 +99,6 @@ module Glimmer
 end
 
 require 'glimmer/swt/custom/shape/polygon'
+require 'glimmer/swt/custom/shape/polyline'
 require 'glimmer/swt/custom/shape/rectangle'
 require 'glimmer/swt/custom/shape/text'

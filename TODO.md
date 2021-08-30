@@ -4,9 +4,12 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Support Canvas Shape DSL: point, line, arc
+- Ensure text shape does not clash with text widget
+
 ## Soon
 
-- Support Canvas Shape DSL
+- Support nested shapes with relative positioning in Canvas Shape DSL
 - Support Custom Shapes
 - Implement bevel look in Tetris sample blocks (just like in Glimmer DSL for SWT)
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)

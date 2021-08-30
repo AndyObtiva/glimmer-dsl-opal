@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2021-08-28"
+  s.date = "2021-08-30"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -181,15 +181,22 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/c_combo_proxy.rb",
     "lib/glimmer/swt/c_tab_folder_proxy.rb",
     "lib/glimmer/swt/c_tab_item_proxy.rb",
+    "lib/glimmer/swt/canvas_proxy.rb",
     "lib/glimmer/swt/checkbox_proxy.rb",
     "lib/glimmer/swt/color_proxy.rb",
     "lib/glimmer/swt/combo_proxy.rb",
     "lib/glimmer/swt/composite_proxy.rb",
     "lib/glimmer/swt/control_editor.rb",
     "lib/glimmer/swt/custom/checkbox_group.rb",
-    "lib/glimmer/swt/custom/drawable.rb",
     "lib/glimmer/swt/custom/radio_group.rb",
     "lib/glimmer/swt/custom/shape.rb",
+    "lib/glimmer/swt/custom/shape/line.rb",
+    "lib/glimmer/swt/custom/shape/oval.rb",
+    "lib/glimmer/swt/custom/shape/point.rb",
+    "lib/glimmer/swt/custom/shape/polygon.rb",
+    "lib/glimmer/swt/custom/shape/polyline.rb",
+    "lib/glimmer/swt/custom/shape/rectangle.rb",
+    "lib/glimmer/swt/custom/shape/text.rb",
     "lib/glimmer/swt/date_time_proxy.rb",
     "lib/glimmer/swt/dialog_proxy.rb",
     "lib/glimmer/swt/display_proxy.rb",
@@ -213,6 +220,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/progress_bar_proxy.rb",
     "lib/glimmer/swt/property_owner.rb",
     "lib/glimmer/swt/radio_proxy.rb",
+    "lib/glimmer/swt/rectangle.rb",
     "lib/glimmer/swt/row_layout_proxy.rb",
     "lib/glimmer/swt/scale_proxy.rb",
     "lib/glimmer/swt/scrolled_composite_proxy.rb",

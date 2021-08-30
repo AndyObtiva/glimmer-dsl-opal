@@ -145,7 +145,7 @@ Hello, Table! Game Booked
 
 NOTE: Glimmer DSL for Opal is an alpha project. Please help make better by contributing, adopting for small or low risk projects, and providing feedback. It is still an early alpha, so the more feedback and issues you report the better.
 
-**Alpha Version** 0.27.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
+**Alpha Version** 0.28.0 only supports bare-minimum capabilities for the included [samples](https://github.com/AndyObtiva/glimmer-dsl-opal#samples) (originally written for [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt))
 
 Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
 - [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt): Glimmer DSL for SWT (JRuby Desktop Development GUI Framework)
@@ -179,6 +179,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems:
       - [Hello, Radio!](#hello-radio)
       - [Hello, Radio Group!](#hello-radio-group)
       - [Hello, Group!](#hello-group)
+      - [Hello, Canvas!](#hello-canvas)
       - [Hello, C Combo!](#hello-c-combo)
       - [Hello, C Tab!](#hello-c-tab)
       - [Hello, Checkbox!](#hello-checkbox)
@@ -270,7 +271,7 @@ gem 'opal', '1.0.5'
 gem 'opal-rails', '1.1.2'
 gem 'opal-async', '~> 1.4.0'
 gem 'opal-jquery', '~> 0.4.4'
-gem 'glimmer-dsl-opal', '~> 0.27.0'
+gem 'glimmer-dsl-opal', '~> 0.28.0'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
 gem 'glimmer-dsl-css', '~> 1.2.0', require: false
 
@@ -1457,6 +1458,35 @@ Visit `http://localhost:3000`
 You should see "Hello, Group!"
 
 ![Glimmer DSL for Opal Hello Group](images/glimmer-dsl-opal-hello-group.png)
+
+#### Hello, Canvas!
+
+This is a minimal initial version of the [Hello, Canvas! sample included in Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_SAMPLES.md#hello-canvas).
+
+It supports all shapes except `arc`, with no shape nesting, data-binding, or gradient support yet.
+
+Add the following require statement to `app/assets/javascripts/application.rb`
+
+```ruby
+require 'glimmer-dsl-opal/samples/hello/hello_canvas'
+```
+
+Glimmer app on the desktop (using [`glimmer-dsl-swt`](https://github.com/AndyObtiva/glimmer-dsl-swt) gem):
+
+![Glimmer DSL for SWT Hello Canvas](https://github.com/AndyObtiva/glimmer-dsl-swt/raw/master/images/glimmer-hello-canvas.png)
+
+Glimmer app on the web (using `glimmer-dsl-opal` gem):
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see "Hello, Canvas!"
+
+![Glimmer DSL for Opal Hello Canvas](images/glimmer-dsl-opal-hello-canvas.png)
 
 #### Hello, C Combo!
 

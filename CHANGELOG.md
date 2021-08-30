@@ -1,5 +1,18 @@
 # Change Log
 
+## 0.28.0
+
+- Initial support for Canvas Shape DSL keywords (no-databinding, nesting, or gradients yet):
+ - `line`
+ - `point`
+ - `oval`
+ - `polygon`
+ - `polyline`
+ - `rectangle`
+ - `string`
+ - `text`
+- Minimal initial version of Hello, Canvas! sample
+
 ## 0.27.0
 
 - Hello, Text!

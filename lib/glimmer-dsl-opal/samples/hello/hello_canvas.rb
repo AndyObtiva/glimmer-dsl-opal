@@ -64,6 +64,11 @@ class HelloCanvas
         polyline(250, 110, 260, 70, 270, 110, 290, 130, 250, 110) {
           foreground :black
         }
+        3.times do |n|
+          line(250, 120 + n*10, 270 + n*10, 80 + n*10) {
+            foreground :yellow
+          }
+        end
       }
     }
   }

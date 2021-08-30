@@ -100,6 +100,7 @@ module Glimmer
   
 end
 
+require 'glimmer/swt/custom/shape/line'
 require 'glimmer/swt/custom/shape/oval'
 require 'glimmer/swt/custom/shape/polygon'
 require 'glimmer/swt/custom/shape/polyline'

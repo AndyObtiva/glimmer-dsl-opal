@@ -23,7 +23,7 @@ require 'glimmer/swt/custom/shape'
 require 'glimmer/swt/swt_proxy'
 require 'glimmer/swt/display_proxy'
 require 'glimmer/swt/color_proxy'
-# require 'glimmer/swt/transform_proxsy'
+# require 'glimmer/swt/transform_proxy'
 
 module Glimmer
   module SWT

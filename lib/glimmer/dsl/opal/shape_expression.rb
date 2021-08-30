@@ -23,7 +23,6 @@ require 'glimmer/dsl/expression'
 require 'glimmer/dsl/parent_expression'
 require 'glimmer/swt/swt_proxy'
 require 'glimmer/swt/custom/shape'
-require 'glimmer/swt/custom/drawable'
 
 module Glimmer
   module DSL
@@ -32,7 +31,7 @@ module Glimmer
         include ParentExpression
         
         def can_interpret?(parent, keyword, *args, &block)
-          (parent.is_a?(Glimmer::SWT::Custom::Drawable) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
+          (parent.is_a?(Glimmer::SWT::WidgetProxy) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
             Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block)
         end
         

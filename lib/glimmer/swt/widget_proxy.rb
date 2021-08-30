@@ -22,7 +22,6 @@
 require 'glimmer/swt/event_listener_proxy'
 require 'glimmer/swt/property_owner'
 require 'glimmer/swt/swt_proxy'
-require 'glimmer/swt/custom/drawable'
 
 # TODO implement menu (which delays building it till render using add_content_on_render)
 
@@ -31,7 +30,6 @@ module Glimmer
     class WidgetProxy
       include Glimmer
       include PropertyOwner
-      include Custom::Drawable
             
       Event = Struct.new(:widget, keyword_init: true)
     
@@ -336,7 +334,7 @@ module Glimmer
           # TODO make a method attach to allow subclasses to override if needed
           attach(the_parent_dom_element)
         else
-          old_element.replace_with(@dom)
+          reattach(old_element)
         end
         observation_requests&.each do |keyword, event_listener_set|
           event_listener_set.each do |event_listener|
@@ -353,6 +351,10 @@ module Glimmer
         
       def attach(the_parent_dom_element)
         the_parent_dom_element.append(@dom)
+      end
+        
+      def reattach(old_element)
+        old_element.replace_with(@dom)
       end
       
       def content_on_render_blocks

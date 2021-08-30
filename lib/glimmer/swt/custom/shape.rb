@@ -90,6 +90,8 @@ module Glimmer
           }.to_s
         end
         
+        # TODO implement shape_at_location potentially with document.elementFromPoint(x, y);
+        
       end
       
     end

@@ -27,7 +27,7 @@ class HelloCanvas
       text 'Hello, Canvas!'
       minimum_size 320, 400
     
-      @canvas = canvas {
+      canvas {
         background :yellow
         
         rectangle(0, 0, 220, 400) {

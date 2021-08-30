@@ -57,6 +57,7 @@ module Glimmer
           end
           
         end
+        String = Text
       end
     end
   end

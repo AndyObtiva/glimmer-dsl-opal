@@ -393,6 +393,16 @@ Event loop:
 - `display`: featured in [Tic Tac Toe](#tic-tac-toe)
 - `async_exec`: featured in [Hello, Custom Widget!](#hello-custom-widget) / [Hello, Custom Shell!](#hello-custom-shell)
 
+Canvas Shape DSL:
+- `line`
+- `point`
+- `oval`
+- `polygon`
+- `polyline`
+- `rectangle`
+- `string`
+- `text`
+
 ## Samples
 
 Follow the instructions below to try out [glimmer-dsl-swt](https://github.com/AndyObtiva/glimmer-dsl-swt) samples webified via [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal)

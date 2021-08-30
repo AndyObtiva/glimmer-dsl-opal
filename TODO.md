@@ -12,6 +12,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Support nested shapes with relative positioning in Canvas Shape DSL
 - Support Custom Shapes
 - Implement bevel look in Tetris sample blocks (just like in Glimmer DSL for SWT)
+- Consider supporting canvas drawing via on_paint_control listener as an alternative to Canvas Shape DSL
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
 - Support mutation operations on File instances on server (or consider a database abstraction alternative)
 - Support building image objects on the spot with Canvas Shape DSL (consider SVG as the format)

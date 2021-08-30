@@ -102,6 +102,7 @@ end
 
 require 'glimmer/swt/custom/shape/line'
 require 'glimmer/swt/custom/shape/oval'
+require 'glimmer/swt/custom/shape/point'
 require 'glimmer/swt/custom/shape/polygon'
 require 'glimmer/swt/custom/shape/polyline'
 require 'glimmer/swt/custom/shape/rectangle'

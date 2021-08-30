@@ -69,6 +69,11 @@ class HelloCanvas
             foreground :yellow
           }
         end
+        10.times do |n|
+          point(220 + n*5, 100 + n*5) {
+            foreground :yellow
+          }
+        end
       }
     }
   }

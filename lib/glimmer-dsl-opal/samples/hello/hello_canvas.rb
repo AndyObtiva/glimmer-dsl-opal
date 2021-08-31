@@ -22,6 +22,10 @@
 class HelloCanvas
   include Glimmer::UI::CustomShell
   
+  before_body do
+    @image_object = image(File.expand_path('./images/scaffold_app.png', __dir__), width: 50)
+  end
+  
   body {
     shell {
       text 'Hello, Canvas!'
@@ -61,6 +65,7 @@ class HelloCanvas
           foreground :dark_magenta
           font name: 'Courier', height: 30
         }
+        image(@image_object, 205, 55)
         polygon(250, 210, 260, 170, 270, 210, 290, 230) {
           background :dark_yellow
         }

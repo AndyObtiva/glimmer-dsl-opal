@@ -19,36 +19,36 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require 'glimmer/dsl/expression'
-require 'glimmer/dsl/parent_expression'
-require 'glimmer/swt/swt_proxy'
 require 'glimmer/swt/custom/shape'
+require 'glimmer/swt/swt_proxy'
+require 'glimmer/swt/display_proxy'
+require 'glimmer/swt/color_proxy'
+require 'glimmer/swt/image_proxy'
+# require 'glimmer/swt/transform_proxy'
 
 module Glimmer
-  module DSL
-    module Opal
-      class ShapeExpression < Expression
-        include ParentExpression
+  module SWT
+    module Custom
+      class Shape
+        class Image < Shape
         
-        def can_interpret?(parent, keyword, *args, &block)
-          (parent.is_a?(Glimmer::SWT::WidgetProxy) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
-            Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block) and
-            (keyword != 'text' || args.size >= 3)
+          def element
+            'image'
+          end
+          
+          def dom
+            shape_id = id
+            shape_class = name
+            href = @args[0].is_a?(Glimmer::SWT::ImageProxy) ? @args[0].file_path : @args[0]
+            width = @args[0].is_a?(Glimmer::SWT::ImageProxy) ? @args[0].width : nil
+            height = @args[0].is_a?(Glimmer::SWT::ImageProxy) ? @args[0].height : nil
+            @dom ||= xml {
+              image(id: shape_id, class: shape_class, href: href, x: @args[1], y: @args[2], width: width, height: height)
+            }.to_s
+          end
+          
         end
-        
-        def interpret(parent, keyword, *args, &block)
-          Glimmer::SWT::Custom::Shape.create(parent, keyword, args, &block)
-        end
-        
-        def add_content(parent, keyword, *args, &block)
-          super(parent, keyword, *args, &block)
-          parent.post_add_content
-        end
-      
       end
-      
     end
-    
   end
-  
 end

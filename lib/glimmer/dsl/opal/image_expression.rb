@@ -20,35 +20,48 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'glimmer/dsl/expression'
+require 'glimmer/dsl/top_level_expression'
 require 'glimmer/dsl/parent_expression'
-require 'glimmer/swt/swt_proxy'
-require 'glimmer/swt/custom/shape'
+require 'glimmer/swt/image_proxy'
 
 module Glimmer
   module DSL
     module Opal
-      class ShapeExpression < Expression
+      # image expression
+      # Note: Cannot be a static expression because it clashes with image property expression
+      class ImageExpression < Expression
+        include TopLevelExpression
         include ParentExpression
         
         def can_interpret?(parent, keyword, *args, &block)
-          (parent.is_a?(Glimmer::SWT::WidgetProxy) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
-            Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block) and
-            (keyword != 'text' || args.size >= 3)
+          options = args.last.is_a?(Hash) ? args.last : {}
+          (
+            (keyword == 'image') and
+            (
+              options.keys.include?(:top_level) or
+              (
+                !parent.is_a?(Glimmer::SWT::Custom::Shape) &&
+                !parent.is_a?(Glimmer::SWT::CanvasProxy)
+              ) or
+              (
+                args.size < 3
+              )
+            )
+          )
         end
-        
+  
         def interpret(parent, keyword, *args, &block)
-          Glimmer::SWT::Custom::Shape.create(parent, keyword, args, &block)
+#           options = args.last.is_a?(Hash) ? args.last : {}
+#           args.unshift(parent) unless parent.nil? || options[:top_level]
+          Glimmer::SWT::ImageProxy.create(*args, &block)
         end
-        
+
         def add_content(parent, keyword, *args, &block)
-          super(parent, keyword, *args, &block)
+          return if @create_pixel_by_pixel || block&.parameters&.count == 2
+          super
           parent.post_add_content
         end
-      
       end
-      
     end
-    
   end
-  
 end

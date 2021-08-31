@@ -101,6 +101,7 @@ module Glimmer
 end
 
 require 'glimmer/swt/custom/shape/arc'
+require 'glimmer/swt/custom/shape/image'
 require 'glimmer/swt/custom/shape/line'
 require 'glimmer/swt/custom/shape/oval'
 require 'glimmer/swt/custom/shape/point'

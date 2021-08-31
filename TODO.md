@@ -9,6 +9,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
+- Switch arc implementation to p5.js (p5js.org & https://github.com/zenozeng/p5.js-svg), which better matches the SWT arc implementation with regards to honoring both oval/ellipse width and height
 - Support nested shapes with relative positioning in Canvas Shape DSL
 - Support Custom Shapes
 - Implement bevel look in Tetris sample blocks (just like in Glimmer DSL for SWT)

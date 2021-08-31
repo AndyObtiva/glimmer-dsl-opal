@@ -31,6 +31,7 @@ require 'glimmer/dsl/opal/dialog_expression'
 require 'glimmer/dsl/opal/shape_expression'
 require 'glimmer/dsl/opal/shine_data_binding_expression'
 require 'glimmer/dsl/opal/shape_expression'
+require 'glimmer/dsl/opal/image_expression'
 
 module Glimmer
   module DSL
@@ -47,6 +48,7 @@ module Glimmer
          checkbox_group_selection_data_binding
          data_binding
          font
+         image
          layout
          block_property
          property

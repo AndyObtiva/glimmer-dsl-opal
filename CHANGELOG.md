@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.28.2
+
+- Support `image` Canvas Shape DSL keyword
+- Use `image` in Hello, Canvas! sample
+
 ## 0.28.1
 
 - Support `arc` Canvas Shape DSL keyword (partial support whereby width is assumed to be equal to height to start from a circle basis)

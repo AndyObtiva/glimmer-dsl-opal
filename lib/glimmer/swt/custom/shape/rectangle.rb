@@ -39,7 +39,7 @@ module Glimmer
             shape_id = id
             shape_class = name
             @dom ||= xml {
-              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3], rx: @args[4], ry: @args[5])
+              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3], rx: @args[4].to_f/2.0, ry: @args[5].to_f/2.0)
             }.to_s
           end
           

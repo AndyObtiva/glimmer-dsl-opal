@@ -30,6 +30,9 @@ module Glimmer
     module Custom
       class Shape
         class Line < Shape
+          def parameter_names
+            [:x1, :y1, :x2, :y2]
+          end
                 
           def element
             'line'

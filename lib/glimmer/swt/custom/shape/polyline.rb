@@ -30,6 +30,9 @@ module Glimmer
     module Custom
       class Shape
         class Polyline < Shape
+          def parameter_names
+            [:point_array]
+          end
                 
           def element
             'polyline'

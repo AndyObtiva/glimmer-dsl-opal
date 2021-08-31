@@ -30,7 +30,39 @@ module Glimmer
     module Custom
       class Shape
         class Text < Shape
-        
+          def parameter_names
+            @parameter_names || text_parameter_names
+          end
+          
+          def possible_parameter_names
+            # TODO refactor and improve this method through meta-programming (and share across other shapes)
+            (text_parameter_names) #+ text_transparent_parameter_names + text_flags_parameter_names).uniq
+          end
+          
+          def text_parameter_names
+            [:string, :x, :y]
+          end
+          
+          def text_transparent_parameter_names
+            [:string, :x, :y, :is_transparent]
+          end
+          
+          def text_flags_parameter_names
+            [:string, :x, :y, :flags]
+          end
+          
+          def set_parameter_attribute(attribute_name, *args)
+            return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+            if text_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = text_parameter_names
+            elsif text_transparent_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = text_transparent_parameter_names
+            elsif text_flags_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = text_flags_parameter_names
+            end
+            super(attribute_name, *args)
+          end
+          
           def background=(value)
             # TODO override background= to fill a rectangle containing text, matching its size
             # For now, disable background when foreground is not set

@@ -4,11 +4,15 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Support Canvas Shape DSL: point, line, arc
 - Ensure text shape does not clash with text widget
 
 ## Soon
 
+- Canvas Shape DSL data-binding
+- Canvas Shape DSL gradient patterns
+- Support drag & drop for widgets
+- Canvas Shape DSL events (on_mouse_up, on_drag_detected, etc...)
+- Use Canvas Shape DSL outside of Canvas (in any widget)
 - Switch arc implementation to p5.js (p5js.org & https://github.com/zenozeng/p5.js-svg), which better matches the SWT arc implementation with regards to honoring both oval/ellipse width and height
 - Support nested shapes with relative positioning in Canvas Shape DSL
 - Support Custom Shapes

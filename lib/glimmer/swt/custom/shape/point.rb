@@ -30,6 +30,9 @@ module Glimmer
     module Custom
       class Shape
         class Point < Shape
+          def parameter_names
+            [:x, :y]
+          end
                 
           def element
             'rect'

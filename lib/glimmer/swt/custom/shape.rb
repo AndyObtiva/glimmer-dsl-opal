@@ -61,16 +61,98 @@ module Glimmer
         end
         
         def background=(value)
-          value = ColorProxy.new(value) if value.is_a?(String)
+          value = ColorProxy.new(value) if value.is_a?(String) || value.is_a?(Symbol)
           @background = value
           dom_element.css('fill', background.to_css) unless background.nil?
         end
         
         def foreground=(value)
-          value = ColorProxy.new(value) if value.is_a?(String)
+          value = ColorProxy.new(value) if value.is_a?(String) || value.is_a?(Symbol)
           @foreground = value
           dom_element.css('stroke', foreground.to_css) unless foreground.nil?
           dom_element.css('fill', 'transparent') if background.nil?
+        end
+        
+        # parameter names for arguments to pass to SWT GC.xyz method for rendering shape (e.g. draw_image(image, x, y) yields :image, :x, :y parameter names)
+        def parameter_names
+          [:x, :y, :width, :height]
+        end
+        
+        # subclasses may override to specify location parameter names if different from x and y (e.g. all polygon points are location parameters)
+        # used in calculating movement changes
+        def location_parameter_names
+          [:x, :y]
+        end
+        
+        def possible_parameter_names
+          parameter_names
+        end
+        
+        def parameter_name?(attribute_name)
+          possible_parameter_names.map(&:to_s).include?(attribute_getter(attribute_name))
+        end
+        
+        def current_parameter_name?(attribute_name)
+          parameter_names.include?(attribute_name.to_s.to_sym)
+        end
+        
+        def parameter_index(attribute_name)
+          parameter_names.index(attribute_name.to_s.to_sym)
+        end
+        
+        def get_parameter_attribute(attribute_name)
+          @args[parameter_index(attribute_getter(attribute_name))]
+        end
+        
+        def set_parameter_attribute(attribute_name, *args)
+          @args[parameter_index(attribute_getter(attribute_name))] = args.size == 1 ? args.first : args
+        end
+        
+        def has_attribute?(attribute_name, *args)
+          parameter_name?(attribute_name) or
+            (respond_to?(attribute_name, super: true) and respond_to?(attribute_setter(attribute_name), super: true))
+        end
+        
+        def set_attribute(attribute_name, *args)
+          attribute_getter_name = attribute_getter(attribute_name)
+          attribute_setter_name = attribute_setter(attribute_name)
+          if parameter_name?(attribute_name)
+            return if attribute_getter_name == (args.size == 1 ? args.first : args)
+            set_parameter_attribute(attribute_getter_name, *args)
+          elsif (respond_to?(attribute_name, super: true) and respond_to?(attribute_setter_name, super: true))
+            return if self.send(attribute_getter_name) == (args.size == 1 ? args.first : args)
+            self.send(attribute_setter_name, *args)
+          end
+        end
+        
+        def get_attribute(attribute_name)
+          if parameter_name?(attribute_name)
+            arg_index = parameter_index(attribute_name)
+            @args[arg_index] if arg_index
+          elsif (respond_to?(attribute_name, super: true) and respond_to?(attribute_setter(attribute_name), super: true))
+            self.send(attribute_name)
+          end
+        end
+        
+        # TODO look why image is not working with the method_missing and respond_to? on shape
+        def method_missing(method_name, *args, &block)
+          if method_name.to_s.end_with?('=')
+            set_attribute(method_name, *args)
+          elsif has_attribute?(method_name)
+            get_attribute(method_name)
+          else # TODO support proxying calls to handle_observation_request for listeners just like WidgetProxy
+            super(method_name, *args, &block)
+          end
+        end
+
+        def respond_to?(method_name, *args, &block)
+          options = args.last if args.last.is_a?(Hash)
+          super_invocation = options && options[:super]
+          if !super_invocation && has_attribute?(method_name)
+            true
+          else
+            super(method_name, *args, &block)
+          end
         end
         
         def attach(the_parent_dom_element)

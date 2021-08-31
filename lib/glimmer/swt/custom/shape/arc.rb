@@ -30,6 +30,9 @@ module Glimmer
     module Custom
       class Shape
         class Arc < Shape
+          def parameter_names
+            [:x, :y, :width, :height, :start_angle, :arc_angle]
+          end
         
           def post_add_content
             @performing_post_add_content = true

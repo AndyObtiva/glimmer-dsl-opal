@@ -31,6 +31,33 @@ module Glimmer
     module Custom
       class Shape
         class Image < Shape
+          def parameter_names
+            @parameter_names || image_whole_parameter_names
+          end
+        
+          def possible_parameter_names
+            image_whole_parameter_names
+#             (+ image_part_parameter_names).uniq
+          end
+          
+          def image_part_parameter_names
+            [:image, :src_x, :src_y, :src_width, :src_height, :dest_x, :dest_y, :dest_width, :dest_height]
+          end
+          
+          def image_whole_parameter_names
+            [:image, :x, :y]
+          end
+          
+          def set_parameter_attribute(attribute_name, *args)
+            return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+            ####TODO refactor and improve this method through meta-programming (and share across other shapes)
+            if image_part_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = image_part_parameter_names
+            elsif image_whole_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = image_whole_parameter_names
+            end
+            super(attribute_name, *args)
+          end
         
           def element
             'image'

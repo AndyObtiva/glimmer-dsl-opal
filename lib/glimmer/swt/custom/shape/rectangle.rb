@@ -30,6 +30,47 @@ module Glimmer
     module Custom
       class Shape
         class Rectangle < Shape
+        
+          def parameter_names
+            @parameter_names || rectangle_parameter_names
+          end
+          
+          def possible_parameter_names
+            # TODO refactor and improve this method through meta-programming (and share across other shapes)
+            (rectangle_round_parameter_names + rectangle_parameter_names).uniq
+#             rectangle_gradient_parameter_names + rectangle_rectangle_parameter_names).uniq
+          end
+          
+          def rectangle_round_parameter_names
+            [:x, :y, :width, :height, :arc_width, :arc_height]
+          end
+          
+          def rectangle_gradient_parameter_names
+            [:x, :y, :width, :height, :vertical]
+          end
+          
+          def rectangle_parameter_names
+            [:x, :y, :width, :height]
+          end
+          
+          def rectangle_rectangle_parameter_names
+            # this receives a Rectangle object
+            [:rectangle]
+          end
+          
+          def set_parameter_attribute(attribute_name, *args)
+            return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+            if rectangle_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = rectangle_parameter_names
+            elsif rectangle_round_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = rectangle_round_parameter_names
+            elsif rectangle_gradient_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = rectangle_gradient_parameter_names
+            elsif rectangle_rectangle_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = rectangle_rectangle_parameter_names
+            end
+            super(attribute_name, *args)
+          end
                 
           def element
             'rect'
@@ -39,7 +80,7 @@ module Glimmer
             shape_id = id
             shape_class = name
             @dom ||= xml {
-              rect(id: shape_id, class: shape_class, x: @args[0], y: @args[1], width: @args[2], height: @args[3], rx: @args[4].to_f/2.0, ry: @args[5].to_f/2.0)
+              rect(id: shape_id, class: shape_class, x: x, y: y, width: width, height: height, rx: @args[4].to_f/2.0, ry: @args[5].to_f/2.0)
             }.to_s
           end
           

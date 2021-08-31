@@ -30,21 +30,40 @@ module Glimmer
     module Custom
       class Shape
         class Arc < Shape
+        
+          def post_add_content
+            @performing_post_add_content = true
+            render
+            @performing_post_add_content = false
+          end
+          
+          def background=(value)
+            super(value)
+            self.foreground = value
+          end
 
           def render(custom_parent_dom_element: nil, brand_new: false)
-            the_parent_element = document.getElementById(parent.id)
-            params = { type: Native(`Two`).Types.svg }
-            two = Native(`Two`).new(params).appendTo(the_parent_element)
+            return unless @performing_post_add_content
+            the_parent_element = Native(`document.getElementById(#{parent.id})`)
+            params = { type: `Two.Types.svg` }
+            two = Native(`new Two(#{params})`)
+            two.appendTo(the_parent_element)
             x = @args[0]
             y = @args[1]
             width = @args[2]
             height = @args[3]
+            start_angle = -1*@args[4]
+            arc_angle = -1*@args[5]
+            end_angle = start_angle + arc_angle
             rx = width / 2.0
             ry = height / 2.0
             cx = x + rx
             cy = y + ry
             # TODO finish implementation connecting args with makeArcSegment method (currently containing static data)
-            arc = two.makeArcSegment(150, 150, 0, 35, 2*Math.PI*(-90)/360, 2*Math.PI*(-90 + 77)/360);
+            arc = two.makeArcSegment(cx, cy, 0, ry, 2*`Math.PI`*(start_angle)/360.0, 2*`Math.PI`*(end_angle)/360.0);
+            arc.fill = background.to_css unless background.nil?
+            arc.stroke = foreground.to_css unless foreground.nil?
+            two.update
           end
                     
         end

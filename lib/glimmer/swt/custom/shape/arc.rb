@@ -59,7 +59,6 @@ module Glimmer
             ry = height / 2.0
             cx = x + rx
             cy = y + ry
-            # TODO finish implementation connecting args with makeArcSegment method (currently containing static data)
             arc = two.makeArcSegment(cx, cy, 0, ry, 2*`Math.PI`*(start_angle)/360.0, 2*`Math.PI`*(end_angle)/360.0);
             arc.fill = background.to_css unless background.nil?
             arc.stroke = foreground.to_css unless foreground.nil?

@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["AndyMaleh".freeze]
-  s.date = "2021-08-30"
+  s.date = "2021-08-31"
   s.description = "Glimmer DSL for Opal on Rails (Pure Ruby Web GUI and Auto-Webifier of Desktop Apps)".freeze
   s.email = "andy.am@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -131,6 +131,7 @@ Gem::Specification.new do |s|
     "lib/glimmer-dsl-opal/vendor/jquery-ui/jquery-ui.theme.min.css",
     "lib/glimmer-dsl-opal/vendor/jquery-ui/package.json",
     "lib/glimmer-dsl-opal/vendor/jquery.js",
+    "lib/glimmer-dsl-opal/vendor/two.min.js",
     "lib/glimmer-dsl-swt.rb",
     "lib/glimmer/config.rb",
     "lib/glimmer/config/opal_logger.rb",
@@ -190,6 +191,7 @@ Gem::Specification.new do |s|
     "lib/glimmer/swt/custom/checkbox_group.rb",
     "lib/glimmer/swt/custom/radio_group.rb",
     "lib/glimmer/swt/custom/shape.rb",
+    "lib/glimmer/swt/custom/shape/arc.rb",
     "lib/glimmer/swt/custom/shape/line.rb",
     "lib/glimmer/swt/custom/shape/oval.rb",
     "lib/glimmer/swt/custom/shape/point.rb",

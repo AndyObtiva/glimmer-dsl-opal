@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.28.1
+
+- Support `arc` Canvas Shape DSL keyword (partial support whereby width is assumed to be equal to height to start from a circle basis)
+- Use `arc` in Hello, Canvas! sample
+
 ## 0.28.0
 
 - Initial support for Canvas Shape DSL keywords (no-databinding, nesting, or gradients yet):

@@ -55,12 +55,20 @@ module Glimmer
           def set_parameter_attribute(attribute_name, *args)
             return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
             ####TODO refactor and improve this method through meta-programming (and share across other shapes)
-            if image_part_parameter_names.map(&:to_s).include?(attribute_name.to_s)
-              @parameter_names = image_part_parameter_names
-            elsif image_whole_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+            if image_whole_parameter_names.map(&:to_s).include?(attribute_name.to_s)
               @parameter_names = image_whole_parameter_names
+            elsif image_part_parameter_names.map(&:to_s).include?(attribute_name.to_s)
+              @parameter_names = image_part_parameter_names
             end
             super(attribute_name, *args)
+          end
+              
+          def reattach(old_element)
+            old_element.attr('href', Element[@dom].attr('href'))
+            old_element.attr('x', Element[@dom].attr('x'))
+            old_element.attr('y', Element[@dom].attr('y'))
+            old_element.attr('width', Element[@dom].attr('width'))
+            old_element.attr('height', Element[@dom].attr('height'))
           end
         
           def element

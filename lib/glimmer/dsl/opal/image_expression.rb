@@ -42,9 +42,6 @@ module Glimmer
               (
                 !parent.is_a?(Glimmer::SWT::Custom::Shape) &&
                 !parent.is_a?(Glimmer::SWT::CanvasProxy)
-              ) or
-              (
-                args.size < 3
               )
             )
           )

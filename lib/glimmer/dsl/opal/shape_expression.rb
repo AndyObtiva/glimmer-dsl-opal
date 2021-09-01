@@ -33,7 +33,7 @@ module Glimmer
         def can_interpret?(parent, keyword, *args, &block)
           (parent.is_a?(Glimmer::SWT::WidgetProxy) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
             Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block) and
-            (keyword != 'text' || args.size >= 3)
+            ((keyword != 'text' && keyword != 'image') || args.size >= 3 || (args.empty? && block_given?))
         end
         
         def interpret(parent, keyword, *args, &block)

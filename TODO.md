@@ -10,6 +10,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 - Canvas Shape DSL data-binding
 - Canvas Shape DSL gradient patterns
+- Support Canvas Shape DSL extra shape parameter possibilities (e.g. text shape receiving is_transparent parmeter)
 - Support drag & drop for widgets
 - Canvas Shape DSL events (on_mouse_up, on_drag_detected, etc...)
 - Use Canvas Shape DSL outside of Canvas (in any widget)

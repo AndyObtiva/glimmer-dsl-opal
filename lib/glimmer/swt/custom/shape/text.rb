@@ -31,12 +31,19 @@ module Glimmer
       class Shape
         class Text < Shape
           def parameter_names
+            if text_parameter_names.size == @args.size
+              @parameter_names = text_parameter_names
+            elsif text_transparent_parameter_names.size == @args.size
+              @parameter_names = text_transparent_parameter_names
+            elsif text_flags_parameter_names.size == @args.size
+              @parameter_names = text_flags_parameter_names
+            end
             @parameter_names || text_parameter_names
           end
           
           def possible_parameter_names
             # TODO refactor and improve this method through meta-programming (and share across other shapes)
-            (text_parameter_names) #+ text_transparent_parameter_names + text_flags_parameter_names).uniq
+            (text_parameter_names + text_transparent_parameter_names + text_flags_parameter_names).uniq
           end
           
           def text_parameter_names

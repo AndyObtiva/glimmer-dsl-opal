@@ -32,13 +32,23 @@ module Glimmer
         class Rectangle < Shape
         
           def parameter_names
+            if @parameter_names.nil?
+              if rectangle_parameter_names.size == @args.size
+                @parameter_names = rectangle_parameter_names
+              elsif rectangle_round_parameter_names.size == @args.size
+                @parameter_names = rectangle_round_parameter_names
+              elsif rectangle_gradient_parameter_names.size == @args.size
+                @parameter_names = rectangle_gradient_parameter_names
+              elsif rectangle_rectangle_parameter_names.size == @args.size
+                @parameter_names = rectangle_rectangle_parameter_names
+              end
+            end
             @parameter_names || rectangle_parameter_names
           end
           
           def possible_parameter_names
             # TODO refactor and improve this method through meta-programming (and share across other shapes)
-            (rectangle_round_parameter_names + rectangle_parameter_names).uniq
-#             rectangle_gradient_parameter_names + rectangle_rectangle_parameter_names).uniq
+            (rectangle_round_parameter_names + rectangle_parameter_names + rectangle_gradient_parameter_names + rectangle_rectangle_parameter_names).uniq
           end
           
           def rectangle_round_parameter_names

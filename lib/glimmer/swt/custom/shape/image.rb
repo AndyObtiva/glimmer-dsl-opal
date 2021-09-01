@@ -32,12 +32,16 @@ module Glimmer
       class Shape
         class Image < Shape
           def parameter_names
+            if image_whole_parameter_names.size == @args.size
+              @parameter_names = image_whole_parameter_names
+            elsif image_part_parameter_names.size == @args.size
+              @parameter_names = image_part_parameter_names
+            end
             @parameter_names || image_whole_parameter_names
           end
         
           def possible_parameter_names
-            image_whole_parameter_names
-#             (+ image_part_parameter_names).uniq
+            (image_whole_parameter_names + image_part_parameter_names).uniq
           end
           
           def image_part_parameter_names

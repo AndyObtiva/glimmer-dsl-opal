@@ -295,6 +295,7 @@ module Glimmer
       end
       
       def font=(value)
+        return if value.nil?
         @font = value.is_a?(FontProxy) ? value : FontProxy.new(self, value)
         dom_element.css('font-family', @font.name) unless @font.nil?
         dom_element.css('font-style', 'italic') if @font&.style == :italic || [@font&.style].flatten.compact.include?(:italic)

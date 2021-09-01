@@ -73,6 +73,18 @@ module Glimmer
           dom_element.css('fill', 'transparent') if background.nil?
         end
         
+        def post_add_content
+          # TODO avoid rendering unless args changed from initialize args (due to setting of piecemeal attributes)
+          render
+        end
+        
+        def render(custom_parent_dom_element: nil, brand_new: false)
+          super(custom_parent_dom_element: nil, brand_new: false)
+          self.background = background
+          self.foreground = foreground
+          self.font = font
+        end
+        
         # parameter names for arguments to pass to SWT GC.xyz method for rendering shape (e.g. draw_image(image, x, y) yields :image, :x, :y parameter names)
         def parameter_names
           [:x, :y, :width, :height]

@@ -1,11 +1,10 @@
 require 'glimmer/dsl/expression'
+require 'glimmer/swt/custom/shape'
 
 module Glimmer
   module DSL
     module Opal
       class PropertyExpression < StaticExpression
-        include TopLevelExpression
-
         def can_interpret?(parent, keyword, *args, &block)
           parent and
             (!args.empty?) and

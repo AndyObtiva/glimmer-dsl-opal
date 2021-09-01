@@ -21,7 +21,7 @@
 
 class HelloCanvas
   include Glimmer::UI::CustomShell
-          
+        
   before_body do
     @image_object = image(File.expand_path('./images/scaffold_app.png', __dir__), width: 50)
   end
@@ -34,11 +34,7 @@ class HelloCanvas
       canvas {
         background :yellow
         
-        rectangle {
-          x 0
-          y 0
-          width 220
-          height 400
+        rectangle(0, 0, 220, 400) {
           background rgb(255, 0, 0)
         }
         rectangle(50, 20, 300, 150, 30, 50) {

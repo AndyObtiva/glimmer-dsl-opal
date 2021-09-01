@@ -53,7 +53,11 @@ module Glimmer
           end
           
           def set_parameter_attribute(attribute_name, *args)
-            return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+            if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+              super(attribute_name, *args)
+              reattach(dom_element)
+              return
+            end
             ####TODO refactor and improve this method through meta-programming (and share across other shapes)
             if image_whole_parameter_names.map(&:to_s).include?(attribute_name.to_s)
               @parameter_names = image_whole_parameter_names

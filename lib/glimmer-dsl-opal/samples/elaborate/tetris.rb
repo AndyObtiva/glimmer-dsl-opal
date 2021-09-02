@@ -29,7 +29,7 @@ require_relative 'tetris/view/tetris_menu_bar'
 class Tetris
   include Glimmer::UI::CustomShell
   
-  BLOCK_SIZE = 7
+  BLOCK_SIZE = 37
   FONT_NAME = 'Menlo'
   FONT_TITLE_HEIGHT = 32
   FONT_TITLE_STYLE = :bold
@@ -143,7 +143,7 @@ class Tetris
   def show_about_dialog
     message_box {
       text 'Glimmer Tetris'
-      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nUse arrow keys for movement\nand right/left alt/shift keys for rotation\nAlternatively:\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\n\nCopyright (c) 2007-2021 Andy Maleh"
+      message "Glimmer Tetris\n\nGlimmer DSL for SWT Sample\n\nLeft is A\nRight is D\nDown is S\nUp is W\nRotate Left is Q\nRotate Right is E\nAlternatively:\nUse arrow keys for movement\nand right/left alt/shift keys for rotation\n\nCopyright (c) 2007-2021 Andy Maleh"
     }.open
   end
 end

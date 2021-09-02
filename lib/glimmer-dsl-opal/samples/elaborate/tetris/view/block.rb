@@ -25,10 +25,54 @@ class Tetris
       include Glimmer::UI::CustomWidget
   
       options :game_playfield, :block_size, :row, :column
+      
+      attr_accessor :bevel_pixel_size
+      
+      before_body do
+        self.bevel_pixel_size = 0.16*block_size.to_f
+      end
   
       body {
         canvas { |canvas_proxy|
           background <= [game_playfield[row][column], :color]
+          polygon(0, 0, block_size, 0, block_size - bevel_pixel_size, bevel_pixel_size, bevel_pixel_size, bevel_pixel_size) {
+            background <= [game_playfield[row][column], :color, on_read: ->(color_value) {
+              unless color_value.nil?
+                color = color(color_value)
+                rgb(color.red + 4*BEVEL_CONSTANT, color.green + 4*BEVEL_CONSTANT, color.blue + 4*BEVEL_CONSTANT)
+              end
+            }]
+          }
+          polygon(block_size, 0, block_size - bevel_pixel_size, bevel_pixel_size, block_size - bevel_pixel_size, block_size - bevel_pixel_size, block_size, block_size) {
+            background <= [game_playfield[row][column], :color, on_read: ->(color_value) {
+              unless color_value.nil?
+                color = color(color_value)
+                rgb(color.red - BEVEL_CONSTANT, color.green - BEVEL_CONSTANT, color.blue - BEVEL_CONSTANT)
+              end
+            }]
+          }
+          polygon(block_size, block_size, 0, block_size, bevel_pixel_size, block_size - bevel_pixel_size, block_size - bevel_pixel_size, block_size - bevel_pixel_size) {
+            background <= [game_playfield[row][column], :color, on_read: ->(color_value) {
+              unless color_value.nil?
+                color = color(color_value)
+                rgb(color.red - 2*BEVEL_CONSTANT, color.green - 2*BEVEL_CONSTANT, color.blue - 2*BEVEL_CONSTANT)
+              end
+            }]
+          }
+          polygon(0, 0, 0, block_size, bevel_pixel_size, block_size - bevel_pixel_size, bevel_pixel_size, bevel_pixel_size) {
+            background <= [game_playfield[row][column], :color, on_read: ->(color_value) {
+              unless color_value.nil?
+                color = color(color_value)
+                rgb(color.red - BEVEL_CONSTANT, color.green - BEVEL_CONSTANT, color.blue - BEVEL_CONSTANT)
+              end
+            }]
+          }
+          rectangle(0, 0, block_size, block_size) {
+            foreground <= [game_playfield[row][column], :color, on_read: ->(color_value) {
+              color_value == Model::Block::COLOR_CLEAR ? :gray : color_value
+            }]
+          }
+          
         }
       }
     end

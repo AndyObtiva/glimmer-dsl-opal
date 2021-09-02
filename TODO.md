@@ -126,9 +126,14 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 ## Samples
 
+- Build Quarto game sample: https://en.gigamic.com/game/quarto-classic
 - Style all samples with an alternate version
 - Host all internal samples online
 - Web-Only Samples
+
+## Frameworks
+
+- Think of an isomorphic web framework that eliminates the web resource metaphor in favor of a simpler object oriented metaphor similar to desktop application development (like client-server apps)
 
 ## Production Apps
 

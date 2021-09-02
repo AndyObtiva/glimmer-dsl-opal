@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.28.3
+
+- Support Canvas Shape DSL data-binding
+- Use Canvas Shape DSL data-binding with Hello, Canvas! text string attribute
+- Add bevel 3D look to Tetris elaborate sample via Canvas Shape DSL
+
 ## 0.28.2
 
 - Support `image` Canvas Shape DSL keyword

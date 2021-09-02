@@ -70,9 +70,10 @@ class Weather
             text temp_unit
             background DEFAULT_BACKGROUND
             
-            rectangle(0, 0, [:default, -2], [:default, -2], 15, 15) {
-              foreground DEFAULT_FOREGROUND
-            }
+            # TODO enable once Canvas Shape DSL is supported under any widget (not just canvas)
+#             rectangle(0, 0, [:default, -2], [:default, -2], 15, 15) {
+#               foreground DEFAULT_FOREGROUND
+#             }
       
             %w[temp temp_min temp_max feels_like].each do |field_name|
               temp_field(field_name, temp_unit)

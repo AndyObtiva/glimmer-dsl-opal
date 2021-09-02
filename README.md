@@ -2653,7 +2653,7 @@ Glimmer DSL for Opal Contact Manager Edit Done
 
 #### Tetris
 
-This is a minimal initial version of the [Tetris seen in Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_SAMPLES.md#glimmer-tetris).
+This is a slightly minimal version of the [Tetris seen in Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_SAMPLES.md#glimmer-tetris).
 
 Note that while the Glimmer GUI DSL code is mostly the same, some of the behavioral code around threads is changed
 into async Opal code via the [opal-async](https://github.com/AndyObtiva/opal-async) gem due to the async nature of transpiled JavaScript.
@@ -2742,6 +2742,8 @@ You should see "User Profile"
 ![Opal User Profile](/images/glimmer-dsl-opal-user-profile.png)
 
 #### Weather
+
+This sample does everything the desktop sample does except for the Canvas Shape DSL rectangle decoration (until supported).
 
 Code: [lib/glimmer-dsl-opal/samples/elaborate/weather](lib/glimmer-dsl-opal/samples/elaborate/weather.rb)
 

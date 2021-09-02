@@ -21,9 +21,21 @@
 
 class HelloCanvas
   include Glimmer::UI::CustomShell
+
+  attr_accessor :artist
         
   before_body do
     @image_object = image(File.expand_path('./images/scaffold_app.png', __dir__), width: 50)
+    @artist = ''
+  end
+  
+  after_body do
+    Thread.new do
+      'Picasso'.chars.async_each do |character|
+        sleep(0.5)
+        self.artist += character
+      end
+    end
   end
   
   body {
@@ -61,7 +73,10 @@ class HelloCanvas
         arc(210, 210, 100, 100, 30, -77) {
           background :red
         }
-        text('Picasso', 67, 103) {
+        text {
+          string <= [self, :artist]
+          x 67
+          y 103
           foreground :dark_magenta
           font name: 'Courier', height: 30
         }

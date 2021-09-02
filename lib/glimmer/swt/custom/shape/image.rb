@@ -55,6 +55,7 @@ module Glimmer
           def set_parameter_attribute(attribute_name, *args)
             if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
               super(attribute_name, *args)
+              build_dom
               reattach(dom_element)
               return
             end

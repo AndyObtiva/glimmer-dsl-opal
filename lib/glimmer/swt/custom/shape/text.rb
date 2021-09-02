@@ -59,7 +59,12 @@ module Glimmer
           end
           
           def set_parameter_attribute(attribute_name, *args)
-            return super(attribute_name, *args) if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+            if @parameter_names.to_a.map(&:to_s).include?(attribute_name.to_s)
+              super(attribute_name, *args)
+              build_dom
+              reattach(dom_element)
+              return
+            end
             if text_parameter_names.map(&:to_s).include?(attribute_name.to_s)
               @parameter_names = text_parameter_names
             elsif text_transparent_parameter_names.map(&:to_s).include?(attribute_name.to_s)
@@ -68,6 +73,12 @@ module Glimmer
               @parameter_names = text_flags_parameter_names
             end
             super(attribute_name, *args)
+          end
+          
+          def reattach(old_element)
+            old_element.attr('x', Element[@dom].attr('x'))
+            old_element.attr('y', Element[@dom].attr('y'))
+            old_element.text(Element[@dom].html)
           end
           
           def background=(value)

@@ -1463,7 +1463,7 @@ You should see "Hello, Group!"
 
 This is a minimal initial version of the [Hello, Canvas! sample included in Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_SAMPLES.md#hello-canvas).
 
-It [supports](#supported-glimmer-dsl-keywords) all shapes, but with no shape nesting, data-binding, or gradient support yet.
+It [supports](#supported-glimmer-dsl-keywords) all shapes and attribute data-binding, but no shape nesting or gradient support yet.
 
 Add the following require statement to `app/assets/javascripts/application.rb`
 

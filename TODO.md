@@ -8,6 +8,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
+- Report issues to opal-rails project:
+  - Use `bin/rails g opal:install` (not `rails opal:install`)
+- `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
 - Canvas Shape DSL data-binding
 - Canvas Shape DSL gradient patterns
 - Support Canvas Shape DSL extra shape parameter possibilities (e.g. text shape receiving is_transparent parmeter)
@@ -126,9 +129,14 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 ## Samples
 
+- Build Quarto game sample: https://en.gigamic.com/game/quarto-classic
 - Style all samples with an alternate version
 - Host all internal samples online
 - Web-Only Samples
+
+## Frameworks
+
+- Think of an isomorphic web framework that eliminates the web resource metaphor in favor of a simpler object oriented metaphor similar to desktop application development (like client-server apps)
 
 ## Production Apps
 

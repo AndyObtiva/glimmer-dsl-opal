@@ -198,6 +198,7 @@ module Glimmer
           # delay this till all children rendered (perhaps post_add_content block)
           parent_dom_element.css('position', 'relative')
           parent_dom_element.css('margin-top', '30px')
+          parent_dom_element.css('height', '114%')
           redraw
           `$(#{path}).menu({
             position: { my: "top", at: "bottom" },
@@ -222,7 +223,6 @@ module Glimmer
         @visible = value
         if @visible
           parent.menu_requested = true
-          parent.dom_element.css('position', 'relative')
           render
           dom_element.css('position', 'absolute')
           dom_element.css('left', parent.menu_x - parent.dom_element.offset.left)

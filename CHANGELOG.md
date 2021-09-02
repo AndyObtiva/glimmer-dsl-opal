@@ -5,6 +5,7 @@
 - Support Canvas Shape DSL data-binding
 - Use Canvas Shape DSL data-binding with Hello, Canvas! text string attribute
 - Add bevel 3D look to Tetris elaborate sample via Canvas Shape DSL
+- Ensure shell height compensates for providing extra top space to menu_bar when rendered
 
 ## 0.28.2
 

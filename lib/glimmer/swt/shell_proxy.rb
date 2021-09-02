@@ -41,7 +41,7 @@ module Glimmer
           cursor: inherit;
         }
         .shell {
-          height: 114%;
+          height: 100%;
           margin: 0;
         }
         .shell iframe {

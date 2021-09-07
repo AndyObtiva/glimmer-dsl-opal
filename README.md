@@ -277,7 +277,7 @@ gem 'glimmer-dsl-css', '~> 1.2.0', require: false
 
 ```
 
-Follow (opal-rails)[https://github.com/opal/opal-rails] instructions, basically the configuration of: config/initializers/assets.rb
+Follow [opal-rails](https://github.com/opal/opal-rails) instructions, basically the configuration of: config/initializers/assets.rb
 
 Edit `config/initializers/assets.rb` and add the following at the bottom:
 ```

@@ -277,7 +277,6 @@ gem 'opal-jquery', '~> 0.4.4'
 gem 'glimmer-dsl-opal', '~> 0.28.3'
 gem 'glimmer-dsl-xml', '~> 1.2.0', require: false
 gem 'glimmer-dsl-css', '~> 1.2.0', require: false
-
 ```
 
 Follow [opal-rails](https://github.com/opal/opal-rails) instructions, basically the configuration of: config/initializers/assets.rb
@@ -293,9 +292,16 @@ Run:
 rails g scaffold welcome
 ```
 
-Modify `config/routes.rb`:
+Run:
+
+```
+rails db:migrate
+```
+
+Add the following to `config/routes.rb` inside the `Rails.application.routes.draw` block:
 
 ```ruby
+mount Glimmer::Engine => "/glimmer" # add on top
 root to: 'welcomes#index'
 ```
 
@@ -305,14 +311,16 @@ Edit `app/views/layouts/application.html.erb` and add the following below other 
 <%= stylesheet_link_tag    'glimmer/glimmer', media: 'all', 'data-turbolinks-track': 'reload' %>
 ```
 
-Clear the file `app/views/welcomes/index.html.erb` from any content.
+Clear the file `app/views/welcomes/index.html.erb` completely from all content.
 
-Add the following line to the top of an empty `app/assets/javascripts/application.rb` (replacing `application.js`), and add Glimmer GUI DSL code or a require statement for one of the samples below.
+Delete `app/assets/javascripts/application.js`
+
+Create an empty `app/assets/javascripts/application.rb`, and add Glimmer GUI DSL code or a require statement for one of the [samples](#samples) below.
 
 ```ruby
 require 'glimmer-dsl-opal' # brings opal and other dependencies automatically
 
-# require-statement/code goes here.
+# Add more require-statements or Glimmer GUI DSL code
 ```
 
 Example to confirm setup is working:
@@ -332,6 +340,21 @@ shell {
   }
 }.open
 ```
+
+Start the Rails server:
+```
+rails s
+```
+
+Visit `http://localhost:3000`
+
+You should see:
+
+![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
+
+If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-app.herokuapp.com/
+
+Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
 
 ## Supported Glimmer DSL Keywords
 

@@ -84,6 +84,7 @@ module Glimmer
         input_disabled = @enabled ? {} : {'disabled': 'disabled'}
         input_args = input_args.merge(type: 'password') if has_style?(:password)
         @dom ||= html {
+          # TODO `:style` key is duplicated twice
           button(input_args.merge(id: input_id, class: name, style: input_style, style: 'min-width: 32px; min-height: 32px;').merge(input_disabled)) {
             input_text.to_s == '' ? '&nbsp;' : input_text
           }

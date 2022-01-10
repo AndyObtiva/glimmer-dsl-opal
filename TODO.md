@@ -4,6 +4,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
+- Fix Hello, Arrow! (menu is showing up outside of widget on the top left of the screen)
+- Update copy to 2022
 - Ensure text shape does not clash with text widget
 
 ## Soon

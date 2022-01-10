@@ -22,7 +22,7 @@ module Glimmer
         
         def add_content(parent, keyword, *args, &block)
           if parent.rendered? || parent.skip_content_on_render_blocks?
-            super(parent, &block)
+            super(parent, keyword, *args, &block)
             parent.post_add_content
           else
             parent.add_content_on_render(&block)

@@ -43,9 +43,9 @@ module Glimmer
       
       attr_accessor :accelerator # TODO consider doing something with it
     
-      def initialize(parent, args)
+      def initialize(parent, args, block)
         args.push(:push) if args.empty?
-        super(parent, args)
+        super(parent, args, block)
         # TODO do not add the following event till post_add_content to avoid adding if already one on_widget_selected event existed
         on_widget_selected {
           # No Op, just trigger selection

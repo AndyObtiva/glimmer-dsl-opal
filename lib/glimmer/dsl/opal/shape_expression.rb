@@ -32,6 +32,7 @@ module Glimmer
         include ParentExpression
         
         def can_interpret?(parent, keyword, *args, &block)
+          # TODO consider parent as WidgetProxy too just like SWT
           (parent.is_a?(Glimmer::SWT::CanvasProxy) or parent.is_a?(Glimmer::SWT::Custom::Shape)) and
             Glimmer::SWT::Custom::Shape.valid?(parent, keyword, args, &block) and
             ((keyword != 'text' && keyword != 'image') || args.size >= 3 || (args.empty? && block_given?))

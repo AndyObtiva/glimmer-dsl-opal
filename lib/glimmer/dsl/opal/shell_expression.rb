@@ -23,12 +23,12 @@ module Glimmer
             # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
             Glimmer::SWT::MakeShiftShellProxy.new
           else
-            Glimmer::SWT::ShellProxy.new(*args)
+            Glimmer::SWT::ShellProxy.new(args)
           end
         end
         
         def add_content(parent, keyword, *args, &block)
-          super(parent, &block)
+          super(parent, keyword, *args, &block)
           parent.post_add_content
         end
       end

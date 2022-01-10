@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'glimmer', '~> 2.0.1' #, path: '../glimmer'
-gem 'glimmer-dsl-xml', '~> 1.2.0'
-gem 'glimmer-dsl-css', '~> 1.2.0'
+gem 'glimmer', '~> 2.4.1' #, path: '../glimmer'
+gem 'glimmer-dsl-xml', '~> 1.3.1'
+gem 'glimmer-dsl-css', '~> 1.2.1'
 gem 'opal-async', '~> 1.4.0'
 gem 'to_collection', '>= 2.0.1', '< 3.0.0'
 gem 'pure-struct', '>= 1.0.2', '< 2.0.0'

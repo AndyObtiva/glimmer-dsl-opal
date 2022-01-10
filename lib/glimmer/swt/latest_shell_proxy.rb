@@ -24,7 +24,7 @@ require 'glimmer/swt/shell_proxy'
 module Glimmer
   module SWT
     class LatestShellProxy < ShellProxy
-      def initialize(parent, args, block)
+      def initialize
         # No Op
       end
       
@@ -36,8 +36,8 @@ module Glimmer
         end
       end
       
-      def respond_to?(method, *args, &block)
-        super || latest_shell&.respond_to?(method, *args, &block)
+      def respond_to?(method_name, include_private = false)
+        super(method_name, include_private) || latest_shell&.respond_to?(method_name, include_private)
       end
       
       def open

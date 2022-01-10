@@ -42,8 +42,8 @@ module Glimmer
         !!@called
       end
       
-      def respond_to?(method, *args, &block)
-        %w[owner invoked_from called?].include?(method.to_s) || super(method, *args, &block)
+      def respond_to?(method_name, include_private = false)
+        %w[owner invoked_from called?].include?(method_name.to_s) || super(method_name, include_private)
       end
     end
   end

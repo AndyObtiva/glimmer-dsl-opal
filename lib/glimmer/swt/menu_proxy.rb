@@ -98,7 +98,7 @@ module Glimmer
       
       attr_reader :menu_item_proxy, :menu_parent
 
-      def initialize(parent, args)
+      def initialize(parent, args, block = nil)
         # TODO refactor/simplify code below
         @children = []
         index = args.delete(args.last) if args.last.is_a?(Numeric)
@@ -111,21 +111,22 @@ module Glimmer
           args = args.unshift(:pop_up)
         end
         if parent.is_a?(MenuProxy)
-          @menu_item_proxy = SWT::WidgetProxy.for('menu_item', parent, [:cascade] + [index].compact)
-          super(@menu_item_proxy, args)
+          @menu_item_proxy = SWT::WidgetProxy.for('menu_item', parent, [:cascade] + [index].compact, block)
+          super(@menu_item_proxy, args, nil)
           @menu_item_proxy.menu = self
         elsif parent.is_a?(ShellProxy)
-          super(parent, args)
+          super(parent, args, nil)
         else # widget pop up
-          super(parent, args)
+          super(parent, args, nil)
         end
-
+        
         if bar?
           # Assumes a parent shell
           parent.menu_bar = self
         elsif pop_up?
           parent.menu = self
         end
+        
         # TODO IMPLEMENT PROPERLY
 #         on_focus_lost {
 #           dispose
@@ -195,26 +196,30 @@ module Glimmer
       
       def post_add_content
         if bar?
-          # delay this till all children rendered (perhaps post_add_content block)
           parent_dom_element.css('position', 'relative')
           parent_dom_element.css('margin-top', '30px')
           parent_dom_element.css('height', '114%')
-          redraw
+          render
           `$(#{path}).menu({
             position: { my: "top", at: "bottom" },
             icons: { submenu: "ui-icon-blank" }
           });`
           the_element = dom_element
-          the_element.on('mouseover') { |event|
+          the_element.on('mouseenter') do |event|
             if event.page_x.between?(the_element.offset.left, the_element.offset.left + the_element.width) and
                event.page_y.between?(the_element.offset.top, the_element.offset.top + the_element.height)
               `$(#{path}).menu('option', 'position', { my: 'left top', at: 'left bottom' })`
             end
-          }
-          the_element.on('menublur') {
-            `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' })`
-          }
-          minimum_width = children.to_a.map(&:dom_element).map(&:width).reduce(:+)
+          end
+          the_element.on('mouseout') do |event|
+            if event.page_x.between?(the_element.offset.left, the_element.offset.left + the_element.width) and
+               event.page_y.between?(the_element.offset.top, the_element.offset.top + the_element.height)
+              `$(#{path}).menu('option', 'position', { my: 'left top', at: 'left bottom' })`
+             else
+              `$(#{path}).menu('option', 'position', { my: 'left top', at: 'right top' })`
+            end
+          end
+          minimum_width = children.to_a.map(&:dom_element).map(&:width).map(&:to_f).reduce(:+)
           the_element.css('min-width', minimum_width)
         end
       end
@@ -223,6 +228,7 @@ module Glimmer
         @visible = value
         if @visible
           parent.menu_requested = true
+          parent.dom_element.css('position', 'relative')
           render
           dom_element.css('position', 'absolute')
           dom_element.css('left', parent.menu_x - parent.dom_element.offset.left)
@@ -250,7 +256,7 @@ module Glimmer
       
       def close
         dom_element.remove
-        Element['body'].off('click', &@close_event_handler)
+        Element['body'].off('click', @close_event_handler)
         @visible = false
       end
       

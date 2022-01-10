@@ -26,7 +26,7 @@ module Glimmer
           #TODO make this options observer dependent and all similar observers in element specific data binding handlers
           element_binding.observe(model_binding)
           # TODO simplify this logic and put it where it belongs
-          parent.add_observer(model_binding, keyword) if parent.respond_to?(:add_observer, [model_binding, keyword])
+          parent.add_observer(model_binding, keyword) if parent.respond_to?(:add_observer)
         end
       end
     end

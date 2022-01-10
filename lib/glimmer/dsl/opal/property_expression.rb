@@ -9,7 +9,7 @@ module Glimmer
           parent and
             (!args.empty?) and
             parent.respond_to?(:set_attribute) and
-            parent.respond_to?(keyword, *args) and
+            parent.respond_to?(keyword) and
             keyword and
             block.nil?
         end

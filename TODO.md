@@ -10,9 +10,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
-- Report issues to opal-rails project:
-  - Use `bin/rails g opal:install` (not `rails opal:install`)
 - `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
+- Upgrade to opal 1.41 to support rails 7 (and potentially rails 6 while at it)
+- drop pure struct gem if struct is fixed in newer opal
 - Canvas Shape DSL data-binding
 - Canvas Shape DSL gradient patterns
 - Support Canvas Shape DSL extra shape parameter possibilities (e.g. text shape receiving is_transparent parmeter)

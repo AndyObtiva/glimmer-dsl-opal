@@ -152,7 +152,7 @@ Other [Glimmer](https://github.com/AndyObtiva/glimmer) DSL gems you might be int
 - [glimmer-dsl-libui](https://github.com/AndyObtiva/glimmer-dsl-libui): Glimmer DSL for LibUI (Prerequisite-Free Ruby Desktop Development GUI Library)
 - [glimmer-dsl-tk](https://github.com/AndyObtiva/glimmer-dsl-tk): Glimmer DSL for Tk (MRI Ruby Desktop Development GUI Library)
 - [glimmer-dsl-gtk](https://github.com/AndyObtiva/glimmer-dsl-gtk): Glimmer DSL for GTK (Ruby-GNOME Desktop Development GUI Library)
-- [glimmer-dsl-fx](https://github.com/AndyObtiva/glimmer-dsl-fx): Glimmer DSL for FX (FOX Ruby Desktop Development GUI Library)
+- [glimmer-dsl-fx](https://github.com/AndyObtiva/glimmer-dsl-fx): Glimmer DSL for FX (FOX Toolkit Ruby Desktop Development GUI Library)
 - [glimmer-dsl-jfx](https://github.com/AndyObtiva/glimmer-dsl-jfx): Glimmer DSL for JFX (JRuby JavaFX Desktop Development GUI Library)
 - [glimmer-dsl-swing](https://github.com/AndyObtiva/glimmer-dsl-swing): Glimmer DSL for Swing (JRuby Swing Desktop Development GUI Library)
 - [glimmer-dsl-xml](https://github.com/AndyObtiva/glimmer-dsl-xml): Glimmer DSL for XML (& HTML)

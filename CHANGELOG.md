@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.29.0
+
+- Support Rails 7
+- Upgrade to Opal 1.4.1
+- Upgrade jQuery-UI to 1.13.1
+- Fix Hello, Arrow! (menu is showing up outside of widget on the top left of the screen)
+- Upgrade to Glimmer DSL for XML 1.3.1
+- Upgrade to Glimmer DSL for CSS 1.2.1
+
+
 ## 0.28.3
 
 - Support Canvas Shape DSL data-binding

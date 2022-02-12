@@ -48,7 +48,7 @@ module Glimmer
         end
         
         def add_content(parent, keyword, *args, &block)
-          super(parent, &block)
+          super(parent, keyword, *args, &block)
           parent.post_add_content
         end
         

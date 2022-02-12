@@ -7,6 +7,8 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Fix Hello, Arrow! (menu is showing up outside of widget on the top left of the screen)
 - Update copy to 2022
 - Ensure text shape does not clash with text widget
+- Upgrade to Glimmer DSL for XML 1.3.1
+- Make sure to link to the code in all samples in README
 
 ## Soon
 
@@ -106,6 +108,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 - Build a Ruby repl in the browser
 - Build a Glimmer GUI repl in the browser
+- Mobile-Response Menu Bar Support
 
 ## Technical Tasks
 

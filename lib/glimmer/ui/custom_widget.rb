@@ -285,10 +285,10 @@ module Glimmer
       end
 
       alias local_respond_to? respond_to?
-      def respond_to?(method, *args, &block)
-        super or
-          can_handle_observation_request?(method) or
-          body_root.respond_to?(method, *args, &block)
+      def respond_to?(method_name, include_private = false)
+        super(method_name, include_private) or
+          can_handle_observation_request?(method_name) or
+          body_root.respond_to?(method_name, include_private)
       end
 
       private

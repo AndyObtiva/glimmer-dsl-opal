@@ -163,7 +163,7 @@ module Glimmer
           if !super_invocation && has_attribute?(method_name)
             true
           else
-            super(method_name, *args, &block)
+            super(method_name, (args.first if args.first == true), &block)
           end
         end
         

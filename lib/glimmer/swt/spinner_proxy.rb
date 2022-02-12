@@ -159,10 +159,10 @@ module Glimmer
       def dom
         text_text = @text
         text_id = id
-        text_style = css
+        text_style = "min-width: 27px; #{css}"
         text_class = name
         # TODO `:style` key is duplicated twice
-        options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text, style: 'min-width: 27px;'}
+        options = {type: 'text', id: text_id, style: text_style, class: text_class, value: text_text}
         options = options.merge('disabled': 'disabled') unless @enabled
         @dom ||= html {
           input(options)

@@ -57,11 +57,11 @@ module Glimmer
       def dom
         check_text = @text
         check_id = id
-        check_style = css
+        check_style = "min-width: 27px; #{css}"
         check_class = name
         check_selection = @selection
         # TODO `:style` key is duplicated twice
-        options = {type: 'checkbox', id: check_id, name: parent.id, style: check_style, class: check_class, value: check_text, style: 'min-width: 27px;'}
+        options = {type: 'checkbox', id: check_id, name: parent.id, style: check_style, class: check_class, value: check_text}
         options[checked: 'checked'] if check_selection
         @dom ||= html {
           span {

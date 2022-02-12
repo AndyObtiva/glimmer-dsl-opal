@@ -25,6 +25,12 @@ require 'glimmer/swt/button_proxy'
 module Glimmer
   module SWT
     class ArrowProxy < ButtonProxy
+      STYLE = <<~CSS
+        .arrow {
+          position: relative;
+        }
+      CSS
+      
       def initialize(parent, args, block)
         if args.to_a.include?(:left)
           @text = '<'

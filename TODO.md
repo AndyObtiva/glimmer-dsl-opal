@@ -4,14 +4,13 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Fix Hello, Arrow! (menu is showing up outside of widget on the top left of the screen)
 - Update copy to 2022
 - Ensure text shape does not clash with text widget
-- Upgrade to Glimmer DSL for XML 1.3.1
 - Make sure to link to the code in all samples in README
 
 ## Soon
 
+- Upgrade jQuery
 - `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
 - Upgrade to opal 1.41 to support rails 7 (and potentially rails 6 while at it)
 - drop pure struct gem if struct is fixed in newer opal

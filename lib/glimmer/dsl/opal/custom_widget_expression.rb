@@ -52,7 +52,7 @@ module Glimmer
           # TODO clean code by extracting methods into CustomShell
           if !Glimmer::UI::CustomShell.requested? && custom_widget_class&.ancestors&.to_a.include?(Glimmer::UI::CustomShell)
             if Glimmer::SWT::DisplayProxy.instance.shells.empty? || Glimmer::SWT::DisplayProxy.open_custom_shells_in_current_window?
-              custom_widget_class.new(parent, *args, {}, &block)
+              custom_widget_class.new(parent, args, {}, &block)
             else
               options = args.last.is_a?(Hash) ? args.pop : {}
               options = options.merge('swt_style' => args.join(',')) unless args.join(',').empty?
@@ -75,7 +75,7 @@ module Glimmer
               # just a placeholder that has an open method # TODO return an actual CustomShell in the future that does the work happening above in the #open method
               Glimmer::SWT::MakeShiftShellProxy.new
             else
-              custom_widget_class&.new(parent, *args, {}, &block)
+              custom_widget_class&.new(parent, args, {}, &block)
             end
           end
         end

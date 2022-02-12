@@ -11,6 +11,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 ## Soon
 
 - Upgrade jQuery
+- Change mouse cursor when pointing at checkboxes/radios (avoid caret cursor since user won't be typing)
 - `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
 - Upgrade to opal 1.41 to support rails 7 (and potentially rails 6 while at it)
 - drop pure struct gem if struct is fixed in newer opal

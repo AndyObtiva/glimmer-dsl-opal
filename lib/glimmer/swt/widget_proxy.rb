@@ -128,7 +128,7 @@ module Glimmer
       
       DEFAULT_INITIALIZERS = {
         # TODO remove if built in class initializer is taking care of this
-        composite: lambda do |composite_proxy|
+        composite: proc do |composite_proxy|
           if composite_proxy.get_layout.nil?
             the_layout = GridLayoutProxy.new(composite_proxy, [])
             composite_proxy.layout = the_layout
@@ -136,18 +136,18 @@ module Glimmer
             the_layout.margin_height = 15
           end
         end,
-#         scrolled_composite: lambda do |scrolled_composite|
+#         scrolled_composite: proc do |scrolled_composite|
 #           scrolled_composite.expand_horizontal = true
 #           scrolled_composite.expand_vertical = true
 #         end,
-#         table: lambda do |table|
+#         table: proc do |table|
 #           table.setHeaderVisible(true)
 #           table.setLinesVisible(true)
 #         end,
-        table_column: lambda do |table_column_proxy|
+        table_column: proc do |table_column_proxy|
           table_column_proxy.width = 80
         end,
-#         group: lambda do |group_proxy|
+#         group: proc do |group_proxy|
 #           group_proxy.layout = GridLayoutProxy.new(group_proxy, []) if group.get_layout.nil?
 #         end,
       }
@@ -878,7 +878,7 @@ module Glimmer
           event_element_css_selector = mapping[:event_element_css_selector]
           potential_event_listener = event_handler&.call(original_event_listener)
           event_listener = potential_event_listener || original_event_listener
-          async_event_listener = lambda do |event|
+          async_event_listener = proc do |event|
             # TODO look into the issue with using async::task.new here. maybe put it in event listener (like not being able to call preventDefault or return false successfully )
             # maybe consider pushing inside the widget classes instead where needed only or implement universal doit support correctly to bypass this issue
 #             Async::Task.new do
@@ -944,7 +944,7 @@ module Glimmer
       end
       
       def property_type_converters
-        color_converter = lambda do |value|
+        color_converter = proc do |value|
           if value.is_a?(Symbol) || value.is_a?(String)
             ColorProxy.new(value)
           else
@@ -953,7 +953,7 @@ module Glimmer
         end
         @property_type_converters ||= {
           :background => color_converter,
-#           :background_image => lambda do |value|
+#           :background_image => proc do |value|
 #             if value.is_a?(String)
 #               if value.start_with?('uri:classloader')
 #                 value = value.sub(/^uri\:classloader\:\//, '')
@@ -973,7 +973,7 @@ module Glimmer
 #             end
 #           end,
           :foreground => color_converter,
-#           :font => lambda do |value|
+#           :font => proc do |value|
 #             if value.is_a?(Hash)
 #               font_properties = value
 #               FontProxy.new(self, font_properties).swt_font
@@ -981,14 +981,14 @@ module Glimmer
 #               value
 #             end
 #           end,
-          :text => lambda do |value|
+          :text => proc do |value|
 #             if swt_widget.is_a?(Browser)
 #               value.to_s
 #             else
               value.to_s
 #             end
           end,
-#           :visible => lambda do |value|
+#           :visible => proc do |value|
 #             !!value
 #           end,
         }
@@ -997,7 +997,7 @@ module Glimmer
       def widget_property_listener_installers
         @swt_widget_property_listener_installers ||= {
 #           WidgetProxy => {
-#             :focus => lambda do |observer|
+#             :focus => proc do |observer|
 #               on_focus_gained { |focus_event|
 #                 observer.call(true)
 #               }
@@ -1007,7 +1007,7 @@ module Glimmer
 #             end,
 #           },
           MenuItemProxy => {
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 # TODO look into validity of this and perhaps move toggle logic to MenuItemProxy
                 if check?
@@ -1019,33 +1019,33 @@ module Glimmer
             end
           },
           ScaleProxy => {
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(selection)
               }
             end
           },
           SliderProxy => {
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(selection)
               }
             end
           },
           SpinnerProxy => {
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(selection)
               }
             end
           },
           TextProxy => {
-            :text => lambda do |observer|
+            :text => proc do |observer|
               on_modify_text { |modify_event|
                 observer.call(text)
               }
             end,
-#             :caret_position => lambda do |observer|
+#             :caret_position => proc do |observer|
 #               on_event_keydown { |event|
 #                 observer.call(getCaretPosition)
 #               }
@@ -1059,7 +1059,7 @@ module Glimmer
 #                 observer.call(getCaretPosition)
 #               }
 #             end,
-#             :selection => lambda do |observer|
+#             :selection => proc do |observer|
 #               on_event_keydown { |event|
 #                 observer.call(getSelection)
 #               }
@@ -1073,7 +1073,7 @@ module Glimmer
 #                 observer.call(getSelection)
 #               }
 #             end,
-#             :selection_count => lambda do |observer|
+#             :selection_count => proc do |observer|
 #               on_event_keydown { |event|
 #                 observer.call(getSelectionCount)
 #               }
@@ -1087,7 +1087,7 @@ module Glimmer
 #                 observer.call(getSelectionCount)
 #               }
 #             end,
-#             :top_index => lambda do |observer|
+#             :top_index => proc do |observer|
 #               @last_top_index = getTopIndex
 #               on_paint_control { |event|
 #                 if getTopIndex != @last_top_index
@@ -1098,35 +1098,35 @@ module Glimmer
 #             end,
           },
 #           Java::OrgEclipseSwtCustom::StyledText => {
-#             :text => lambda do |observer|
+#             :text => proc do |observer|
 #               on_modify_text { |modify_event|
 #                 observer.call(getText)
 #               }
 #             end,
 #           },
           DateTimeProxy => {
-            :date_time => lambda do |observer|
+            :date_time => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(date_time)
               }
             end
           },
           RadioProxy => { #radio?
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(selection)
               }
             end
           },
           TableProxy => {
-            :selection => lambda do |observer|
+            :selection => proc do |observer|
               on_widget_selected { |selection_event|
                 observer.call(selection_event.table_item.get_data)  # TODO ensure selection doesn't conflict with editing
               }
             end,
           },
 #           Java::OrgEclipseSwtWidgets::MenuItem => {
-#             :selection => lambda do |observer|
+#             :selection => proc do |observer|
 #               on_widget_selected { |selection_event|
 #                 observer.call(getSelection)
 #               }

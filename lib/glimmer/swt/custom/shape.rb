@@ -40,9 +40,9 @@ module Glimmer
           def create(parent, keyword, args, &property_block)
             potential_shape_class_name = keyword.to_s.camelcase(:upper).to_sym
             if constants.include?(potential_shape_class_name)
-              const_get(potential_shape_class_name).new(parent, args, &property_block)
+              const_get(potential_shape_class_name).new(parent, args, property_block)
             else
-              new(parent, args, &property_block)
+              new(parent, args, property_block)
             end
           end
         

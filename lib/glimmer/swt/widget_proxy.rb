@@ -235,7 +235,7 @@ module Glimmer
               event_handler = mapping[:event_handler]
               event_element_css_selector = mapping[:event_element_css_selector]
               the_listener_dom_element = event_element_css_selector ? Element[event_element_css_selector] : listener_dom_element
-              the_listener_dom_element.off(event)
+              the_listener_dom_element.off(event, event_listener)
               # TODO improve to precisely remove the listeners that were added, no more no less. (or use the event_listener_proxies method instead or in collaboration)
             end
           end

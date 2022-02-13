@@ -41,9 +41,9 @@ module Glimmer
       def initialize(parent, args, block)
         super(parent, args, block)
         # TODO check if there is a need to remove this observer when removing widget from table upon items update
-        on_widget_selected { |event|
+        on_widget_selected do |event|
           parent.select(parent.index_of(self), (event.meta? if event.respond_to?(:meta?)))
-        }
+        end
       end
       
       def get_text(index)

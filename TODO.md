@@ -7,6 +7,7 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Update copy to 2022
 - Ensure text shape does not clash with text widget
 - Make sure to link to the code in all samples in README
+- Remove pure-struct if no longer needed
 
 ## Soon
 

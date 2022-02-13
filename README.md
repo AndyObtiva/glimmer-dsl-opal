@@ -365,7 +365,7 @@ You should see:
 
 ![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
 
-If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-app.herokuapp.com/
+If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails 7 App](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails7-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-rails7.herokuapp.com/
 
 Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
 
@@ -471,7 +471,7 @@ You should see:
 
 ![setup is working](/images/glimmer-dsl-opal-setup-example-working.png)
 
-If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails7-app) project (in case I forgot to include some setup steps by mistake).
+If you run into any issues in setup, refer to the [Sample Glimmer DSL for Opal Rails App](https://github.com/AndyObtiva/sample-glimmer-dsl-opal-rails-app) project (in case I forgot to include some setup steps by mistake). It is also hosted online (proving that it works): https://sample-glimmer-dsl-opal-app.herokuapp.com/
 
 Otherwise, if you still cannot setup successfully (even with the help of the sample project, or if the sample project stops working), please do not hesitate to report an [Issue request](https://github.com/AndyObtiva/glimmer-dsl-opal/issues) or fix and submit a [Pull Request](https://github.com/AndyObtiva/glimmer-dsl-opal/pulls).
 

@@ -12,7 +12,7 @@ module Glimmer
 
         def interpret(parent, keyword, *args, &block)
           parent = args.delete_at(0)
-          Glimmer::SWT::DialogProxy.new(parent, args)
+          Glimmer::SWT::DialogProxy.new(parent, args, block)
         end
       end
     end

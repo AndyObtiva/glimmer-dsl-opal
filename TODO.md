@@ -11,9 +11,9 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Soon
 
-- Upgrade jQuery
-- Fix jQuery-UI theme
 - Fix images tab in Hello, Label!
+- Fix Hello, Progress Bar!
+- Fix issue with C-tab closing keeping tooltip on
 - Change mouse cursor when pointing at checkboxes/radios (avoid caret cursor since user won't be typing)
 - `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
 - Upgrade to opal 1.41 to support rails 7 (and potentially rails 6 while at it)

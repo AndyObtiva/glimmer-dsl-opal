@@ -24,6 +24,12 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class SliderProxy < WidgetProxy
+      STYLE = <<~CSS
+        .slider {
+          width: 100%;
+        }
+      CSS
+          
       attr_reader :selection, :minimum, :maximum, :page_increment
     
       def initialize(parent, args, block)

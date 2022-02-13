@@ -4,16 +4,19 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Update copy to 2022
-- Ensure text shape does not clash with text widget
-- Make sure to link to the code in all samples in README
-- Remove pure-struct if no longer needed
+- Build a Rails 6 sample app just like that of Rails 5 and Rails 7 and add Rails 6 instructions
+- Attempt to make Rails 5 sample app work with latest Opal 1.4.1 and update Rails 5 instructions
 
 ## Soon
 
+- Improve styling of Tetris in CSS (and in general) as it seems to be too big for the screen on smaller screens
+- Ensure text shape does not clash with text widget
+- Make sure to link to the code in all samples in README
+- Remove pure-struct if no longer needed
 - Fix images tab in Hello, Label!
 - Fix Hello, Progress Bar!
 - Fix issue with C-tab closing keeping tooltip on
+- Fix automatic image hosting of desktop app images on Heroku with Rails 7 (works with Rails 5 fine)
 - Change mouse cursor when pointing at checkboxes/radios (avoid caret cursor since user won't be typing)
 - `:style` key is duplicated twice in some widgets like `button`, `checkbox`, and `spinner`
 - Upgrade to opal 1.41 to support rails 7 (and potentially rails 6 while at it)
@@ -27,7 +30,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 - Switch arc implementation to p5.js (p5js.org & https://github.com/zenozeng/p5.js-svg), which better matches the SWT arc implementation with regards to honoring both oval/ellipse width and height
 - Support nested shapes with relative positioning in Canvas Shape DSL
 - Support Custom Shapes
-- Implement bevel look in Tetris sample blocks (just like in Glimmer DSL for SWT)
 - Consider supporting canvas drawing via on_paint_control listener as an alternative to Canvas Shape DSL
 - Support ShellProxy maximum_size (as per new support of it in Glimer DSL for SWT)
 - Support mutation operations on File instances on server (or consider a database abstraction alternative)

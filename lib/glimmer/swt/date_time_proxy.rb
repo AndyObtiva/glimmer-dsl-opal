@@ -34,10 +34,10 @@ module Glimmer
             showNowButton: true,
             showCloseButton: true,
             button: "##{time_button_id}",
-            onClose: ->(v) {
+            onClose: proc do |v|
               @timepicker_done = true
               dom_element.trigger('change')
-            },
+            end,
           })
         else
           options = {}

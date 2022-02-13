@@ -101,10 +101,6 @@ module Glimmer
         body_root.visible?
       end
 
-      def center
-        body_root.center
-      end
-
       def start_event_loop
         body_root.start_event_loop
       end

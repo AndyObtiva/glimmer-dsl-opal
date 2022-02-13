@@ -24,6 +24,12 @@ require 'glimmer/swt/widget_proxy'
 module Glimmer
   module SWT
     class ScaleProxy < WidgetProxy
+      STYLE = <<~CSS
+        .scale {
+          width: 100%;
+        }
+      CSS
+          
       attr_reader :selection, :minimum, :maximum, :increment
     
       def initialize(parent, args, block)

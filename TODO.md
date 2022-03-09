@@ -4,7 +4,6 @@ Here is a list of tasks to do (moved to CHANGELOG.md once done).
 
 ## Next
 
-- Build a Rails 6 sample app just like that of Rails 5 and Rails 7 and add Rails 6 instructions
 - Attempt to make Rails 5 sample app work with latest Opal 1.4.1 and update Rails 5 instructions
 
 ## Soon
@@ -119,6 +118,7 @@ Consider a security model where you pre-add all gem Ruby files to make available
 
 - fire on_widget_disposed listener in WidgetProxy on calling `#dispose`
 - Consider making it a configurable option to whether open a secondary shell as a new tab or an internal modeless dialog
+- Look into the solving the problem of predictable ids and classes breaking styling if done based on ids or ordering index and a developer adds an extra field before other fields that shifts all their ids
 
 ## Opal Ruby Extensions/Missing Features
 - Figure out a way to do File.read in Opal

@@ -3,6 +3,8 @@
 [![Gem Version](https://badge.fury.io/rb/glimmer-dsl-opal.svg)](http://badge.fury.io/rb/glimmer-dsl-opal)
 [![Join the chat at https://gitter.im/AndyObtiva/glimmer](https://badges.gitter.im/AndyObtiva/glimmer.svg)](https://gitter.im/AndyObtiva/glimmer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## **Note: This project has been superseded by [Glimmer DSL for Web](https://github.com/AndyObtiva/glimmer-dsl-web), which you should check out for more serious usage of Glimmer on the Web going forward! Glimmer DSL for Opal was a great experiment that proved a Glimmer GUI DSL can work on the Web by rendering HTML in web browsers using Ruby as the frontend language of Rails applications instead of JavaScript, allowing both declarative programming of user interface structure and imperative programming of user interface logic to happen more productively in one language instead of the awkward and unproductive mixing of multiple languages (HTML, JS, JSX, etc...) on the Web. [Glimmer DSL for Web](https://github.com/AndyObtiva/glimmer-dsl-web) offers a more web-like approach to the Glimmer GUI DSL that better leverages existing HTML/CSS/JS skills, and will be maintained in place of this project going forward.**
+
 ### You can finally live in pure Rubyland on the web!
 
 [Glimmer](https://github.com/AndyObtiva/glimmer) DSL for [Opal](https://opalrb.com/) is an **alpha** [gem](https://rubygems.org/gems/glimmer-dsl-opal) that enables building web GUI in pure Ruby via [Opal](https://opalrb.com/) on [Rails](https://rubyonrails.org/) **(now comes with the new Shine data-binding syntax)**.
@@ -255,6 +257,8 @@ Alternatively, web developers may directly use [Glimmer DSL for Opal](https://ru
 - jQuery-UI Timepicker 0.3 (included): [https://code.jquery.com/](https://fgelinas.com/code/timepicker/) (jQuery-UI Timepicker 0.3.3 is included in the [glimmer-dsl-opal](https://rubygems.org/gems/glimmer-dsl-opal) gem)
 
 ## Setup
+
+**Note: This project has been superseded by [Glimmer DSL for Web](https://github.com/AndyObtiva/glimmer-dsl-web), which you should check out for more serious usage of Glimmer on the Web going forward! Glimmer DSL for Opal was a great experiment that proved a Glimmer GUI DSL can work on the Web by rendering HTML in web browsers using Ruby as the frontend language of Rails applications instead of JavaScript, allowing both declarative programming of user interface structure and imperative programming of user interface logic to happen more productively in one language instead of the awkward and unproductive mixing of multiple languages (HTML, JS, JSX, etc...) on the Web. [Glimmer DSL for Web](https://github.com/AndyObtiva/glimmer-dsl-web) offers a more web-like approach to the Glimmer GUI DSL that better leverages existing HTML/CSS/JS skills, and will be maintained in place of this project going forward.**
 
 (NOTE: Keep in mind this is a very early experimental and incomplete **alpha**. If you run into issues, try to go back to a [previous revision](https://rubygems.org/gems/glimmer-dsl-opal/versions). Also, there is a slight chance any issues you encounter are fixed in master or some other branch that you could check out instead)
 
